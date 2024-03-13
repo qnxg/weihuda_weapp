@@ -105,6 +105,7 @@ export const initClassTableThunk = createAsyncThunk('classTable/initClassTable',
     tempStart = storage.getTermStart(semesters[0].xn, semesters[0].xq)
     tempWeekNum = 1
   }
+  const termConfig = storage.getTermConfig()
   // 生成基础信息
   return {
     ...oldState,
@@ -114,7 +115,7 @@ export const initClassTableThunk = createAsyncThunk('classTable/initClassTable',
     currentWeek: tempWeekNum,
     currentStart: tempStart,
     mode: storage.getTableMode() && true,
-    classTable: storage.getClassTable(semesters[0].xn, semesters[0].xq) || []
+    classTable: storage.getClassTable(termConfig.year, termConfig.term) || []
   }
 })
 
