@@ -16,41 +16,44 @@ interface TodayClassProps {
 }
 
 interface FormatData {
+  id: string
   startTime: string
   endTime: string
   name: string
+  section: string
   location: string
   color: string
+  teachers: string
 }
 
 const startTime = [
-  '8:00 AM',
-  '8:55 AM',
-  '10:00 AM',
-  '10:55 AM',
-  '2:30 PM',
-  '3:15 PM',
-  '4:10 PM',
-  '4:55 PM',
-  '7:00 PM',
-  '7:55 PM',
-  '8:50 PM',
-  '9:35 PM'
+  '8:00',
+  '8:55',
+  '10:00',
+  '10:55',
+  '14:30',
+  '15:15',
+  '16:10',
+  '16:55',
+  '19:00',
+  '19:55',
+  '20:50',
+  '21:35'
 ]
 
 const endTime = [
-  '8:45 AM',
-  '9:40 AM',
-  '10:45 AM',
-  '11:40 AM',
-  '3:15 PM',
-  '4:00 PM',
-  '4:55 PM',
-  '5:40 PM',
-  '7:45 PM',
-  '8:40 PM',
-  '9:35 PM',
-  '10:20 PM'
+  '8:45',
+  '9:40',
+  '10:45',
+  '11:40',
+  '15:15',
+  '16:00',
+  '16:55',
+  '17:40',
+  '19:45',
+  '20:40',
+  '21:35',
+  '22:20'
 ]
 
 const TodayClass: React.FC<TodayClassProps> = (props) => {
@@ -83,16 +86,26 @@ const TodayClass: React.FC<TodayClassProps> = (props) => {
     if (todayClass.length !== 0) {
       const tempArray: Array<FormatData> = []
       todayClass.map((item) => {
+        // 去重
+        if (tempArray.some((i) => i.id === item.id)) {
+          return
+        }
         const tempSection: Array<string> = item.section.split(',')
         const temp: FormatData = {
+          id: item.id,
           startTime: startTime[parseInt(tempSection[0]) - 1],
           endTime: endTime[parseInt(tempSection[tempSection.length - 1]) - 1],
+          section: `第${parseInt(tempSection[0])}-${parseInt(tempSection[tempSection.length - 1])}节`,
           name: item.classname,
           location: item.location,
-          color: item.bgColor!
+          color: item.bgColor!,
+          teachers: item.teachers
         }
         tempArray.push(temp)
       })
+
+
+
       return tempArray
     } else {
       return []
@@ -102,24 +115,24 @@ const TodayClass: React.FC<TodayClassProps> = (props) => {
   return (
     <CardLayout icon={cardIcon} title='今日课程'>
       {formattedData && formattedData.length > 0 ? (
-        <Block>
+        <View style={{ padding: '0 8px', width: '100%' }}>
           {formattedData.map((item) => (
             <View key={item.name} className={styles.outer}>
               <View className={styles.leftPart}>
                 <View className={styles.startTime}>{item.startTime}</View>
                 <View className={styles.endTime}>{item.endTime}</View>
               </View>
-              <View className={styles.divide} style={{ backgroundColor: item.color }} />
               <View className={styles.rightPart}>
                 <View className={styles.courseName}>{item.name}</View>
-                <View className={styles.location}>
-                  <View className={styles.icon} />
-                  <View className={styles.text}>{item.location}</View>
+                <View className={styles.courseInfo}>
+                  <View className={styles.infoItem}>{item.section}</View>
+                  <View className={styles.infoItem}>{item.location}</View>
+                  <View className={styles.infoItem}>{item.teachers}</View>
                 </View>
               </View>
             </View>
           ))}
-        </Block>
+        </View>
       ) : (
         <CardEmpty icon={empty} text='今日无课，好好放松一下吧' />
       )}

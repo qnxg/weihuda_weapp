@@ -1,67 +1,41 @@
 @import '~@/utils/scss/global.scss';
 
 .outer {
-  // @include flex(flex-start, stretch);
+  display: flex;
   width: 100%;
-  min-height: 112px;
-  padding: 0px;
+  margin-bottom: 16px;
+  padding: 24px 20px;
+  background: #dde2e238;
+  border-radius: 12px;
+  font-size: $fontMedium;
+  color: $primaryTextColor;
+  border-left: 12px solid #dde2e25b;
 
   .leftPart {
-    @include flex(center, center, column);
-    letter-spacing: 0.6px;
-    width: 180px;
-    flex: none;
-
-    .startTime {
-      font-size: $fontNormal;
-      line-height: 32px;
-      color: $primaryTextColor;
-      margin-bottom: 5px;
-    }
-
-    .endTime {
-      font-size: $fontMedium;
-      line-height: 28px;
-      letter-spacing: 0.4px;
-      color: $thirdTextColor;
-      margin-top: 5px;
-    }
+    margin-right: 20px;
   }
 
-  .divide {
-    width: 10px;
-    border-radius: $borderRadiusSmall;
-    margin: 6px 22px 6px 0;
-    flex: none;
+  .startTime,
+  .courseName {
+    margin-bottom: 24px;
+    font-size: $fontNormal;
+    font-weight: bold;
   }
 
-  .rightPart {
-    @include flex(center, flex-start, column);
-    width: auto;
+  .courseInfo {
+    display: flex;
+  }
 
-    .courseName {
-      font-size: $fontBig;
-      line-height: 36px;
-      color: $primaryTextColor;
-      margin-bottom: 11px;
-      margin-top: -5px;
+  .infoItem {
+    padding: 0 12px;
+    border-right: 3px solid $primaryTextColor;
+
+    &:first-child {
+      padding-left: 0;
     }
 
-    .location {
-      @include flex(flex-start, center);
-
-      .icon {
-        width: 28px;
-        height: 28px;
-        background-image: url('~@/static/icon/location.svg');
-      }
-
-      .text {
-        font-size: $fontMedium;
-        line-height: 28px;
-        color: $thirdTextColor;
-        margin-left: 6px;
-      }
+    &:last-child {
+      border-right: none;
     }
   }
 }
