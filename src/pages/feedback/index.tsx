@@ -13,10 +13,10 @@ const Index: React.FC = () => {
   const noAuth = params.noAuth && params.noAuth == '1'
   const { stuId } = useAppSelector((state) => state.userInfo)
 
-  const type_list = [
-    { label: '产品建议', value: 'suggestion', checked: true },
-    { label: '功能故障或其他问题', value: 'bug', checked: false }
-  ]
+  // const type_list = [
+  //   { label: '产品建议', value: 'suggestion', checked: true },
+  //   { label: '功能故障或其他问题', value: 'bug', checked: false }
+  // ]
 
   const [data, setData] = useState({
     type: 'suggestion',
@@ -109,7 +109,7 @@ const Index: React.FC = () => {
 
   return (
     <View className={styles.container}>
-      <View className={styles.title}>反馈类型：</View>
+      {/* <View className={styles.title}>反馈类型：</View>
       <RadioGroups
         current={data.type}
         onChange={(newVal) => {
@@ -120,7 +120,7 @@ const Index: React.FC = () => {
         {type_list.map((v) => {
           return <Radio style={{ marginRight: '16px' }} key={v.value} label={v.label} value={v.value} />
         })}
-      </RadioGroups>
+      </RadioGroups> */}
 
       <View className={styles.title} style={{ marginTop: '30px;' }}>
         学号：
@@ -135,7 +135,7 @@ const Index: React.FC = () => {
         placeholder='请输入学号'
       />
 
-      <View className={styles.title} style={{ marginTop: '30px;' }}>
+      {/* <View className={styles.title} style={{ marginTop: '30px;' }}>
         联系方式：
       </View>
       <Input
@@ -146,7 +146,7 @@ const Index: React.FC = () => {
         className={styles.input}
         type='text'
         placeholder='请留下QQ或微信号方便我们联系你'
-      />
+      /> */}
 
       <View className={styles.title} style={{ marginTop: '30px;' }}>
         详细描述：

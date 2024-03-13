@@ -28,10 +28,10 @@ const Second: React.FC = () => {
       Taro.reLaunch({
         url: '/pages/index/index'
       })
+      Taro.hideLoading()
     } catch(err) {
       console.log(err)
     }
-    Taro.hideLoading()
     
   }
 
@@ -76,7 +76,7 @@ const Second: React.FC = () => {
             onInput={(e): void => {
               stuIdRef.current = e.detail.value
             }}
-            placeholder='[必填]'
+            placeholder='请输入学号'
             placeholderClass={styles.placeholder}
             cursorSpacing={5}
           />
@@ -88,7 +88,7 @@ const Second: React.FC = () => {
             onInput={(e): void => {
               stuPassRef.current = e.detail.value
             }}
-            placeholder='[必填]'
+            placeholder='请输入个人门户密码'
             placeholderClass={styles.placeholder}
             cursorSpacing={5}
             password
