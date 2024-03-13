@@ -2,8 +2,8 @@ import { Subject } from '@/models/classTable'
 import empty from '@/static/empty/no-today-class.svg'
 import cardIcon from '@/static/index/icon/today-class.svg'
 import { judgeOn } from '@/utils/day'
-import { Block, View } from '@tarojs/components'
-import React, { useMemo } from 'react'
+import { View } from '@tarojs/components'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { useAppSelector } from '@/hooks/redux'
 import CardEmpty from '../CardEmpty'
@@ -82,7 +82,22 @@ const TodayClass: React.FC<TodayClassProps> = (props) => {
     }
   }, [classTable, currentWeek, dayOfTheWeek])
 
+  const [currentMinute, setCurrentMinute] = useState(new Date().getMinutes())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentMinute(new Date().getMinutes())
+    }, 60000) // 每分钟更新一次
+
+    return () => {
+      clearInterval(timer) // 清除定时器
+    }
+  }, [])
+
   const formattedData = useMemo<Array<FormatData>>(() => {
+    const currentTime = new Date()
+    currentTime.setMinutes(currentMinute) // 设置当前分钟数
+
     if (todayClass.length !== 0) {
       const tempArray: Array<FormatData> = []
       todayClass.map((item) => {
@@ -101,16 +116,18 @@ const TodayClass: React.FC<TodayClassProps> = (props) => {
           color: item.bgColor!,
           teachers: item.teachers
         }
-        tempArray.push(temp)
+        const currentDateString = currentTime.toISOString().split('T')[0]
+        const endTimeDate = new Date(Date.parse(`${currentDateString} ${temp.endTime}`))
+
+        if (endTimeDate > currentTime) {
+          tempArray.push(temp)
+        }
       })
-
-
-
       return tempArray
     } else {
       return []
     }
-  }, [todayClass])
+  }, [todayClass, currentMinute])
 
   return (
     <CardLayout icon={cardIcon} title='今日课程'>
