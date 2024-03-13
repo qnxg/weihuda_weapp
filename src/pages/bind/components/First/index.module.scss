@@ -1,0 +1,69 @@
+@import '~@/utils/scss/global.scss';
+
+.footArea {
+  margin: 48px auto 0 auto;
+  width: $defaultWidth;
+
+  .hintText {
+    font-size: $fontBig;
+    color: $primaryBlue;
+    text-align: center;
+  }
+
+  .dealCard {
+    border-radius: 8px;
+    background: #fff;
+    width: $defaultWidth;
+    margin-top: 48px;
+    padding: 28px 0;
+
+    .logo {
+      display: block;
+      width: 100px;
+      height: 100px;
+      background-color: $primaryBlue;
+      border-radius: 100%;
+      margin: 0 auto;
+    }
+
+    .textArea {
+      box-sizing: border-box;
+      width: $defaultWidth - 100px;
+      height: 620px;
+      margin: 32px 0 0 50px;
+      padding: 6px 16px;
+      color: #707070;
+      font-size: $fontMedium;
+      line-height: 48px;
+      text-align: left;
+
+      .boldText {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .nextStepBtn {
+    @include shadow($primaryBlue, rgba(50, 140, 203, 0.5));
+    border-radius: $borderRadiusBig;
+    width: 570px;
+    height: 80px;
+    margin: 48px auto;
+    color: $primaryColor;
+    font-size: $fontLarge;
+    text-align: center;
+    line-height: 80px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+
+
+  .itemTitle {
+    color: $darkTextColor !important;
+  }
+
+  .dealCard {
+    background: #333333 !important;
+  }
+}

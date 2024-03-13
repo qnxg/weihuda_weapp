@@ -1,0 +1,130 @@
+@import '~@/utils/scss/global.scss';
+
+@keyframes slideUp {
+  0% {
+    margin-top: -90px;
+    opacity: 0;
+  }
+  90% {
+    margin-top: -116px;
+    opacity: 0.9;
+  }
+  100% {
+    margin-top: -110px;
+    opacity: 1;
+  }
+}
+
+.container {
+  @include shadow;
+  width: $defaultWidth;
+  margin: 22px auto 0 auto;
+  padding: 18px 24px;
+
+  .name {
+    width: 100%;
+    text-align: left;
+    height: 40px;
+    font-size: $fontMedium;
+    line-height: 40px;
+    letter-spacing: 0.2px;
+    color: #808080;
+  }
+
+  .score {
+    font-size: $fontNormal;
+    line-height: 46px;
+    height: 46px;
+    margin-bottom: 30px;
+    letter-spacing: 0.1px;
+    color: #3e3e3e;
+  }
+
+  .backGreen {
+    background-color: #00d378;
+  }
+
+  .backRed {
+    background-color: #ff5555;
+  }
+
+  .bnOuter {
+    background-color: #fafafa;
+    border-radius: $borderRadiusBig;
+    width: 634px;
+    height: 30px;
+
+    .content {
+      position: absolute;
+      width: 634px;
+      height: 110px;
+      box-sizing: border-box;
+      border-radius: $borderRadius;
+      margin-top: -110px;
+      background-color: #fff;
+      animation: slideUp 0.07s ease-out;
+
+      .title {
+        width: 100%;
+        text-align: left;
+        height: 40px;
+        font-size: $fontMedium;
+        line-height: 40px;
+        letter-spacing: 0.2px;
+        color: #808080;
+      }
+
+      .percent {
+        font-size: $fontNormal;
+        line-height: 46px;
+        height: 46px;
+        letter-spacing: 0.1px;
+        color: #3e3e3e;
+      }
+    }
+
+    .banner {
+      @include flex(flex-start, center);
+
+      .onePart {
+        height: 30px;
+
+        &:first-of-type {
+          border-radius: 18px 0 0 18px;
+        }
+
+        &:last-of-type {
+          border-radius: 0 18px 18px 0;
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    @include darkShadow;
+
+    .name {
+      color: $darkTextColor;
+    }
+
+    .score {
+      color: darken($darkTextColor, 10%);
+    }
+
+    .bnOuter {
+      .content {
+        background-color: $darkBgColor;
+
+        .title {
+          color: darken($darkTextColor, 10%);
+        }
+
+        .percent {
+          color: darken($darkTextColor, 15%);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,212 @@
+@import '~@/utils/scss/global.scss';
+
+.personalInfo {
+  @include flex(center, center, column);
+  width: 100%;
+  margin: 100px auto;
+
+  .nickName {
+    color: #808080;
+    font-weight: bold;
+    font-size: $fontMax;
+    line-height: $fontMax + 20px;
+    text-align: right;
+  }
+
+  .nickId {
+    color: #969696;
+    margin-top: 8px;
+    font-size: $fontBig;
+    line-height: $fontBig + 12px;
+    text-align: right;
+  }
+}
+
+@mixin imageCommon($url) {
+  height: 48px;
+  width: 48px;
+  background: {
+    image: url($url);
+    repeat: no-repeat;
+    position: center;
+    size: 48px;
+  }
+}
+
+.options {
+  background: #fff;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin: 30px auto;
+  width: 100%;
+  overflow: hidden;
+
+  .divider {
+    height: 0;
+    width: 95%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(241, 241, 241);
+  }
+
+  .optionItem {
+    @include flex(normal, stretch);
+    width: 100%;
+    height: 106px;
+    padding-left: 40px;
+    color: #3e3e3e;
+    font-size: $fontBig;
+    line-height: 36px;
+
+    .imgContainer {
+      @include flex(normal, center);
+    }
+
+    .titleContainer {
+      @include flex(space-between, center);
+      width: 100%;
+      margin-left: 16px;
+      padding-right: 32px;
+      line-height: 40px;
+      letter-spacing: 0.6px;
+
+      .arrow {
+        width: 18px;
+        height: 30px;
+      }
+    }
+  }
+
+  .bindImg {
+    @include imageCommon('~@/static/mine/icon-link.svg');
+  }
+
+  .unBindImg {
+    @include imageCommon('~@/static/mine/icon-unlink.svg');
+  }
+
+  .cleanImg {
+    @include imageCommon('~@/static/mine/clean.svg');
+  }
+
+  .cusServiceImg {
+    @include imageCommon('~@/static/mine/icon-waiter.svg');
+  }
+
+  .feedback {
+    @include imageCommon('~@/static/mine/icon-feedback.svg');
+  }
+
+  .roomBind {
+    @include imageCommon('~@/static/mine/icon-room-bind.svg');
+  }
+
+  .message {
+    @include imageCommon('~@/static/mine/icon-message.svg');
+  }
+
+  .about {
+    @include imageCommon('~@/static/mine/icon-about.svg');
+  }
+
+  .cusBut {
+    background: inherit;
+    color: inherit;
+    font-size: inherit;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+
+    &::after {
+      border: 0;
+      border-radius: 0;
+    }
+  }
+
+  .liabilityImg {
+    @include imageCommon('~@/static/mine/icon-paper.svg');
+  }
+
+  .faImg {
+    @include imageCommon('~@/static/mine/fa.svg');
+  }
+
+  .changelogImg {
+    @include imageCommon('~@/static/mine/icon-changelog.svg');
+  }
+}
+
+.outer {
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.version {
+  font-size: $fontMedium;
+  line-height: 40px;
+  font-weight: bold;
+  color: #d9dee2;
+  width: 100%;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.copyright {
+  @include flex(center, center);
+  font-size: $fontMedium;
+  font-weight: bold;
+  line-height: 48px;
+  color: #d9dee2;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.5px;
+  padding-bottom: 24px;
+
+  .logo1000 {
+    width: 70px;
+    height: 48px;
+    background-image: url("~@/static/mine/1000-light.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70px auto;
+    margin-left: 10px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .personalInfo {
+    color: $darkTextColor;
+  }
+
+  .options {
+    @include darkShadow;
+
+    .divider {
+      border-bottom: 1px solid rgb(53, 53, 53);
+    }
+
+    .optionItem {
+      background: $darkBgColor;
+      color: $darkTextColor;
+
+      .imgContainer {
+        filter: invert(100%);
+      }
+
+      .titleContainer {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .version {
+    color: #404040;
+  }
+
+  .copyright {
+    color: #404040;
+
+    .logo1000 {
+      background-image: url("~@/static/mine/1000-dark.svg");
+    }
+  }
+}

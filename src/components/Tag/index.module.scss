@@ -1,0 +1,14 @@
+.tag {
+    display: inline-block;
+    padding: 0 8px;
+    margin-right: 8px;
+    background: #efefef;
+    border-radius: 4px;
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .tag {
+        background: rgba($color: #efefef, $alpha: 0.05);
+    }
+  }

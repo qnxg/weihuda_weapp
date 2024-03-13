@@ -1,0 +1,59 @@
+@import '~@/utils/scss/global.scss';
+
+.layout {
+  @include flex(space-between, center);
+  width: 100%;
+
+  .title {
+    width: 230px;
+    margin-right: 24px;
+    font-size: $fontMedium;
+    letter-spacing: 0.2px;
+    color: $primaryTextColor;
+  }
+
+  .process {
+    width: 176px;
+    height: 15px;
+    margin-right: 28px;
+    border-radius: $borderRadiusBig;
+    background-color: #eaeaea;
+
+    .content {
+      height: 100%;
+      border-radius: $borderRadiusBig;
+      background-color: $primaryBlue;
+    }
+  }
+
+  .score {
+    width: 56px;
+    margin-right: 28px;
+    font-size: $fontMedium;
+    letter-spacing: 0.4px;
+    color: $thirdTextColor;
+  }
+
+  .tips {
+    width: 120px;
+    font-size: $fontMedium;
+    letter-spacing: 0.4px;
+    color: $primaryTextColor;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .layout {
+    .title {
+      color: $darkTextColor;
+    }
+
+    .score {
+      color: darken($darkTextColor, 10%);
+    }
+
+    .tips {
+      color: $darkTextColor;
+    }
+  }
+}

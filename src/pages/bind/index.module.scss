@@ -1,0 +1,49 @@
+@import '~@/utils/scss/global.scss';
+
+.main {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.pattern {
+  @include flex(space-between, center);
+  width: 290px;
+  margin: 52px auto 0 auto;
+
+  .stepCircle {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: $primaryBlue;
+    font-size: $fontMedium;
+    text-align: center;
+    line-height: 40px;
+    color: $primaryColor;
+  }
+
+  .stepUnreach {
+    color: rgba(112, 112, 112, 0.36);
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  .point {
+    width: 6px;
+    height: 6px;
+    border-radius: 6px;
+    background-color: $primaryBlue;
+  }
+}
+
+.stepText {
+  @include flex(space-between);
+
+  width: 332px;
+  margin: 18px auto 0 auto;
+  font-size: $fontSmall;
+  color: #707070;
+
+  .unreach {
+    color: rgba(112, 112, 112, 0.36);
+  }
+}

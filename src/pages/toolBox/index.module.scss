@@ -1,0 +1,77 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  width: 100%;
+  padding: 20px;
+
+  .category {
+    background: #fff;
+    border-radius: 8px;
+    width: 100%;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+
+    .title {
+      font-size: $fontBig;
+      font-weight: 500;
+    }
+
+    .content {
+      @include flex(space-between, flex-start);
+      flex-wrap: wrap;
+      // width: 640px;
+    }
+  }
+
+  .itemHover {
+    position: relative;
+    transform: scale(1.1);
+  }
+
+  .item {
+    @include flex(center, center, column);
+    overflow: hidden;
+    min-width: 140px;
+    width: 25%;
+    height: 140px;
+    margin-top: 10px;
+    transition: all 180ms ease-out;
+
+    &:last-child {
+      margin-right: auto;
+    }
+
+    .itemImg {
+      width: 112px;
+      height: 112px;
+    }
+
+    .itemTitle {
+      font-size: $fontMedium;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 34px;
+      letter-spacing: 0.2px;
+      color: rgba(3, 3, 3, 1);
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    .category {
+      background-color: $darkBgColor;
+      box-shadow: 0 0 20px 0 $darkBoxShadowColor;
+    }
+
+    .item {
+      .itemImg {
+        filter: invert(0.9) hue-rotate(185deg);
+      }
+
+      .itemTitle {
+        color: $darkTextColor;
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  @include flex(normal, center, column);
+
+  .search {
+    @include shadow($primaryBlue, rgba(50, 140, 203, 0.5));
+    width: 570px;
+    height: 80px;
+    margin-top: 46px;
+    padding-top: 14px;
+    text-align: center;
+    line-height: 54px;
+    font-size: $fontLarge;
+    color: #ffffff;
+    letter-spacing: 0;
+  }
+
+  .tips {
+    font-size: $fontMedium;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+    color: #acacac;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .itemContainer {
+    @include shadow;
+    @include flex(normal, center, column);
+    width: $defaultWidth;
+    margin-top: 48px;
+
+    .head {
+      @include flex(normal, flex-end, row);
+      margin-top: 20px;
+      width: 100%;
+
+      .preIcon {
+        margin-left: 24px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .titles {
+        font-size: $fontNormal;
+        letter-spacing: 0.6px;
+        color: #3e3e3e;
+        margin-left: 16px;
+      }
+    }
+
+    .noRoom {
+      width: 140px;
+      height: 140px;
+      margin-top: 16px;
+    }
+
+    .noAlt {
+      margin-bottom: 40px;
+      text-align: center;
+      font-size: $fontMedium;
+      letter-spacing: 0;
+      color: #808080;
+    }
+
+    .Box {
+      @include flex;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-top: 20px;
+
+      .item {
+        font-size: $fontNormal;
+        line-height: 48px;
+        letter-spacing: 0;
+        color: #666666;
+        margin: 0 16px 30px 16px;
+        width: 20%;
+        text-align: center;
+      }
+
+      .highlight {
+        font-size: $fontNormal;
+        line-height: 48px;
+        letter-spacing: 0;
+        color: #ffffff;
+        margin: 0 16px 30px 16px;
+        width: 20%;
+        text-align: center;
+        border-radius: $borderRadiusSmall;
+        background-color: $primaryBlue;
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    .search {
+      background-color: darken($primaryBlue, 8%);
+      box-shadow: 0 6px 20px 0 $darkBoxShadowColor;
+      color: #fafafa;
+    }
+
+    .itemContainer {
+      @include darkShadow;
+
+      .head {
+        .preIcon {
+          filter: invert(1) hue-rotate(180deg);
+        }
+
+        .titles {
+          color: $darkTextColor;
+        }
+
+        .noRoom {
+          filter: invert(1) hue-rotate(180deg);
+        }
+      }
+    }
+  }
+}

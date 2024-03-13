@@ -1,0 +1,70 @@
+@import '~@/utils/scss/global.scss';
+
+.container {
+  width: $defaultWidth;
+  margin: 30px auto;
+  padding-bottom: 64px;
+
+  .form {
+    display: flex;
+    margin-top: 16px;
+    height: 72px;
+  }
+
+  .input {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    height: auto;
+    flex: 4;
+    margin-right: 8px;
+  }
+
+  
+
+  .submitButton {
+    width: 50%;
+    flex: 1;
+    background: #00d378;
+    color: #fff;
+    border-radius: 16px;
+    border: none;
+    font-weight: bold;
+    outline: none;
+    line-height: 72px;
+  }
+
+  .historyCard {
+    // @include shadow;
+    @include flex(flex-start, flex-start, column);
+    width: $defaultWidth;
+    margin: 20px auto 0 auto;
+    padding: 12px;
+    background: #fff;
+    border-radius: 16px;
+    font-size: $fontMedium;
+    line-height: 40px;
+
+    > view {
+      margin-bottom: 16px;
+    }
+  }
+
+  .label {
+    font-weight: bold;
+    // margin-bottom: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    .input,.historyCard {
+      background: #333333;
+    }
+
+    .submitButton {
+      background: #1b5924;
+    }
+  }
+}

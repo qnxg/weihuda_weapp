@@ -1,0 +1,44 @@
+@import "~@/utils/scss/global.scss";
+
+$cell-height: 95px;
+$indicator-height: 68px;
+
+.body-container {
+  @include flex;
+  background-color: #fafafa;
+  width: 100%;
+
+  .jc-indicator {
+    @include flex(normal, normal, column);
+    background: $bgColor;
+    min-height: calc(100vh - 124px);
+
+    .content {
+      display: block;
+      box-sizing: border-box;
+      height: 2 * $cell-height;
+      width: 78px;
+      font-size: 24px;
+      text-align: center;
+      color: #4a4a4a;
+
+      &:last-child {
+        height: 4 * $cell-height;
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .body-container {
+    background-color: #000000;
+
+    .jc-indicator {
+      background-color: $darkBgColor;
+
+      .content {
+        color: $darkTextColor;
+      }
+    }
+  }
+}

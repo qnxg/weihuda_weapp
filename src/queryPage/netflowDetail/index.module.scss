@@ -1,0 +1,118 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  padding-bottom: 50px;
+}
+
+.selector {
+  font-size: $fontBig;
+  color: $primaryBlue;
+  margin-left: 48px;
+}
+
+.tip {
+  color: $thirdTextColor;
+  font-size: $fontMedium;
+  line-height: 32px;
+  text-align: center;
+  margin: 35px auto;
+}
+
+.title {
+  @include flex(space-between, baseline);
+  width: 630px;
+  margin: 0 auto 40px auto;
+  font-size: $fontBig;
+  color: $thirdTextColor;
+
+  .num {
+    font-size: 50px;
+    color: $primaryTextColor;
+  }
+
+  .all {
+    color: $primaryTextColor;
+    font-size: 36px;
+    text-align: right;
+  }
+}
+
+.content {
+  @include flex(space-between, center);
+  width: 630px;
+  margin: 24px auto 0 auto;
+  padding-bottom: 20px;
+  border-bottom: 2px rgb(235, 235, 235) solid;
+
+  &:last-of-type {
+    border: none;
+  }
+
+  .left {
+    text-align: left;
+    overflow: hidden;
+    text-wrap: avoid;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    .c1 {
+      overflow: hidden;
+      text-wrap: avoid;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 32px;
+      line-height: 44px;
+      color: $thirdTextColor;
+    }
+
+    .c2 {
+      overflow: hidden;
+      text-wrap: avoid;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-top: 8px;
+      font-size: 30px;
+      color: darken($forthTextColor, 10%);
+    }
+  }
+
+  .right {
+    flex: none;
+    text-wrap: avoid;
+    text-align: right;
+    padding-left: 20px;
+    color: $secondTextColor;
+    font-size: $fontLarge;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .title {
+    color: $forthTextColor;
+
+    .num {
+      color: lighten($forthTextColor, 30%);
+    }
+
+    .all {
+      color: lighten($forthTextColor, 20%);
+    }
+  }
+  .content {
+    border-bottom: 2px hsl(0, 0%, 30%) solid;
+
+    .left {
+      .c1 {
+        color: darken($forthTextColor, 10%);
+      }
+
+      .c2 {
+        color: $thirdTextColor;
+      }
+    }
+
+    .right {
+      color: darken($forthTextColor, 10%);
+    }
+  }
+}

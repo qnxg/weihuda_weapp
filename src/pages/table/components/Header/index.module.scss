@@ -1,0 +1,55 @@
+@import "~@/utils/scss/global.scss";
+
+.base-info {
+  @include flex(center, center);
+  width: 100%;
+  height: 48px;
+  font-size: $fontBig;
+  background: $bgColor;
+  color: $primaryTextColor;
+
+  .down {
+    flex: 0 0 60px;
+    height: 48px;
+    background-size: 40px 32px;
+    background-position: 0 6px;
+    background-repeat: no-repeat;
+    background-image: url("~@/static/table/down.svg");
+  }
+}
+
+.title {
+  width: 100%;
+  height: 75px;
+  background-color: $bgColor;
+  color: $primaryTextColor;
+  font-size: $fontMedium;
+  @include flex(space-around, center);
+  box-shadow: 0 8px 16px 0 rgba(196, 196, 196, 0.1);
+
+  .title-item {
+    padding: 8px;
+    text-align: center;
+  }
+
+  .selected {
+    color: $primaryBlue;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .base-info {
+    background: $darkBgColor;
+    color: $darkTextColor;
+
+    .down {
+      filter: invert(0.8);
+    }
+  }
+
+  .title {
+    background: $darkBgColor;
+    color: $darkTextColor;
+    box-shadow: 0 8px 16px 0 $darkBoxShadowColor;
+  }
+}

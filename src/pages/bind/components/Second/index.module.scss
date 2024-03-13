@@ -1,0 +1,98 @@
+@import '~@/utils/scss/global.scss';
+
+.footArea {
+  width: $defaultWidth;
+  margin: 48px auto 0 auto;
+
+  .hintText {
+    color: $primaryBlue;
+    font-size: $fontBig;
+    text-align: center;
+  }
+
+  // 最下面的问题反馈链接文本
+  .feedbackLink {
+    margin-top: 36px;
+    text-decoration: underline;
+    color: $primaryBlue;
+    font-size: $fontNormal;
+    text-align: center;
+    background-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .formCard {
+    width: 100%;
+    padding: 20px 0 56px;
+
+    .dataItem {
+      width: 100%;
+      margin: 0 auto;
+
+      .itemTitle {
+        font-size: $fontNormal;
+        margin: 48px 0 0;
+        color: #3e3e3e;
+      }
+
+      .inputArea {
+        background: #fff;
+        border-radius: 16px;
+        padding: 16px;
+        margin-top: 16px;
+        box-sizing: border-box;
+        height: auto;
+        width: 100%;
+        font-size: $fontNormal;
+        line-height: 48px;
+        color: #7d7d7d;
+      }
+
+      .placeholder {
+        color: #bbb;
+        font-size: $fontNormal;
+      }
+    }
+  }
+
+  .radio {
+    @include flex(space-between);
+    width: $defaultWidth;
+    margin-top: 48px;
+
+    .radioItem {
+      @include shadow;
+      display: block;
+      border-radius: $borderRadiusSmall;
+      width: 280px;
+      height: 90px;
+      font-size: $fontNormal;
+      color: #8c8c8c;
+      text-align: center;
+      line-height: 90px;
+    }
+  }
+
+  .confirmBtn {
+    @include shadow($primaryBlue, rgba(50, 140, 203, 0.5));
+    border-radius: $borderRadiusBig;
+    width: 570px;
+    height: 80px;
+    margin: 48px auto;
+    color: $primaryColor;
+    font-size: $fontLarge;
+    text-align: center;
+    line-height: 80px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .itemTitle {
+    color: $darkTextColor !important;
+  }
+
+  .inputArea,
+  .upload {
+    background: #333333 !important;
+  }
+}

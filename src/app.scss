@@ -1,0 +1,28 @@
+view,page,navigator {
+  box-sizing: border-box;
+}
+
+page {
+  background: #f9f9f9;
+  height: 100vh;
+  font-family: "Source Han Sans", sans-serif;
+
+  & > view {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  page {
+    background: rgb(0, 0, 0);
+  }
+}
+
+view {
+  box-sizing: border-box;
+}
+
+.hover-class {
+  background: none;
+}

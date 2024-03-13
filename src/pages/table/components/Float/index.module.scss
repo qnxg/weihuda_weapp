@@ -1,0 +1,92 @@
+.firstMask {
+  background: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 125;
+
+  .swiper {
+    height: 100%;
+    width: 100%;
+
+    .swiperItem {
+      width: 500px;
+      height: 100%;
+
+      .card {
+        border-radius: 10px;
+        bottom: 160px;
+        box-sizing: border-box;
+        color: white;
+        left: 50px;
+        padding: 30px 36px;
+        position: absolute;
+        right: 60px;
+        top: 250px;
+        width: 360px;
+
+        .classId {
+          font-size: 28px;
+          line-height: 40px;
+        }
+
+        .className {
+          font-size: 48px;
+          line-height: 72px;
+        }
+
+        .classOther {
+          font-size: 28px;
+          line-height: 40px;
+          margin-top: 20px;
+        }
+
+        .rangeEvenOdd {
+          word-break: break-all;
+        }
+
+        .optionContainer {
+          position: absolute;
+          left: 126px;
+          bottom: 36px;
+
+          .options {
+            width: 128px;
+            height: 48px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 6px;
+            background-color: #fff;
+            color: #f55;
+            font-size: 22px;
+            letter-spacing: 1.2px;
+            line-height: 48px;
+            padding-right: 10px;
+
+            .removeIcon {
+              width: 40px;
+              height: 40px;
+              background: {
+                image: url('~@/static/table/icon-delete.svg');
+                position: center;
+                repeat: no-repeat;
+                size: 40px 40px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .firstMask {
+    .swiper {
+      filter: brightness(0.85);
+    }
+  }
+}

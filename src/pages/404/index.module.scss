@@ -1,0 +1,27 @@
+@import '~@/utils/scss/global.scss';
+
+.cardOuter {
+  padding-top: 32px;
+
+  .card {
+    @include shadow;
+    @include flex(center, center);
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 96px 24px;
+    width: $defaultWidth;
+
+    .pic {
+      width: $defaultWidth - 48px;
+      height: $defaultWidth - 48px;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .cardOuter {
+    .card {
+      @include darkShadow;
+    }
+  }
+}

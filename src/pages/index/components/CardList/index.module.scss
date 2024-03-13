@@ -1,0 +1,15 @@
+@import '~@/utils/scss/global.scss';
+
+.cardView {
+  width: 100%;
+}
+
+.cardItem {
+  padding: 20px;
+  padding-bottom: 0;
+
+  &:last-child {
+    padding-bottom: 20px;
+  }
+}
+

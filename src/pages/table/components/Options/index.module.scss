@@ -1,0 +1,77 @@
+@import "~@/utils/scss/global.scss";
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.compMask {
+  position: fixed;
+  z-index: 125;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+
+  .headerMask {
+    font-size: $fontBig;
+    line-height: 48px;
+    position: absolute;
+    z-index: 126;
+    width: 100%;
+    height: 294px;
+    color: $primaryTextColor;
+    background: $bgColor;
+
+    .container {
+      overflow: hidden;
+      width: 520px;
+      margin: 28px auto 0 auto;
+      white-space: nowrap;
+
+      .container-item {
+        margin-bottom: 34px;
+      }
+
+      .switch-item {
+        @include flex(space-between, center);
+
+        .switch {
+          color: $primaryBlue;
+        }
+      }
+    }
+  }
+
+  .slideDown {
+    display: block;
+    animation: slideDown 0.2s ease both;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .compMask {
+    .headerMask {
+      background: lighten($darkBgColor, 10%);
+      color: darken($darkTextColor, 10%);
+
+      .container {
+        .switch-item {
+          .switch {
+            color: darken($primaryBlue, 10%);
+            filter: brightness(0.9);
+          }
+        }
+      }
+    }
+  }
+}

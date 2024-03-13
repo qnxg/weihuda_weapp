@@ -1,0 +1,115 @@
+@import '~@/utils/scss/global.scss';
+
+$ballWidth: 22px;
+$ballMaxGap: -11px - $ballWidth;
+$ballColorLight: #ffffff;
+$ballColor: #d6d6d6;
+
+@keyframes colorChange {
+  0% {
+    background-color: $ballColor;
+  }
+  50% {
+    background-color: $ballColorLight;
+  }
+  100% {
+    background-color: $ballColor;
+  }
+}
+
+.moveAnimate {
+  animation: colorChange 1.8s -0.2s linear infinite forwards;
+
+  &::before {
+    animation: colorChange 1.8s -0.8s linear infinite forwards;
+  }
+
+  &::after {
+    animation: colorChange 1.8s linear infinite forwards;
+  }
+}
+
+.loadingOuter {
+  @include flex(center, center);
+  width: 750px;
+  min-height: 96px;
+  transition: all linear 50ms;
+  box-sizing: border-box;
+}
+
+.loading {
+  width: $ballWidth;
+  height: $ballWidth;
+  border-radius: 100%;
+  background-color: $ballColor;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: $ballMaxGap;
+    content: '';
+    width: $ballWidth;
+    height: $ballWidth;
+    border-radius: 100%;
+    background-color: $ballColor;
+  }
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: $ballMaxGap;
+    content: '';
+    width: $ballWidth;
+    height: $ballWidth;
+    border-radius: 100%;
+    background-color: $ballColor;
+  }
+}
+
+.tipText {
+  font-size: $fontMedium;
+  color: darken($forthTextColor, 10%);
+}
+
+@keyframes colorChangeDark {
+  0% {
+    background-color: hsl(0, 0%, 20%);
+  }
+  50% {
+    background-color: hsl(0, 0%, 40%);
+  }
+  100% {
+    background-color: hsl(0, 0%, 20%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .moveAnimate {
+    animation: colorChangeDark 1.8s 0.4s ease-in-out infinite both;
+
+    &::before {
+      animation: colorChangeDark 1.8s ease-in-out infinite both;
+    }
+
+    &::after {
+      animation: colorChangeDark 1.8s 0.8s ease-in-out infinite both;
+    }
+  }
+
+  .loading {
+    background-color: hsl(0, 0%, 20%);
+
+    &::before {
+      background-color: hsl(0, 0%, 20%);
+    }
+
+    &::after {
+      background-color: hsl(0, 0%, 20%);
+    }
+  }
+
+  .tipText {
+    color: $thirdTextColor;
+  }
+}

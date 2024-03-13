@@ -1,0 +1,163 @@
+@import "~@/utils/scss/global.scss";
+
+.calendar {
+  @include shadow;
+  @include flex(normal, normal, column);
+  width: $defaultWidth;
+  margin: 32px auto auto;
+  padding: 44px 0 44px 0;
+  text-align: center;
+
+  .headBox {
+    @include flex(space-between, center, row);
+
+    .rightContainer {
+      @include flex(normal, center);
+      width: 100px;
+      height: 100px;
+
+      .shiftRight {
+        padding-left: 32px;
+        width: 18px;
+        height: 36px;
+      }
+    }
+
+    .leftContainer {
+      @include flex(normal, center);
+      width: 100px;
+      height: 100px;
+
+      .shiftLeft {
+        padding-left: 48px;
+        width: 18px;
+        height: 36px;
+      }
+    }
+
+    .head {
+      text-align: center;
+      font-size: $fontNormal;
+      line-height: 40px;
+      letter-spacing: 0.6px;
+      color: #3e3e3e;
+    }
+  }
+
+  .title {
+    @include flex(space-between, normal, row);
+    padding-right: 30px;
+    padding-left: 30px;
+    font-size: $fontMedium;
+    line-height: 40px;
+    color: #c2c2c2;
+    margin-top: 6px;
+
+    .titleItem {
+      width: 60px;
+    }
+  }
+
+  .mainBox {
+    @include flex(normal, center, column);
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 100%;
+    font-size: $fontMedium;
+    line-height: 40px;
+    letter-spacing: 0;
+    margin-top: 10px;
+
+    .row {
+      @include flex(space-between, center, row);
+      width: 100%;
+      font-size: $fontMedium;
+      line-height: 60px;
+      letter-spacing: 0;
+      margin-top: 20px;
+
+      .cell {
+        .valid {
+          width: 60px;
+          color: #3e3e3e;
+        }
+
+        .blank {
+          width: 60px;
+          color: #c2c2c2;
+        }
+
+        .highlight {
+          @include shadow(#328ccb, rgba(209, 205, 205, 0.16));
+          width: 60px;
+          height: 60px;
+          color: #ffffff;
+          border-radius: 50%;
+        }
+
+        .counters {
+          @include flex(space-around, center, column);
+          margin-top: 4px;
+          flex-wrap: wrap;
+          width: 100%;
+          height: 20px;
+
+          .counter {
+            width: 4px;
+            border: solid 4px #c47be4;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .calendar {
+    background-color: $darkBgColor;
+    box-shadow: 0 0 20px 0 $darkBoxShadowColor;
+
+    .title {
+      color: $darkTextColor;
+    }
+
+    .headBox {
+      .leftContainer {
+        .shiftLeft {
+          filter: invert(0.8);
+        }
+      }
+
+      .rightContainer {
+        .shiftRight {
+          filter: invert(0.8);
+        }
+      }
+
+      .head {
+        color: $darkTextColor;
+      }
+    }
+
+    .mainBox {
+      .row {
+        .cell {
+          .valid {
+            color: $darkTextColor;
+          }
+
+          .blank {
+            color: darken($darkTextColor, 40%);
+          }
+
+          .highlight {
+            color: $darkTextColor;
+            background-color: darken($primaryBlue, 15%);
+            box-shadow: 0 6px 12px 0 $darkBoxShadowColor;
+          }
+        }
+      }
+    }
+  }
+}

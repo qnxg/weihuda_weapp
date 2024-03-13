@@ -1,0 +1,76 @@
+@import '~@/utils/scss/global.scss';
+
+.container {
+  @include shadow;
+  @include flex(stretch, normal, column);
+  width: $defaultWidth;
+  position: relative;
+  margin: 18px auto;
+  padding: 40px 32px;
+
+  &:first-child {
+    margin-top: 38px;
+  }
+
+  .content {
+    @include flex(normal, flex-end);
+    height: 40px;
+    margin-top: 32px;
+    padding-right: 12px;
+    border-bottom: solid 2px #eeeeee;
+    color: #cccccc;
+    font-size: $fontMedium;
+    line-height: 34px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    .title {
+      flex: initial;
+    }
+
+    .inputArea {
+      flex: auto;
+      padding-left: 36px;
+      color: $primaryTextColor;
+      font-size: $fontNormal;
+      line-height: 40px;
+      letter-spacing: 0.6px;
+    }
+  }
+
+  .del {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    top: 6px;
+    right: 8px;
+    z-index: 100;
+  }
+}
+
+.btnContainer {
+  @include flex(center, normal, row);
+  font-size: $fontLarge;
+  text-align: center;
+  line-height: 80px;
+
+
+  .cancelButton {
+    width: 250px;
+    height: 80px;
+    @include shadow(#cccccc, rgba(210, 210, 210, 0.5));
+    color: #ffffff;
+    margin-top: 34px;
+  }
+
+  .saveButton {
+    @include shadow($primaryBlue, rgba(50, 140, 203, 0.5));
+    width: 250px;
+    height: 80px;
+    color: #ffffff;
+    margin-top: 34px;
+    margin-left: 40px;
+  }
+}

@@ -1,0 +1,87 @@
+@import '~@/utils/scss/global.scss';
+
+.outer {
+  // @include flex(flex-start, stretch);
+  width: 100%;
+  min-height: 112px;
+  padding: 0px;
+
+  .leftPart {
+    @include flex(center, center, column);
+    letter-spacing: 0.6px;
+    width: 180px;
+    flex: none;
+
+    .startTime {
+      font-size: $fontNormal;
+      line-height: 32px;
+      color: $primaryTextColor;
+      margin-bottom: 5px;
+    }
+
+    .endTime {
+      font-size: $fontMedium;
+      line-height: 28px;
+      letter-spacing: 0.4px;
+      color: $thirdTextColor;
+      margin-top: 5px;
+    }
+  }
+
+  .divide {
+    width: 10px;
+    border-radius: $borderRadiusSmall;
+    margin: 6px 22px 6px 0;
+    flex: none;
+  }
+
+  .rightPart {
+    @include flex(center, flex-start, column);
+    width: auto;
+
+    .courseName {
+      font-size: $fontBig;
+      line-height: 36px;
+      color: $primaryTextColor;
+      margin-bottom: 11px;
+      margin-top: -5px;
+    }
+
+    .location {
+      @include flex(flex-start, center);
+
+      .icon {
+        width: 28px;
+        height: 28px;
+        background-image: url('~@/static/icon/location.svg');
+      }
+
+      .text {
+        font-size: $fontMedium;
+        line-height: 28px;
+        color: $thirdTextColor;
+        margin-left: 6px;
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .outer {
+    .leftPart {
+      .startTime {
+        color: $darkTextColor;
+      }
+    }
+
+    .rightPart {
+      .courseName {
+        color: $darkTextColor;
+      }
+
+      .icon {
+        filter: invert(0.8);
+      }
+    }
+  }
+}

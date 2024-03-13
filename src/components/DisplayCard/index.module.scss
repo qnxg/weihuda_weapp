@@ -1,0 +1,72 @@
+@import '~@/utils/scss/global.scss';
+
+.container {
+  padding: 0 20px 20px;
+
+  &:first-child {
+    padding-top: 20px;
+  }
+
+  .wrapper {
+    background-color: $primaryColor;
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .titleContainer {
+    @include flex(space-between);
+  }
+
+  .title {
+    @include fontTitle;
+    @include flex(flex-start);
+    color: $blackText;
+  }
+
+  .titleImg {
+    height: 44px;
+    width: 44px;
+    margin-right: 15px;
+  }
+
+  .subTitle {
+    color: #cfcfcf;
+    font-size: $fontNormal;
+    line-height: 48px;
+  }
+
+  .content {
+    margin-top: 22px;
+    color: $blackText;
+    font-size: $fontMedium;
+    line-height: 40px;
+  }
+
+  .footer {
+    margin-top: 22px;
+    color: #cfcfcf;
+    font-size: $fontMedium;
+    line-height: 40px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+
+    .wrapper {
+
+      background-color: $darkBgColor;
+      // box-shadow: 0 3px 6px 0 $darkBoxShadowColor;
+      color: darken($darkTextColor, 5%);
+    }
+
+    .title {
+      color: $darkTextColor;
+    }
+
+    .titleImg {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  }
+}

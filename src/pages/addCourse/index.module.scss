@@ -1,0 +1,145 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  width: $defaultWidth;
+  margin: 0 auto;
+  padding: {
+    top: 20px;
+  }
+
+  .courseName {
+    @include flex(flex-start, center);
+    @include shadow;
+    height: 96px;
+    margin-bottom: 20px;
+    padding: 12px 30px;
+    border-radius: $borderRadius;
+    background-color: $bgColor;
+
+    .icon {
+      flex: 0 0 48px;
+      height: 48px;
+      margin-right: 22px;
+      background: {
+        image: url("~@/static/tab/table-selected.png");
+        position: center;
+        repeat: no-repeat;
+        size: 84px;
+      };
+    }
+
+    .inputArea {
+      width: 100%;
+      border-bottom: solid 3px #eee;
+      color: $primaryTextColor;
+      font-size: $fontBig;
+      line-height: 52px;
+    }
+  }
+
+  .otherData {
+    @include shadow;
+    margin-bottom: 20px;
+    padding: 32px 44px 32px 44px;
+    border-radius: $borderRadiusBig;
+    font-size: $fontNormal;
+    line-height: 34px;
+
+    .dataItem {
+      @include flex(flex-start, center);
+      margin-bottom: 34px;
+      border-bottom: solid 3px #eee;
+      color: $primaryTextColor;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      .itemTitle {
+        flex: 0 0 60px;
+        margin-right: 36px;
+        color: #ccc;
+        font-size: $fontMedium;
+      }
+
+      .weekContainer {
+        display: flex;
+        flex-wrap: wrap;
+
+        .weekItem {
+          width: 45px;
+          height: 45px;
+          margin: 0 15px 20px 15px;
+          border: solid 2px $primaryBlue;
+          border-radius: 50%;
+          color: $primaryBlue;
+          text-align: center;
+          font-size: $fontNormal;
+          line-height: 45px;
+        }
+
+        .select {
+          color: $primaryColor;
+          background-color: $primaryBlue;
+        }
+      }
+
+      .optionContainer {
+        @include flex(space-between, center);
+        padding: 0 25px 20px 25px;
+
+        .optionItem {
+          padding: 5px 15px;
+          color: $primaryColor;
+          border-radius: 45px;
+          background-color: $primaryBlue;
+        }
+      }
+
+      .pickerContainer {
+        padding-bottom: 8px;
+      }
+    }
+  }
+
+  .submit {
+    width: 570px;
+    height: 80px;
+    margin: 50px auto 30px auto;
+    border-radius: $borderRadiusBig;
+    box-shadow: 0 6px 20px 0 rgba(50, 140, 203, 0.5);
+    color: $primaryColor;
+    background-color: $primaryBlue;
+    text-align: center;
+    font-size: $fontLarge;
+    line-height: 80px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    .courseName {
+      @include darkShadow;
+
+      .icon {
+        filter: invert(1) hue-rotate(180deg);
+      }
+
+      .inputArea {
+        color: $darkTextColor;
+      }
+    }
+
+    .otherData {
+      @include darkShadow;
+
+      .dataItem {
+        color: $darkTextColor;
+
+        .itemTitle {
+          color: $darkTextColor;
+        }
+      }
+    }
+  }
+}

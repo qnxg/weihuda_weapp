@@ -1,0 +1,33 @@
+@import '~@/utils/scss/global.scss';
+
+.content_out {
+  margin-top: 20px;
+
+  .title {
+    font-size: $fontNormal;
+    line-height: 40px;
+    letter-spacing: 0.6px;
+    color: $primaryTextColor;
+  }
+
+  .content {
+    margin-top: 16px;
+    font-size: $fontMedium;
+    line-height: 40px;
+    letter-spacing: 0.4px;
+    color: $thirdTextColor;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .content_out {
+    .title {
+      color: $darkTextColor;
+    }
+
+    .content {
+      color: darken($darkTextColor, 10%);
+    }
+  }
+}
+

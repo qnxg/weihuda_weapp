@@ -1,0 +1,29 @@
+@import '~@/utils/scss/global.scss';
+
+.add {
+  position: relative;
+  margin: 20px auto 0 auto;
+  padding: 22px 30px;
+  width: 90px;
+  height: 90px;
+  display: block;
+}
+
+.empty {
+  @include flex(normal, center, column);
+  text-align: center;
+
+  .iconNoCard {
+    width: 140px;
+    height: 146px;
+    margin-top: 82px;
+  }
+
+  .tip {
+    margin-top: 32px;
+    font-size: $fontMedium;
+    line-height: 40px;
+    letter-spacing: 0;
+    color: $thirdTextColor;
+  }
+}

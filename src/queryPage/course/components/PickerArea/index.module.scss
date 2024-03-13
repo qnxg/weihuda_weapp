@@ -1,0 +1,119 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 26px;
+  font-size: $fontNormal;
+  color: #3e3e3e;
+
+  .picker {
+    @include shadow;
+    width: $defaultWidth;
+    height: 142px;
+    margin-left: 38px;
+
+    .preIcon {
+      display: inline-block;
+      position: absolute;
+      width: 22px;
+      height: 36px;
+      margin-left: 28px;
+      margin-top: 22px;
+    }
+
+    .titles {
+      position: absolute;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 0.6px;
+      color: #3e3e3e;
+      margin-top: 22px;
+      margin-left: 72px;
+    }
+
+    .pickerText {
+      position: absolute;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 0;
+      color: #328ccb;
+      margin-left: 68px;
+      margin-top: 84px;
+    }
+  }
+
+  .inputArea {
+    @include shadow;
+    width: $defaultWidth;
+    height: 142px;
+    margin-left: 38px;
+    margin-top: 20px;
+
+    .preIcon {
+      display: inline-block;
+      position: absolute;
+      width: 22px;
+      height: 36px;
+      margin-left: 28px;
+      margin-top: 22px;
+    }
+
+    .titles {
+      position: absolute;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 0.6px;
+      color: #3e3e3e;
+      margin-top: 22px;
+      margin-left: 72px;
+    }
+
+    .text {
+      font-size: $fontNormal;
+    }
+
+    .input {
+      position: absolute;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 0;
+      color: #328ccb;
+      width: 550px;
+      margin-left: 68px;
+      margin-top: 84px;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    .picker {
+      @include darkShadow;
+
+      .preIcon {
+        filter: invert(1) hue-rotate(180deg);
+      }
+
+      .titles {
+        color: $darkTextColor;
+      }
+    }
+
+    .inputArea {
+      @include darkShadow;
+
+      .input {
+        color: $darkTextColor;
+      }
+
+      .preIcon {
+        filter: invert(1) hue-rotate(180deg);
+      }
+
+      .titles {
+        color: $darkTextColor;
+      }
+    }
+  }
+}

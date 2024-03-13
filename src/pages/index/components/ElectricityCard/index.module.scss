@@ -1,0 +1,59 @@
+@import "~@/utils/scss/global.scss";
+
+.outer {
+  @include flex(space-between, center);
+  width: 100%;
+  min-height: 112px;
+  font-size: $fontBig;
+  padding-left: 60px;
+  padding-right: 62px;
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 40px;
+  letter-spacing: 0;
+  color: rgb(62, 62, 62);
+
+  .item {
+    @include flex(normal, center);
+    flex-grow: 1;
+
+    .img {
+      width: 34px;
+      height: 34px;
+      margin-right: 8px;
+    }
+  }
+
+  .left {
+    font-size: $fontNormal;
+    justify-content: flex-start;
+    padding-left: 15px;
+    padding-right: 25px;
+  }
+
+  .mid {
+    font-size: $fontNormal;
+    justify-content: center;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .right {
+    font-size: $fontNormal;
+    justify-content: flex-end;
+    padding-left: 30px;
+    padding-right: 20px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .outer {
+    color: $darkTextColor;
+
+    .item {
+      .img {
+        filter: invert(1) hue-rotate(175deg);
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  width: $defaultWidth;
+  border-radius: $borderRadiusLarge;
+  padding: 0;
+  box-shadow: 0 0 20px 0 rgba(226, 226, 226, 0.34);
+  box-sizing: border-box;
+  margin: 30px auto 0 auto;
+  position: relative;
+  overflow: hidden;
+
+  .lineWrapper {
+    @include flex(flex-start, stretch);
+    width: auto;
+    margin: 0;
+    padding: 0;
+
+    .choiceContainer {
+      @include flex(flex-end, normal);
+      flex-shrink: 0;
+      position: relative;
+      border-radius: $borderRadius;
+
+      .choiceCard {
+        @include flex(center, center);
+        color: #ffffff;
+        text-align: center;
+        line-height: 100%;
+        width: 140px;
+        margin: 0;
+      }
+
+      .topping {
+        background-color: #ffc63f;
+      }
+
+      .topped {
+        width: 200px;
+        background-color: #ffc63f;
+      }
+
+      .delete {
+        background-color: #ff7584;
+        border-radius: 0 $borderRadiusLarge $borderRadiusLarge 0;
+      }
+    }
+
+    .topStar {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    box-shadow: 0 0 20px 0 $darkBoxShadowColor;
+
+    .lineWrapper {
+      .choiceContainer {
+        .topping {
+          filter: brightness(0.8);
+        }
+
+        .topped {
+          filter: brightness(0.8);
+        }
+
+        .delete {
+          filter: brightness(0.8);
+        }
+      }
+    }
+  }
+}

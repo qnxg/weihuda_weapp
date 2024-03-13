@@ -1,0 +1,78 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  @include shadow;
+  width: 324px;
+  height: 116px;
+  margin: 20px 0 0 34px;
+  padding: 16px 16px 16px 26px;
+  float: left;
+
+  .titleContainer {
+    @include flex(space-between, flex-start);
+    width: 100%;
+
+    .title {
+      color: #666;
+      font-size: $fontNormal;
+      line-height: 46px;
+      height: 46px;
+      font-weight: bold;
+      letter-spacing: 0.2px;
+    }
+
+    .subTitle {
+      color: #fff;
+      font-size: $fontSmall;
+      line-height: 32px;
+      height: 32px;
+      text-align: center;
+      border-radius: 26px;
+      padding: 0 16px;
+      flex: none;
+      margin-top: 8px;
+      letter-spacing: 0.2px;
+    }
+
+    .backGreen {
+      background-color: #00d378;
+    }
+
+    .backRed {
+      background-color: #f55;
+    }
+  }
+
+  .footer {
+    color: #666;
+    font-size: $fontMedium;
+    line-height: 38px;
+    height: 38px;
+    margin-top: 4px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    @include darkShadow;
+
+    .titleContainer {
+
+      .title {
+        color: #a6a6a6;
+      }
+
+      .subTitle {
+        color: #e6e6e6;
+      }
+
+      .backGreen {
+        background-color: #008f51;
+      }
+
+      .backRed {
+        background-color: #f00000;
+      }
+    }
+  }
+}

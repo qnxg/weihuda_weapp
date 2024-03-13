@@ -1,0 +1,87 @@
+@import '~@/utils/scss/global.scss';
+
+.layout {
+  margin-top: 44px;
+  padding: 0 32px;
+
+  .title {
+    font-size: $fontLarge;
+    font-weight: 500;
+    line-height: 62px;
+    letter-spacing: 0.4px;
+    color: $primaryTextColor;
+  }
+
+  .scroll {
+    @include flex;
+    white-space: nowrap;
+
+    .content {
+      @include shadow;
+      width: 472px;
+      height: 304px;
+      margin: 34px 20px 46px auto;
+      padding: 26px 32px;
+      display: inline-block;
+      overflow: hidden;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .itemTitle {
+        font-size: $fontNormal;
+        line-height: 40px;
+        letter-spacing: 0.6px;
+        color: $primaryTextColor;
+      }
+
+      .details {
+        font-size: $fontMedium;
+        line-height: 30px;
+        color: rgba(102, 102, 102, 0.8);
+      }
+
+      .all {
+        margin-top: 20px;
+      }
+
+      .core {
+        margin-top: 28px;
+      }
+
+      .tips {
+        margin-top: 20px;
+        font-size: $fontSmall;
+        line-height: 34px;
+        color: $forthTextColor;
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .layout {
+    .title {
+      color: $darkTextColor;
+    }
+
+    .scroll {
+      .content {
+        @include darkShadow;
+
+        .itemTitle {
+          color: darken($darkTextColor, 15%);
+        }
+
+        .details {
+          color: darken($darkTextColor, 15%);
+        }
+
+        .tips {
+          color: darken($darkTextColor, 25%);
+        }
+      }
+    }
+  }
+}

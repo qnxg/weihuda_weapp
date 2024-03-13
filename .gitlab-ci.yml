@@ -1,0 +1,71 @@
+# This file is a template, and might need editing before it works on your project.
+# Read more about this feature here: https://docs.gitlab.com/ee/user/application_security/sast/
+image: node:14
+# Configure the scanning tool through the environment variables.
+# List of the variables: https://gitlab.com/gitlab-org/security-products/sast#settings
+# How to set: https://docs.gitlab.com/ee/ci/yaml/#variables
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - test
+  - build
+
+
+eslint-sast:
+  stage: test
+  allow_failure: true
+  artifacts:
+    paths:
+      - gl-sast-report.json
+  image:
+    name: "registry.gitlab.com/gitlab-org/security-products/analyzers/eslint:2"
+  script:
+    - /analyzer run
+  tags:
+    - dev-docker
+
+
+nodejs-scan-sast:
+  stage: test
+  allow_failure: true
+  artifacts:
+    paths:
+      - gl-sast-report.json
+  image:
+    name: "registry.gitlab.com/gitlab-org/security-products/analyzers/nodejs-scan:2"
+  script:
+    - /analyzer run
+    - cat gl-sast-report.json
+  tags:
+    - dev-docker
+
+
+secrets-sast:
+  stage: test
+  allow_failure: true
+  artifacts:
+    paths:
+      - gl-sast-report.json
+  image:
+    name: "registry.gitlab.com/gitlab-org/security-products/analyzers/secrets:2"
+  script:
+    - /analyzer run
+    - cat gl-sast-report.json
+  tags:
+    - dev-docker
+
+
+build:
+  stage: build
+  script:
+   - npm config set registry https://registry.npm.taobao.org/
+   - npm install
+   - npm run build:weapp
+  artifacts:
+    paths:
+      - dist/
+  tags:
+    - dev-docker

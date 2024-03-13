@@ -1,0 +1,88 @@
+@import '~@/utils/scss/global.scss';
+
+@mixin icons($url) {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 6px;
+  background: {
+    image: url($url);
+    size: 20px;
+    position: center;
+    repeat: no-repeat;
+  }
+}
+
+.container {
+  @include shadow;
+  @include flex(space-between, center);
+  margin-top: 20px;
+  padding: 32px;
+  color: $blackText;
+  white-space: normal;
+
+  .infoContainer {
+    @include flex(space-between, normal, column);
+
+    .title {
+      font-size: $fontLarge;
+      line-height: 48px;
+      color: #141313;
+    }
+
+    .extra {
+      // margin-top: 8px;
+      padding-top: 12px;
+      font-size: $fontMedium;
+      line-height: 26px;
+      letter-spacing: 0.4px;
+
+      .addressContainer {
+        padding-bottom: 6px;
+      }
+
+      .address {
+        @include icons('~@/static/information/location.svg');
+      }
+
+      .date {
+        @include icons('~@/static/information/time.svg');
+      }
+    }
+  }
+
+  .imgContainer {
+    flex: 0 0 144px;
+    height: 144px;
+    margin-left: 30px;
+    border-radius: $borderRadius;
+    overflow: hidden;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: $darkBgColor;
+    box-shadow: 0 0 10px 0 $darkBoxShadowColor;
+
+    .infoContainer {
+      .title {
+        color: $darkTextColor;
+      }
+
+      .extra {
+        .address {
+          filter: invert(0.8);
+        }
+
+        .date {
+          filter: invert(0.8);
+        }
+      }
+    }
+
+    .imgContainer {
+      filter: brightness(0.7);
+    }
+  }
+}

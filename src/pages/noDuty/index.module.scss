@@ -1,0 +1,45 @@
+@import "~@/utils/scss/global.scss";
+
+.container {
+  @include shadow;
+  width: $defaultWidth;
+  margin: 22px auto;
+  padding: 32px 48px 24px 48px;
+
+  .title {
+    margin-bottom: 32px;
+    color: #f55;
+    font-size: $fontBig;
+    letter-spacing: 1.6px;
+    line-height: 48px;
+    text-align: center;
+  }
+
+  .main {
+    font-size: $fontMedium;
+    line-height: 36px;
+
+    .listArea {
+      margin-bottom: 48px;
+
+      .boldText {
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+
+      .gap {
+        margin-bottom: 12px;
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    @include darkShadow;
+
+    .main {
+      color: $darkTextColor;
+    }
+  }
+}
