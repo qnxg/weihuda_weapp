@@ -42,20 +42,12 @@
 
 @media (prefers-color-scheme: dark) {
   .outer {
-    .leftPart {
-      .startTime {
-        color: $darkTextColor;
-      }
-    }
+    color: $darkTextColor;
+    background: #dde2e214;
+    border-left: 12px solid #dde2e22f;
 
-    .rightPart {
-      .courseName {
-        color: $darkTextColor;
-      }
-
-      .icon {
-        filter: invert(0.8);
-      }
+    .infoItem {
+      border-right: 3px solid $darkTextColor;
     }
   }
 }
