@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import React from 'react'
 import { Provider } from 'react-redux'
+import './theme.css'
 import './app.scss'
 import store from './models'
 
