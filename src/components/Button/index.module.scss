@@ -1,7 +1,29 @@
 .button {
   color: var(--text-color-anti);
-  background: var(--brand-color);
   border-radius: var(--radius-medium);
+  background: var(--brand-color);
   border: none;
   outline: none;
+
+  &.primary {
+    background: var(--brand-color);
+  }
+
+  &.default {
+    color: var(--text-color-primary);
+    background: var(--bg-color-component);
+  }
+
+}
+
+.button.buttonActive {
+  background: var(--brand-color-active);
+
+  &.primary {
+    background: var(--brand-color-active);
+  }
+
+  &.default {
+    background: var(--bg-color-component-hover);
+  }
 }

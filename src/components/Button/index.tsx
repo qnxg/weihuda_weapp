@@ -3,15 +3,17 @@ import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
 
-interface Props extends ButtonProps {}
+interface Props extends ButtonProps {
+  theme?: 'primary' | 'default' | 'danger' | 'success' | 'warning' | 'success'
+}
 
 /**
  * 按钮组件
  */
 const Button: React.FC<Props> = (props) => {
-  console.log('Button', props)
-  props.className = classNames(props.className, styles.button)
-  return <TaroButton {...props}></TaroButton>
+  props.theme = props.theme || 'primary'
+  props.className = classNames(props.className, styles.button, styles[props.theme])
+  return <TaroButton {...props} hoverClass={styles.buttonActive}></TaroButton>
 }
 
 export default Button

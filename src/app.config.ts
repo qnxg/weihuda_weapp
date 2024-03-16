@@ -4,6 +4,7 @@ export default {
     'pages/information/index', // 知湖
     'pages/table/index', // 微课表
     'pages/mine/index', // 我的
+    'pages/authConfirm/index', // 授权确认
     'pages/toolBox/index', // 工具箱
     'pages/detail/index', // 知湖文章详情
     // 'pages/lostFoundAdd/index', // 发布失物招领帖

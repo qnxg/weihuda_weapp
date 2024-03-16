@@ -1,0 +1,52 @@
+// @import '~@/utils/scss/global.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 200px;
+
+  .logo {
+    margin-top: 200px;
+    margin-bottom: 50px;
+    width: 120px;
+    height: 120px;
+    background: #fff;
+    border: 1px solid var(--component-border);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    image {
+      width: 80%;
+      height: 80%;
+    }
+  }
+
+  .text {
+    color: var(--text-color-primary);
+    font-size: 36px;
+  }
+
+  .btn {
+    margin-top: 36px;
+    width: 400px;
+  }
+
+  .btn1 {
+    margin-top: 100px;
+  }
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+}

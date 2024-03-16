@@ -120,4 +120,13 @@ request.post = <T extends Data>(url: string, options: WithoutUrlOption = {}) => 
   })
 }
 
+// 重写put方法
+request.put = <T extends Data>(url: string, options: WithoutUrlOption = {}) => {
+  return request<T>({
+    ...options,
+    url,
+    method: 'PUT'
+  })
+}
+
 export default request
