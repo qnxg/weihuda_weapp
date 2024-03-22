@@ -1,47 +1,33 @@
 @import "~@/utils/scss/global.scss";
 
 @mixin icons($url) {
-  width: 18px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   display: inline-block;
   margin-right: 6px;
+  vertical-align: middle;
   background: {
     image: url($url);
-    size: 18px;
+    size: 32px;
     position: center;
     repeat: no-repeat;
   }
 }
 
 .container {
-  width: $defaultWidth;
+  width: 100%;
   margin: 0 auto;
 
   .titleContainer {
-    @include shadow;
-    margin: 16px 0;
-    padding: 16px 24px;
 
     .title {
-      /* prettier-ignore */
-      font-size: 17PX;
-      /* prettier-ignore */
-      line-height: 24PX;
+      font-size: 36px;
       font-weight: bold;
     }
 
     .extra {
-      /* prettier-ignore */
-      font-size: 13PX;
-      /* prettier-ignore */
-      line-height: 16PX;
-      padding-top: 12px;
-      /* prettier-ignore */
-      letter-spacing: 2PX;
-    }
-
-    .address {
-      @include icons('~@/static/information/location.svg');
+      font-size: 24px;
+      padding-top: 24px;
     }
 
     .date {
@@ -50,8 +36,6 @@
   }
 
   .contentContainer {
-    @include shadow;
-    padding: 20px;
     box-sizing: border-box;
     overflow: hidden;
 
@@ -60,68 +44,10 @@
       background-color: inherit;
       line-height: 2em;
 
-      :global(.p) {
-        width: 100%;
-        line-height: 2em;
-        /* prettier-ignore */
-        font-size: 14PX;
-      }
-
-      :global(.img) {
-        position: relative;
-        left: 10%;
-        width: 80%;
-        height: auto;
-        /* prettier-ignore */
-        border-radius: 12PX;
-        /* prettier-ignore */
-        margin-top: 5PX;
-        /* prettier-ignore */
-        margin-bottom: 5PX;
-      }
     }
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  .container {
-    .titleContainer {
-      background-color: $darkBgColor;
-      box-shadow: 0 6px 12px $darkBoxShadowColor;
 
-      .address {
-        filter: invert(1);
-      }
-
-      .date {
-        filter: invert(1);
-      }
-    }
-
-    .contentContainer {
-      background-color: $darkBgColor;
-      box-shadow: 0 6px 12px $darkBoxShadowColor;
-
-      .content {
-        :global(.p), :global(.span) {
-          color: $darkTextColor !important;
-          background-color: transparent !important;
-        }
-
-        :global(.h1), :global(.h2), :global(.h3), :global(.h4), :global(.h5) {
-          color: $darkTextColor !important;
-          background-color: transparent !important;
-        }
-
-        :global(.strong) {
-          color: $darkTextColor !important;
-          font-weight: bold;
-        }
-
-        :global(.img) {
-          filter: brightness(0.7);
-        }
-      }
-    }
-  }
 }

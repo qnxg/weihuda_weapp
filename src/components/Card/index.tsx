@@ -4,7 +4,10 @@ import React from 'react'
 import styles from './index.module.scss'
 
 interface Props extends ViewProps {
-
+  /**
+   * 外部容器类名
+   */
+  wrapperClassName?: string
 }
 
 /**
@@ -12,7 +15,8 @@ interface Props extends ViewProps {
  */
 const Card: React.FC<Props> = (props) => {
   props.className = classNames(props.className, styles.card)
-  return <View className={styles.cardWrapper}>
+  const wrapperClassName = classNames(styles.cardWrapper, props.wrapperClassName)
+  return <View className={wrapperClassName}>
     <View {...props}></View>
   </View>
 }
