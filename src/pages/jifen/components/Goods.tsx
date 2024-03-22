@@ -1,8 +1,9 @@
+import { View } from '@tarojs/components'
 import React from 'react'
 
 const Goods: React.FC = () => {
   return (
-    <div>Goods</div>
+    <View>Goods</View>
   )
 }
 

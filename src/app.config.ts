@@ -1,8 +1,8 @@
 export default {
   pages: [
+    'pages/jifen/index', // 积分中心
     'pages/information/index', // 知湖
     'pages/webview/index', // webview
-    'pages/jifen/index', // 积分中心
     'pages/index/index', // 首页
     'pages/table/index', // 微课表
     'pages/mine/index', // 我的

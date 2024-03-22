@@ -1,8 +1,9 @@
+import { View } from '@tarojs/components'
 import React from 'react'
 
 const JifenRules: React.FC = () => {
   return (
-    <div>JifenRules</div>
+    <View>JifenRules</View>
   )
 }
 

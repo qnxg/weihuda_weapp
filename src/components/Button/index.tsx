@@ -4,7 +4,8 @@ import React from 'react'
 import styles from './index.module.scss'
 
 interface Props extends ButtonProps {
-  theme?: 'primary' | 'default' | 'danger' | 'success' | 'warning' | 'success'
+  theme?: 'primary' | 'default' 
+  // | 'danger' | 'success' | 'warning' | 'success'
 }
 
 /**
