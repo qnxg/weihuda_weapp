@@ -64,25 +64,17 @@ const Index: React.FC = () => {
           <View className={styles.nickId}>{userRealId || 'HNU20150415'}</View>
         </View>
         <View className={styles.options}>
-          <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200} onClick={unBind}>
-            <View className={styles.imgContainer}>
-              <View className={styles.unBindImg} />
+        <Navigator url='/pages/messageBox/index'>
+            <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
+              <View className={styles.imgContainer}>
+                <View className={styles.message} />
+              </View>
+              <View className={styles.titleContainer}>
+                <View>积分中心</View>
+                <Image src={arrow} className={styles.arrow} />
+              </View>
             </View>
-            <View className={styles.titleContainer}>
-              <View>解除绑定</View>
-              <Image src={arrow} className={styles.arrow} />
-            </View>
-          </View>
-          <View className={styles.divider} />
-          <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200} onClick={clean}>
-            <View className={styles.imgContainer}>
-              <View className={styles.cleanImg} />
-            </View>
-            <View className={styles.titleContainer}>
-              <View>清除缓存</View>
-              <Image src={arrow} className={styles.arrow} />
-            </View>
-          </View>
+          </Navigator>
           <View className={styles.divider} />
           <Navigator url='/pages/messageBox/index'>
             <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
@@ -132,6 +124,18 @@ const Index: React.FC = () => {
             </View>
           </View>
           <View className={styles.divider} />
+          <Navigator openType='navigate' url='/pages/changeLog/index'>
+            <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
+              <View className={styles.imgContainer}>
+                <View className={styles.changelogImg} />
+              </View>
+              <View className={styles.titleContainer} style={{ borderBottom: 'none' }}>
+                <View>更新日志</View>
+                <Image src={arrow} className={styles.arrow} />
+              </View>
+            </View>
+          </Navigator>
+          <View className={styles.divider} />
           <Navigator openType='navigate' url='/pages/noDuty/index'>
             <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
               <View className={styles.imgContainer}>
@@ -144,17 +148,25 @@ const Index: React.FC = () => {
             </View>
           </Navigator>
           <View className={styles.divider} />
-          <Navigator openType='navigate' url='/pages/changeLog/index'>
-            <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
-              <View className={styles.imgContainer}>
-                <View className={styles.changelogImg} />
-              </View>
-              <View className={styles.titleContainer} style={{ borderBottom: 'none' }}>
-                <View>更新日志</View>
-                <Image src={arrow} className={styles.arrow} />
-              </View>
+          <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200} onClick={clean}>
+            <View className={styles.imgContainer}>
+              <View className={styles.cleanImg} />
             </View>
-          </Navigator>
+            <View className={styles.titleContainer}>
+              <View>清除缓存</View>
+              <Image src={arrow} className={styles.arrow} />
+            </View>
+          </View>
+          <View className={styles.divider} />
+          <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200} onClick={unBind}>
+            <View className={styles.imgContainer}>
+              <View className={styles.unBindImg} />
+            </View>
+            <View className={styles.titleContainer}>
+              <View>解除绑定</View>
+              <Image src={arrow} className={styles.arrow} />
+            </View>
+          </View>
         </View>
       </View>
       <View className={styles.version}>

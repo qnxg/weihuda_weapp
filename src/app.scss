@@ -6,6 +6,7 @@ page {
   background: #f9f9f9;
   height: 100vh;
   font-family: "Source Han Sans", sans-serif;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 
   & > view {
     margin: 0;

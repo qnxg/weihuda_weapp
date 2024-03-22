@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/jifen/index', // 积分中心
     'pages/index/index', // 首页
     'pages/information/index', // 知湖
     'pages/table/index', // 微课表

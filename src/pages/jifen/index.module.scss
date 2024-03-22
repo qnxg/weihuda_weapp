@@ -1,0 +1,50 @@
+
+.wrapper {
+}
+
+.myJifenCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 50px;
+  color: var(--text-color-secondary);
+
+  .username {
+    color: var(--text-color-primary);
+    font-size: 36px;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .myCount {
+    font-size: 64px;
+    margin-top: 10px;
+    color: var(--brand-color);
+  }
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .tabItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+
+    &.active {
+      color: var(--brand-color);
+      border-bottom: 2px solid var(--brand-color);
+    }
+  }
+}
