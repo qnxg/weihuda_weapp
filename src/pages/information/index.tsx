@@ -1,4 +1,4 @@
-import { IZhihu } from '@/apis/zhihu'
+import { IZhihu, getZhihuPageApi } from '@/apis/zhihu'
 import Card from '@/components/Card'
 import { TabPanel, Tabs } from '@/components/Tabs'
 import { Image, View } from '@tarojs/components'
@@ -8,121 +8,72 @@ import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 
 const Index: React.FC = () => {
-  const [data, setData] = useState<IZhihu[]>([
-    {
-      id: 13,
-      title: '格式检查',
-      type: 'article',
-      tags: '活动',
-      cover: 'http://qnxg.cn/upload-2023/editor-test/1711115495793.jpg',
-      content: null,
-      status: 1,
-      publishTime: '2024-03-22T13:48:31.000Z',
-      stuId: '201909060601'
-    },
-    {
-      id: 12,
-      title: '湖南大学食堂文明用餐倡议书',
-      type: 'link',
-      tags: '活动',
-      cover: null,
-      content: 'https://mp.weixin.qq.com/s/MSv80EYBtuQ7DBIDUABHyA',
-      status: 1,
-      publishTime: '2024-03-22T13:25:38.000Z',
-      stuId: '201909060601'
-    },
-    {
-      id: 11,
-      title: '纵向的封面',
-      type: 'article',
-      tags: '活动',
-      cover: 'http://qnxg.cn/upload-2023/editor-test/1711113478231.jpg',
-      status: 1,
-      publishTime: '2024-03-22T13:16:27.000Z',
-      stuId: '201909060601'
-    },
-    {
-      id: 10,
-      title: '横向的封面',
-      type: 'article',
-      tags: '讲座',
-      cover: 'http://qnxg.cn/upload-2023/editor-test/1711113378232.jpg',
-      status: 1,
-      publishTime: '2024-03-22T13:16:07.000Z',
-      stuId: '201909060601'
-    },
-    {
-      id: 9,
-      title: '模型实例很长很长超级长特别长的以恶搞标题模型实例很长很长超级长特别长的以恶搞标题',
-      type: 'article',
-      tags: '活动',
-      cover: 'http://qnxg.cn/upload-2023/editor-test/1711110957117.jpg',
-      status: 1,
-      publishTime: '2024-03-22T12:35:54.000Z',
-      stuId: '201909060601'
-    },
-    {
-      id: 8,
-      title: '模型实例很长很长超级长特别长的以恶搞标题模型实例很长很长超级长特别长的以恶搞标题',
-      type: 'article',
-      tags: '活动',
-      cover: null,
-      status: 1,
-      publishTime: '2024-03-22T10:41:12.000Z',
-      stuId: '202108010501'
-    },
-    {
-      id: 8,
-      title: '问题排查指南',
-      type: 'article',
-      tags: '活动',
-      cover: null,
-      status: 1,
-      publishTime: '2024-03-22T10:41:12.000Z',
-      stuId: '202108010501'
-    },
-    {
-      id: 7,
-      title: '文章1',
-      type: 'article',
-      tags: '活动',
-      cover: null,
-      status: 1,
-      publishTime: '2024-03-22T02:58:39.000Z',
-      stuId: '201909060601'
-    }
-  ])
+  // 知湖页面数据
+  const [data, setData] = useState<IZhihu[]>([])
+  // 总数，分页时会用到
+  const [total, setTotal] = useState(0)
+  // 是否正在加载数据
+  const [loading, setLoading] = useState(true)
+  // 查询数据
+  const [queryData, setQueryData] = useState({
+    page: 1,
+    pageSize: 5,
+    tags: ''
+  })
 
-  const getData = async () => {
-    // const res = await getZhihuPageApi({ page: 1, pageSize: 10 })
-    // console.log(res)
-    // setData(res.rows)
+  // 获取知湖页面数据
+  const getData = async (newQueryData: typeof queryData, force: boolean = false) => {
+    setLoading(true)
+    const res = await getZhihuPageApi(newQueryData)
+    if (force) {
+      setData(res.rows)
+    } else {
+      setData([...data, ...res.rows])
+    }
+    setTotal(res.count)
+    setLoading(false)
   }
 
+  // 切换标签，获取对应标签的数据
+  const handleChange = (value: string) => {
+    const newQueryData = { ...queryData, tags: value, page: 1 }
+    setQueryData(newQueryData)
+    getData(newQueryData, true)
+  }
+
+  // 点击卡片，跳转到详情页
   const handleClick = (item: IZhihu) => {
-    console.log('click', item)
-    Taro.navigateTo({
-      url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`
-    })
+    if (item.type === 'link') {
+      Taro.navigateTo({
+        url: `/pages/webview/index?url=${item.content}&title=${item.title}`
+      })
+    } else {
+      Taro.navigateTo({
+        url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`
+      })
+    }
   }
 
   // 滑倒底部，会获取下一页的数据
   useReachBottom(() => {
-    console.log('reach bottom')
+    if (data.length >= total) return
+    const newQueryData = { ...queryData, page: queryData.page + 1 }
+    setQueryData(newQueryData)
+    getData(newQueryData)
   })
 
   useEffect(() => {
-    getData()
+    getData(queryData, true)
   }, [])
 
   return (
     <View>
       <View className={styles.tabsWrapper}>
-        <Tabs tabsClassName={styles.tabs} onChange={getData}>
-          <TabPanel title='首页' value={0}></TabPanel>
-          <TabPanel title='活动' value={1}></TabPanel>
-          <TabPanel title='讲座' value={2}></TabPanel>
-          <TabPanel title='通知' value={4}></TabPanel>
+        <Tabs tabsClassName={styles.tabs} onChange={handleChange}>
+          <TabPanel title='首页' value=''></TabPanel>
+          <TabPanel title='活动' value='活动'></TabPanel>
+          <TabPanel title='讲座' value='讲座'></TabPanel>
+          <TabPanel title='通知' value='通知'></TabPanel>
         </Tabs>
       </View>
 
@@ -147,6 +98,7 @@ const Index: React.FC = () => {
             {/* <View>{item.content}</View> */}
           </Card>
         ))}
+        {loading && <View className={styles.loading}>加载中...</View>}
       </View>
     </View>
   )

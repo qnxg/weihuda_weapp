@@ -21,7 +21,7 @@ interface ITabsProps extends ViewProps {
    * 切换 Tab 时的回调函数
    * @param index 新选中的 Tab 索引
    */
-  onChange?: (index: number) => void
+  onChange?: (value: string | number) => void
 }
 
 interface IPanelData {
@@ -133,7 +133,7 @@ interface ITabPanelProps extends ViewProps {
   /**
    * Tab 索引
    */
-  value: number
+  value: number | string
   /**
    * Tab 标题
    */
