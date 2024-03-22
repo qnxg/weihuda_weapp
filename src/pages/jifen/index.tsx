@@ -13,7 +13,7 @@ const Index: React.FC = () => {
       {/* 积分数展示卡片 */}
       <Card className={styles.myJifenCard}>
         <View className={styles.left}>
-          <View className={styles.username}>{userInfo.name}艾麦尔·艾买提</View>
+          <View className={styles.username}>{userInfo.name}</View>
         </View>
         <View className={styles.right}>
           <View className='title'>我的积分</View>

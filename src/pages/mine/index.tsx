@@ -64,7 +64,7 @@ const Index: React.FC = () => {
           <View className={styles.nickId}>{userRealId || 'HNU20150415'}</View>
         </View>
         <View className={styles.options}>
-        <Navigator url='/pages/messageBox/index'>
+        <Navigator url='/pages/jifen/index'>
             <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
               <View className={styles.imgContainer}>
                 <View className={styles.message} />

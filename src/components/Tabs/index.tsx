@@ -1,16 +1,41 @@
-import { View, ViewProps } from '@tarojs/components'
+import { getBoundingClientRect, getScrollOffset } from '@/utils/tool'
+import { ScrollView, View, ViewProps } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 
 interface ITabsProps extends ViewProps {
+  /**
+   * 默认选中的 Tab 索引
+   */
   current?: number
+  /**
+   * 顶部 Tab 的样式类名
+   */
+  tabsClassName?: string
+  /**
+   * Tab 内容容器的样式类名
+   */
+  contentClassName?: string
+  /**
+   * 切换 Tab 时的回调函数
+   * @param index 新选中的 Tab 索引
+   */
   onChange?: (index: number) => void
 }
 
 interface IPanelData {
-  value: number
+  /**
+   * Tab 索引
+   */
+  value: number | string
+  /**
+   * Tab 标题
+   */
   title: string
+  /**
+   * TabPanel 组件
+   */
   component: React.ReactNode
 }
 
@@ -39,40 +64,79 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
     }
   })
 
+  const initialTabIndex = props.current !== undefined ? props.current : panels[0].value
   // 当前选中的 Tab
-  const [currentTab, setCurrentTab] = useState(props.current !== undefined ? props.current : panels[0].value)
-
+  const [currentTab, setCurrentTab] = useState(initialTabIndex)
+  // activeLine 的位置
+  const [activeLineLeft, setActiveLineLeft] = useState(0)
+  // 获取当前选中的 TabPanel 组件
   const getCurrentPanel = () => {
     return panels.find((panel) => panel.value === currentTab)!.component
   }
 
+  // 更新 activeLine 的位置
+  const updateActiveLine = async (newValue) => {
+    const { scrollLeft } = await getScrollOffset('.tabsScrollView')
+    const scrollViewRects = await getBoundingClientRect('.tabsScrollView')
+    const rects = await getBoundingClientRect('.tab-item')
+    const activeLineRects = await getBoundingClientRect(`.${styles.activeLine}`)
+    const activeIndex = panels.findIndex((panel) => panel.value === newValue)
+    const activeRect = rects[activeIndex]
+    setActiveLineLeft(
+      activeRect.left + scrollLeft - scrollViewRects[0].left + activeRect.width / 2 - activeLineRects[0].width / 2
+    )
+  }
+
+  const handleTabClick = async (value) => {
+    await updateActiveLine(value)
+    setCurrentTab(value)
+    if (props.onChange) {
+      props.onChange(value)
+    }
+  }
+
+  useEffect(() => {
+    updateActiveLine(initialTabIndex)
+  }, [])
+
   return (
     <View>
-      <View className={styles.tabs}>
-        {panels.map((panel) => (
-          <View
-            key={panel.value}
-            className={classNames(styles.tabItem, {
-              [styles.active]: currentTab === panel.value
-            })}
-            onClick={() => {
-              setCurrentTab(panel.value)
-              if (props.onChange) {
-                props.onChange(panel.value)
-              }
-            }}
-          >
-            {panel.title}
-          </View>
-        ))}
-      </View>
-      <View className={styles.tabContent}>{getCurrentPanel()}</View>
+      <ScrollView scrollX className={classNames(styles.tabsScrollView, 'tabsScrollView')}>
+        <View className={classNames(styles.tabs, props.tabsClassName)}>
+          {panels.map((panel) => (
+            <View
+              key={panel.value}
+              className={classNames(
+                styles.tabItem,
+                {
+                  [styles.active]: currentTab === panel.value
+                },
+                'tab-item'
+              )}
+              onClick={() => handleTabClick(panel.value)}
+            >
+              {panel.title}
+            </View>
+          ))}
+          <View className={styles.activeLine} style={{ 
+            transform: `translateX(${activeLineLeft}px)`,
+            // left: activeLineLeft + 'px'
+             }}></View>
+        </View>
+      </ScrollView>
+      <View className={classNames(styles.tabContent, props.contentClassName)}>{getCurrentPanel()}</View>
     </View>
   )
 }
 
 interface ITabPanelProps extends ViewProps {
+  /**
+   * Tab 索引
+   */
   value: number
+  /**
+   * Tab 标题
+   */
   title: string
 }
 
