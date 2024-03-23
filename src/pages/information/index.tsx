@@ -6,6 +6,7 @@ import Taro, { useReachBottom } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getBoundingClientRect } from '@/utils/tool'
 
 const defaultTags = [
   {
@@ -23,6 +24,10 @@ const defaultTags = [
   {
     label: '通知',
     value: '通知'
+  },
+  {
+    label: '其他',
+    value: '其他'
   }
 ]
 
@@ -85,6 +90,16 @@ const Index: React.FC = () => {
     getData(queryData, true)
   }, [])
 
+  // 设置padding-top，避免被顶部tab遮挡
+  const [paddingTop, setPaddingTop] = useState(70)
+  const updatePaddingTop = async () => {
+    const rects = await getBoundingClientRect(`.${styles.tabsWrapper}`)
+    setPaddingTop(rects[0].height + 10)
+  }
+  useEffect(() => {
+    updatePaddingTop()
+  }, [])
+
   return (
     <View>
       <View className={styles.tabsWrapper}>
@@ -99,7 +114,12 @@ const Index: React.FC = () => {
         </Tabs>
       </View>
 
-      <View className={styles.contentWrapper}>
+      <View
+        className={styles.contentWrapper}
+        style={{
+          paddingTop: `${paddingTop}px`
+        }}
+      >
         {data.map((item) => (
           <Card
             key={item.id}
