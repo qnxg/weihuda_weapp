@@ -1,0 +1,35 @@
+.recordContainer {
+    padding-top: 20px 0;
+
+    .recordItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--text-color-secondary);
+        // border-bottom: 1px solid var(--component-border);
+        padding: 20px;
+    }
+
+    .recordDesc {
+        padding: 0 20px;
+        flex: 1;
+    }
+
+    .recordJifen {
+        padding: 0 20px;
+        color: var(--brand-color);
+    }
+
+    .reduce {
+        color: var(--error-color);
+    }
+}
+
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: var(--bg-color-container);
+    color: var(--text-color-secondary);
+}

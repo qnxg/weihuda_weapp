@@ -6,13 +6,19 @@ import { View } from '@tarojs/components'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
 import Qiandao from './components/Qiandao'
+import Goods from './components/Goods'
+import JifenRecord from './components/JifenRecord'
+import JifenRule from './components/JifenRule'
 
 const Index: React.FC = () => {
   const userInfo = useAppSelector((state) => state.userInfo)
+  const [total, setTotal] = React.useState(0)
 
   const getData = async () => {
     const res = await getJifenTotalApi()
-    console.log(res)
+    if (res) {
+      setTotal(res.jifen)
+    }
   }
 
   useEffect(() => {
@@ -28,7 +34,7 @@ const Index: React.FC = () => {
         </View>
         <View className={styles.right}>
           <View className='title'>我的积分</View>
-          <View className={styles.myCount}>20</View>
+          <View className={styles.myCount}>{total}</View>
         </View>
       </Card>
       {/* 签到 */}
@@ -36,16 +42,16 @@ const Index: React.FC = () => {
         <Qiandao />
       </Card>
       {/* 兑换奖品，积分记录，积分规则 */}
-      <Card className={styles.myJifenCard1}>
-        <Tabs>
+      <Card wrapperClassName={styles.jifenActionsCard}>
+        <Tabs keepAlive initialValue={2}>
           <TabPanel value={0} title='兑换奖品'>
-            兑换奖品
+            <Goods />
           </TabPanel>
           <TabPanel value={1} title='积分记录'>
-            积分记录
+            <JifenRecord />
           </TabPanel>
           <TabPanel value={2} title='积分规则'>
-            积分规则
+            <JifenRule />
           </TabPanel>
         </Tabs>
       </Card>

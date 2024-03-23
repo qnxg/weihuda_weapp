@@ -8,7 +8,7 @@ interface ITabsProps extends ViewProps {
   /**
    * 默认选中的 Tab 索引
    */
-  current?: number
+  initialValue?: number
   /**
    * 顶部 Tab 的样式类名
    */
@@ -17,6 +17,10 @@ interface ITabsProps extends ViewProps {
    * Tab 内容容器的样式类名
    */
   contentClassName?: string
+  /**
+   * 是否缓存 TabPanel 组件，默认为 false
+   */
+  keepAlive?: boolean
   /**
    * 切换 Tab 时的回调函数
    * @param index 新选中的 Tab 索引
@@ -64,7 +68,7 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
     }
   })
 
-  const initialTabIndex = props.current !== undefined ? props.current : panels[0].value
+  const initialTabIndex = props.initialValue !== undefined ? props.initialValue : panels[0].value
   // 当前选中的 Tab
   const [currentTab, setCurrentTab] = useState(initialTabIndex)
   // activeLine 的位置
@@ -118,13 +122,29 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
               {panel.title}
             </View>
           ))}
-          <View className={styles.activeLine} style={{ 
-            transform: `translateX(${activeLineLeft}px)`,
-            // left: activeLineLeft + 'px'
-             }}></View>
+          <View
+            className={styles.activeLine}
+            style={{
+              transform: `translateX(${activeLineLeft}px)`
+              // left: activeLineLeft + 'px'
+            }}
+          ></View>
         </View>
       </ScrollView>
-      <View className={classNames(styles.tabContent, props.contentClassName)}>{getCurrentPanel()}</View>
+      {props.keepAlive ? (
+        panels.map((panel) => {
+          return (
+            <View
+              key={panel.value}
+              className={classNames(props.contentClassName, { [styles.hidden]: currentTab !== panel.value })}
+            >
+              {panel.component}
+            </View>
+          )
+        })
+      ) : (
+        <View className={classNames(props.contentClassName)}>{getCurrentPanel()}</View>
+      )}
     </View>
   )
 }

@@ -29,13 +29,13 @@ export interface IJifenRecordPageQueryData extends IPageQueryData, Partial<IJife
  * 获取总积分
  */
 export const getJifenTotalApi = async () => {
-  return request.get<number>('/jifen/total')
+  return request.get<Pick<IJifenRecord, 'jifen'>>('/jifen/total')
 }
 
 /**
  * 获取积分记录
  */
-export const getJifenRecordApi = async (queryData: IJifenRecordPageQueryData) => {
+export const getJifenRecordPageApi = async (queryData: IJifenRecordPageQueryData) => {
   return request.get<IJifenRecordPageResponseData>('/jifen/record', {
     data: queryData
   })
@@ -47,5 +47,75 @@ export const getJifenRecordApi = async (queryData: IJifenRecordPageQueryData) =>
 export const postJifenRecordApi = async (postData: Partial<IJifenRecord>) => {
   return request.post<IJifenRecordPageResponseData>('/jifen', {
     data: postData
+  })
+}
+
+export interface IJifenGoods {
+  /** id */
+  id: number
+  /** 名称 */
+  name: string
+  /** 图片 */
+  cover: string
+  /** 数量 */
+  count: number
+  /** 价格 */
+  price: number
+  /** 描述 */
+  description: string
+  }
+
+export interface IJifenGoodsPageResponseData {
+  count: number
+  rows: IJifenGoods[]
+}
+
+export interface IJifenGoodsPageQueryData extends IPageQueryData, Partial<IJifenGoods> {}
+
+
+/**
+ * 获取积分奖品列表分页
+ */
+export const getJifenGoodsPageApi = async (queryData: IJifenGoodsPageQueryData) => {
+  return request.get<IJifenGoodsPageResponseData>('/jifen/goods', {
+      data: queryData,
+  })
+}
+
+
+export interface IJifenRule {
+  /** id */
+  id: number
+  /** key */
+  key: string
+  /** 名称 */
+  name: string
+  /** 积分 */
+  jifen: number
+  /** 周期（天） */
+  cycle: number
+  /** 奖励次数上限 */
+  maxCount: number
+  /** 启用 */
+  enabled: number
+}
+
+export interface IJifenRulePageResponseData {
+  count: number
+  rows: IJifenRule[]
+}
+
+export interface IJifenRulePageQueryData
+  extends IPageQueryData,
+      Partial<IJifenRule> {}
+
+/**
+* 获取积分规则列表分页
+*/
+export const getJifenRulePageApi = async (
+  queryData: IJifenRulePageQueryData
+) => {
+  return request.get<IJifenRulePageResponseData>('/jifen/rules', {
+      data: queryData,
   })
 }

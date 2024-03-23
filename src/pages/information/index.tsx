@@ -7,6 +7,25 @@ import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 
+const defaultTags = [
+  {
+    label: '首页',
+    value: ''
+  },
+  {
+    label: '活动',
+    value: '活动'
+  },
+  {
+    label: '讲座',
+    value: '讲座'
+  },
+  {
+    label: '通知',
+    value: '通知'
+  }
+]
+
 const Index: React.FC = () => {
   // 知湖页面数据
   const [data, setData] = useState<IZhihu[]>([])
@@ -70,10 +89,13 @@ const Index: React.FC = () => {
     <View>
       <View className={styles.tabsWrapper}>
         <Tabs tabsClassName={styles.tabs} onChange={handleChange}>
-          <TabPanel title='首页' value=''></TabPanel>
+          {defaultTags.map((item) => (
+            <TabPanel key={item.value} title={item.label} value={item.value}></TabPanel>
+          ))}
+          {/* <TabPanel title='首页' value=''></TabPanel>
           <TabPanel title='活动' value='活动'></TabPanel>
           <TabPanel title='讲座' value='讲座'></TabPanel>
-          <TabPanel title='通知' value='通知'></TabPanel>
+          <TabPanel title='通知' value='通知'></TabPanel> */}
         </Tabs>
       </View>
 

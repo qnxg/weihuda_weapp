@@ -1,4 +1,4 @@
-import { getJifenRecordApi, postJifenRecordApi } from '@/apis/jifen'
+import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
 import Button from '@/components/Button'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
@@ -18,7 +18,7 @@ const Qiandao: React.FC = () => {
 
   // 获取签到状态
   const getData = async () => {
-    const res = await getJifenRecordApi({
+    const res = await getJifenRecordPageApi({
       key: 'qiandao',
       param: dayjs().format('YYYY-MM-DD')
     })
