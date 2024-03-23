@@ -7,3 +7,4 @@ node_modules/
 .idea
 yarn.lock
 yarn-error.log
+.swc/plugins/v7_windows_x86_64_0.104.8/650403a8464e272c42781043014b0c4a7852b23c2ea43daf240d37a42b026a56
