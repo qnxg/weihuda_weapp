@@ -118,7 +118,7 @@ const TodayClass: React.FC<TodayClassProps> = (props) => {
                 const currentDateString = currentTime.toLocaleDateString('zh-CN') // 使用 'fr-CA' 选项来获取 'yyyy-mm-dd' 格式的日期字符串
                 const endTimeDate = new Date(Date.parse(`${currentDateString} ${temp.endTime}`))
 
-                console.log(currentTime, endTimeDate)
+                // console.log(currentTime, endTimeDate)
 
                 if (endTimeDate > currentTime) {
                     tempArray.push(temp)
