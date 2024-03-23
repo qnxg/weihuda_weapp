@@ -42,11 +42,23 @@ export const getJifenRecordPageApi = async (queryData: IJifenRecordPageQueryData
 }
 
 /**
- * 新增积分记录
+ * 新增积分记录（签到、等获取积分）
  */
 export const postJifenRecordApi = async (postData: Partial<IJifenRecord>) => {
   return request.post<IJifenRecordPageResponseData>('/jifen', {
     data: postData
+  })
+}
+
+/**
+ * 阅读文章获取积分，（webview页面的阅读事件除了现在用来获得积分外，未来
+ * 还有可能用来统计用户的阅读行为，比如阅读时长，阅读次数等，所以单独提取出来一个请求）
+ */
+export const getJifenWebviewReadApi = async (queryData: {
+  url: string
+}) => {
+  return request.get<IJifenRecordPageResponseData>('/jifen/webview-read', {
+    data: queryData
   })
 }
 

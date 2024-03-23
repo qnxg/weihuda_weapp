@@ -64,7 +64,7 @@ const Index: React.FC = () => {
   const handleClick = (item: IZhihu) => {
     if (item.type === 'link') {
       Taro.navigateTo({
-        url: `/pages/webview/index?url=${item.content}&title=${item.title}`
+        url: `/pages/webview/index?url=${item.content}&title=${item.title}&from=zhihu`
       })
     } else {
       Taro.navigateTo({
