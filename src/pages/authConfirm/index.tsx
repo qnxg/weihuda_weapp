@@ -10,8 +10,9 @@ import styles from './index.module.scss'
 const Index: React.FC = () => {
   // 获取query参数
   const { params } = useRouter()
-  params.q = 'https://qnxg.cn/mp-qrcode/abcd'
-  const code = decodeURIComponent(params?.q!).replace('https://qnxg.cn/mp-qrcode/', '')
+  const code = decodeURIComponent(params?.q!).replace('https://qnxg.cn/mp-qrcode/', '').replace(
+    'test0/', ''
+  )
   const [status, setStatus] = useState<AuthQrcodeStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
 
