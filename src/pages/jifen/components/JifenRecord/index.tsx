@@ -5,10 +5,16 @@ import dayjs from 'dayjs'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
 
-const JifenRecord: React.FC = () => {
+interface IJifenRecordProps {
+  updateTotal?: () => void
+  jifenRecordRef?: React.MutableRefObject<any>
+}
+
+const JifenRecord: React.FC<IJifenRecordProps> = (props) => {
   const [loading, setLoading] = React.useState(true)
   const [data, setData] = React.useState<IJifenRecord[]>([])
 
+  // 获取列表数据
   const getData = async () => {
     const res = await getJifenRecordPageApi({
       page: 1,
@@ -24,6 +30,14 @@ const JifenRecord: React.FC = () => {
     getData()
   }, [])
 
+  // 通过ref暴露给父组件调用
+  const updateJifenRecord = () => {
+    getData()
+  }
+  if (props.jifenRecordRef) {
+    props.jifenRecordRef.current = { updateJifenRecord }
+  }
+
   return (
     <View className={styles.recordContainer}>
       <View>
@@ -36,7 +50,8 @@ const JifenRecord: React.FC = () => {
                 [styles.reduce]: item.jifen < 0
               })}
             >
-              {item.jifen > 0 ? '+' : ''}{item.jifen}
+              {item.jifen > 0 ? '+' : ''}
+              {item.jifen}
             </View>
           </View>
         ))}

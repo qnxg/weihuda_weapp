@@ -12,7 +12,12 @@ const btnText = {
   unsigned: '签到'
 }
 
-const Qiandao: React.FC = () => {
+interface IQiandaoProps {
+  updateTotal?: () => void
+  updateJifenRecord?: () => void
+}
+
+const Qiandao: React.FC<IQiandaoProps> = (props) => {
   // 加载，已签到，未签到
   const [status, setStatus] = useState<'loading' | 'unsigned' | 'signed'>('loading')
 
@@ -22,11 +27,16 @@ const Qiandao: React.FC = () => {
       key: 'qiandao',
       param: dayjs().format('YYYY-MM-DD')
     })
-    console.log(res)
     if (res.rows.length > 0) {
       setStatus('signed')
     } else {
       setStatus('unsigned')
+    }
+    if (props.updateTotal) {
+      props.updateTotal()
+    }
+    if (props.updateJifenRecord) {
+      props.updateJifenRecord()
     }
   }
 

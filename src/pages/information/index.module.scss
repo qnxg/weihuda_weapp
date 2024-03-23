@@ -11,7 +11,7 @@
 }
 
 .tabs {
-  background: #fff;
+  background: var(--bg-color-container);
   padding: 10px 10px 0;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .articleItem {
-  background: #fff;
+  background: var(--bg-color-container);
   display: flex;
   justify-content: space-between;
   min-height: 150px;

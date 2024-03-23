@@ -1,6 +1,6 @@
 import { IJifenRule, getJifenRulePageApi } from '@/apis/jifen'
 import { getMiniConfigPageApi } from '@/apis/miniConfig'
-import { RichText, View } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'

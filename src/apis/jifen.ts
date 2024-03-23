@@ -63,7 +63,7 @@ export interface IJifenGoods {
   price: number
   /** 描述 */
   description: string
-  }
+}
 
 export interface IJifenGoodsPageResponseData {
   count: number
@@ -72,16 +72,14 @@ export interface IJifenGoodsPageResponseData {
 
 export interface IJifenGoodsPageQueryData extends IPageQueryData, Partial<IJifenGoods> {}
 
-
 /**
  * 获取积分奖品列表分页
  */
 export const getJifenGoodsPageApi = async (queryData: IJifenGoodsPageQueryData) => {
   return request.get<IJifenGoodsPageResponseData>('/jifen/goods', {
-      data: queryData,
+    data: queryData
   })
 }
-
 
 export interface IJifenRule {
   /** id */
@@ -105,17 +103,52 @@ export interface IJifenRulePageResponseData {
   rows: IJifenRule[]
 }
 
-export interface IJifenRulePageQueryData
-  extends IPageQueryData,
-      Partial<IJifenRule> {}
+export interface IJifenRulePageQueryData extends IPageQueryData, Partial<IJifenRule> {}
 
 /**
-* 获取积分规则列表分页
-*/
-export const getJifenRulePageApi = async (
-  queryData: IJifenRulePageQueryData
-) => {
+ * 获取积分规则列表分页
+ */
+export const getJifenRulePageApi = async (queryData: IJifenRulePageQueryData) => {
   return request.get<IJifenRulePageResponseData>('/jifen/rules', {
-      data: queryData,
+    data: queryData
   })
+}
+export interface IGoodsRecord {
+  /** id */
+  id: number
+  /** 学号 */
+  stuId: string
+  /** 奖品id */
+  goodsId: number
+  /** 兑换时间 */
+  exchangeTime: string
+  /** 状态 */
+  status: number
+  /** 收货时间 */
+  receiveTime: string
+  /** 备注 */
+  comment: string
+}
+
+export interface IGoodsRecordPageResponseData {
+  count: number
+  rows: IGoodsRecord[]
+}
+
+export interface IGoodsRecordPageQueryData extends IPageQueryData, Partial<IGoodsRecord> {}
+
+/**
+ * 获取兑换记录列表分页
+ */
+export const getGoodsRecordPageApi = async (queryData: IGoodsRecordPageQueryData) => {
+  return request.get<IGoodsRecordPageResponseData>('/jifen/goods-record', {
+    data: queryData
+  })
+}
+
+/**
+ * 新增兑换记录（兑换奖品）
+ */
+export const postGoodsRecordApi = async (postData: Partial<IGoodsRecord>) => {
+  return request.post<IGoodsRecordPageResponseData>('/jifen/goods-record', { data: postData })
 }
