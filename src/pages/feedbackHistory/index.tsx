@@ -1,5 +1,6 @@
 import { FeedbackData, getFeedbackPageApi } from '@/apis/back/feedback'
-import { Button, Input, View } from '@tarojs/components'
+import Button from '@/components/Button'
+import { Input, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'

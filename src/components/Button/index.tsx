@@ -1,0 +1,20 @@
+import { ButtonProps, Button as TaroButton } from '@tarojs/components'
+import classNames from 'classnames'
+import React from 'react'
+import styles from './index.module.scss'
+
+interface Props extends ButtonProps {
+  theme?: 'primary' | 'default' 
+  // | 'danger' | 'success' | 'warning' | 'success'
+}
+
+/**
+ * 按钮组件
+ */
+const Button: React.FC<Props> = (props) => {
+  props.theme = props.theme || 'primary'
+  props.className = classNames(props.className, styles.button, styles[props.theme])
+  return <TaroButton {...props} hoverClass={styles.buttonActive}></TaroButton>
+}
+
+export default Button

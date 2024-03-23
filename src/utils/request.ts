@@ -89,10 +89,14 @@ async function request<T extends Data>(options: Taro.request.Option<Response>): 
   }
 
   if (response.data.code !== 200) {
-    Taro.showToast({
-      title: response.data.msg,
-      icon: 'none'
-    })
+    // 有些请求不需要弹出提示，例如知湖阅读文章获取积分的请求
+    // 不用弹出提示的请求会在msg中包含NO_TOAST
+    if (!response.data.msg.includes('NO_TOAST')) {
+      Taro.showToast({
+        title: response.data.msg,
+        icon: 'none'
+      })
+    }
     throw new Error(response.data.msg)
   }
 
@@ -117,6 +121,15 @@ request.post = <T extends Data>(url: string, options: WithoutUrlOption = {}) => 
     ...options,
     url,
     method: 'POST'
+  })
+}
+
+// 重写put方法
+request.put = <T extends Data>(url: string, options: WithoutUrlOption = {}) => {
+  return request<T>({
+    ...options,
+    url,
+    method: 'PUT'
   })
 }
 

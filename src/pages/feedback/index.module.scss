@@ -73,15 +73,8 @@
 
   .submitButton {
     width: 50%;
-    height: 90px;
-    line-height: 90px;
-    background: #00d378;
-    color: #fff;
-    border-radius: 16px;
-    border: none;
-    font-weight: bold;
-    box-shadow: 0px 3px 6px 0px #00000045;
-    outline: none;
+    height: 80px;
+    line-height: 80px;
   }
 
   .feedbackLink {
@@ -100,10 +93,6 @@
     .input,
     .upload {
       background: #333333;
-    }
-
-    .submitButton {
-      background: #1b5924;
     }
   }
 }

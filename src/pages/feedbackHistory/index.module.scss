@@ -26,12 +26,6 @@
   .submitButton {
     width: 50%;
     flex: 1;
-    background: #00d378;
-    color: #fff;
-    border-radius: 16px;
-    border: none;
-    font-weight: bold;
-    outline: none;
     line-height: 72px;
   }
 
@@ -61,10 +55,6 @@
   .container {
     .input,.historyCard {
       background: #333333;
-    }
-
-    .submitButton {
-      background: #1b5924;
     }
   }
 }

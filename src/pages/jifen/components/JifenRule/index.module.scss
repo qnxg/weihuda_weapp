@@ -1,0 +1,54 @@
+.ruleContainer {
+    padding-top: 20px 0;
+    margin-bottom: 20px;
+
+    .ruleItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--text-color-secondary);
+        // border-bottom: 1px solid var(--component-border);
+        padding: 20px;
+    }
+
+    .ruleItem:nth-child(1) .ruleDesc,
+    .ruleItem:nth-child(1) .ruleJifen {
+        font-weight: bold;
+    }
+
+    .ruleDesc {
+        padding: 0 20px;
+        flex: 1;
+    }
+
+    .ruleJifen {
+        min-width: 200px;
+        text-align: center;
+        padding: 0 20px;
+        // color: var(--brand-color);
+    }
+
+    .reduce {
+        color: var(--error-color);
+    }
+}
+
+.exteraRule {
+    margin-top: 20px;
+    padding: 0 20px;
+    color: var(--text-color-secondary);
+
+    .exteraTitle {
+        margin-bottom: 20px;
+    
+    }
+}
+
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: var(--bg-color-container);
+    color: var(--text-color-secondary);
+}
