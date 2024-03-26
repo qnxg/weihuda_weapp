@@ -1,13 +1,14 @@
 import { IZhihu, getZhihuPageApi } from '@/apis/zhihu'
 import Card from '@/components/Card'
 import { TabPanel, Tabs } from '@/components/Tabs'
+import { getBoundingClientRect } from '@/utils/tool'
 import { Image, View } from '@tarojs/components'
 import Taro, { useReachBottom } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getBoundingClientRect } from '@/utils/tool'
 
+//TODO: 可以从数据库获取标签后更新
 const defaultTags = [
   {
     label: '首页',
@@ -94,7 +95,7 @@ const Index: React.FC = () => {
   const [paddingTop, setPaddingTop] = useState(70)
   const updatePaddingTop = async () => {
     const rects = await getBoundingClientRect(`.${styles.tabsWrapper}`)
-    setPaddingTop(rects[0].height + 10)
+    setPaddingTop(rects[0].height + 4)
   }
   useEffect(() => {
     updatePaddingTop()

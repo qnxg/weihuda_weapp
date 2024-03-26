@@ -21,6 +21,15 @@ const Qiandao: React.FC<IQiandaoProps> = (props) => {
   // 加载，已签到，未签到
   const [status, setStatus] = useState<'loading' | 'unsigned' | 'signed'>('loading')
 
+  const updateTotalAndRecord = () => {
+    if (props.updateTotal) {
+      props.updateTotal()
+    }
+    if (props.updateJifenRecord) {
+      props.updateJifenRecord()
+    }
+  }
+
   // 获取签到状态
   const getData = async () => {
     const res = await getJifenRecordPageApi({
@@ -31,12 +40,6 @@ const Qiandao: React.FC<IQiandaoProps> = (props) => {
       setStatus('signed')
     } else {
       setStatus('unsigned')
-    }
-    if (props.updateTotal) {
-      props.updateTotal()
-    }
-    if (props.updateJifenRecord) {
-      props.updateJifenRecord()
     }
   }
 
@@ -52,6 +55,7 @@ const Qiandao: React.FC<IQiandaoProps> = (props) => {
     if (res) {
       Taro.showToast({ title: '签到成功' })
       setStatus('signed')
+      updateTotalAndRecord()
       return
     }
     Taro.hideLoading()
