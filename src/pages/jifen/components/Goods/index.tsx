@@ -108,23 +108,6 @@ const Goods: React.FC<IGoodsProps> = (props) => {
             </Button>
           </View>
         ))}
-        {/* <View className={styles.goodsItem}>
-          <View className={styles.left}>
-            <View>
-              <Image className={styles.goodsImg} src='https://img.yzcdn.cn/vant/ipad.jpeg' mode='aspectFit' />
-            </View>
-            <View className={styles.goodsInfo}>
-              <View className={styles.goodsName}>iPad</View>
-              <View className={styles.extera}>
-                <View className={styles.goodsPrice}>10000积分</View>
-                <View className={styles.goodsCount}>剩余: 100</View>
-              </View>
-            </View>
-          </View>
-          <Button className={styles.goodsBtn} theme='primary'>
-            兑换
-          </Button>
-        </View> */}
       </View>
       {data.length === 0 && (
         <View className={styles.empty}>

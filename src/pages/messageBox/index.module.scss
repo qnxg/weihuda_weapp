@@ -1,13 +1,16 @@
 @import '~@/utils/scss/global.scss';
 
+.countInfo {
+  color: var(--text-color-secondary);
+  font-size: 26px;
+}
+
 .content_out {
   margin-top: 20px;
 
   .title {
-    font-size: $fontNormal;
-    line-height: 40px;
-    letter-spacing: 0.6px;
-    color: $primaryTextColor;
+    font-size: 28px;
+    color: var(--text-color-primary);
   }
 
   .content {
@@ -15,19 +18,13 @@
     font-size: $fontMedium;
     line-height: 40px;
     letter-spacing: 0.4px;
-    color: $thirdTextColor;
+    color: var(--text-color-secondary);
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .content_out {
-    .title {
-      color: $darkTextColor;
-    }
-
-    .content {
-      color: darken($darkTextColor, 10%);
-    }
-  }
+.messageItem {
+  color: var(--text-color-secondary);
 }
+
+
 

@@ -1,57 +1,15 @@
 @import '~@/utils/scss/global.scss';
 
-.sOuter {
-  width: $defaultWidth;
-  height: 120px;
-  transition: height 660ms ease-in-out 0ms;
-
-  .sItem {
-    width: $defaultWidth;
-    height: 120px;
-    padding: 20px 0;
-
-    .cOuter {
-      width: $defaultWidth;
-      height: auto;
-      padding: 0 36px;
-
-      .title {
-        width: 100%;
-        font-size: $fontBig;
-        line-height: 40px;
-        height: 40px;
-        letter-spacing: 0.6px;
-        font-weight: 500;
-        color: $primaryTextColor;
-      }
-
-      .content {
-        width: 100%;
-        font-size: $fontNormal;
-        line-height: 40px;
-        min-height: 40px;
-        letter-spacing: 0.4px;
-        word-wrap: break-word;
-        //overflow: hidden;
-        //text-overflow: ellipsis;
-        color: $thirdTextColor;
-      }
-    }
-  }
+.icon {
+  width: 48px;
+  height: 48px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .sOuter {
-    .sItem {
-      .cOuter {
-        .title {
-          color: $darkTextColor;
-        }
+.swiper {
+  transition: height 0.3s;
+  color: var(--text-color-secondary);
+}
 
-        .content {
-          color: darken($darkTextColor, 15%);
-        }
-      }
-    }
-  }
+.messageItem {
+  box-sizing: border-box;
 }

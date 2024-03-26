@@ -1,0 +1,8 @@
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: var(--bg-color-container);
+    color: var(--text-color-secondary);
+}

@@ -5,6 +5,10 @@
   border: none;
   outline: none;
 
+  &::after {
+    border: none;
+  }
+
   &.primary {
     background: var(--brand-color);
   }
@@ -14,6 +18,10 @@
     background: var(--bg-color-component);
   }
 
+  &.plain {
+    color: var(--brand-color);
+    background: none;
+  }
 }
 
 .button.buttonActive {
@@ -25,5 +33,10 @@
 
   &.default {
     background: var(--bg-color-component-hover);
+  }
+
+  &.plain {
+    color: var(--brand-color-active);
+    background: none;
   }
 }

@@ -8,6 +8,7 @@ import styles from './index.module.scss'
 
 const Index: React.FC = () => {
   const { name: userRealName, stuId: userRealId } = useAppSelector((state) => state.userInfo)
+  const unread = useAppSelector((state) => state.notice.unread)
 
   const postData = async () => {
     return await postUnbind()
@@ -82,7 +83,7 @@ const Index: React.FC = () => {
                 <View className={styles.message} />
               </View>
               <View className={styles.titleContainer}>
-                <View>消息盒子</View>
+                <View>消息盒子({unread})</View>
                 <Image src={arrow} className={styles.arrow} />
               </View>
             </View>

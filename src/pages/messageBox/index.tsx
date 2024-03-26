@@ -1,110 +1,99 @@
 import { Message, getMessage } from '@/apis/back/message'
-import DisplayCard from '@/components/DisplayCard'
+import Card from '@/components/Card'
+import CardHeader from '@/components/Card/CardHeader'
+import Empty from '@/components/Empty'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { fetchNoticeThunk } from '@/models/notice'
 import icon from '@/static/mine/icon-date.svg'
-import { Block, Navigator, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import { Navigator, View } from '@tarojs/components'
 import React, { useEffect, useState } from 'react'
+import MessageItem from '../../components/MessageItem'
 import styles from './index.module.scss'
 
 const Index: React.FC = () => {
-  const [data, setData] = useState<Message[] | null>(null)
+  // 公告数据
+  const [messageData, setMessageData] = useState<Message[]>([])
+  // 总消息数
+  const [countInfo, setCountInfo] = useState({ total: 0, unread: 0, message: 0 })
+  // 消息通知
+  const notice = useAppSelector((state) => state.notice)
+  // dispatch
+  const dispatch = useAppDispatch()
 
   /**
-   * 获取数据
+   * 获取公告数据
    */
-  const getData = async () => {
-    Taro.showLoading({
-      mask: true,
-      title: '加载中...'
-    })
-    try {
-      const res = await getMessage()
-      setData(res)
-    } catch (err) {
-      Taro.showToast({
-        icon: 'none',
-        title: err.toString()
-      })
+  const getMessageData = async () => {
+    const res = await getMessage()
+    if (res) {
+      setMessageData(res)
+      return
     }
-    Taro.hideLoading()
+  }
+
+  // 更新数量
+  useEffect(() => {
+    setCountInfo({
+      total: messageData.length + notice.total,
+      message: messageData.length,
+      unread: notice.unread
+    })
+  }, [countInfo, messageData, notice])
+
+  /**
+   * 获取消息通知
+   */
+  const getNotice = async () => {
+    if (notice.data.length) return
+    dispatch(fetchNoticeThunk())
   }
 
   useEffect(() => {
-    getData()
+    getMessageData()
+    getNotice()
   }, [])
 
-  // const { data, loading } = useGraphql<RootObject>(
-  //   {
-  //     query: `
-  //     query message{
-  //       message{
-  //         id
-  //         title
-  //         content
-  //         url
-  //         create_at
-  //       }
-  //     }
-  //     `,
-  //     operationName: 'message'
-  //   },
-  //   {
-  //     onError: (error) => {
-  //       Taro.showToast({
-  //         icon: 'none',
-  //         title: error.toString()
-  //       })
-  //     }
-  //   }
-  // )
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     Taro.showLoading({
-  //       mask: true,
-  //       title: '正在获取数据'
-  //     })
-  //   } else {
-  //     Taro.hideLoading()
-  //   }
-  // }, [loading])
-
   return (
-    <Block>
-      <View>
-        {data && data.length !== 0 ? (
-          data.map((item) => {
-            return (
-              <View key={Math.random()}>
-                {item.url ? (
-                  <Navigator key={Math.random()} url={item.url ? item.url : ''}>
-                    <DisplayCard key={String(item.id)} title={item.create_at} icon={icon}>
-                      <View className={styles.content_out}>
-                        <View className={styles.title}>{item.title}</View>
-                        <View className={styles.content}>{item.content}</View>
-                      </View>
-                    </DisplayCard>
-                  </Navigator>
-                ) : (
-                  <DisplayCard key={String(item.id)} title={item.create_at} icon={icon}>
-                    <View className={styles.content_out}>
-                      <View className={styles.title}>{item.title}</View>
-                      <View className={styles.content}>{item.content}</View>
-                    </View>
-                  </DisplayCard>
-                )}
+    <View style={{paddingBottom: '20px'}}>
+      <Card className={styles.countInfo}>
+        共有{countInfo.total}条消息，含有 {countInfo.message} 条公告，{countInfo.unread} 条未读消息。
+      </Card>
+      {messageData &&
+        messageData.length !== 0 &&
+        messageData.map((item, i) => {
+          const CardComp = (
+            <Card key={`msg-card-${i}`}>
+              <CardHeader title={item.create_at} icon={icon} />
+              <View className={styles.content_out}>
+                <View className={styles.title}>{item.title}</View>
+                <View className={styles.content}>{item.content}</View>
               </View>
+            </Card>
+          )
+          if (item.url) {
+            return (
+              <Navigator key={`msg-navi-${i}`} url={item.url}>
+                {CardComp}
+              </Navigator>
             )
-          })
-        ) : (
-          <DisplayCard title='----/--/--' icon={icon}>
-            <View className={styles.content_out}>
-              <View className={styles.title}>还没有接收到新消息噢</View>
-            </View>
-          </DisplayCard>
-        )}
-      </View>
-    </Block>
+          }
+          return CardComp
+        })}
+      {notice &&
+        notice.data.length &&
+        notice.data.map((item, i) => {
+          return (
+            <Card key={`notice-card-${i}`}>
+              <MessageItem className={styles.messageItem} data={item} />
+            </Card>
+          )
+        })}
+      {countInfo.total === 0 && (
+        <Card>
+          <Empty>暂无消息</Empty>
+        </Card>
+      )}
+    </View>
   )
 }
 

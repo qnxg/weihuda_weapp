@@ -1,0 +1,33 @@
+.messageItem {
+  padding: 4px 10px;
+  padding-top: 20px;
+  font-size: 28px;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.right,
+.left,
+.result {
+  display: flex;
+  align-items: center;
+  color: var(--text-color-secondary);
+}
+
+.btn {
+  height: 42px;
+  line-height: 42px;
+  font-size: 20px;
+  margin: 0;
+  margin-right: 8px;
+  border-radius: 8px;
+}
+
+.status {
+  margin-left: 16px;
+}
