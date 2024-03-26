@@ -80,7 +80,7 @@ const Index: React.FC = () => {
           return CardComp
         })}
       {notice &&
-        notice.data.length &&
+        notice.data.length !== 0 &&
         notice.data.map((item, i) => {
           return (
             <Card key={`notice-card-${i}`}>
@@ -88,7 +88,7 @@ const Index: React.FC = () => {
             </Card>
           )
         })}
-      {countInfo.total === 0 && (
+      {(countInfo.total == 0) && (
         <Card>
           <Empty>暂无消息</Empty>
         </Card>

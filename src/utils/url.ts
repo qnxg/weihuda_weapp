@@ -1,6 +1,6 @@
 // BASE_URL: 服务器地址
-export const BASE_URL = 'http://127.0.0.1:4000'
-// export const BASE_URL = 'https://qnxg.cn/api/middleware-2023'
+// export const BASE_URL = 'http://127.0.0.1:4000'
+export const BASE_URL = 'https://qnxg.cn/api/middleware-2023'
 // export const BASE_URL = 'https://qnxg.cn/node/grade'
 
 // 图片上传地址
