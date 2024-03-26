@@ -1,9 +1,14 @@
 import Taro from '@tarojs/taro'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import React from 'react'
 import { Provider } from 'react-redux'
-import './theme.css'
 import './app.scss'
 import store from './models'
+import './theme.css'
+
+dayjs.extend(customParseFormat)
 
 Taro.onPageNotFound(() => {
   Taro.redirectTo({ url: '/pages/404/index' })
