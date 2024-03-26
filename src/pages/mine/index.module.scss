@@ -103,6 +103,10 @@
   .message {
     @include imageCommon('~@/static/mine/icon-message.svg');
   }
+  
+  .jifen {
+    @include imageCommon('~@/static/mine/icon-jifen.svg');
+  }
 
   .about {
     @include imageCommon('~@/static/mine/icon-about.svg');

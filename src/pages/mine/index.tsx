@@ -68,7 +68,7 @@ const Index: React.FC = () => {
         <Navigator url='/pages/jifen/index'>
             <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
               <View className={styles.imgContainer}>
-                <View className={styles.message} />
+                <View className={styles.jifen} />
               </View>
               <View className={styles.titleContainer}>
                 <View>积分中心</View>
