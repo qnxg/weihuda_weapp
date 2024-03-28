@@ -27,7 +27,7 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
   // 当前显示的消息
   const [current, setCurrent] = useState(0)
   // 高度，用于swiper的高度
-  const [height, setHeight] = useState(120)
+  const [height, setHeight] = useState(0)
 
   // 获取消息通知
   const getNoticeData = async () => {
@@ -68,7 +68,19 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
     <View>
       {total > 0 && (
         <Card>
-          <CardHeader title={`消息盒子(${total})`} icon={icon} />
+          <CardHeader
+            title={`消息盒子(${total})`}
+            footer={
+              <View
+                onClick={() => {
+                  Taro.navigateTo({ url: '/pages/messageBox/index' })
+                }}
+              >
+                查看更多
+              </View>
+            }
+            icon={icon}
+          />
           <Swiper
             circular
             duration={500}
@@ -82,7 +94,7 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
             className={styles.swiper}
           >
             {/* 公告 */}
-            {message.map((item) => {
+            {messageData.map((item) => {
               return (
                 <SwiperItem
                   key={item.title}
@@ -99,7 +111,7 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
             })}
             {/* 消息通知 */}
             {notice.data.map((item, i) => {
-              if (item.status === 1) return null
+              if (item.status === 1 || item.isShow === 0) return null
               return (
                 <SwiperItem key={`notice-${i}`}>
                   <MessageItem className={styles.messageItem} data={item} />

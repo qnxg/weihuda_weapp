@@ -20,7 +20,6 @@ export const fetchNoticeThunk = createAsyncThunk('notice/fetchNotice', async () 
   const res = await getNoticePageApi({ page: 1, pageSize: 20 })
   if (res) {
     const newNotice = res.rows
-      .filter((item) => item.isShow === 1)
       .map((item) => {
         if (item.btnConfig && typeof item.btnConfig === 'string') {
           item.btnConfig = JSON.parse(item.btnConfig).reverse()

@@ -45,6 +45,10 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
         status: 1
       })
     )
+    setData({
+      ...data,
+      status: 1
+    })
   }
 
   // 当按钮点击时

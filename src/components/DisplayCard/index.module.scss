@@ -21,7 +21,7 @@
   .title {
     @include fontTitle;
     @include flex(flex-start);
-    color: $blackText;
+    color: var(--text-color-secondary);
   }
 
   .titleImg {
@@ -31,7 +31,7 @@
   }
 
   .subTitle {
-    color: #cfcfcf;
+    color: var(--text-color-secondary);
     font-size: $fontNormal;
     line-height: 48px;
   }
@@ -45,7 +45,7 @@
 
   .footer {
     margin-top: 22px;
-    color: #cfcfcf;
+    color: var(--text-color-secondary);
     font-size: $fontMedium;
     line-height: 40px;
   }

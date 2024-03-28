@@ -33,7 +33,7 @@ export interface IZhihuPageQueryData extends IPageQueryData, Partial<IZhihu> {}
  * 获取知湖文章列表分页
  */
 export const getZhihuPageApi = async (queryData: IZhihuPageQueryData) => {
-    return request.get<IZhihuPageResponseData>('/old/zhihu', {
+    return request.get<IZhihuPageResponseData>('/zhihu', {
         data: queryData,
     })
 }
@@ -42,14 +42,14 @@ export const getZhihuPageApi = async (queryData: IZhihuPageQueryData) => {
  * 根据 id 获取知湖文章
  */
 export const getZhihuByIdApi = async (id: number) => {
-    return request.get<IZhihu>(`/old/zhihu/${id}`)
+    return request.get<IZhihu>(`/zhihu/${id}`)
 }
 
 /**
  * 新增知湖文章
  */
 export const postZhihuApi = async (postData: Partial<IZhihu>) => {
-    return request.post<IZhihuPageResponseData>('/old/zhihu', {
+    return request.post<IZhihuPageResponseData>('/zhihu', {
         data: postData,
     })
 }
@@ -58,7 +58,7 @@ export const postZhihuApi = async (postData: Partial<IZhihu>) => {
  * 编辑知湖文章
  */
 export const putZhihuByIdApi = async (id: number, putData: Partial<IZhihu>) => {
-    return request.put<IZhihuPageResponseData>(`/old/zhihu/${id}`, {
+    return request.put<IZhihuPageResponseData>(`/zhihu/${id}`, {
         data: putData,
     })
 }

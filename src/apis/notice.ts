@@ -42,7 +42,7 @@ export interface INoticePageQueryData extends IPageQueryData, Partial<INotice> {
  * 获取消息通知列表分页
  */
 export const getNoticePageApi = async (queryData: INoticePageQueryData) => {
-  return request.get<INoticePageResponseData>('/old/notice', {
+  return request.get<INoticePageResponseData>('/notice', {
     data: queryData
   })
 }
@@ -51,7 +51,7 @@ export const getNoticePageApi = async (queryData: INoticePageQueryData) => {
  * 编辑消息通知
  */
 export const putNoticeByIdApi = async (id: number, putData: Partial<INotice>) => {
-  return request.put<INoticePageResponseData>(`/old/notice/${id}`, {
+  return request.put<INoticePageResponseData>(`/notice/${id}`, {
     data: putData
   })
 }

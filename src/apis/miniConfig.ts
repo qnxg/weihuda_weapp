@@ -27,7 +27,7 @@ export interface IMiniConfigPageQueryData extends IPageQueryData, Partial<IMiniC
  * 获取小程序配置列表分页
  */
 export const getMiniConfigPageApi = async (queryData: IMiniConfigPageQueryData) => {
-  return request.get<IMiniConfigPageResponseData>('/old/config', {
+  return request.get<IMiniConfigPageResponseData>('/config', {
     data: queryData
   })
 }
