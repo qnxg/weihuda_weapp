@@ -1,53 +1,55 @@
-import Taro from '@tarojs/taro';
-import React, { useState, useImperativeHandle, forwardRef } from 'react';
-import classNames from 'classnames';
-import { ScrollView, Slot, View } from '@tarojs/components';
-import styles from './index.module.scss';
+import Taro from '@tarojs/taro'
+import React, { useState, useImperativeHandle, forwardRef } from 'react'
+import classNames from 'classnames'
+import { ScrollView, ScrollViewProps, Slot, View } from '@tarojs/components'
+import styles from './index.module.scss'
 
 export interface Props {
-  runFunc: (closer: () => void) => any;
-  topGap?: number;
-  leftGap?: number;
+  runFunc: (closer: () => void) => any
+  topGap?: number
+  leftGap?: number
+  scrollViewProps?: ScrollViewProps
 }
 
 export interface RefProps {
-  start: () => any;
-  stop: () => any;
+  start: () => any
+  stop: () => any
 }
 
-type IndexType = React.ForwardRefRenderFunction<RefProps, React.PropsWithChildren<Props>>;
+type IndexType = React.ForwardRefRenderFunction<RefProps, React.PropsWithChildren<Props>>
 
 const Index: IndexType = (props, ref) => {
-  const { runFunc, topGap = 0 } = props;
-  const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [isToRefresh, setIsToRefresh] = useState<boolean>(false);
+  const { runFunc, topGap = 0 } = props
+  const [refreshing, setRefreshing] = useState<boolean>(false)
+  const [isToRefresh, setIsToRefresh] = useState<boolean>(false)
 
-  const darkMode = Taro.getSystemInfoSync().theme === 'dark';
+  const darkMode = Taro.getSystemInfoSync().theme === 'dark'
 
   const pullingRefresh = (e) => {
-    const d = e.detail.dy || 0;
+    const d = e.detail.dy || 0
     if (d > 64) {
-      setIsToRefresh(true);
+      setIsToRefresh(true)
     }
-  };
+  }
 
   const stopRefresh = () => {
-    setRefreshing(false);
-    setIsToRefresh(false);
-  };
+    setRefreshing(false)
+    setIsToRefresh(false)
+  }
 
   const runRefresh = async () => {
-    setRefreshing(true);
-    await runFunc(stopRefresh);
-  };
+    setRefreshing(true)
+    await runFunc(stopRefresh)
+  }
 
   useImperativeHandle(ref, () => ({
     start: runRefresh,
     stop: stopRefresh
-  }));
+  }))
 
   return (
     <ScrollView
+      {...props.scrollViewProps}
       scrollY
       enhanced
       enableFlex
@@ -81,9 +83,9 @@ const Index: IndexType = (props, ref) => {
       </Slot>
       {props.children}
     </ScrollView>
-  );
-};
+  )
+}
 
-const forwardIndex = forwardRef(Index);
+const forwardIndex = forwardRef(Index)
 
-export default forwardIndex;
+export default forwardIndex

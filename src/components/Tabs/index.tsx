@@ -105,7 +105,7 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
 
   return (
     <View>
-      <ScrollView scrollX className={classNames(styles.tabsScrollView, 'tabsScrollView')}>
+      <ScrollView enhanced showScrollbar={false} scrollX className={classNames(styles.tabsScrollView, 'tabsScrollView')}>
         <View className={classNames(styles.tabs, props.tabsClassName)}>
           {panels.map((panel) => (
             <View

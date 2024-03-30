@@ -1,8 +1,9 @@
 export default {
   pages: [
     'pages/index/index', // 首页
-    'pages/jifen/index', // 积分中心
     'pages/information/index', // 知湖
+    'pages/informationAdd/index', // 发布知湖
+    'pages/jifen/index', // 积分中心
     'pages/webview/index', // webview
     'pages/table/index', // 微课表
     'pages/mine/index', // 我的
@@ -19,7 +20,7 @@ export default {
     'pages/feedback/index', // 反馈建议
     'pages/feedbackHistory/index', // 历史反馈查询
     'pages/noDuty/index', // 免责声明
-    'pages/404/index', // 404页
+    'pages/404/index' // 404页
   ],
   subPackages: [
     {
@@ -45,7 +46,7 @@ export default {
         'card/index', // 校园卡账单
         'card/detail', // 交易详情
         'netflowOrder/index', // 校园网流量账单
-        'netflowDetail/index', // 校园网流量明细
+        'netflowDetail/index' // 校园网流量明细
         // 'electricityHistory/index', // 剩余电量历史记录
       ]
     }

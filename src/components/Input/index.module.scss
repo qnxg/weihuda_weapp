@@ -1,0 +1,51 @@
+.inputItem {
+  width: 100%;
+  margin-bottom: 30px;
+  // label position is left
+  &.left {}
+  
+  // label position is top
+  &.top {
+    display: flex;
+    align-items: center;
+
+    .input {
+      flex: 1;
+    }
+  }
+}
+
+.required .label::before,
+.required.label::before {
+  content: '*';
+  color: var(--error-color);
+  margin-right: 4px;
+}
+
+
+.label {
+  margin-right: 12px;
+  margin-bottom: 15px;
+  color: var(--text-color-primary);
+}
+
+.input {
+  width: 100%;
+  height: auto;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: var(--bg-color-container-hover);
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 16px;
+  // prettier ignore
+}
+
+.textarea {
+  resize: none;
+  height: 300px;
+}
+
+.focus {
+  border: 1px solid var(--brand-color);
+}

@@ -1,7 +1,10 @@
 .tabsScrollView {
   width: 100%;
-  
-  &::-webkit-scrollbar {
+
+  :global(::-webkit-scrollbar) {
+    width: 0;
+    height: 0;
+    color: transparent;
     display: none;
   }
 }
@@ -11,38 +14,38 @@
 }
 
 .tabs {
-    display: flex;
-    justify-content: space-between;
-    min-width: 100%;
-    width: fit-content;
-    position: relative;
-  
-    .tabItem {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 1;
-      white-space: nowrap;
-      padding: 10px 30px;
-      color: var(--text-color-secondary);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-  
-      &.active {
-        color: var(--brand-color);
-        // border-bottom: 2px solid var(--brand-color);
-      }
-    }
+  display: flex;
+  justify-content: space-between;
+  min-width: 100%;
+  width: fit-content;
+  position: relative;
 
-    .activeLine {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 40px;
-      height: 4px;
-      border-radius: 4px;
-      background-color: var(--brand-color);
-      // transform: translateX(-100%);
-      transition: transform 0.3s;
+  .tabItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    white-space: nowrap;
+    padding: 10px 30px;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+
+    &.active {
+      color: var(--brand-color);
+      // border-bottom: 2px solid var(--brand-color);
     }
   }
+
+  .activeLine {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 4px;
+    border-radius: 4px;
+    background-color: var(--brand-color);
+    // transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+}

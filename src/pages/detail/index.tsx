@@ -21,23 +21,21 @@ export const fixImageStyle = (html: string): string => {
 const Index: React.FC = () => {
   const router = useRouter()
   const [title, setTitle] = useState<string>('')
-  const [date, setDate] = useState<string>('')
+  const [date, setDate] = useState<string | null>('')
   const [content, setContent] = useState('')
   useEffect(() => {
     ;(async () => {
-      const { id, title: _title, publishTime: _date } = router.params
+      const { id, title: _title, publishTime } = router.params
       await Taro.setNavigationBarTitle({
         title: _title as string
       })
       setTitle(_title as string)
-      setDate(dayjs(_date).format('YYYY-MM-DD'))
+      setDate(publishTime !== 'null' ? dayjs(publishTime).format('YYYY-MM-DD') : null)
       let res: any = await getZhihuByIdApi(Number(id))
-      console.log(res)
       res = res.content!
       // res = res.replace(/<img/gi, '<img style="position: relative; left: 50%; width: 80%; height: auto"');
       // res = fixImageStyle(res)
       // res = entities.decodeHTML5(res)
-      console.log(res)
       setContent(res)
     })()
   }, [router])
@@ -47,7 +45,7 @@ const Index: React.FC = () => {
       <Card className={styles.titleContainer}>
         <View className={styles.title}>{title}</View>
         <View className={styles.extra}>
-          {date.length !== 0 ? (
+          {!!date == true ? (
             <View>
               <View className={styles.date} />
               {date}

@@ -1,9 +1,11 @@
 import { IZhihu, getZhihuPageApi } from '@/apis/zhihu'
+import Button from '@/components/Button'
 import Card from '@/components/Card'
+import PullRefresh from '@/components/PullRefresh'
 import { TabPanel, Tabs } from '@/components/Tabs'
 import { getBoundingClientRect } from '@/utils/tool'
 import { Image, View } from '@tarojs/components'
-import Taro, { useReachBottom } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
@@ -13,6 +15,14 @@ const defaultTags = [
   {
     label: '首页',
     value: ''
+  },
+  {
+    label: '讨论',
+    value: '讨论'
+  },
+  {
+    label: '失物招领',
+    value: '失物招领'
   },
   {
     label: '活动',
@@ -42,7 +52,7 @@ const Index: React.FC = () => {
   // 查询数据
   const [queryData, setQueryData] = useState({
     page: 1,
-    pageSize: 5,
+    pageSize: 10,
     tags: ''
   })
 
@@ -79,17 +89,33 @@ const Index: React.FC = () => {
     }
   }
 
-  // 滑倒底部，会获取下一页的数据
-  useReachBottom(() => {
+  const scrollToLower = () => {
     if (data.length >= total) return
     const newQueryData = { ...queryData, page: queryData.page + 1 }
     setQueryData(newQueryData)
     getData(newQueryData)
-  })
+  }
+
+  // 滑倒底部，会获取下一页的数据
+  // useReachBottom(() => {
+  //   console.log('reach bottom')
+  //   if (data.length >= total) return
+  //   const newQueryData = { ...queryData, page: queryData.page + 1 }
+  //   setQueryData(newQueryData)
+  //   getData(newQueryData)
+  // })
 
   useEffect(() => {
     getData(queryData, true)
   }, [])
+
+  // 下拉刷新
+  const runRefresh = async (closer) => {
+    const newQueryData = { ...queryData, page: 1 }
+    setQueryData(newQueryData)
+    await getData(newQueryData, true)
+    closer()
+  }
 
   // 设置padding-top，避免被顶部tab遮挡
   const [paddingTop, setPaddingTop] = useState(70)
@@ -103,6 +129,7 @@ const Index: React.FC = () => {
 
   return (
     <View>
+      {/* 顶部tab栏 */}
       <View className={styles.tabsWrapper}>
         <Tabs tabsClassName={styles.tabs} onChange={handleChange}>
           {defaultTags.map((item) => (
@@ -114,34 +141,63 @@ const Index: React.FC = () => {
           <TabPanel title='通知' value='通知'></TabPanel> */}
         </Tabs>
       </View>
-
-      <View
-        className={styles.contentWrapper}
-        style={{
-          paddingTop: `${paddingTop}px`
+      <PullRefresh
+        scrollViewProps={{
+          onScrollToLower: scrollToLower
         }}
+        topGap={0}
+        runFunc={runRefresh}
       >
-        {data.map((item) => (
-          <Card
-            key={item.id}
-            wrapperClassName={styles.articleItemWrapper}
-            className={styles.articleItem}
-            hoverClass={styles.active}
-            onClick={() => handleClick(item)}
-          >
-            <View className={styles.left}>
-              <View className={styles.title}>{item.title}</View>
-              <View className={styles.publishTime}>{dayjs(item.publishTime).format('YYYY-MM-DD')}</View>
-            </View>
-            {item.cover && (
-              <View className={styles.cover}>
-                <Image src={item.cover} mode='aspectFill' />
-              </View>
-            )}
-            {/* <View>{item.content}</View> */}
-          </Card>
-        ))}
-        {loading && <View className={styles.loading}>加载中...</View>}
+        {/* 文章列表 */}
+        <View
+          className={styles.contentWrapper}
+          style={{
+            paddingTop: `${paddingTop}px`
+          }}
+        >
+          {data.map((item) => {
+            return (
+              <Card
+                key={item.id}
+                wrapperClassName={styles.articleItemWrapper}
+                className={styles.articleItem}
+                hoverClass={styles.active}
+                onClick={() => handleClick(item)}
+              >
+                <View className={styles.left}>
+                  <View className={styles.title}>{item.title}</View>
+                  {item.status !== 1 && (
+                    <View className={styles.status}>{item.status == 0 ? '审核中' : '审核未通过'}</View>
+                  )}
+                  {item.publishTime && (
+                    <View className={styles.publishTime}>{dayjs(item.publishTime).format('YYYY-MM-DD')}</View>
+                  )}
+                </View>
+                {item.cover && (
+                  <View className={styles.cover}>
+                    <Image src={item.cover} mode='aspectFill' />
+                  </View>
+                )}
+                {/* <View>{item.content}</View> */}
+              </Card>
+            )
+          })}
+          {loading && <View className={styles.loading}>加载中...</View>}
+        </View>
+      </PullRefresh>
+
+      {/* 发布按钮 */}
+      <View className={styles.publishBtnWarpper}>
+        <Button
+          className={styles.publishBtn}
+          onClick={() =>
+            Taro.navigateTo({
+              url: '/pages/informationAdd/index'
+            })
+          }
+        >
+          发布
+        </Button>
       </View>
     </View>
   )

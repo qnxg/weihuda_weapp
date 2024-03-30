@@ -1,0 +1,28 @@
+.tagsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+.tagsItem {
+  margin: 0 10px 10px 0;
+  padding: 8px 20px;
+  font-size: 30px;
+  background: var(--bg-color-container-hover);
+  border-radius: 15px;
+  color: var(--text-color-secondary);
+
+  &.selected {
+    background: var(--brand-color);
+    color: var(--font-white-1);
+  }
+}
+
+.btn {
+  width: 30%;
+  height: 70px;
+  line-height: 70px;
+  font-size: 30px;
+  margin: 50px 0;
+  margin-left: auto;
+}

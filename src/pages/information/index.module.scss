@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
 }
 
 .contentWrapper {
@@ -40,14 +41,14 @@
   image {
     width: 180px;
     height: 180px;
-    margin-right: 10px;
+    margin: 0 10px;
   }
 
   &.active {
     background: var(--bg-color-container-hover);
   }
 
-  .publishTime {
+  .publishTime,.status {
     color: var(--text-color-secondary);
     font-size: 24px;
   }
@@ -58,4 +59,17 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+
+.publishBtnWarpper {
+  position: fixed;
+  bottom: 60px;
+  right: 70px;
+
+  .publishBtn {
+    padding: 4px 50px;
+    height: 80px;
+    line-height: 80px;
+    box-shadow: var(--shadow-2);
+  }
 }
