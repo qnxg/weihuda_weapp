@@ -8,6 +8,7 @@ import { useAppSelector } from '@/hooks/redux'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
+import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
 
@@ -85,10 +86,14 @@ const Index: React.FC = () => {
       content: content.trim().split('\n').map((item) => `<p>${item}</p>`).join(''),
       title: getTitle(title.trim()),
       stuId: userInfo.stuId,
+      publishTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       type: 'article',
       tags: selectedTag,
       status: 0
     })
+    setContent('')
+    setTitle('')
+    setSelectedTag('')
     Taro.showToast({
       title: '发布成功',
       icon: 'success'

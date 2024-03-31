@@ -166,12 +166,14 @@ const Index: React.FC = () => {
               >
                 <View className={styles.left}>
                   <View className={styles.title}>{item.title}</View>
-                  {item.status !== 1 && (
-                    <View className={styles.status}>{item.status == 0 ? '审核中' : '审核未通过'}</View>
-                  )}
-                  {item.publishTime && (
-                    <View className={styles.publishTime}>{dayjs(item.publishTime).format('YYYY-MM-DD')}</View>
-                  )}
+                  <View className={styles.exteraInfo}>
+                    {item.publishTime && (
+                      <View className={styles.publishTime}>{dayjs(item.publishTime).format('YYYY-MM-DD')}</View>
+                    )}
+                    {item.status !== 1 && (
+                      <View className={styles.status}>{item.status == 0 ? '审核中' : '审核未通过'}</View>
+                    )}
+                  </View>
                 </View>
                 {item.cover && (
                   <View className={styles.cover}>
