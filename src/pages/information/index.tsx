@@ -16,10 +16,10 @@ const defaultTags = [
     label: '首页',
     value: ''
   },
-  {
-    label: '讨论',
-    value: '讨论'
-  },
+  // {
+  //   label: '讨论',
+  //   value: '讨论'
+  // },
   {
     label: '失物招领',
     value: '失物招领'

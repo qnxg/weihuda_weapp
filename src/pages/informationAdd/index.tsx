@@ -14,10 +14,10 @@ import styles from './index.module.scss'
 
 //TODO: 可以从数据库获取标签后更新
 const defaultTags = [
-  {
-    label: '讨论',
-    value: '讨论'
-  },
+  // {
+  //   label: '讨论',
+  //   value: '讨论'
+  // },
   {
     label: '失物招领',
     value: '失物招领'
