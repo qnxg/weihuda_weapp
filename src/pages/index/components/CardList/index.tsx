@@ -1,10 +1,11 @@
+import { Message, getMessage } from '@/apis/back/message'
 import { GradeItem, getGrade } from '@/apis/hdjw/grade'
 import { SmesterInfo, getSmesterInfo } from '@/apis/info'
-import { Message, getMessage } from '@/apis/back/message'
 import { NetflowData, getNetflow } from '@/apis/netflow'
 import { CardInfo, getCardInfo } from '@/apis/pt/card'
 import { getUnReadCount } from '@/apis/pt/email'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { fetchNoticeThunk } from '@/models/notice'
 import { Block, View } from '@tarojs/components'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -23,6 +24,8 @@ const CardList: React.FC<CardListProps> = (props) => {
   const { termYear, termType } = useAppSelector((state) => state.smester)
   const [daysLeft, setDaysLeft] = useState(999)
 
+  const dispatch = useAppDispatch()
+
   const [messageData, setMessageData] = useState<Message[] | undefined>(undefined)
   const [smesterDate, setSmesterDate] = useState<SmesterInfo | undefined>(undefined)
   const [gradeData, setGradeData] = useState<GradeItem[] | undefined>(undefined)
@@ -37,6 +40,8 @@ const CardList: React.FC<CardListProps> = (props) => {
       getMessage().then((res) => {
         setMessageData(res)
       }),
+
+      dispatch(fetchNoticeThunk()),
 
       // 获取学期信息
       getSmesterInfo().then((res) => {

@@ -83,7 +83,7 @@ const Index: React.FC = () => {
                 <View className={styles.message} />
               </View>
               <View className={styles.titleContainer}>
-                <View>消息盒子({unread})</View>
+                <View>消息盒子{unread > 0 ? `(${unread})` : ''}</View>
                 <Image src={arrow} className={styles.arrow} />
               </View>
             </View>

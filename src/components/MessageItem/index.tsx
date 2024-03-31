@@ -102,7 +102,9 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
 
   return (
     <View className={classNames(styles.messageItem, className)}>
-      <View className={styles.content}>{data.content}</View>
+      <View className={classNames(styles.content, {
+        [styles.read]: data.status === 1
+      })}>{data.content}</View>
       <View className={styles.btnWrapper}>
         <View className={styles.left}>
           <View className={classNames(styles.sendTime, styles.btn)}>{dayjs(data.sendTime).format('YYYY-MM-DD')}</View>

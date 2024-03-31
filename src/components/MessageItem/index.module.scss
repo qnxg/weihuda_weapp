@@ -11,9 +11,17 @@
   margin-top: 20px;
 }
 
+.content {
+  color: var(--text-color-primary);
+}
+
+.read {
+  color: var(--text-color-secondary);
+}
+
 .right,
 .left,
-.result {
+.result, {
   display: flex;
   align-items: center;
   color: var(--text-color-secondary);

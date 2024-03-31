@@ -43,7 +43,7 @@ const Index: React.FC = () => {
   }, [])
 
   const onRefresh = async (close) => {
-    // await run()
+    await getData()
     close()
   }
 
