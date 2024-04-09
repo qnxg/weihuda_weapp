@@ -5,7 +5,6 @@ import { NetflowData, getNetflow } from '@/apis/netflow'
 import { CardInfo, getCardInfo } from '@/apis/pt/card'
 import { getUnReadCount } from '@/apis/pt/email'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { fetchNoticeThunk } from '@/models/notice'
 import { Block, View } from '@tarojs/components'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -41,8 +40,6 @@ const CardList: React.FC<CardListProps> = (props) => {
         setMessageData(res)
       }),
 
-      dispatch(fetchNoticeThunk()),
-
       // 获取学期信息
       getSmesterInfo().then((res) => {
         setSmesterDate(res)
@@ -73,13 +70,19 @@ const CardList: React.FC<CardListProps> = (props) => {
     }
   }, [runRefereshFlag])
 
+
+  // 初始的termType为0的时候不用去获取数据，所以需要跳过第一次获取
+  const [mark, setMark] = useState(false)
   // 获取成绩
   useEffect(() => {
     // 获取成绩
-    getGrade(termYear, termType).then((res) => {
-      setGradeData(res)
-    })
-  }, [termYear, termType])
+    if (mark) {
+        getGrade(termYear, termType).then((res) => {
+        setGradeData(res);
+        })
+    }
+    setMark(true)
+  }, [termYear, termType, mark])
 
   useEffect(() => {
     if (smesterDate) {
