@@ -88,7 +88,7 @@ const Goods: React.FC<IGoodsProps> = (props) => {
           <View key={item.id} className={styles.goodsItem}>
             <View className={styles.left}>
               <View>
-                <Image className={styles.goodsImg} src={item.cover.replace('http', 'https')} mode='aspectFit' />
+                <Image className={styles.goodsImg} src={item.cover.replace('http:', 'https:')} mode='aspectFit' />
               </View>
               <View className={styles.goodsInfo}>
                 <View className={styles.goodsName}>{item.name}</View>
