@@ -5,6 +5,7 @@ import { NetflowData, getNetflow } from '@/apis/netflow'
 import { CardInfo, getCardInfo } from '@/apis/pt/card'
 import { getUnReadCount } from '@/apis/pt/email'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { fetchNoticeThunk } from '@/models/notice'
 import { Block, View } from '@tarojs/components'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -44,6 +45,8 @@ const CardList: React.FC<CardListProps> = (props) => {
       getSmesterInfo().then((res) => {
         setSmesterDate(res)
       }),
+
+      dispatch(fetchNoticeThunk()),
 
       // 获取流量信息
       getNetflow().then((res) => {

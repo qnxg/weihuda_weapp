@@ -1,8 +1,7 @@
 import { Message } from '@/apis/back/message'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { fetchNoticeThunk } from '@/models/notice'
+import { useAppSelector } from '@/hooks/redux'
 import icon from '@/static/index/icon/message.svg'
 import { getBoundingClientRect } from '@/utils/tool'
 import { Swiper, SwiperItem, View } from '@tarojs/components'
@@ -20,8 +19,6 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
   const [messageData] = useState<Message[]>(message)
   // 消息通知
   const notice = useAppSelector((state) => state.notice)
-  // dispatch
-  const dispatch = useAppDispatch()
   // 总数
   const [total, setTotal] = useState(message.length)
   // 当前显示的消息
@@ -29,21 +26,12 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
   // 高度，用于swiper的高度
   const [height, setHeight] = useState(0)
 
-  // 获取消息通知
-  const getNoticeData = async () => {
-    if (notice.data.length) return
-    dispatch(fetchNoticeThunk())
-  }
 
   // 更新总数
   useEffect(() => {
     setTotal(messageData.length + notice.unread)
   }, [messageData, notice])
 
-  // 获取数据
-  useEffect(() => {
-    getNoticeData()
-  }, [])
 
   // 计算后的高度
   const calcedHeights = useMemo(async () => {
