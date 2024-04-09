@@ -73,13 +73,19 @@ const CardList: React.FC<CardListProps> = (props) => {
     }
   }, [runRefereshFlag])
 
+
+  // 初始的termType为0的时候不用去获取数据，所以需要跳过第一次获取
+  const [mark, setMark] = useState(false)
   // 获取成绩
   useEffect(() => {
     // 获取成绩
-    getGrade(termYear, termType).then((res) => {
-      setGradeData(res)
-    })
-  }, [termYear, termType])
+    if (mark) {
+        getGrade(termYear, termType).then((res) => {
+        setGradeData(res);
+        })
+    }
+    setMark(true)
+  }, [termYear, termType, mark])
 
   useEffect(() => {
     if (smesterDate) {
