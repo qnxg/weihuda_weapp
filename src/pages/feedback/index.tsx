@@ -172,6 +172,7 @@ const Index: React.FC = () => {
                 <View className={styles.uploadIcon}></View>
                 <View className={styles.placeholder}>上传图片能帮助程序猿更好地解决问题</View>
               </View>
+              
             )}
           </View>
         </View>

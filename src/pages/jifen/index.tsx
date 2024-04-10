@@ -52,11 +52,11 @@ const Index: React.FC = () => {
       {/* 兑换奖品，积分记录，积分规则 */}
       <Card wrapperClassName={styles.jifenActionsCard}>
         <Tabs keepAlive initialValue={0}>
-          <TabPanel value={0} title='兑换奖品'>
-            <Goods total={total} updateTotal={getData} updateJifenRecord={updateJifenRecord} />
-          </TabPanel>
-          <TabPanel value={1} title='积分记录'>
+          <TabPanel value={0} title='积分记录'>
             <JifenRecord jifenRecordRef={jifenRecordRef} />
+          </TabPanel>
+          <TabPanel value={1} title='兑换奖品'>
+            <Goods total={total} updateTotal={getData} updateJifenRecord={updateJifenRecord} />
           </TabPanel>
           <TabPanel value={2} title='积分规则'>
             <JifenRule />
