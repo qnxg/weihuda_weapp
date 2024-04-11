@@ -15,8 +15,6 @@ interface IProps {
 }
 
 const MessageCard: React.FC<IProps> = ({ message }) => {
-  // 公告
-  const [messageData] = useState<Message[]>(message)
   // 消息通知
   const notice = useAppSelector((state) => state.notice)
   // 总数
@@ -29,8 +27,8 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
 
   // 更新总数
   useEffect(() => {
-    setTotal(messageData.length + notice.unread)
-  }, [messageData, notice])
+    setTotal(message.length + notice.unread)
+  }, [message, notice])
 
 
   // 计算后的高度
@@ -42,7 +40,7 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
       if (item) return item.height
       return 120
     })
-  }, [notice, messageData])
+  }, [notice, message])
 
   // 滑块切换
   const handleSwiperChange = (e) => {
@@ -82,7 +80,7 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
             className={styles.swiper}
           >
             {/* 公告 */}
-            {messageData.map((item) => {
+            {message.map((item) => {
               return (
                 <SwiperItem
                   key={item.title}
