@@ -12,35 +12,8 @@ import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
+import defaultTags from '../information/defaultTags'
 import styles from './index.module.scss'
-
-//TODO: 可以从数据库获取标签后更新
-const defaultTags = [
-  // {
-  //   label: '讨论',
-  //   value: '讨论'
-  // },
-  {
-    label: '失物招领',
-    value: '失物招领'
-  },
-  {
-    label: '活动',
-    value: '活动'
-  },
-  {
-    label: '讲座',
-    value: '讲座'
-  },
-  {
-    label: '通知',
-    value: '通知'
-  },
-  {
-    label: '其他',
-    value: '其他'
-  }
-]
 
 const getTitle = (content: string, length = 20) => {
   if (content.length <= length) {
@@ -152,19 +125,21 @@ const Index: React.FC = () => {
       <Upload label='图片' value={imgUrl} onChoose={(filePath) => setImgUrl(filePath)} />
       <Label required>分类</Label>
       <View className={styles.tagsWrapper}>
-        {defaultTags.map((item) => {
-          return (
-            <View
-              className={classNames(styles.tagsItem, {
-                [styles.selected]: selectedTag === item.value
-              })}
-              onClick={() => setSelectedTag(item.value)}
-              key={item.value}
-            >
-              {item.label}
-            </View>
-          )
-        })}
+        {defaultTags
+          .filter((v) => !!v.value)
+          .map((item) => {
+            return (
+              <View
+                className={classNames(styles.tagsItem, {
+                  [styles.selected]: selectedTag === item.value
+                })}
+                onClick={() => setSelectedTag(item.value)}
+                key={item.value}
+              >
+                {item.label}
+              </View>
+            )
+          })}
       </View>
       <Button className={styles.btn} onClick={onSubmit}>
         发布

@@ -1,48 +1,20 @@
+import { getMiniConfigPageApi } from '@/apis/miniConfig'
 import { IZhihu, getZhihuPageApi } from '@/apis/zhihu'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import { TabPanel, Tabs } from '@/components/Tabs'
-import { getBoundingClientRect } from '@/utils/tool'
+import { getBoundingClientRect, parseJSON } from '@/utils/tool'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-
-//TODO: 可以从数据库获取标签后更新
-const defaultTags = [
-  {
-    label: '首页',
-    value: ''
-  },
-  // {
-  //   label: '讨论',
-  //   value: '讨论'
-  // },
-  {
-    label: '失物招领',
-    value: '失物招领'
-  },
-  {
-    label: '活动',
-    value: '活动'
-  },
-  {
-    label: '讲座',
-    value: '讲座'
-  },
-  {
-    label: '通知',
-    value: '通知'
-  },
-  {
-    label: '其他',
-    value: '其他'
-  }
-]
+import defaultTags from './defaultTags'
 
 const Index: React.FC = () => {
+  // 标签
+  const [tags, setTags] = useState(defaultTags)
   // 知湖页面数据
   const [data, setData] = useState<IZhihu[]>([])
   // 总数，分页时会用到
@@ -56,13 +28,26 @@ const Index: React.FC = () => {
     tags: ''
   })
 
+  // 获取tags
+  const getTags = async () => {
+    const res = await getMiniConfigPageApi({ page: 1, pageSize: 100, key: 'zhihuTags' })
+    if (res.rows.length) {
+      // 先解析，没有报错就存储
+      const resTags = parseJSON(res.rows[0].value)
+      Taro.setStorageSync('zhihuTags', res.rows[0].value)
+      setTags(resTags)
+    }
+  }
+
   // 获取知湖页面数据
   const getData = async (newQueryData: typeof queryData, force: boolean = false) => {
     setLoading(true)
     const res = await getZhihuPageApi(newQueryData)
     if (force) {
+      // 切换标签时，直接替换数据
       setData(res.rows)
     } else {
+      // 滑倒底部（分页）时，追加数据
       setData([...data, ...res.rows])
     }
     setTotal(res.count)
@@ -96,17 +81,9 @@ const Index: React.FC = () => {
     getData(newQueryData)
   }
 
-  // 滑倒底部，会获取下一页的数据
-  // useReachBottom(() => {
-  //   console.log('reach bottom')
-  //   if (data.length >= total) return
-  //   const newQueryData = { ...queryData, page: queryData.page + 1 }
-  //   setQueryData(newQueryData)
-  //   getData(newQueryData)
-  // })
-
   useEffect(() => {
     getData(queryData, true)
+    getTags()
   }, [])
 
   // 下拉刷新
@@ -132,7 +109,7 @@ const Index: React.FC = () => {
       {/* 顶部tab栏 */}
       <View className={styles.tabsWrapper}>
         <Tabs tabsClassName={styles.tabs} onChange={handleChange}>
-          {defaultTags.map((item) => (
+          {tags.map((item) => (
             <TabPanel key={item.value} title={item.label} value={item.value}></TabPanel>
           ))}
           {/* <TabPanel title='首页' value=''></TabPanel>

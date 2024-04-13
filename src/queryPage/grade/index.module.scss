@@ -13,7 +13,7 @@
     padding: 32px;
     margin: 20px;
     margin-bottom: 28px;
-    background: #fff;
+    background: var(--bg-color-container);
     border-radius: 8px;
   }
 
@@ -26,8 +26,8 @@
   .nameAndGrade {
     margin-bottom: 32px;
     font-size: $fontBig;
-    color: $primaryTextColor;
-    
+    color: var(--text-color-primary);
+
     > view {
       max-width: 80%;
       word-break: break-all;
@@ -35,7 +35,7 @@
   }
 
   .exteraInfo {
-    color: $thirdTextColor;
+    color: var(--text-color-secondary);
     font-size: $fontMedium;
   }
 }
@@ -63,20 +63,6 @@
   .empty {
     .img {
       filter: invert(0.8) hue-rotate(180deg);
-    }
-  }
-
-  .gradeCardContainer {
-    .gradeCard {
-      background: $darkBgColor;
-    }
-
-    .nameAndGrade {
-      color: $darkTextColor;
-    }
-
-    .exteraInfo {
-      color: rgba($color: $darkTextColor, $alpha: 0.7);
     }
   }
 }
