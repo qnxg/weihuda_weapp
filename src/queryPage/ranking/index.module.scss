@@ -2,7 +2,35 @@
 
 .layout {
   width: 100%;
+  .viewCard {
+    @include shadow;
+    width: 80%;
+    height: auto; // 自动高度，根据内容调整
+    margin: 10px 60px 10px 60px;
+    padding: 10px 10px;
+    display: inline-block;
+    overflow: hidden;
+
+    .viewText {
+      font-size: $fontNormal;
+      line-height: 40px;
+      letter-spacing: 0.6px;
+      color: $primaryTextColor;
+    }
+  }
 }
+
+@media (prefers-color-scheme: dark) {
+    .layout {  
+      .viewCard {
+        @include darkShadow;
+  
+        .viewText {
+          color: darken($darkTextColor, 15%);
+        }
+      }
+    }
+  }
 
 .empty {
   @include flex(normal, center, column);

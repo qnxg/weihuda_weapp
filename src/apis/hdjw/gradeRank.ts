@@ -105,3 +105,11 @@ interface Total {
 export const getGradeRank = async () => {
   return request.get<GradeRank>('/hdjw/grade-rank')
 }
+
+export const getMustGrade = async (xn: number) => {
+return request.get<number>('/hdjw/must-grade', {
+    data: {
+        xn
+    }
+    })
+}

@@ -1,5 +1,6 @@
-import { GradeRank, getGradeRank } from '@/apis/hdjw/gradeRank'
+import { GradeRank, getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
 import PullRefresh from '@/components/PullRefresh'
+import { useAppSelector } from '@/hooks/redux'
 import empty from '@/static/empty/no-ranking.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
@@ -11,6 +12,10 @@ import style from './index.module.scss'
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
   const [data, setData] = useState<GradeRank | null>(null)
+
+  const [newShow, setNewShow] = useState(false)
+  const [newData, setNewData] = useState<number | null>(null)
+  const { termYear } = useAppSelector((state) => state.smester)
 
   /**
    * 获取数据
@@ -35,6 +40,14 @@ const Index: React.FC = () => {
       })
       setShow(false)
     }
+    // 不处理报错，因为不是特别重要
+    const newRes = await getMustGrade(termYear)
+    if (!newRes) {
+      setNewShow(false)
+    } else {
+      setNewData(newRes)
+      setNewShow(true)
+    }
     Taro.hideLoading()
   }
 
@@ -52,6 +65,11 @@ const Index: React.FC = () => {
       {data && show ? (
         <View className={style.layout}>
           <Report report={data.total} />
+          {newData && newShow ? (
+            <View className={style.viewCard}>
+              <View className={style.viewText}>当前学年全部必修课程加权平均分：{newData}</View>
+            </View>
+          ) : null}
           <Semester semseter={data.semesters} />
         </View>
       ) : (
