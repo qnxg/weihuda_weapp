@@ -89,6 +89,18 @@ const Index: React.FC = () => {
             </View>
           </Navigator>
           <View className={styles.divider} />
+          <Navigator url='/pages/messageleft/index'>
+            <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
+              <View className={styles.imgContainer}>
+                <View className={styles.messageleft} />
+              </View>
+              <View className={styles.titleContainer}>
+                <View>留言板</View>
+                <Image src={arrow} className={styles.arrow} />
+              </View>
+            </View>
+          </Navigator>
+          <View className={styles.divider} />
           <Navigator url='/pages/feedback/index'>
             <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
               <View className={styles.imgContainer}>

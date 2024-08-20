@@ -96,6 +96,10 @@
     @include imageCommon('~@/static/mine/icon-feedback.svg');
   }
 
+  .messageleft {
+    @include imageCommon('~@/static/mine/icon-feedback.svg');
+  }
+
   .roomBind {
     @include imageCommon('~@/static/mine/icon-room-bind.svg');
   }
