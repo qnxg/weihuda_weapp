@@ -20,7 +20,8 @@ export default {
     'pages/feedback/index', // 反馈建议
     'pages/feedbackHistory/index', // 历史反馈查询
     'pages/noDuty/index', // 免责声明
-    'pages/404/index' // 404页
+    'pages/404/index', // 404页
+    'pages/messageleft/index'//留言板
   ],
   subPackages: [
     {
