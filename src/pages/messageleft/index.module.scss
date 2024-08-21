@@ -83,34 +83,10 @@
     line-height: 80px;
   }
 
-  .feedbackLink {
-    margin-top: 72px;
-    text-decoration: underline;
-    color: $primaryBlue;
-    font-size: $fontNormal;
-    text-align: center;
-    background-color: transparent;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .selectorContainer {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+  .radioItem {
+    margin-top: 10px;
   }
   
-  .selectorOption {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    text-align: center;
-    cursor: pointer;
-  }
-  
-  .selected {
-    background-color: #007aff;
-    color: white;
-    border-color: #007aff;
-  }
 }
 
 @media (prefers-color-scheme: dark) {

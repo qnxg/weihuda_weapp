@@ -1,7 +1,7 @@
 import { IMessageLeft, postMessageLeftApi } from '@/apis/back/messageleft'
 import Button from '@/components/Button'
 import { useAppSelector } from '@/hooks/redux'
-import { Picker, Switch, Text, Textarea, View } from '@tarojs/components'
+import { Picker, Radio, RadioGroup, Text, Textarea, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
@@ -97,50 +97,42 @@ const Index: React.FC = () => {
           <Text>当前选择时间: {data.sendTime}</Text>
         </View>
       </Picker>
-
       <View className={styles.title} style={{ marginTop: '30px;' }}>
         时间胶囊：
       </View>
       <View className={styles.input}>
         <Textarea
           value={data.desc}
+          maxlength={300}
           onInput={(e) => {
             change('desc', (e.target as any).value)
           }}
           placeholder='请填写你想留给自己的话，必填。'
         />
       </View>
-
+      <View>字数：{data.desc.length}/300</View> 
       {/* 是否选择器 */}
       <View className={styles.title} style={{ marginTop: '30px' }}>
         是否愿意在公众号展示自己的留言：
       </View>
-      <View className={styles.ps} >
-      ps:公开可获得额外奖励并让心声被更多人听见
-      </View>
-      <View className={styles.selectorContainer}>
-        {/* 选项1 */}
-        <View
-          className={`${styles.selectorOption} ${data.isAgree ? styles.selected : ''}`}
-          onClick={() => change('isAgree', true)}
-        >
-          公开
-        </View>
-
-        {/* 选项2 */}
-        <View
-          className={`${styles.selectorOption} ${!data.isAgree ? styles.selected : ''}`}
-          onClick={() => change('isAgree', false)}
-        >
-          不公开
-        </View>
-      </View>
-      {/* <Switch
-        checked={data.isAgree}
+      <View className={styles.ps}>ps:公开可获得额外奖励并让心声被更多人听见</View>
+      <RadioGroup
         onChange={(e) => {
-          change('isAgree', e.detail.value)
+          const isAgree = e.detail.value === 'true'
+          change('isAgree', isAgree)
         }}
-      /> */}
+      >
+        <View className={styles.radioItem}>
+          <Radio value='true' checked={data.isAgree}>
+            公开
+          </Radio>
+        </View>
+        <View className={styles.radioItem}>
+          <Radio value='false' checked={!data.isAgree}>
+            不公开
+          </Radio>
+        </View>
+      </RadioGroup>
       <View style={{ marginTop: '30px' }}>
         <Button onClick={handleSubmit} className={styles.submitButton}>
           提交
