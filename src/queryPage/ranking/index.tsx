@@ -15,7 +15,7 @@ const Index: React.FC = () => {
   const [newShow, setNewShow] = useState(false)
   const [newData, setNewData] = useState<number | null>(null)
 //   const { termYear } = useAppSelector((state) => state.smester)
-  var termYear = 2023
+  const termYear = 2023
 
   /**
    * 获取数据
@@ -67,7 +67,7 @@ const Index: React.FC = () => {
           <Report report={data.total} />
           {newData && newShow ? (
             <View className={style.viewCard}>
-              <View className={style.viewText}>当前学年全部必修课程加权平均分：{newData}</View>
+              <View className={style.viewText}>｛termYear｝学年全部必修课程加权平均分：{newData}</View>
             </View>
           ) : null}
           <Semester semseter={data.semesters} />
