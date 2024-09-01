@@ -103,14 +103,14 @@ const Index: React.FC = () => {
       <View className={styles.input}>
         <Textarea
           value={data.desc}
-          maxlength={300}
+          maxlength={255}
           onInput={(e) => {
             change('desc', (e.target as any).value)
           }}
           placeholder='请填写你想留给自己的话，必填。'
         />
       </View>
-      <View>字数：{data.desc.length}/300</View> 
+      <View>字数：{data.desc.length}/255</View> 
       {/* 是否选择器 */}
       <View className={styles.title} style={{ marginTop: '30px' }}>
         是否愿意在公众号展示自己的留言：

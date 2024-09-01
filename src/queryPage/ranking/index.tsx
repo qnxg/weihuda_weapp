@@ -65,11 +65,11 @@ const Index: React.FC = () => {
       {data && show ? (
         <View className={style.layout}>
           <Report report={data.total} />
-          {newData && newShow ? (
+          {/* {newData && newShow ? (
             <View className={style.viewCard}>
               <View className={style.viewText}>当前学年全部必修课程加权平均分：{newData}</View>
             </View>
-          ) : null}
+          ) : null} */}
           <Semester semseter={data.semesters} />
         </View>
       ) : (
