@@ -67,7 +67,7 @@ const Index: React.FC = () => {
           <Report report={data.total} />
           {newData && newShow ? (
             <View className={style.viewCard}>
-              <View className={style.viewText}>｛termYear｝学年全部必修课程加权平均分：{newData}</View>
+              <View className={style.viewText}>{termYear}学年全部必修课程加权平均分：{newData}</View>
             </View>
           ) : null}
           <Semester semseter={data.semesters} />
