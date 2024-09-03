@@ -107,7 +107,7 @@ export const getGradeRank = async () => {
 }
 
 export const getMustGrade = async (xn: number) => {
-return request.get<number>('/hdjw/must-grade', {
+return request.get<string[]>('/hdjw/must-grade', {
     data: {
         xn
     }

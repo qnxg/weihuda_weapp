@@ -13,7 +13,7 @@ const Index: React.FC = () => {
   const [data, setData] = useState<GradeRank | null>(null)
 
   const [newShow, setNewShow] = useState(false)
-  const [newData, setNewData] = useState<number | null>(null)
+  const [newData, setNewData] = useState<string[] | null>(null)
 //   const { termYear } = useAppSelector((state) => state.smester)
   const termYear = 2023
 
@@ -64,12 +64,7 @@ const Index: React.FC = () => {
     <PullRefresh runFunc={onRefresh}>
       {data && show ? (
         <View className={style.layout}>
-          <Report report={data.total} />
-          {/* {newData && newShow ? (
-            <View className={style.viewCard}>
-              <View className={style.viewText}>{termYear}学年全部必修课程加权平均分：{newData}</View>
-            </View>
-          ) : null} */}
+          <Report report={data.total} must={newData} year={termYear} show={newShow}/>
           <Semester semseter={data.semesters} />
         </View>
       ) : (
