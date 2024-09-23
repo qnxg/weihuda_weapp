@@ -51,9 +51,8 @@ const Index: React.FC = () => {
     let reqData: Partial<IMessageLeft> = {
       isAgree: data.isAgree ? 1 : 0,
       desc: data.desc,
-      sendTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      sendTime: dayjs(data.sendTime).format('YYYY-MM-DD HH:mm:ss'),  // 格式化用户选择的时间
       stuId: data.stuId
-      // imgUrl: data.imgUrl ? data.imgUrl : null
     }
     try {
       await postMessageLeftApi(reqData)
@@ -75,6 +74,7 @@ const Index: React.FC = () => {
     }
 
     Taro.showLoading({ title: '正在提交' })
+    console.log('提交数据', data)
     submitData({
       ...data
     })
@@ -90,6 +90,7 @@ const Index: React.FC = () => {
         mode='date' // 选择日期
         value={data.sendTime}
         onChange={(e) => {
+          console.log("选择的新时间",e.detail.value)
           change('sendTime', e.detail.value)
         }}
       >
