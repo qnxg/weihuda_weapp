@@ -18,7 +18,7 @@ const Index: React.FC = () => {
   const [data, setData] = useState({
     stuId: stuId,
     isAgree: true,
-    sendTime: dayjs().format('YYYY-MM-DD'),
+    sendTime: dayjs().add(100,'day').format('YYYY-MM-DD'),
     desc: ''
     // imgUrl: ''
   })
