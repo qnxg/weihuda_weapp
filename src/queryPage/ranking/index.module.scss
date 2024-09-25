@@ -1,9 +1,5 @@
 @import '~@/utils/scss/global.scss';
 
-.layout {
-  width: 100%;
-}
-
 .empty {
   @include flex(normal, center, column);
   width: 100%;

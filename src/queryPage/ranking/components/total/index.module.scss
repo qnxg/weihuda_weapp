@@ -28,6 +28,14 @@
       color: $forthTextColor;
       text-align: center;
     }
+
+    .must {
+      height: 30px;
+      font-size: $fontMedium;
+      color: $secondTextColor;
+      text-align: center;
+      margin-bottom: 20px;
+    }
   }
 
   .position {
