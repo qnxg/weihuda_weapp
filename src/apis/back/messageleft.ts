@@ -12,6 +12,8 @@ export interface IMessageLeft {
   isAgree: number
   /** 发送时间 */
   sendTime: string
+  /** 是否发送 */
+  isSend: number
 }
 
 export interface IMessageLeftPageResponseData {
