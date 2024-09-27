@@ -183,7 +183,7 @@ const Index: React.FC = () => {
         </View>
       </View>
       <View className={styles.version}>
-        <View>Version 3.8.7</View>
+        <View>Version 3.8.8</View>
       </View>
       <View className={styles.copyright}>
         <View>Copyright © 2017-2024</View>

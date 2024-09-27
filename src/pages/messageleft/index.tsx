@@ -19,7 +19,7 @@ const Index: React.FC = () => {
     stuId: stuId,
     isAgree: true,
     isSend: false,
-    sendTime: dayjs().add(100,'day').format('YYYY-MM-DD'),
+    sendTime: dayjs().add(100, 'day').format('YYYY-MM-DD'),
     desc: ''
     // imgUrl: ''
   })
@@ -49,11 +49,16 @@ const Index: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const submitData = async (data: any) => {
     // 初始化
+    // 获取当前的时分秒
+    const currentTime = dayjs().format('HH:mm:ss')
+
+    // 拼接用户选择的日期和当前的时分秒
+    const fullDateTime = `${data.sendTime} ${currentTime}`
     let reqData: Partial<IMessageLeft> = {
       isAgree: data.isAgree ? 1 : 0,
       desc: data.desc,
       isSend: data.isSend ? 1 : 0,
-      sendTime: dayjs(data.sendTime).format('YYYY-MM-DD HH:mm:ss'),  // 格式化用户选择的时间
+      sendTime: fullDateTime, // 格式化用户选择的时间
       stuId: data.stuId
     }
     try {
@@ -92,7 +97,7 @@ const Index: React.FC = () => {
         mode='date' // 选择日期
         value={data.sendTime}
         onChange={(e) => {
-          console.log("选择的新时间",e.detail.value)
+          console.log('选择的新时间', e.detail.value)
           change('sendTime', e.detail.value)
         }}
       >
@@ -113,7 +118,7 @@ const Index: React.FC = () => {
           placeholder='请填写你想留给自己的话，必填。'
         />
       </View>
-      <View>字数：{data.desc.length}/255</View> 
+      <View>字数：{data.desc.length}/255</View>
       {/* 是否选择器 */}
       <View className={styles.title} style={{ marginTop: '30px' }}>
         是否愿意在公众号展示自己的留言：
