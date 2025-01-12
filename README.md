@@ -37,7 +37,8 @@ src
 │  ├─ request.ts                        # 请求处理函数封装
 │  ├─ storage.ts                        # 本地存储相关的函数封装
 │  ├─ tool.ts                           # 通用的工具函数
-│  └─ url.ts                            # BASE_URL
+│  ├─ url.ts                            # BASE_URL
+│  └─ getLoginCode.ts                   # 封装Taro.login()操作
 ├─ app.config.ts                        # 小程序入口，相当于小程序中的app.json
 ├─ app.scss                             # 全局样式
 ├─ app.tsx                              # 入口文件
@@ -75,7 +76,7 @@ yarn dev
 
 注意：
 
-1. 小程序控制台可能会报类似“你不是本项目的开发者”的错误，第一次开发时需要找小程序管理员成为小程序的开发者（在微信公众平台中操作）。
+1. 小程序控制台可能会报类似“你不是本项目的开发者”的错误。解决方法之一是找小程序管理员成为小程序的开发者（在微信公众平台中操作）。你也可以临时使用测试号，并将`./src/utils/getLoginCode.ts`中的`useTestingCode`置为`true`。
 
 2. 本地开发：
 

@@ -4,6 +4,7 @@ import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useRef } from 'react'
 import styles from './index.module.scss'
+import getLoginCode from '@/utils/getLoginCode'
 
 const Second: React.FC = () => {
   const stuIdRef = useRef('')
@@ -15,7 +16,7 @@ const Second: React.FC = () => {
       title: '加载中...'
     })
     try {
-      const { code } = await Taro.login()
+      const code = await getLoginCode();
       const res = await postBind({
         code,
         stuId: stuIdRef.current,

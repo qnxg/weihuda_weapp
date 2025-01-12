@@ -1,6 +1,6 @@
+import getLoginCode from '@/utils/getLoginCode'
 import request from '@/utils/request'
 import storage from '@/utils/storage'
-import Taro from '@tarojs/taro'
 
 // 避免多次请求
 let getTokenPromise: Promise<any> | null = null
@@ -13,10 +13,10 @@ export const getTokenApi = async () => {
     return getTokenPromise
   }
   getTokenPromise = new Promise(async (resolve, reject) => {
-    const login = await Taro.login()
+    const code = await getLoginCode();
     const token = await request.get<string>('/token', {
       data: {
-        code: login.code
+        code
       }
     }).catch(() => null)
     getTokenPromise = null
