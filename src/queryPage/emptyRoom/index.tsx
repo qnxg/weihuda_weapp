@@ -46,7 +46,7 @@ const Index: React.FC = () => {
       const res = await getEmptyRoom({
         xn: termYear,
         xq: termType,
-        week: state.pickerValue[1],
+        week: state.pickerValue[1] + 1,
         day: state.pickerValue[2],
         jc: getJc(state.radioValue),
         buildId: multiObject[state.pickerValue[0]].id
