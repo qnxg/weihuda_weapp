@@ -1,5 +1,6 @@
 import { GradeRank, getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
 import PullRefresh from '@/components/PullRefresh'
+import { useAppSelector } from '@/hooks/redux'
 import empty from '@/static/empty/no-ranking.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
@@ -14,8 +15,10 @@ const Index: React.FC = () => {
 
   const [newShow, setNewShow] = useState(false)
   const [newData, setNewData] = useState<string[] | null>(null)
-//   const { termYear } = useAppSelector((state) => state.smester)
-  const termYear = 2023
+  var { termYear, termType} = useAppSelector((state) => state.smester)
+  if (termType == 1) {
+    termYear -= 1
+  }
 
   /**
    * 获取数据
@@ -41,7 +44,7 @@ const Index: React.FC = () => {
       setShow(false)
     }
     // 不处理报错，因为不是特别重要
-    const newRes = await getMustGrade(termYear) // 这项数据手动更新
+    const newRes = await getMustGrade()
     if (!newRes) {
       setNewShow(false)
     } else {
