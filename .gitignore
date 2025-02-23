@@ -5,6 +5,6 @@ deploy_versions/
 node_modules/
 .DS_Store
 .idea
-yarn.lock
 yarn-error.log
 .swc
+package-lock.json
