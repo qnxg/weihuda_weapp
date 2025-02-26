@@ -1,4 +1,4 @@
-import { getLibraryApi } from '@/apis/library'
+import { getLibraryApi, LibraryRes } from '@/apis/library'
 import DisplayCard from '@/components/DisplayCard'
 import Card from '@/components/LineDivideCard'
 import Left from '@/components/LineDivideCard/components/LeftPart'
@@ -13,7 +13,6 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { Library } from './interface'
 
 const items = ['在借图书', '借阅清单', '借阅账单']
 
@@ -21,7 +20,7 @@ const Index: React.FC = () => {
   const [current, setCurrent] = useState(0)
   const [show, setShow] = useState(false)
 
-  const [data, setData] = useState<Library | null>(null)
+  const [data, setData] = useState<LibraryRes | null>(null)
 
   /**
    * 获取数据
@@ -33,6 +32,7 @@ const Index: React.FC = () => {
     })
     try {
       const res = await getLibraryApi()
+      console.log(res)
       if (!res) {
         setShow(false)
       } else {
@@ -71,8 +71,8 @@ const Index: React.FC = () => {
               <View style={{ padding: 0 }}>
                 <View className={styles.totalAmount}>{`共${data.borrowing.length}本书`}</View>
                 {data.borrowing.map((item, index) => {
-                  const temp = item.returnDate.split('-')
-                  const date = item.returnDate.replace(/-/g, '/')
+                  const temp = item.return_date.split('-')
+                  const date = item.return_date.replace(/-/g, '/')
                   const rest = dayjs(new Date(+temp[0], +temp[1] - 1, +temp[2])).diff(dayjs(), 'day')
                   return (
                     <Card
@@ -84,10 +84,9 @@ const Index: React.FC = () => {
                           title={item.title}
                           renderContent={
                             <View style='font-size: 20rpx;'>
-                              <View>{`${item.author}/${item.publisher}`}</View>
-                              <View>
-                                到期：{date} 续借次数：{item.renew}
-                              </View>
+                              <View>{`${item.author}`}</View>
+                              <View>{`${item.library}`}</View>
+                              <View>到期：{date}</View>
                             </View>
                           }
                         />
@@ -122,7 +121,12 @@ const Index: React.FC = () => {
                       renderRight={
                         <Right
                           title={item.title}
-                          renderContent={<View style='font-size: 20rpx;'>{`${item.author}/${item.publisher}`}</View>}
+                          renderContent={
+                            <>
+                              <View style='font-size: 20rpx;'>{`${item.author}`}</View>
+                              <View style='font-size: 20rpx;'>{`${item.library}`}</View>
+                            </>
+                          }
                         />
                       }
                     />
@@ -142,20 +146,11 @@ const Index: React.FC = () => {
             {data && show && data.finance.length !== 0 ? (
               <View>
                 {data.finance.map((item) => {
-                  const title = item.title.length > 24 ? item.title.substr(0, 24) + '…' : item.title
                   return (
-                    <DisplayCard
-                      title={item.feeType}
-                      subTitle={String(item.cost)}
-                      key={Math.random()}
-                      footer={item.time}
-                    >
+                    <DisplayCard title={item.fee_type} subTitle={item.cost} key={Math.random()} footer={item.time}>
                       <View>图书编号：{item.barcode}</View>
-                      <View>图书名：{title}</View>
-                      <View>
-                        支付类型/状态：{item.payType} / {item.paySign}
-                      </View>
-                      <View>订单号：{item.tranID}</View>
+                      <View>产生地点：{item.place}</View>
+                      <View>支付类型/状态：{item.pay_sign}</View>
                     </DisplayCard>
                   )
                 })}
