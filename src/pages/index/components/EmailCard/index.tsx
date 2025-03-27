@@ -15,7 +15,7 @@ const EmailCard: React.FC<CardProps> = (props) => {
     <CardLayout icon={icon} title='校园邮箱'>
       <View className={styles.outer}>
         <View className={`${styles.item} ${styles.left}`}>
-          <Text>未读邮件数: {unReadCount ? unReadCount : '查询失败'}</Text>
+          <Text>未读邮件数: {unReadCount ?? '查询失败'}</Text>
         </View>
       </View>
     </CardLayout>
