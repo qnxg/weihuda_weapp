@@ -72,7 +72,7 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
             duration={500}
             interval={3000}
             current={current}
-            // autoplay
+            autoplay
             easingFunction='easeInOutCubic'
             onChange={handleSwiperChange}
             adjustHeight='current'
