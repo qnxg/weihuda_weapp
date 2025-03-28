@@ -1,38 +1,38 @@
-import arrangement from '@/static/toolBox/icon-arrangement.svg';
-import borrow from '@/static/toolBox/icon-borrow.svg';
-import computerTest from '@/static/toolBox/icon-computer-test.svg';
-import courseInfo from '@/static/toolBox/icon-course-info.svg';
-import electricityHistory from '@/static/toolBox/icon-electricity.svg';
-import empty from '@/static/toolBox/icon-empty.svg';
-import examId from '@/static/toolBox/icon-exam-id.svg';
-import experiment from '@/static/toolBox/icon-experiment.svg';
-import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg';
-import grade from '@/static/toolBox/icon-grade.svg';
-import netflowBill from '@/static/toolBox/icon-network-bill.svg';
-import netflowDetail from '@/static/toolBox/icon-network-detail.svg';
+import arrangement from '@/static/toolBox/icon-arrangement.svg'
+import borrow from '@/static/toolBox/icon-borrow.svg'
+import computerTest from '@/static/toolBox/icon-computer-test.svg'
+import courseInfo from '@/static/toolBox/icon-course-info.svg'
+import electricity from '@/static/toolBox/icon-electricity.svg'
+import empty from '@/static/toolBox/icon-empty.svg'
+import examId from '@/static/toolBox/icon-exam-id.svg'
+import experiment from '@/static/toolBox/icon-experiment.svg'
+import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg'
+import grade from '@/static/toolBox/icon-grade.svg'
+import netflowBill from '@/static/toolBox/icon-network-bill.svg'
+import netflowDetail from '@/static/toolBox/icon-network-detail.svg'
 // import noclass from '@/static/toolBox/icon-noclass.svg';
-import peaceTime from '@/static/toolBox/icon-peacetime.svg';
-import PEAppoint from '@/static/toolBox/icon-pe-appointment.svg';
-import PEGrade from '@/static/toolBox/icon-pe-grade.svg';
-import PEStandard from '@/static/toolBox/icon-pe-standard.svg';
-import ranking from '@/static/toolBox/icon-ranking.svg';
-import schoolCalendar from '@/static/toolBox/icon-school-calendar.svg';
+import peaceTime from '@/static/toolBox/icon-peacetime.svg'
+import PEAppoint from '@/static/toolBox/icon-pe-appointment.svg'
+import PEGrade from '@/static/toolBox/icon-pe-grade.svg'
+import PEStandard from '@/static/toolBox/icon-pe-standard.svg'
+import ranking from '@/static/toolBox/icon-ranking.svg'
+import schoolCalendar from '@/static/toolBox/icon-school-calendar.svg'
 // import selectResult from '@/static/toolBox/icon-select-result.svg';
-import stuCard from '@/static/toolBox/icon-stu-card.svg';
-import trend from '@/static/toolBox/icon-trend.svg';
+import stuCard from '@/static/toolBox/icon-stu-card.svg'
+import trend from '@/static/toolBox/icon-trend.svg'
 
 /**
  * @interface GridTab 定义tab数据结构
  */
 export interface GridTab {
-  title: string;
-  imgUrl: string;
-  navigator: string;
+  title: string
+  imgUrl: string
+  navigator: string
 }
 
 export interface Category {
-  name: string;
-  member: GridTab[];
+  name: string
+  member: GridTab[]
 }
 
 export const data: Category[] = [
@@ -143,12 +143,12 @@ export const data: Category[] = [
         title: '流量详情',
         imgUrl: netflowDetail,
         navigator: '/queryPage/netflowDetail/index'
+      },
+      {
+        title: '电费查询',
+        imgUrl: electricity,
+        navigator: '/queryPage/electricity/index'
       }
-      // {
-      //   title: '电费历史',
-      //   imgUrl: electricityHistory,
-      //   navigator: '/queryPage/electricityHistory/index'
-      // }
     ]
   }
-];
+]
