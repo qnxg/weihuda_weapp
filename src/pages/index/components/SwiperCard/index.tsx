@@ -39,19 +39,27 @@ const HomeSwiper: React.FC = () => {
   }
 
   return (
-    <View className={styles.carouselWrapper}>
+    <View>
         <Card>
             <CardHeader title='今日知湖' icon={cardIcon}/>
             <Swiper
-                className={styles.carousel}
+                className={styles.swiper}
                 autoplay
                 interval={5000}
                 circular
                 indicatorDots
                 indicatorActiveColor="#007aff"
+                style={{ height: '120px' }}
             >
                 {latestArticles.map((item) => (
-                <SwiperItem key={item.id} onClick={() => handleClick(item)}>
+                <SwiperItem key={item.id} onClick={() => handleClick(item)} style={
+                    {
+                        height: '120px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }
+                }>
                     <Card
                         key={item.id}
                         wrapperClassName={styles.articleItemWrapper}
@@ -75,7 +83,6 @@ const HomeSwiper: React.FC = () => {
                             <Image src={item.cover} mode='aspectFill' />
                         </View>
                         )}
-                        {/* <View>{item.content}</View> */}
                     </Card>
                 </SwiperItem>
                 ))}

@@ -106,8 +106,8 @@ const CardList: React.FC<CardListProps> = (props) => {
 
   return (
     <Block>
-      <HomeSwiper/>
       <MessageCard message={messageData || []} />
+      <HomeSwiper/>
       <TodayClass currentWeek={curDayAndWeek.curWeek || 0} dayOfTheWeek={curDayAndWeek.curDay || 0} />
       <View className={styles.cardView}>
         <View className={styles.cardItem}>

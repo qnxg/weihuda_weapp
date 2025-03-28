@@ -70,7 +70,7 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
           <Swiper
             circular
             duration={500}
-            interval={3000}
+            interval={6000}
             current={current}
             autoplay
             easingFunction='easeInOutCubic'
