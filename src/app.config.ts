@@ -21,7 +21,7 @@ export default {
     'pages/feedbackHistory/index', // 历史反馈查询
     'pages/noDuty/index', // 免责声明
     'pages/404/index', // 404页
-    'pages/messageleft/index'//留言板
+    'pages/messageleft/index' //留言板
   ],
   subPackages: [
     {
@@ -47,8 +47,8 @@ export default {
         'card/index', // 校园卡账单
         'card/detail', // 交易详情
         'netflowOrder/index', // 校园网流量账单
-        'netflowDetail/index' // 校园网流量明细
-        // 'electricityHistory/index', // 剩余电量历史记录
+        'netflowDetail/index', // 校园网流量明细
+        'electricity/index' // 剩余电量查询
       ]
     }
   ],

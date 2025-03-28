@@ -19,6 +19,8 @@ import HomeSwiper from '../SwiperCard'
 import TodayClass from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
+import ElectricityCard from '@/pages/index/components/ElectricityCard'
+import { getElectricityApi } from '@/apis/electricity'
 
 const CardList: React.FC<CardListProps> = (props) => {
   const { curDayAndWeek, runRefereshFlag, stopRefresh } = props
@@ -33,6 +35,7 @@ const CardList: React.FC<CardListProps> = (props) => {
   const [netFlowData, setNetFlowData] = useState<NetflowData | undefined>(undefined)
   const [cardData, setCardData] = useState<CardInfo | undefined>(undefined)
   const [unReadCount, setUnReadCount] = useState<number | undefined>(undefined)
+  const [electricity, setElectricity] = useState<string | undefined>(undefined)
 
   // 获取数据
   const getData = async () => {
@@ -59,6 +62,11 @@ const CardList: React.FC<CardListProps> = (props) => {
         setCardData(res)
       }),
 
+      // 获取电量信息
+      getElectricityApi().then((res) => {
+        setElectricity(res)
+      }),
+
       // 获取未读邮件数量
       getUnReadCount().then((res) => {
         setUnReadCount(res)
@@ -74,16 +82,15 @@ const CardList: React.FC<CardListProps> = (props) => {
     }
   }, [runRefereshFlag])
 
-
   // 初始的termType为0的时候不用去获取数据，所以需要跳过第一次获取
   const [mark, setMark] = useState(false)
   // 获取成绩
   useEffect(() => {
     // 获取成绩
     if (mark) {
-        getGrade(termYear, termType).then((res) => {
-        setGradeData(res);
-        })
+      getGrade(termYear, termType).then((res) => {
+        setGradeData(res)
+      })
     }
     setMark(true)
   }, [termYear, termType, mark])
@@ -108,6 +115,7 @@ const CardList: React.FC<CardListProps> = (props) => {
     <Block>
       <HomeSwiper/>
       <MessageCard message={messageData || []} />
+      {/*<AlertCard info='您的宿舍电费已不足 5 元，请注意及时充值' variant='warning' />*/}
       <TodayClass currentWeek={curDayAndWeek.curWeek || 0} dayOfTheWeek={curDayAndWeek.curDay || 0} />
       <View className={styles.cardView}>
         <View className={styles.cardItem}>
@@ -116,10 +124,9 @@ const CardList: React.FC<CardListProps> = (props) => {
         <View className={styles.cardItem}>
           <NetflowCard netFlow={netFlowData} />
         </View>
-        {/* 电费卡片
-          <View>
-            <ElectricityCard electricity={data?.data?.garden?.electricity} dorm={data?.data?.garden?.dorm} />
-          </View> */}
+        <View className={styles.cardItem}>
+          <ElectricityCard electricity={electricity} />
+        </View>
         <View className={styles.cardItem}>
           <CountdownCard daysLeft={daysLeft} />
         </View>
