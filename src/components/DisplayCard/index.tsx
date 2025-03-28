@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { View, Image } from '@tarojs/components'
 
 import styles from './index.module.scss'
@@ -6,7 +6,7 @@ import styles from './index.module.scss'
 interface Props extends React.PropsWithChildren<{}> {
   title?: string
   subTitle?: string | null
-  footer?: string
+  footer?: string | ReactNode
   icon?: string
 }
 

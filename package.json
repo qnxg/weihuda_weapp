@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "taro build --type weapp",
-    "dev": "taro build --type weapp --watch"
+    "dev": "taro build --type weapp --watch",
+    "postinstall": "weapp-tw patch"
   },
   "browserslist": [
     "last 3 versions",
@@ -43,6 +44,7 @@
     "@types/webpack-env": "^1.18.2",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "autoprefixer": "^10.4.21",
     "babel-preset-taro": "^3.6.17",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
@@ -51,8 +53,11 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.5.3",
     "prettier": "^3.0.3",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.2.2",
+    "weapp-tailwindcss": "^4.1.1",
     "webpack": "^5.88.2",
     "webpack-bundle-analyzer": "^4.9.1"
   }

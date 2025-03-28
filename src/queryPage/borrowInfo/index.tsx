@@ -32,7 +32,6 @@ const Index: React.FC = () => {
     })
     try {
       const res = await getLibraryApi()
-      console.log(res)
       if (!res) {
         setShow(false)
       } else {
