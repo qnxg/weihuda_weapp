@@ -1,0 +1,19 @@
+@import "~@/utils/scss/global.scss";
+
+.box {
+  padding: 20px 20px 0;
+}
+
+.content {
+  background: #FFF4E5;
+  width: 100%;
+  font-size: $fontMedium;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.icon {
+  height: 52px;
+  width: 52px;
+}

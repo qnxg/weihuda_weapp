@@ -94,7 +94,9 @@ npx yarn dev
 
 1. 确保 `src/utils/url.ts` 中的BASE_URL为正式环境
 
-2. 设置中取消勾选不校验合法域名选项，然后对你所写的功能进行测试
+2. 确保 `./src/utils/getLoginCode.ts` 中的 `useTestingCode` 为 `false`
+
+3. 设置中取消勾选不校验合法域名选项，然后对你所写的功能进行测试
 
 运行以下命令对项目打包：
 

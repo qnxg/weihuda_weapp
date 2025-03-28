@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-commonjs
-const path = require('path');
+const path = require('path')
+const { UnifiedWebpackPluginV5 } = require('weapp-tailwindcss/webpack')
 
 const config = {
   projectName: 'hnu_query',
@@ -49,13 +50,29 @@ const config = {
           localIdentHashSalt: '1000@hnu'
         }
       }
+    },
+    webpackChain(chain, webpack) {
+      // 复制这块区域到你的配置代码中 region start
+      chain.merge({
+        plugin: {
+          install: {
+            plugin: UnifiedWebpackPluginV5,
+            args: [
+              {
+                appType: 'taro'
+              }
+            ]
+          }
+        }
+      })
+      // region end
     }
   }
-};
+}
 
 module.exports = function (merge) {
   if (process.env.NODE_ENV === 'development') {
-    return merge({}, config, require('./dev'));
+    return merge({}, config, require('./dev'))
   }
-  return merge({}, config, require('./prod'));
-};
+  return merge({}, config, require('./prod'))
+}

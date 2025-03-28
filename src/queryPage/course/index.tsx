@@ -68,14 +68,20 @@ const Index: React.FC = () => {
         <View className={styles.outer}>
           {data?.data?.hdjw?.course.map((item) => {
             return (
-              <DisplayCard title={item.name} subTitle={item.classID} footer={item.serial} key={Math.random()}>
+              <DisplayCard
+                title={item.name}
+                subTitle={item.classID}
+                footer={`${item.serial} - ${item.place}`}
+                key={Math.random()}
+              >
                 <View>授课老师：{item.teacher}</View>
+                <View>开课学院：{item.academy}</View>
+                <View>上课班级：{item.className}</View>
                 <View>考核方式：{item.examType}</View>
                 <View>选课人数：{item.people}</View>
                 <View>
                   学分/学时：{item.credit}/{item.school}
                 </View>
-                <View>上课时间地点：{item.timePlace}</View>
               </DisplayCard>
             )
           })}
