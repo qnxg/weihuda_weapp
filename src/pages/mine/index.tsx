@@ -137,7 +137,7 @@ const Index: React.FC = () => {
             </View>
           </View>
           <View className={styles.divider} />
-          <Navigator openType='navigate' url='/pages/changeLog/index'>
+          {/* <Navigator openType='navigate' url='/pages/changeLog/index'>
             <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
               <View className={styles.imgContainer}>
                 <View className={styles.changelogImg} />
@@ -148,7 +148,7 @@ const Index: React.FC = () => {
               </View>
             </View>
           </Navigator>
-          <View className={styles.divider} />
+          <View className={styles.divider} /> */}
           <Navigator openType='navigate' url='/pages/noDuty/index'>
             <View className={styles.optionItem} hoverClass={styles.itemHover} hoverStayTime={200}>
               <View className={styles.imgContainer}>
