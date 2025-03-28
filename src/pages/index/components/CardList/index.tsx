@@ -118,9 +118,9 @@ const CardList: React.FC<CardListProps> = (props) => {
       {/*<AlertCard info='您的宿舍电费已不足 5 元，请注意及时充值' variant='warning' />*/}
       <TodayClass currentWeek={curDayAndWeek.curWeek || 0} dayOfTheWeek={curDayAndWeek.curDay || 0} />
       <View className={styles.cardView}>
-        <View className={styles.cardItem}>
+        {gradeData && gradeData.length > 0  && (<View className={styles.cardItem}>
           <GradeCard grade={gradeData} />
-        </View>
+        </View>)}
         <View className={styles.cardItem}>
           <NetflowCard netFlow={netFlowData} />
         </View>
@@ -136,6 +136,13 @@ const CardList: React.FC<CardListProps> = (props) => {
         <View className={styles.cardItem}>
           <EmailCard unReadCount={unReadCount} />
         </View>
+        {
+         (!gradeData || gradeData.length === 0) && (
+            <View className={styles.cardItem}>
+                <GradeCard grade={[]} />
+            </View>
+         )
+        }
       </View>
     </Block>
   )
