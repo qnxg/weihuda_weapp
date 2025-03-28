@@ -10,7 +10,7 @@ import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg'
 import grade from '@/static/toolBox/icon-grade.svg'
 import netflowBill from '@/static/toolBox/icon-network-bill.svg'
 import netflowDetail from '@/static/toolBox/icon-network-detail.svg'
-// import noclass from '@/static/toolBox/icon-noclass.svg';
+import noclass from '@/static/toolBox/icon-noclass.svg';
 import peaceTime from '@/static/toolBox/icon-peacetime.svg'
 import PEAppoint from '@/static/toolBox/icon-pe-appointment.svg'
 import PEGrade from '@/static/toolBox/icon-pe-grade.svg'
@@ -18,21 +18,21 @@ import PEStandard from '@/static/toolBox/icon-pe-standard.svg'
 import ranking from '@/static/toolBox/icon-ranking.svg'
 import schoolCalendar from '@/static/toolBox/icon-school-calendar.svg'
 // import selectResult from '@/static/toolBox/icon-select-result.svg';
-import stuCard from '@/static/toolBox/icon-stu-card.svg'
-import trend from '@/static/toolBox/icon-trend.svg'
+import stuCard from '@/static/toolBox/icon-stu-card.svg';
+import trend from '@/static/toolBox/icon-trend.svg';
 
 /**
  * @interface GridTab 定义tab数据结构
  */
 export interface GridTab {
-  title: string
-  imgUrl: string
-  navigator: string
+  title: string;
+  imgUrl: string;
+  navigator: string;
 }
 
 export interface Category {
-  name: string
-  member: GridTab[]
+  name: string;
+  member: GridTab[];
 }
 
 export const data: Category[] = [
@@ -148,7 +148,17 @@ export const data: Category[] = [
         title: '电费查询',
         imgUrl: electricity,
         navigator: '/queryPage/electricity/index'
+      },
+      {
+        title: '萌新手册',
+        imgUrl: noclass,
+        navigator: '/pages/webview/index?url=https://qnxg.cn/mxsc/book/'
       }
+      // {
+      //   title: '电费历史',
+      //   imgUrl: electricityHistory,
+      //   navigator: '/queryPage/electricityHistory/index'
+      // }
     ]
   }
-]
+];

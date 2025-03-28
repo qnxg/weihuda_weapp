@@ -15,6 +15,7 @@ import EmailCard from '../EmailCard'
 import GradeCard from '../GradeCard'
 import MessageCard from '../MessageCard'
 import NetflowCard from '../NetflowCard'
+import HomeSwiper from '../SwiperCard'
 import TodayClass from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
@@ -112,6 +113,7 @@ const CardList: React.FC<CardListProps> = (props) => {
 
   return (
     <Block>
+      <HomeSwiper/>
       <MessageCard message={messageData || []} />
       {/*<AlertCard info='您的宿舍电费已不足 5 元，请注意及时充值' variant='warning' />*/}
       <TodayClass currentWeek={curDayAndWeek.curWeek || 0} dayOfTheWeek={curDayAndWeek.curDay || 0} />
