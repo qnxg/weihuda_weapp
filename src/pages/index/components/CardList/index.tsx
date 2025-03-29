@@ -1,5 +1,5 @@
 import { Message, getMessage } from '@/apis/back/message'
-import { getElectricityApi } from '@/apis/electricity'
+import { Dormitory, getDormitoryApi, getElectricityApi } from '@/apis/electricity'
 import { GradeItem, getGrade } from '@/apis/hdjw/grade'
 import { SmesterInfo, getSmesterInfo } from '@/apis/info'
 import { NetflowData, getNetflow } from '@/apis/netflow'
@@ -36,6 +36,7 @@ const CardList: React.FC<CardListProps> = (props) => {
   const [cardData, setCardData] = useState<CardInfo | undefined>(undefined)
   const [unReadCount, setUnReadCount] = useState<number | undefined>(undefined)
   const [electricity, setElectricity] = useState<string | undefined>(undefined)
+  const [dormitory, setDormitory] = useState<Dormitory | null>(null)
 
   // 获取数据
   const getData = async () => {
@@ -65,6 +66,11 @@ const CardList: React.FC<CardListProps> = (props) => {
       // 获取电量信息
       getElectricityApi().then((res) => {
         setElectricity(res)
+      }),
+
+      // 获取宿舍信息
+      getDormitoryApi().then((res) => {
+        setDormitory(res)
       }),
 
       // 获取未读邮件数量
@@ -125,7 +131,7 @@ const CardList: React.FC<CardListProps> = (props) => {
           <NetflowCard netFlow={netFlowData} />
         </View>
         <View className={styles.cardItem}>
-          <ElectricityCard electricity={electricity} />
+          <ElectricityCard electricity={electricity} dormitory={dormitory?.room} />
         </View>
         <View className={styles.cardItem}>
           <CountdownCard daysLeft={daysLeft} />
