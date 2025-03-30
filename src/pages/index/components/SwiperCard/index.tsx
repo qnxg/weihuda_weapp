@@ -1,7 +1,7 @@
 import { getZhihuPageApi, IZhihu } from '@/apis/zhihu'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
-import cardIcon from '@/static/information/time.svg'
+import cardIcon from '@/static/index/icon/information.svg'
 import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'

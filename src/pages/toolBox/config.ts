@@ -5,21 +5,21 @@ import courseInfo from '@/static/toolBox/icon-course-info.svg'
 import electricity from '@/static/toolBox/icon-electricity.svg'
 import empty from '@/static/toolBox/icon-empty.svg'
 import examId from '@/static/toolBox/icon-exam-id.svg'
-import experiment from '@/static/toolBox/icon-experiment.svg'
 import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg'
+import experiment from '@/static/toolBox/icon-experiment.svg'
 import grade from '@/static/toolBox/icon-grade.svg'
 import netflowBill from '@/static/toolBox/icon-network-bill.svg'
 import netflowDetail from '@/static/toolBox/icon-network-detail.svg'
-import noclass from '@/static/toolBox/icon-noclass.svg';
-import peaceTime from '@/static/toolBox/icon-peacetime.svg'
 import PEAppoint from '@/static/toolBox/icon-pe-appointment.svg'
 import PEGrade from '@/static/toolBox/icon-pe-grade.svg'
 import PEStandard from '@/static/toolBox/icon-pe-standard.svg'
+import peaceTime from '@/static/toolBox/icon-peacetime.svg'
 import ranking from '@/static/toolBox/icon-ranking.svg'
 import schoolCalendar from '@/static/toolBox/icon-school-calendar.svg'
 // import selectResult from '@/static/toolBox/icon-select-result.svg';
-import stuCard from '@/static/toolBox/icon-stu-card.svg';
-import trend from '@/static/toolBox/icon-trend.svg';
+import mxsc from '@/static/toolBox/icon-mxsc.svg'
+import stuCard from '@/static/toolBox/icon-stu-card.svg'
+import trend from '@/static/toolBox/icon-trend.svg'
 
 /**
  * @interface GridTab 定义tab数据结构
@@ -151,7 +151,7 @@ export const data: Category[] = [
       },
       {
         title: '萌新手册',
-        imgUrl: noclass,
+        imgUrl: mxsc,
         navigator: '/pages/webview/index?url=https://qnxg.cn/mxsc/book/'
       }
       // {
