@@ -86,10 +86,10 @@ const CardList: React.FC<CardListProps> = (props) => {
     })
   }, [fetchDataListener])
 
-  // 初始的termType为0的时候不用去获取数据，所以需要跳过第一次获取
   // 获取成绩
   useEffect(() => {
     // 获取成绩
+    // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
     if (termType) {
       getGrade(termYear, termType).then((res) => {
         setGradeData(res)
