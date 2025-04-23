@@ -16,7 +16,7 @@ export interface StateType {
   /**
    * 第几学期
    */
-  termType: number
+  termType: number | null
   /**
    * 学年
    */
@@ -78,7 +78,7 @@ export const getSmesterInfoThunk = createAsyncThunk('smester/getSmesterInfo', as
 
 const initialState: StateType = {
   termStart: '2023-09-10',
-  termType: 0,
+  termType: null,
   termYear: 2023,
   weekNum: 0,
   dayOfWeek: 0

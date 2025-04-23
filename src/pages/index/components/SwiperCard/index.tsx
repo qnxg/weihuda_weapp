@@ -40,54 +40,54 @@ const HomeSwiper: React.FC = () => {
 
   return (
     <View>
-        <Card>
-            <CardHeader title='今日知湖' icon={cardIcon}/>
-            <Swiper
-                className={styles.swiper}
-                autoplay
-                interval={5000}
-                circular
-                indicatorDots
-                indicatorActiveColor="#007aff"
-                style={{ height: '120px' }}
-            >
-                {latestArticles.map((item) => (
-                <SwiperItem key={item.id} onClick={() => handleClick(item)} style={
-                    {
-                        height: '120px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }
-                }>
-                    <Card
-                        key={item.id}
-                        wrapperClassName={styles.articleItemWrapper}
-                        className={styles.articleItem}
-                        hoverClass={styles.active}
-                        onClick={() => handleClick(item)}
-                    >
-                        <View className={styles.left}>
-                        <View className={styles.title}>{item.title}</View>
-                        <View className={styles.exteraInfo}>
-                            {item.publishTime && (
-                            <View className={styles.publishTime}>{dayjs(item.publishTime).format('YYYY-MM-DD')}</View>
-                            )}
-                            {item.status !== 1 && (
-                            <View className={styles.status}>{item.status == 0 ? '审核中' : '审核未通过'}</View>
-                            )}
-                        </View>
-                        </View>
-                        {item.cover && (
-                        <View className={styles.cover}>
-                            <Image src={item.cover} mode='aspectFill' />
-                        </View>
-                        )}
-                    </Card>
-                </SwiperItem>
-                ))}
-            </Swiper>
-        </Card>
+      <Card>
+        <CardHeader title='今日知湖' icon={cardIcon} />
+        <Swiper
+          className={styles.swiper}
+          autoplay
+          interval={5000}
+          circular
+          indicatorDots
+          indicatorActiveColor="#007aff"
+          style={{ height: '120px' }}
+        >
+          {latestArticles.map((item) => (
+            <SwiperItem key={item.id} onClick={() => handleClick(item)} style={
+              {
+                height: '120px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }
+            }>
+              <Card
+                key={item.id}
+                wrapperClassName={styles.articleItemWrapper}
+                className={styles.articleItem}
+                hoverClass={styles.active}
+                onClick={() => handleClick(item)}
+              >
+                <View className={styles.left}>
+                  <View className={styles.title}>{item.title}</View>
+                  <View className={styles.exteraInfo}>
+                    {item.publishTime && (
+                      <View className={styles.publishTime}>{dayjs(item.publishTime).format('YYYY-MM-DD')}</View>
+                    )}
+                    {item.status !== 1 && (
+                      <View className={styles.status}>{item.status == 0 ? '审核中' : '审核未通过'}</View>
+                    )}
+                  </View>
+                </View>
+                {item.cover && (
+                  <View className={styles.cover}>
+                    <Image src={item.cover} mode='aspectFill' />
+                  </View>
+                )}
+              </Card>
+            </SwiperItem>
+          ))}
+        </Swiper>
+      </Card>
     </View>
   )
 }
