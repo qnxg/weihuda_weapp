@@ -6,6 +6,6 @@ export interface Data {
 export interface CardListProps {
   curDayAndWeek: Data
   isInit: boolean
-  runRefereshFlag: any
-  stopRefresh: any
+  fetchDataListener: any
+  onFetchDataFinished: any
 }

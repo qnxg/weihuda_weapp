@@ -23,7 +23,7 @@ import styles from './index.module.scss'
 import { CardListProps } from './interface'
 
 const CardList: React.FC<CardListProps> = (props) => {
-  const { curDayAndWeek, runRefereshFlag, stopRefresh } = props
+  const { curDayAndWeek, fetchDataListener, onFetchDataFinished } = props
   const { termYear, termType } = useAppSelector((state) => state.smester)
 
   const dispatch = useAppDispatch()
@@ -81,12 +81,10 @@ const CardList: React.FC<CardListProps> = (props) => {
   }
 
   useEffect(() => {
-    if (runRefereshFlag) {
-      getData().then(() => {
-        stopRefresh()
-      })
-    }
-  }, [runRefereshFlag])
+    getData().then(() => {
+      onFetchDataFinished()
+    })
+  }, [fetchDataListener])
 
   // 初始的termType为0的时候不用去获取数据，所以需要跳过第一次获取
   // 获取成绩
