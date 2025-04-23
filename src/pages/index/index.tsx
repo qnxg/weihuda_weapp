@@ -12,8 +12,6 @@ import styles from './index.module.scss'
 import useRefreshKey from '@/utils/useRefreshKey'
 
 const Index: React.FC = () => {
-  // 这个isInit到底是干嘛的？
-  const [isInit, setIsInit] = useState(true)
   const [fetchDataListener, fetchDataTrigger] = useRefreshKey();
   const { dayOfWeek } = useAppSelector((state) => state.smester)
   const { isBind } = useAppSelector((state) => state.userInfo)
@@ -33,7 +31,6 @@ const Index: React.FC = () => {
     if (isBind) {
       if (terms && terms.length > 0) {
         dispatch(refreshClassTableThunk())
-        setIsInit(false)
       } else {
         dispatch(initClassTableThunk())
       }
@@ -59,7 +56,6 @@ const Index: React.FC = () => {
             onFetchDataFinished={() => {
               scrollRef.current?.stop()
             }}
-            isInit={isInit}
             fetchDataListener={fetchDataListener}
             curDayAndWeek={{ curWeek: currentWeek, curDay: dayOfWeek }}
           />
