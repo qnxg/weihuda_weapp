@@ -12,6 +12,7 @@ import styles from './index.module.scss'
 import useRefreshKey from '@/utils/useRefreshKey'
 
 const Index: React.FC = () => {
+  // 这个isInit到底是干嘛的？
   const [isInit, setIsInit] = useState(true)
   const [fetchDataListener, fetchDataTrigger] = useRefreshKey();
   const { dayOfWeek } = useAppSelector((state) => state.smester)

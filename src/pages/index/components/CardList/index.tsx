@@ -22,8 +22,9 @@ import TodayClass from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
 
-const CardList: React.FC<CardListProps> = (props) => {
-  const { curDayAndWeek, fetchDataListener, onFetchDataFinished } = props
+const CardList: React.FC<CardListProps> = (
+  { curDayAndWeek, fetchDataListener, onFetchDataFinished }
+) => {
   const { termYear, termType } = useAppSelector((state) => state.smester)
 
   const dispatch = useAppDispatch()
