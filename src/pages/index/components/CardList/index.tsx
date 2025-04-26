@@ -22,13 +22,14 @@ import TodayClass from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
 
-const CardList: React.FC<CardListProps> = (props) => {
-  const { curDayAndWeek, runRefereshFlag, stopRefresh } = props
+const CardList: React.FC<CardListProps> = (
+  { curDayAndWeek, fetchDataListener, onFetchDataFinished }
+) => {
   const { termYear, termType } = useAppSelector((state) => state.smester)
-  const [daysLeft, setDaysLeft] = useState(999)
 
   const dispatch = useAppDispatch()
 
+  const [daysLeft, setDaysLeft] = useState(999)
   const [messageData, setMessageData] = useState<Message[] | undefined>(undefined)
   const [smesterDate, setSmesterDate] = useState<SmesterInfo | undefined>(undefined)
   const [gradeData, setGradeData] = useState<GradeItem[] | undefined>(undefined)
@@ -41,6 +42,8 @@ const CardList: React.FC<CardListProps> = (props) => {
   // 获取数据
   const getData = async () => {
     return Promise.allSettled([
+      dispatch(fetchNoticeThunk()),
+
       // 获取消息盒子
       getMessage().then((res) => {
         setMessageData(res)
@@ -50,8 +53,6 @@ const CardList: React.FC<CardListProps> = (props) => {
       getSmesterInfo().then((res) => {
         setSmesterDate(res)
       }),
-
-      dispatch(fetchNoticeThunk()),
 
       // 获取流量信息
       getNetflow().then((res) => {
@@ -81,25 +82,21 @@ const CardList: React.FC<CardListProps> = (props) => {
   }
 
   useEffect(() => {
-    if (runRefereshFlag) {
-      getData().then(() => {
-        stopRefresh()
-      })
-    }
-  }, [runRefereshFlag])
+    getData().then(() => {
+      onFetchDataFinished()
+    })
+  }, [fetchDataListener])
 
-  // 初始的termType为0的时候不用去获取数据，所以需要跳过第一次获取
-  const [mark, setMark] = useState(false)
   // 获取成绩
   useEffect(() => {
     // 获取成绩
-    if (mark) {
+    // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
+    if (termType) {
       getGrade(termYear, termType).then((res) => {
         setGradeData(res)
       })
     }
-    setMark(true)
-  }, [termYear, termType, mark])
+  }, [termYear, termType])
 
   useEffect(() => {
     if (smesterDate) {
@@ -120,11 +117,11 @@ const CardList: React.FC<CardListProps> = (props) => {
   return (
     <Block>
       <MessageCard message={messageData || []} />
-      <HomeSwiper/>
+      <HomeSwiper />
       {/*<AlertCard info='您的宿舍电费已不足 5 元，请注意及时充值' variant='warning' />*/}
       <TodayClass currentWeek={curDayAndWeek.curWeek || 0} dayOfTheWeek={curDayAndWeek.curDay || 0} />
       <View className={styles.cardView}>
-        {gradeData && gradeData.length > 0  && (<View className={styles.cardItem}>
+        {gradeData && gradeData.length > 0 && (<View className={styles.cardItem}>
           <GradeCard grade={gradeData} />
         </View>)}
         <View className={styles.cardItem}>
@@ -143,11 +140,11 @@ const CardList: React.FC<CardListProps> = (props) => {
           <EmailCard unReadCount={unReadCount} />
         </View>
         {
-         (!gradeData || gradeData.length === 0) && (
+          (!gradeData || gradeData.length === 0) && (
             <View className={styles.cardItem}>
-                <GradeCard grade={[]} />
+              <GradeCard grade={[]} />
             </View>
-         )
+          )
         }
       </View>
     </Block>

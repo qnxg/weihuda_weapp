@@ -43,6 +43,7 @@ const Index: React.FC = () => {
       title: '加载中...'
     })
     try {
+      if (termType === null) throw "null termYear";
       const res = await getEmptyRoom({
         xn: termYear,
         xq: termType,

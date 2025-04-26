@@ -26,7 +26,7 @@ const Index: React.FC = () => {
   }, [enterYear, termYear])
 
   const [state, setState] = useState<State>({
-    currentTerm: termType - 1,
+    currentTerm: termType ? termType - 1 : -1,
     currentYear: 0
   })
 
@@ -70,7 +70,7 @@ const Index: React.FC = () => {
       ...state,
       currentYear: index
     })
-    setIsNotStart(years[index] >= termYear && currentTerm + 1 > termType)
+    setIsNotStart(termType === null || years[index] >= termYear && currentTerm + 1 > termType)
   }
 
   const onChangeSecondTab = (index: number): void => {
@@ -78,7 +78,7 @@ const Index: React.FC = () => {
       ...state,
       currentTerm: index
     })
-    setIsNotStart(years[currentYear] >= termYear && index + 1 > termType)
+    setIsNotStart(termType === null || years[currentYear] >= termYear && index + 1 > termType)
   }
 
   const onRefresh = async (close) => {

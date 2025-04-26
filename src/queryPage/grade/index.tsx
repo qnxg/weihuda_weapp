@@ -26,7 +26,7 @@ const Index: React.FC = () => {
   }, [enterYear, termYear])
 
   const [gradeState, setGradeState] = useState<GradeState>({
-    currentSemester: termType,
+    currentSemester: termType ?? 0,
     currentYear: 0,
     isNotStart: false
   })
@@ -68,7 +68,7 @@ const Index: React.FC = () => {
     setGradeState({
       ...gradeState,
       currentYear: index,
-      isNotStart: years[index] >= termYear && currentSemester > termType
+      isNotStart: termType === null || years[index] >= termYear && currentSemester > termType
     })
   }
 
@@ -76,11 +76,11 @@ const Index: React.FC = () => {
     setGradeState({
       ...gradeState,
       currentSemester: index + 1,
-      isNotStart: years[currentYear] >= termYear && index + 1 > termType
+      isNotStart: termType === null || years[currentYear] >= termYear && index + 1 > termType
     })
   }
 
-  const onRefresh = async (close) => {
+  const onRefresh = async (close: () => void): Promise<void> => {
     await getData()
     close()
   }

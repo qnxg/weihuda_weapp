@@ -20,7 +20,7 @@ const Index: React.FC = () => {
   const { termType } = useAppSelector((state) => state.smester)
 
   const [data, setData] = useState<SmesterInfo | null>(null)
-  const [index, setIndex] = useState(termType > 1 ? termType : 0)
+  const [index, setIndex] = useState(termType && termType > 1 ? termType : 0)
 
   /**
    * 获取数据

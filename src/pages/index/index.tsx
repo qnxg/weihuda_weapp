@@ -9,11 +9,10 @@ import React, { Fragment, useEffect, useRef, useState } from 'react'
 import CardList from './components/CardList'
 import DateBar from './components/DateBar'
 import styles from './index.module.scss'
+import useRefreshKey from '@/utils/useRefreshKey'
 
 const Index: React.FC = () => {
-  const [isInit, setIsInit] = useState(true)
-  const [runRefreshFlag, setRunRefreshFlag] = useState(true)
-
+  const [fetchDataListener, fetchDataTrigger] = useRefreshKey();
   const { dayOfWeek } = useAppSelector((state) => state.smester)
   const { isBind } = useAppSelector((state) => state.userInfo)
   const { currentWeek, semesters: terms } = useAppSelector((state) => state.classTable)
@@ -32,7 +31,6 @@ const Index: React.FC = () => {
     if (isBind) {
       if (terms && terms.length > 0) {
         dispatch(refreshClassTableThunk())
-        setIsInit(false)
       } else {
         dispatch(initClassTableThunk())
       }
@@ -49,24 +47,16 @@ const Index: React.FC = () => {
 
   const scrollRef = useRef<RefProps | null>(null)
 
-  const runRefresh = () => {
-    setRunRefreshFlag(true)
-  }
-
-  const stopRefresh = () => {
-    setRunRefreshFlag(false)
-    scrollRef.current?.stop()
-  }
-
   return (
     <Fragment>
       <DateBar />
-      <PullRefresh ref={scrollRef} topGap={100} runFunc={runRefresh}>
+      <PullRefresh ref={scrollRef} topGap={100} runFunc={fetchDataTrigger}>
         <View className={styles.contentOuter}>
           <CardList
-            stopRefresh={stopRefresh}
-            isInit={isInit}
-            runRefereshFlag={runRefreshFlag}
+            onFetchDataFinished={() => {
+              scrollRef.current?.stop()
+            }}
+            fetchDataListener={fetchDataListener}
             curDayAndWeek={{ curWeek: currentWeek, curDay: dayOfWeek }}
           />
         </View>

@@ -5,7 +5,7 @@ export interface Data {
 
 export interface CardListProps {
   curDayAndWeek: Data
-  isInit: boolean
-  runRefereshFlag: any
-  stopRefresh: any
+  /** 如果变化则重新获取首页数据 */
+  fetchDataListener: any
+  onFetchDataFinished: any
 }

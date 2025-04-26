@@ -1,3 +1,5 @@
+@import '~@/utils/scss/global.scss';
+
 .tabsWrapper {
   position: fixed;
   top: 0;
@@ -46,6 +48,10 @@
 
   &.active {
     background: var(--bg-color-container-hover);
+  }
+
+  .title {
+    font-size: $fontBig;
   }
 
   .exteraInfo {
