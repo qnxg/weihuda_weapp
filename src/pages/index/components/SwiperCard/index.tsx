@@ -65,7 +65,6 @@ const HomeSwiper: React.FC = () => {
                 wrapperClassName={styles.articleItemWrapper}
                 className={styles.articleItem}
                 hoverClass={styles.active}
-                onClick={() => handleClick(item)}
               >
                 <View className={styles.left}>
                   <View className={styles.title}>{item.title}</View>
