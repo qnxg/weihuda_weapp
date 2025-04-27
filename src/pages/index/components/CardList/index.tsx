@@ -23,7 +23,7 @@ import styles from './index.module.scss'
 import { CardListProps } from './interface'
 
 const CardList: React.FC<CardListProps> = (
-  { curDayAndWeek, fetchDataListener, onFetchDataFinished }
+  { curDayAndWeek, fetchDataControl, onFetchDataFinished }
 ) => {
   const { termYear, termType } = useAppSelector((state) => state.smester)
 
@@ -85,7 +85,7 @@ const CardList: React.FC<CardListProps> = (
     getData().then(() => {
       onFetchDataFinished()
     })
-  }, [fetchDataListener])
+  }, [fetchDataControl])
 
   // 获取成绩
   useEffect(() => {

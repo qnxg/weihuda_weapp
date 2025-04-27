@@ -12,7 +12,7 @@ import styles from './index.module.scss'
 import useRefreshKey from '@/utils/useRefreshKey'
 
 const Index: React.FC = () => {
-  const [fetchDataListener, fetchDataTrigger] = useRefreshKey();
+  const [fetchDataControl, fetchDataTrigger] = useRefreshKey();
   const { dayOfWeek } = useAppSelector((state) => state.smester)
   const { isBind } = useAppSelector((state) => state.userInfo)
   const { currentWeek, semesters: terms } = useAppSelector((state) => state.classTable)
@@ -56,7 +56,7 @@ const Index: React.FC = () => {
             onFetchDataFinished={() => {
               scrollRef.current?.stop()
             }}
-            fetchDataListener={fetchDataListener}
+            fetchDataControl={fetchDataControl}
             curDayAndWeek={{ curWeek: currentWeek, curDay: dayOfWeek }}
           />
         </View>
