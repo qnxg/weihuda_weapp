@@ -1,0 +1,22 @@
+@import "~@/utils/scss/global.scss";
+
+.bubbleNotification {
+    background-color: #f7f7f7;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .bubbleNotification {
+        background-color: #000000;
+    }
+}

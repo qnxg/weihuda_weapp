@@ -107,7 +107,7 @@ const Index: React.FC = () => {
                 <View className={styles.feedback} />
               </View>
               <View className={styles.titleContainer}>
-                <View>反馈建议</View>
+                <View>我要反馈</View>
                 <Image src={arrow} className={styles.arrow} />
               </View>
             </View>
@@ -131,7 +131,7 @@ const Index: React.FC = () => {
             </View>
             <View className={styles.titleContainer}>
               <Button className={styles.cusBut} openType='contact'>
-                客服消息
+                人工客服
               </Button>
               <Image src={arrow} className={styles.arrow} />
             </View>
