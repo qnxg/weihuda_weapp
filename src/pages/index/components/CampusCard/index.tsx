@@ -9,6 +9,7 @@ interface CardProps {
   info?: CardInfo
 }
 
+/** 校园卡余额卡片 */
 const CampusCard: React.FC<CardProps> = ({ info }) => {
   return (
     <CardLayout icon={icon} title='校园卡余额' moreUrl='/queryPage/card/index' moreTitle='查看账单'>

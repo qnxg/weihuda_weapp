@@ -29,14 +29,39 @@ const CardList: React.FC<CardListProps> = (
 
   const dispatch = useAppDispatch()
 
-  const [daysLeft, setDaysLeft] = useState(999)
+  /** 只被`MessageCard`使用，考虑下移 */
   const [messageData, setMessageData] = useState<Message[] | undefined>(undefined)
+  /**目前只被daysLeft使用，后续考虑在重构时消灭这个state */
   const [smesterDate, setSmesterDate] = useState<SmesterInfo | undefined>(undefined)
+
+  function computeDaysLeft(semesterDate: SmesterInfo | undefined) {
+    if (!semesterDate) { return 999 }
+    const today = dayjs(dayjs().format('YYYY-MM-DD'))
+    // 假期开始时间
+    const vacation = dayjs(semesterDate.vacation)
+    // 下个学期开始时间
+    const termStart = dayjs(semesterDate.next)
+    // 今天是否在假期之前
+    const isInTerm = today.isBefore(vacation, 'day')
+    // 如果假期之前，假期减去今天，否则今天减去下个学期开始时间
+    const interval = isInTerm ? vacation.diff(today, 'day') : today.diff(termStart, 'day')
+    // 小于0表示正在假期中，大于0表示当前学期还没结束
+    return interval
+  }
+  /** 目前只被`CountdownCard`使用，考虑下移 */
+  const daysLeft = computeDaysLeft(smesterDate);
+
+  /** 下移到GradeCard */
   const [gradeData, setGradeData] = useState<GradeItem[] | undefined>(undefined)
+  /** NetflowCard */
   const [netFlowData, setNetFlowData] = useState<NetflowData | undefined>(undefined)
+  /** CampusCard */
   const [cardData, setCardData] = useState<CardInfo | undefined>(undefined)
+  /** EmailCard */
   const [unReadCount, setUnReadCount] = useState<number | undefined>(undefined)
+  /** ElectricityCard */
   const [electricity, setElectricity] = useState<string | undefined>(undefined)
+  /** ElectricityCard */
   const [dormitory, setDormitory] = useState<Dormitory | null>(null)
 
   // 获取数据
@@ -98,22 +123,6 @@ const CardList: React.FC<CardListProps> = (
     }
   }, [termYear, termType])
 
-  useEffect(() => {
-    if (smesterDate) {
-      const today = dayjs(dayjs().format('YYYY-MM-DD'))
-      // 假期开始时间
-      const vacation = dayjs(smesterDate.vacation)
-      // 下个学期开始时间
-      const termStart = dayjs(smesterDate.next)
-      // 今天是否在假期之前
-      const isInTerm = today.isBefore(vacation, 'day')
-      // 如果假期之前，假期减去今天，否则今天减去下个学期开始时间
-      const interval = isInTerm ? vacation.diff(today, 'day') : today.diff(termStart, 'day')
-      // 小于0表示正在假期中，大于0表示当前学期还没结束
-      setDaysLeft(interval)
-    }
-  }, [smesterDate])
-
   return (
     <Block>
       <MessageCard message={messageData || []} />
@@ -140,6 +149,7 @@ const CardList: React.FC<CardListProps> = (
           <EmailCard unReadCount={unReadCount} />
         </View>
         {
+          // 如果没有成绩，就在这个位置加一个空的CardList
           (!gradeData || gradeData.length === 0) && (
             <View className={styles.cardItem}>
               <GradeCard grade={[]} />
