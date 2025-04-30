@@ -10,7 +10,7 @@ import { fetchNoticeThunk } from '@/models/notice'
 import ElectricityCard from '@/pages/index/components/ElectricityCard'
 import { Block, View } from '@tarojs/components'
 import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CampusCard from '../CampusCard'
 import CountdownCard from '../CountdownCard'
 import EmailCard from '../EmailCard'
@@ -25,6 +25,7 @@ import { CardListProps } from './interface'
 const CardList: React.FC<CardListProps> = (
   { curDayAndWeek, fetchDataControl, onFetchDataFinished }
 ) => {
+
   const { termYear, termType } = useAppSelector((state) => state.smester)
 
   const dispatch = useAppDispatch()
@@ -65,7 +66,7 @@ const CardList: React.FC<CardListProps> = (
   const [dormitory, setDormitory] = useState<Dormitory | null>(null)
 
   // 获取数据
-  const getData = async () => {
+  const getData = useCallback(async () => {
     return Promise.allSettled([
       dispatch(fetchNoticeThunk()),
 
@@ -104,13 +105,13 @@ const CardList: React.FC<CardListProps> = (
         setUnReadCount(res)
       })
     ])
-  }
+  }, [dispatch])
 
   useEffect(() => {
     getData().then(() => {
       onFetchDataFinished()
     })
-  }, [fetchDataControl])
+  }, [getData, fetchDataControl, onFetchDataFinished])
 
   // 获取成绩
   useEffect(() => {
