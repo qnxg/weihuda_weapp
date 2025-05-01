@@ -52,14 +52,11 @@ const HomeSwiper: React.FC = () => {
           style={{ height: '120px' }}
         >
           {latestArticles.map((item) => (
-            <SwiperItem key={item.id} onClick={() => handleClick(item)} style={
-              {
-                height: '120px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }
-            }>
+            <SwiperItem
+              key={item.id}
+              onClick={() => handleClick(item)}
+              className={styles.swiperItem}
+            >
               <Card
                 key={item.id}
                 wrapperClassName={styles.articleItemWrapper}
@@ -79,7 +76,7 @@ const HomeSwiper: React.FC = () => {
                 </View>
                 {item.cover && (
                   <View className={styles.cover}>
-                    <Image src={item.cover} mode='aspectFill' />
+                    <Image className={styles.Image} src={item.cover} mode='aspectFill' />
                   </View>
                 )}
               </Card>
