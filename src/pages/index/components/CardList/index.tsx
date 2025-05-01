@@ -128,36 +128,35 @@ const CardList: React.FC<CardListProps> = (
     <Block>
       <MessageCard message={messageData || []} />
       <HomeSwiper />
-      {/*<AlertCard info='您的宿舍电费已不足 5 元，请注意及时充值' variant='warning' />*/}
       <TodayClass currentWeek={curDayAndWeek.curWeek || 0} dayOfTheWeek={curDayAndWeek.curDay || 0} />
-      <View className={styles.cardView}>
-        {gradeData && gradeData.length > 0 && (<View className={styles.cardItem}>
+      {gradeData && gradeData.length > 0 &&
+        <View className={styles.cardItem}>
           <GradeCard grade={gradeData} />
-        </View>)}
-        <View className={styles.cardItem}>
-          <NetflowCard netFlow={netFlowData} />
         </View>
-        <View className={styles.cardItem}>
-          <ElectricityCard electricity={electricity} dormitory={dormitory?.room} />
-        </View>
-        <View className={styles.cardItem}>
-          <CountdownCard daysLeft={daysLeft} />
-        </View>
-        <View className={styles.cardItem}>
-          <CampusCard info={cardData} />
-        </View>
-        <View className={styles.cardItem}>
-          <EmailCard unReadCount={unReadCount} />
-        </View>
-        {
-          // 如果没有成绩，就在这个位置加一个空的CardList
-          (!gradeData || gradeData.length === 0) && (
-            <View className={styles.cardItem}>
-              <GradeCard grade={[]} />
-            </View>
-          )
-        }
+      }
+      <View className={styles.cardItem}>
+        <NetflowCard netFlow={netFlowData} />
       </View>
+      <View className={styles.cardItem}>
+        <ElectricityCard electricity={electricity} dormitory={dormitory?.room} />
+      </View>
+      <View className={styles.cardItem}>
+        <CountdownCard daysLeft={daysLeft} />
+      </View>
+      <View className={styles.cardItem}>
+        <CampusCard info={cardData} />
+      </View>
+      <View className={styles.cardItem}>
+        <EmailCard unReadCount={unReadCount} />
+      </View>
+      {
+        // 如果没有成绩，就在这个位置加一个空的CardList
+        (!gradeData || gradeData.length === 0) && (
+          <View className={styles.cardItem}>
+            <GradeCard grade={[]} />
+          </View>
+        )
+      }
     </Block>
   )
 }
