@@ -5,11 +5,13 @@ import { getSmesterInfoThunk } from '@/models/smester'
 import { getUserInfoThunk } from '@/models/userInfo'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { Fragment, useCallback, useEffect, useRef } from 'react'
+import React, { Fragment, memo, useCallback, useEffect, useRef } from 'react'
 import useRefreshKey from '@/utils/useRefreshKey'
 import CardList from './components/CardList'
 import DateBar from './components/DateBar'
 import styles from './index.module.scss'
+
+const CardListMemo = memo(CardList);
 
 const Index: React.FC = () => {
   const [fetchDataControl, fetchDataTrigger] = useRefreshKey();
@@ -56,7 +58,7 @@ const Index: React.FC = () => {
       <DateBar />
       <PullRefresh ref={scrollRef} topGap={100} runFunc={fetchDataTrigger}>
         <View className={styles.contentOuter}>
-          <CardList
+          <CardListMemo
             onFetchDataFinished={onFetchDataFinished}
             fetchDataControl={fetchDataControl}
             curDayAndWeek={{ curWeek: currentWeek, curDay: dayOfWeek }}
