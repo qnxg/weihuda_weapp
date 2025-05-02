@@ -2,7 +2,7 @@ import { Message, getMessage } from '@/apis/back/message'
 import { Dormitory, getDormitoryApi, getElectricityApi } from '@/apis/electricity'
 import { GradeItem, getGrade } from '@/apis/hdjw/grade'
 import { SmesterInfo, getSmesterInfo } from '@/apis/info'
-import { NetflowData, getNetflow } from '@/apis/netflow'
+import { getNetflow } from '@/apis/netflow'
 import { CardInfo, getCardInfo } from '@/apis/pt/card'
 import { getUnReadCount } from '@/apis/pt/email'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
@@ -11,6 +11,7 @@ import ElectricityCard from '@/pages/index/components/ElectricityCard'
 import { Block, View } from '@tarojs/components'
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useState } from 'react'
+import usePromise from '@/utils/usePromise'
 import CampusCard from '../CampusCard'
 import CountdownCard from '../CountdownCard'
 import EmailCard from '../EmailCard'
@@ -21,142 +22,142 @@ import HomeSwiper from '../SwiperCard'
 import TodayClass from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
+import CardListSortablePart from './CardListSortablePart'
+import { useIsLoadingCountZero } from '../CardProps'
+
+function computeDaysLeft(semesterDate: SmesterInfo | undefined) {
+  if (!semesterDate) { return 999 }
+  const today = dayjs(dayjs().format('YYYY-MM-DD'))
+  // 假期开始时间
+  const vacation = dayjs(semesterDate.vacation)
+  // 下个学期开始时间
+  const termStart = dayjs(semesterDate.next)
+  // 今天是否在假期之前
+  const isInTerm = today.isBefore(vacation, 'day')
+  // 如果假期之前，假期减去今天，否则今天减去下个学期开始时间
+  const interval = isInTerm ? vacation.diff(today, 'day') : today.diff(termStart, 'day')
+  // 小于0表示正在假期中，大于0表示当前学期还没结束
+  return interval
+}
 
 const CardList: React.FC<CardListProps> = (
   { curDayAndWeek, fetchDataControl, onFetchDataFinished }
 ) => {
 
   const { termYear, termType } = useAppSelector((state) => state.smester)
-
   const dispatch = useAppDispatch()
 
-  /** 只被`MessageCard`使用，考虑下移 */
-  const [messageData, setMessageData] = useState<Message[] | undefined>(undefined)
-  /**目前只被daysLeft使用，后续考虑在重构时消灭这个state */
-  const [smesterDate, setSmesterDate] = useState<SmesterInfo | undefined>(undefined)
-
-  function computeDaysLeft(semesterDate: SmesterInfo | undefined) {
-    if (!semesterDate) { return 999 }
-    const today = dayjs(dayjs().format('YYYY-MM-DD'))
-    // 假期开始时间
-    const vacation = dayjs(semesterDate.vacation)
-    // 下个学期开始时间
-    const termStart = dayjs(semesterDate.next)
-    // 今天是否在假期之前
-    const isInTerm = today.isBefore(vacation, 'day')
-    // 如果假期之前，假期减去今天，否则今天减去下个学期开始时间
-    const interval = isInTerm ? vacation.diff(today, 'day') : today.diff(termStart, 'day')
-    // 小于0表示正在假期中，大于0表示当前学期还没结束
-    return interval
-  }
-  /** 目前只被`CountdownCard`使用，考虑下移 */
-  const daysLeft = computeDaysLeft(smesterDate);
-
-  /** 下移到GradeCard */
-  const [gradeData, setGradeData] = useState<GradeItem[] | undefined>(undefined)
-  /** NetflowCard */
-  const [netFlowData, setNetFlowData] = useState<NetflowData | undefined>(undefined)
-  /** CampusCard */
-  const [cardData, setCardData] = useState<CardInfo | undefined>(undefined)
-  /** EmailCard */
-  const [unReadCount, setUnReadCount] = useState<number | undefined>(undefined)
-  /** ElectricityCard */
-  const [electricity, setElectricity] = useState<string | undefined>(undefined)
-  /** ElectricityCard */
-  const [dormitory, setDormitory] = useState<Dormitory | null>(null)
-
-  // 获取数据
-  const getData = useCallback(async () => {
-    return Promise.allSettled([
-      dispatch(fetchNoticeThunk()),
-
-      // 获取消息盒子
-      getMessage().then((res) => {
-        setMessageData(res)
-      }),
-
-      // 获取学期信息
-      getSmesterInfo().then((res) => {
-        setSmesterDate(res)
-      }),
-
-      // 获取流量信息
-      getNetflow().then((res) => {
-        setNetFlowData(res)
-      }),
-
-      // 获取校园卡余额
-      getCardInfo().then((res) => {
-        setCardData(res)
-      }),
-
-      // 获取电量信息
-      getElectricityApi().then((res) => {
-        setElectricity(res)
-      }),
-
-      // 获取宿舍信息
-      getDormitoryApi().then((res) => {
-        setDormitory(res)
-      }),
-
-      // 获取未读邮件数量
-      getUnReadCount().then((res) => {
-        setUnReadCount(res)
-      })
-    ])
-  }, [dispatch])
-
+  // 由于usePromise返回的isPending初始值是false
+  // 对于使用usePromise的请求而言
+  // 第一次渲染会触发onOneFetchStatusChange(false)
+  // 后续请求开始执行会触发onOneFetchStatusChange(true)
+  // 请求完成后会触发onOneFetchStatusChange(false)
+  // 需要设置一定的LoadingCount初始值
+  // 需要设置一定的时间防止onFetchDataFinished触发
+  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(8);
+  const [enableOnFetchDataFinished, setEnableOnFetchDataFinished] =
+    useState(false);
   useEffect(() => {
-    getData().then(() => {
+    setEnableOnFetchDataFinished(false)
+    setTimeout(() => setEnableOnFetchDataFinished(true), 500)
+  }, [fetchDataControl])
+  useEffect(() => {
+    if (isFetchDataFinished && enableOnFetchDataFinished) {
       onFetchDataFinished()
-    })
-  }, [getData, fetchDataControl, onFetchDataFinished])
-
-  // 获取成绩
-  useEffect(() => {
-    // 获取成绩
-    // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
-    if (termType) {
-      getGrade(termYear, termType).then((res) => {
-        setGradeData(res)
-      })
     }
-  }, [termYear, termType])
+  }, [isFetchDataFinished, enableOnFetchDataFinished, onFetchDataFinished]);
 
+  // notice?
+  useEffect(() => {
+    (async () => {
+      onOneFetchStatusChange(true)
+      try {
+        await dispatch(fetchNoticeThunk())
+      } finally {
+        onOneFetchStatusChange(false)
+      }
+    })()
+  }, [dispatch, onOneFetchStatusChange, fetchDataControl])
+
+  /* GradeCard */
+  const [gradeData, setGradeData] = useState<undefined | GradeItem[]>(undefined);
+  useEffect(() => {
+    onOneFetchStatusChange(false)
+  }, [onOneFetchStatusChange])
+  useEffect(() => {
+    (async () => {
+      // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
+      if (!termType) return;
+      onOneFetchStatusChange(true)
+      try {
+        setGradeData(await getGrade(termYear, termType))
+      } finally {
+        onOneFetchStatusChange(false)
+      }
+    })()
+  }, [termType, termYear, onOneFetchStatusChange, fetchDataControl])
+
+  /** 只被`MessageCard`使用，考虑下移 */
+  const [messageData, isMessageDataLoading] =
+    usePromise(getMessage, undefined, [fetchDataControl]);
+  useEffect(() => {
+    onOneFetchStatusChange(isMessageDataLoading)
+  }, [isMessageDataLoading, onOneFetchStatusChange])
+
+  /**目前只被daysLeft使用，后续考虑在重构时消灭这个state */
+  const [semesterDate, isSemesterDateLoading] =
+    usePromise(getSmesterInfo, undefined, [fetchDataControl])
+  useEffect(() => {
+    onOneFetchStatusChange(isSemesterDateLoading)
+  }, [isSemesterDateLoading, onOneFetchStatusChange])
+
+  /** NetflowCard */
+  const [netflowData, isNetflowDataLoading] =
+    usePromise(getNetflow, undefined, [fetchDataControl])
+  useEffect(() => {
+    onOneFetchStatusChange(isNetflowDataLoading)
+  }, [isNetflowDataLoading, onOneFetchStatusChange])
+  /** CampusCard */
+  const [cardData, isCardDataLoading] =
+    usePromise(getCardInfo, undefined, [fetchDataControl]);
+  useEffect(() => {
+    onOneFetchStatusChange(isCardDataLoading)
+  }, [isCardDataLoading, onOneFetchStatusChange])
+  /** EmailCard */
+  const [unReadCount, isUnReadCountLoading] =
+    usePromise(getUnReadCount, undefined, [fetchDataControl])
+  useEffect(() => {
+    onOneFetchStatusChange(isUnReadCountLoading)
+  }, [isUnReadCountLoading, onOneFetchStatusChange])
+  /** ElectricityCard */
+  const [electricity, isElectricityLoading] =
+    usePromise(getElectricityApi, undefined, [fetchDataControl])
+  useEffect(() => {
+    onOneFetchStatusChange(isElectricityLoading)
+  }, [isElectricityLoading, onOneFetchStatusChange])
+  /** ElectricityCard */
+  const [dormitory, isDormitoryLoading] =
+    usePromise(getDormitoryApi, null, [fetchDataControl])
+  useEffect(() => {
+    onOneFetchStatusChange(isDormitoryLoading)
+  }, [isDormitoryLoading, onOneFetchStatusChange])
+
+  // TODO: use memo
   return (
     <Block>
       <MessageCard message={messageData || []} />
-      <HomeSwiper />
-      <TodayClass currentWeek={curDayAndWeek.curWeek || 0} dayOfTheWeek={curDayAndWeek.curDay || 0} />
-      {gradeData && gradeData.length > 0 &&
-        <View className={styles.cardItem}>
-          <GradeCard grade={gradeData} />
-        </View>
-      }
-      <View className={styles.cardItem}>
-        <NetflowCard netFlow={netFlowData} />
-      </View>
-      <View className={styles.cardItem}>
+      <CardListSortablePart>
+        <HomeSwiper />
+        <TodayClass
+          currentWeek={curDayAndWeek.curWeek || 0}
+          dayOfTheWeek={curDayAndWeek.curDay || 0} />
+        <NetflowCard netFlow={netflowData} />
         <ElectricityCard electricity={electricity} dormitory={dormitory?.room} />
-      </View>
-      <View className={styles.cardItem}>
-        <CountdownCard daysLeft={daysLeft} />
-      </View>
-      <View className={styles.cardItem}>
+        <CountdownCard daysLeft={computeDaysLeft(semesterDate)} />
         <CampusCard info={cardData} />
-      </View>
-      <View className={styles.cardItem}>
         <EmailCard unReadCount={unReadCount} />
-      </View>
-      {
-        // 如果没有成绩，就在这个位置加一个空的CardList
-        (!gradeData || gradeData.length === 0) && (
-          <View className={styles.cardItem}>
-            <GradeCard grade={[]} />
-          </View>
-        )
-      }
+        <GradeCard grade={gradeData} />
+      </CardListSortablePart>
     </Block>
   )
 }
