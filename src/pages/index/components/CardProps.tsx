@@ -42,9 +42,9 @@ export function useIsLoadingCountZero(
         }
         const cntLog = `loadingCount.current == ${loadingCount.current}`;
         if (loadingCount.current < 0) {
-            console.error(cntLog)
+            console.error(cntLog + ' 请检查对loading状态的处理')
         } else {
-            console.log(cntLog + ' 请检查对loading状态的处理')
+            console.log(cntLog)
         }
         setIsLoadingCountZero(loadingCount.current == 0)
     }, []);

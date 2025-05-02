@@ -18,12 +18,12 @@ import EmailCard from '../EmailCard'
 import GradeCard from '../GradeCard'
 import MessageCard from '../MessageCard'
 import NetflowCard from '../NetflowCard'
-import HomeSwiper from '../SwiperCard'
+import HomeSwiperCard from '../SwiperCard'
 import TodayClass from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
 import CardListSortablePart from './CardListSortablePart'
-import { useIsLoadingCountZero } from '../CardProps'
+import CardProps, { useIsLoadingCountZero } from '../CardProps'
 
 function computeDaysLeft(semesterDate: SmesterInfo | undefined) {
   if (!semesterDate) { return 999 }
@@ -40,6 +40,15 @@ function computeDaysLeft(semesterDate: SmesterInfo | undefined) {
   return interval
 }
 
+const NewMessageCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [messageData, isMessageDataLoading] =
+    usePromise(getMessage, undefined, [reloadController]);
+  useEffect(() => {
+    onLoadingStatusChange(isMessageDataLoading)
+  }, [isMessageDataLoading, onLoadingStatusChange])
+  return <MessageCard message={messageData || []} />
+}
+
 const CardList: React.FC<CardListProps> = (
   { curDayAndWeek, fetchDataControl, onFetchDataFinished }
 ) => {
@@ -54,7 +63,7 @@ const CardList: React.FC<CardListProps> = (
   // 请求完成后会触发onOneFetchStatusChange(false)
   // 需要设置一定的LoadingCount初始值
   // 需要设置一定的时间防止onFetchDataFinished触发
-  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(8);
+  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(9);
   const [enableOnFetchDataFinished, setEnableOnFetchDataFinished] =
     useState(false);
   useEffect(() => {
@@ -97,13 +106,6 @@ const CardList: React.FC<CardListProps> = (
     })()
   }, [termType, termYear, onOneFetchStatusChange, fetchDataControl])
 
-  /** 只被`MessageCard`使用，考虑下移 */
-  const [messageData, isMessageDataLoading] =
-    usePromise(getMessage, undefined, [fetchDataControl]);
-  useEffect(() => {
-    onOneFetchStatusChange(isMessageDataLoading)
-  }, [isMessageDataLoading, onOneFetchStatusChange])
-
   /**目前只被daysLeft使用，后续考虑在重构时消灭这个state */
   const [semesterDate, isSemesterDateLoading] =
     usePromise(getSmesterInfo, undefined, [fetchDataControl])
@@ -145,9 +147,13 @@ const CardList: React.FC<CardListProps> = (
   // TODO: use memo
   return (
     <Block>
-      <MessageCard message={messageData || []} />
+      <NewMessageCard
+        onLoadingStatusChange={onOneFetchStatusChange}
+        reloadController={fetchDataControl} />
       <CardListSortablePart>
-        <HomeSwiper />
+        <HomeSwiperCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
         <TodayClass
           currentWeek={curDayAndWeek.curWeek || 0}
           dayOfTheWeek={curDayAndWeek.curDay || 0} />
