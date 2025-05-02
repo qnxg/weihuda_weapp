@@ -70,6 +70,15 @@ const NewGradeCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadContro
   return <GradeCard grade={gradeData} />
 }
 
+const NewCountdownCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [semesterDate, isSemesterDateLoading] =
+    usePromise(getSmesterInfo, undefined, [reloadController])
+  useEffect(() => {
+    onLoadingStatusChange(isSemesterDateLoading)
+  }, [isSemesterDateLoading, onLoadingStatusChange])
+  return <CountdownCard daysLeft={computeDaysLeft(semesterDate)} />
+}
+
 const CardList: React.FC<CardListProps> = (
   { curDayAndWeek, fetchDataControl, onFetchDataFinished }
 ) => {
@@ -107,13 +116,6 @@ const CardList: React.FC<CardListProps> = (
       }
     })()
   }, [dispatch, onOneFetchStatusChange, fetchDataControl])
-
-  /**目前只被daysLeft使用，后续考虑在重构时消灭这个state */
-  const [semesterDate, isSemesterDateLoading] =
-    usePromise(getSmesterInfo, undefined, [fetchDataControl])
-  useEffect(() => {
-    onOneFetchStatusChange(isSemesterDateLoading)
-  }, [isSemesterDateLoading, onOneFetchStatusChange])
 
   /** NetflowCard */
   const [netflowData, isNetflowDataLoading] =
@@ -161,7 +163,9 @@ const CardList: React.FC<CardListProps> = (
           dayOfTheWeek={curDayAndWeek.curDay || 0} />
         <NetflowCard netFlow={netflowData} />
         <ElectricityCard electricity={electricity} dormitory={dormitory?.room} />
-        <CountdownCard daysLeft={computeDaysLeft(semesterDate)} />
+        <NewCountdownCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
         <CampusCard info={cardData} />
         <EmailCard unReadCount={unReadCount} />
         <NewGradeCard
