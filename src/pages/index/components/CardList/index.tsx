@@ -147,6 +147,18 @@ const CardList: React.FC<CardListProps> = (
   { fetchDataControl, onFetchDataFinished }
 ) => {
 
+  const childrenList = [
+    NewMessageCard,
+    HomeSwiperCard,
+    NewTodayClassCard,
+    NewNetflowCard,
+    NewElectricityCard,
+    NewCountdownCard,
+    NewCampusCard,
+    NewEmailCard,
+    NewGradeCard,
+  ];
+
   const dispatch = useAppDispatch()
 
   // 由于usePromise返回的isPending初始值是false
@@ -156,7 +168,8 @@ const CardList: React.FC<CardListProps> = (
   // 请求完成后会触发onOneFetchStatusChange(false)
   // 需要设置一定的LoadingCount初始值
   // 需要设置一定的时间防止onFetchDataFinished触发
-  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(9);
+  const [isFetchDataFinished, onOneFetchStatusChange] =
+    useIsLoadingCountZero(childrenList.length);
   const [enableOnFetchDataFinished, setEnableOnFetchDataFinished] =
     useState(false);
   useEffect(() => {
@@ -181,39 +194,12 @@ const CardList: React.FC<CardListProps> = (
     })()
   }, [dispatch, onOneFetchStatusChange, fetchDataControl])
 
-
-  // TODO: use memo
   return (
     <Block>
-      <CardListSort>
-        <NewMessageCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <HomeSwiperCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <NewTodayClassCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <NewNetflowCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <NewElectricityCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <NewCountdownCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <NewCampusCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <NewEmailCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-        <NewGradeCard
-          onLoadingStatusChange={onOneFetchStatusChange}
-          reloadController={fetchDataControl} />
-      </CardListSort>
+      <CardListSort
+        childrenList={childrenList}
+        onEachLoadingStatusChange={onOneFetchStatusChange}
+        reloadAllController={fetchDataControl} />
     </Block>
   )
 }
