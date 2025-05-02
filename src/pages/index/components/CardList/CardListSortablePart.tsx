@@ -1,6 +1,4 @@
-import { View } from "@tarojs/components";
 import React, { useEffect, useState } from "react";
-import styles from './index.module.scss'
 import CardProps, { useIsLoadingCountZero } from "../CardProps";
 
 const CardListSort = (props: {

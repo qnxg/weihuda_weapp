@@ -1,15 +1,18 @@
 import icon from '@/static/index/icon/electricity.svg'
 import { Text, View } from '@tarojs/components'
-import React from 'react'
+import { getElectricityApi, getDormitoryApi } from '@/apis/electricity'
+import usePromise from '@/utils/usePromise'
+import React, { useCallback, useEffect } from 'react'
 import CardLayout from '../CardLayout'
 import styles from './index.module.scss'
+import CardProps from '../CardProps'
 
-interface CardProps {
+interface DisplayProps {
   electricity: string
   dormitory: string
 }
 
-const ElectricityCard: React.FC<CardProps> = (props) => {
+const ElectricityCardDisplay: React.FC<DisplayProps> = (props) => {
   const { electricity, dormitory } = props
   return (
     <CardLayout icon={icon} title='宿舍电量' moreUrl='/queryPage/electricity/index' moreTitle='查看电量'>
@@ -23,6 +26,29 @@ const ElectricityCard: React.FC<CardProps> = (props) => {
       </View>
     </CardLayout>
   )
+}
+
+const ElectricityCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const getElectricityCardInfo = useCallback(async () => ({
+    electricity: await getElectricityApi(),
+    dormitory: (await getDormitoryApi())?.room ?? "未知",
+  }), [])
+  const [cardInfo, isCardInfoLoading] =
+    usePromise(
+      getElectricityCardInfo,
+      {
+        electricity: "查询失败",
+        dormitory: "未知"
+      }, [reloadController])
+  useEffect(
+    () => {
+      onLoadingStatusChange(isCardInfoLoading)
+    },
+    [isCardInfoLoading, onLoadingStatusChange]
+  )
+  return <ElectricityCardDisplay
+    electricity={cardInfo.electricity}
+    dormitory={cardInfo.dormitory} />
 }
 
 export default ElectricityCard

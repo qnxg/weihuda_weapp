@@ -1,15 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View } from '@tarojs/components';
 import icon from '@/static/index/icon/days-left.svg';
+import usePromise from '@/utils/usePromise';
+import { getSmesterInfo, SmesterInfo } from '@/apis/info';
+import dayjs from 'dayjs';
 
 import CardLayout from '../CardLayout';
 import styles from './index.module.scss';
+import CardProps from '../CardProps';
 
 interface Props {
   daysLeft: number;
 }
 
-const CountdownCard: React.FC<Props> = ({ daysLeft }) => {
+const CountdownCardDisplay: React.FC<Props> = ({ daysLeft }) => {
   const dataList = useMemo(() => {
     const temp = Math.abs(daysLeft || 0)
       .toString()
@@ -36,5 +40,28 @@ const CountdownCard: React.FC<Props> = ({ daysLeft }) => {
     </CardLayout>
   );
 };
+
+function computeDaysLeft(semesterDate: SmesterInfo | undefined) {
+  if (!semesterDate) { return 999 }
+  const today = dayjs(dayjs().format('YYYY-MM-DD'))
+  // 假期开始时间
+  const vacation = dayjs(semesterDate.vacation)
+  // 下个学期开始时间
+  const termStart = dayjs(semesterDate.next)
+  // 今天是否在假期之前
+  const isInTerm = today.isBefore(vacation, 'day')
+  // 如果假期之前，假期减去今天，否则今天减去下个学期开始时间
+  const interval = isInTerm ? vacation.diff(today, 'day') : today.diff(termStart, 'day')
+  // 小于0表示正在假期中，大于0表示当前学期还没结束
+  return interval
+}
+const CountdownCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [semesterDate, isSemesterDateLoading] =
+    usePromise(getSmesterInfo, undefined, [reloadController])
+  useEffect(() => {
+    onLoadingStatusChange(isSemesterDateLoading)
+  }, [isSemesterDateLoading, onLoadingStatusChange])
+  return <CountdownCardDisplay daysLeft={computeDaysLeft(semesterDate)} />
+}
 
 export default CountdownCard;

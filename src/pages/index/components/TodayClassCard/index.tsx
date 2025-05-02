@@ -12,6 +12,7 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import CardEmpty from '../CardEmpty'
 import styles from './index.module.scss'
+import CardProps from '../CardProps'
 
 interface TodayClassProps {
   currentWeek: number
@@ -69,7 +70,7 @@ const endTimesArr = [
   '22:20'
 ]
 
-const TodayClassCard: React.FC<TodayClassProps> = (props) => {
+const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
   const { currentWeek = 0, dayOfTheWeek = 0 } = props
 
   const { classTable } = useAppSelector((state) => state.classTable)
@@ -198,6 +199,20 @@ const TodayClassCard: React.FC<TodayClassProps> = (props) => {
       )}
     </Card>
   )
+}
+
+/** 这个卡片无法刷新？ */
+const TodayClassCard: React.FC<CardProps> = ({ onLoadingStatusChange }) => {
+  useEffect(() => {
+    onLoadingStatusChange(false)
+  }, [onLoadingStatusChange])
+
+  const { dayOfWeek } = useAppSelector((state) => state.smester)
+  const { currentWeek } = useAppSelector((state) => state.classTable)
+
+  return <TodayClassCardDisplay
+    currentWeek={currentWeek || 0}
+    dayOfTheWeek={dayOfWeek || 0} />
 }
 
 export default TodayClassCard

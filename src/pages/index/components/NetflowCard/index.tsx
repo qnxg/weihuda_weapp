@@ -1,18 +1,20 @@
-import { NetflowData } from '@/apis/netflow'
+import { getNetflow, NetflowData } from '@/apis/netflow'
 import downloadIcon from '@/static/icon/download.svg'
 import uploadIcon from '@/static/icon/upload.svg'
 import icon from '@/static/index/icon/network.svg'
 import { Image, Text, View } from '@tarojs/components'
-import React from 'react'
+import usePromise from '@/utils/usePromise'
+import React, { useEffect } from 'react'
 import CardLayout from '../CardLayout'
 import GradeBanner from './components/GradeBanner'
 import styles from './index.module.scss'
+import CardProps from '../CardProps'
 
 interface NetFlowCardProps {
   netFlow?: NetflowData
 }
 
-const NetflowCard: React.FC<NetFlowCardProps> = ({ netFlow }) => {
+const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
   return (
     <CardLayout icon={icon} title='本月流量' moreUrl='/queryPage/netflowDetail/index' moreTitle='流量详情'>
       <View className={styles.outer}>
@@ -51,6 +53,15 @@ const NetflowCard: React.FC<NetFlowCardProps> = ({ netFlow }) => {
       </View>
     </CardLayout>
   )
+}
+
+const NetflowCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [netflowData, isNetflowDataLoading] =
+    usePromise(getNetflow, undefined, [reloadController])
+  useEffect(() => {
+    onLoadingStatusChange(isNetflowDataLoading)
+  }, [isNetflowDataLoading, onLoadingStatusChange])
+  return <NetflowCardDisplay netFlow={netflowData} />
 }
 
 export default NetflowCard

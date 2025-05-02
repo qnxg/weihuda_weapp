@@ -1,4 +1,4 @@
-import { Message } from '@/apis/back/message'
+import { getMessage, Message } from '@/apis/back/message'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import { useAppSelector } from '@/hooks/redux'
@@ -6,15 +6,17 @@ import icon from '@/static/index/icon/message.svg'
 import { getBoundingClientRect } from '@/utils/tool'
 import { Swiper, SwiperItem, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import usePromise from '@/utils/usePromise'
 import React, { useEffect, useMemo, useState } from 'react'
 import MessageItem from '../../../../components/MessageItem'
 import styles from './index.module.scss'
+import CardProps from '../CardProps'
 
 interface IProps {
   message: Message[]
 }
 
-const MessageCard: React.FC<IProps> = ({ message }) => {
+const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   // 消息通知
   const notice = useAppSelector((state) => state.notice)
   // 总数
@@ -109,6 +111,15 @@ const MessageCard: React.FC<IProps> = ({ message }) => {
       )}
     </View>
   )
+}
+
+const MessageCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [messageData, isMessageDataLoading] =
+    usePromise(getMessage, undefined, [reloadController]);
+  useEffect(() => {
+    onLoadingStatusChange(isMessageDataLoading)
+  }, [isMessageDataLoading, onLoadingStatusChange])
+  return <MessageCardDisplay message={messageData || []} />
 }
 
 export default MessageCard
