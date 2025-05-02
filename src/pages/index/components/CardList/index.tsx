@@ -19,7 +19,7 @@ import GradeCard from '../GradeCard'
 import MessageCard from '../MessageCard'
 import NetflowCard from '../NetflowCard'
 import HomeSwiperCard from '../SwiperCard'
-import TodayClass from '../TodayClassCard'
+import TodayClassCard from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
 import CardListSort from './CardListSortablePart'
@@ -129,8 +129,22 @@ const NewElectricityCard: React.FC<CardProps> = ({ onLoadingStatusChange, reload
     dormitory={cardInfo.dormitory} />
 }
 
+/** 这个卡片无法刷新？ */
+const NewTodayClassCard: React.FC<CardProps> = ({ onLoadingStatusChange }) => {
+  useEffect(() => {
+    onLoadingStatusChange(false)
+  }, [onLoadingStatusChange])
+
+  const { dayOfWeek } = useAppSelector((state) => state.smester)
+  const { currentWeek } = useAppSelector((state) => state.classTable)
+
+  return <TodayClassCard
+    currentWeek={currentWeek || 0}
+    dayOfTheWeek={dayOfWeek || 0} />
+}
+
 const CardList: React.FC<CardListProps> = (
-  { curDayAndWeek, fetchDataControl, onFetchDataFinished }
+  { fetchDataControl, onFetchDataFinished }
 ) => {
 
   const dispatch = useAppDispatch()
@@ -142,7 +156,7 @@ const CardList: React.FC<CardListProps> = (
   // 请求完成后会触发onOneFetchStatusChange(false)
   // 需要设置一定的LoadingCount初始值
   // 需要设置一定的时间防止onFetchDataFinished触发
-  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(8);
+  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(9);
   const [enableOnFetchDataFinished, setEnableOnFetchDataFinished] =
     useState(false);
   useEffect(() => {
@@ -156,13 +170,13 @@ const CardList: React.FC<CardListProps> = (
   }, [isFetchDataFinished, enableOnFetchDataFinished, onFetchDataFinished]);
 
   // notice?
+  // 暂时不跟踪loading状态
   useEffect(() => {
     (async () => {
-      onOneFetchStatusChange(true)
       try {
         await dispatch(fetchNoticeThunk())
       } finally {
-        onOneFetchStatusChange(false)
+        //
       }
     })()
   }, [dispatch, onOneFetchStatusChange, fetchDataControl])
@@ -178,9 +192,9 @@ const CardList: React.FC<CardListProps> = (
         <HomeSwiperCard
           onLoadingStatusChange={onOneFetchStatusChange}
           reloadController={fetchDataControl} />
-        <TodayClass
-          currentWeek={curDayAndWeek.curWeek || 0}
-          dayOfTheWeek={curDayAndWeek.curDay || 0} />
+        <NewTodayClassCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
         <NewNetflowCard
           onLoadingStatusChange={onOneFetchStatusChange}
           reloadController={fetchDataControl} />

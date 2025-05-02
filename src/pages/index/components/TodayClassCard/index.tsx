@@ -69,7 +69,7 @@ const endTimesArr = [
   '22:20'
 ]
 
-const TodayClass: React.FC<TodayClassProps> = (props) => {
+const TodayClassCard: React.FC<TodayClassProps> = (props) => {
   const { currentWeek = 0, dayOfTheWeek = 0 } = props
 
   const { classTable } = useAppSelector((state) => state.classTable)
@@ -200,4 +200,4 @@ const TodayClass: React.FC<TodayClassProps> = (props) => {
   )
 }
 
-export default TodayClass
+export default TodayClassCard

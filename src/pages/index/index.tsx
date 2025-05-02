@@ -15,12 +15,10 @@ const CardListMemo = memo(CardList);
 
 const Index: React.FC = () => {
   const [fetchDataControl, fetchDataTrigger] = useRefreshKey();
-  const { dayOfWeek } = useAppSelector((state) => state.smester)
   const { isBind } = useAppSelector((state) => state.userInfo)
-  const { currentWeek, semesters: terms } = useAppSelector((state) => state.classTable)
-
+  
   const dispatch = useAppDispatch()
-
+  
   /** 拉取基本信息 */
   useEffect(() => {
     dispatch(getUserInfoThunk())
@@ -28,7 +26,8 @@ const Index: React.FC = () => {
       dispatch(initClassTableThunk())
     })
   }, [dispatch])
-
+  
+  const { currentWeek, semesters: terms } = useAppSelector((state) => state.classTable)
   useEffect(() => {
     if (isBind) {
       if (terms && terms.length > 0) {
@@ -38,7 +37,7 @@ const Index: React.FC = () => {
       }
     }
   }, [isBind, terms, dispatch])
-
+  
   useEffect(() => {
     if (currentWeek !== undefined && currentWeek !== null) {
       Taro.setNavigationBarTitle({
@@ -61,7 +60,6 @@ const Index: React.FC = () => {
           <CardListMemo
             onFetchDataFinished={onFetchDataFinished}
             fetchDataControl={fetchDataControl}
-            curDayAndWeek={{ curWeek: currentWeek, curDay: dayOfWeek }}
           />
         </View>
       </PullRefresh>
