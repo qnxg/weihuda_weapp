@@ -49,11 +49,31 @@ const NewMessageCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadCont
   return <MessageCard message={messageData || []} />
 }
 
+const NewGradeCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const { termYear, termType } = useAppSelector((state) => state.smester)
+  const [gradeData, setGradeData] = useState<undefined | GradeItem[]>(undefined);
+  useEffect(() => {
+    onLoadingStatusChange(false)
+  }, [onLoadingStatusChange])
+  useEffect(() => {
+    (async () => {
+      // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
+      if (!termType) return;
+      onLoadingStatusChange(true)
+      try {
+        setGradeData(await getGrade(termYear, termType))
+      } finally {
+        onLoadingStatusChange(false)
+      }
+    })()
+  }, [termType, termYear, onLoadingStatusChange, reloadController])
+  return <GradeCard grade={gradeData} />
+}
+
 const CardList: React.FC<CardListProps> = (
   { curDayAndWeek, fetchDataControl, onFetchDataFinished }
 ) => {
 
-  const { termYear, termType } = useAppSelector((state) => state.smester)
   const dispatch = useAppDispatch()
 
   // 由于usePromise返回的isPending初始值是false
@@ -87,24 +107,6 @@ const CardList: React.FC<CardListProps> = (
       }
     })()
   }, [dispatch, onOneFetchStatusChange, fetchDataControl])
-
-  /* GradeCard */
-  const [gradeData, setGradeData] = useState<undefined | GradeItem[]>(undefined);
-  useEffect(() => {
-    onOneFetchStatusChange(false)
-  }, [onOneFetchStatusChange])
-  useEffect(() => {
-    (async () => {
-      // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
-      if (!termType) return;
-      onOneFetchStatusChange(true)
-      try {
-        setGradeData(await getGrade(termYear, termType))
-      } finally {
-        onOneFetchStatusChange(false)
-      }
-    })()
-  }, [termType, termYear, onOneFetchStatusChange, fetchDataControl])
 
   /**目前只被daysLeft使用，后续考虑在重构时消灭这个state */
   const [semesterDate, isSemesterDateLoading] =
@@ -162,7 +164,9 @@ const CardList: React.FC<CardListProps> = (
         <CountdownCard daysLeft={computeDaysLeft(semesterDate)} />
         <CampusCard info={cardData} />
         <EmailCard unReadCount={unReadCount} />
-        <GradeCard grade={gradeData} />
+        <NewGradeCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
       </CardListSortablePart>
     </Block>
   )
