@@ -5,8 +5,8 @@ import CardLayout from '../CardLayout'
 import styles from './index.module.scss'
 
 interface CardProps {
-  electricity?: string
-  dormitory?: string
+  electricity: string
+  dormitory: string
 }
 
 const ElectricityCard: React.FC<CardProps> = (props) => {

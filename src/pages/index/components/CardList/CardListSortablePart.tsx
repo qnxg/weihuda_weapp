@@ -2,7 +2,7 @@ import { View } from "@tarojs/components";
 import React from "react";
 import styles from './index.module.scss'
 
-const CardListSortablePart: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const CardListSort: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <>
             {React.Children.map(children, (child, index) => (
@@ -16,4 +16,4 @@ const CardListSortablePart: React.FC<{ children: React.ReactNode }> = ({ childre
     );
 };
 
-export default CardListSortablePart;
+export default CardListSort;

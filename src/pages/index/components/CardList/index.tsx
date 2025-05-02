@@ -22,7 +22,7 @@ import HomeSwiperCard from '../SwiperCard'
 import TodayClass from '../TodayClassCard'
 import styles from './index.module.scss'
 import { CardListProps } from './interface'
-import CardListSortablePart from './CardListSortablePart'
+import CardListSort from './CardListSortablePart'
 import CardProps, { useIsLoadingCountZero } from '../CardProps'
 
 function computeDaysLeft(semesterDate: SmesterInfo | undefined) {
@@ -79,6 +79,56 @@ const NewCountdownCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadCo
   return <CountdownCard daysLeft={computeDaysLeft(semesterDate)} />
 }
 
+const NewNetflowCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [netflowData, isNetflowDataLoading] =
+    usePromise(getNetflow, undefined, [reloadController])
+  useEffect(() => {
+    onLoadingStatusChange(isNetflowDataLoading)
+  }, [isNetflowDataLoading, onLoadingStatusChange])
+  return <NetflowCard netFlow={netflowData} />
+}
+
+const NewCampusCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [cardData, isCardDataLoading] =
+    usePromise(getCardInfo, undefined, [reloadController]);
+  useEffect(() => {
+    onLoadingStatusChange(isCardDataLoading)
+  }, [isCardDataLoading, onLoadingStatusChange])
+  return <CampusCard info={cardData} />
+}
+
+const NewEmailCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [unReadCount, isUnReadCountLoading] =
+    usePromise(getUnReadCount, undefined, [reloadController])
+  useEffect(() => {
+    onLoadingStatusChange(isUnReadCountLoading)
+  }, [isUnReadCountLoading, onLoadingStatusChange])
+  return <EmailCard unReadCount={unReadCount} />
+}
+
+const NewElectricityCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const getElectricityCardInfo = useCallback(async () => ({
+    electricity: await getElectricityApi(),
+    dormitory: (await getDormitoryApi())?.room ?? "未知",
+  }), [])
+  const [cardInfo, isCardInfoLoading] =
+    usePromise(
+      getElectricityCardInfo,
+      {
+        electricity: "查询失败",
+        dormitory: "未知"
+      }, [reloadController])
+  useEffect(
+    () => {
+      onLoadingStatusChange(isCardInfoLoading)
+    },
+    [isCardInfoLoading, onLoadingStatusChange]
+  )
+  return <ElectricityCard
+    electricity={cardInfo.electricity}
+    dormitory={cardInfo.dormitory} />
+}
+
 const CardList: React.FC<CardListProps> = (
   { curDayAndWeek, fetchDataControl, onFetchDataFinished }
 ) => {
@@ -92,7 +142,7 @@ const CardList: React.FC<CardListProps> = (
   // 请求完成后会触发onOneFetchStatusChange(false)
   // 需要设置一定的LoadingCount初始值
   // 需要设置一定的时间防止onFetchDataFinished触发
-  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(9);
+  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(8);
   const [enableOnFetchDataFinished, setEnableOnFetchDataFinished] =
     useState(false);
   useEffect(() => {
@@ -117,61 +167,39 @@ const CardList: React.FC<CardListProps> = (
     })()
   }, [dispatch, onOneFetchStatusChange, fetchDataControl])
 
-  /** NetflowCard */
-  const [netflowData, isNetflowDataLoading] =
-    usePromise(getNetflow, undefined, [fetchDataControl])
-  useEffect(() => {
-    onOneFetchStatusChange(isNetflowDataLoading)
-  }, [isNetflowDataLoading, onOneFetchStatusChange])
-  /** CampusCard */
-  const [cardData, isCardDataLoading] =
-    usePromise(getCardInfo, undefined, [fetchDataControl]);
-  useEffect(() => {
-    onOneFetchStatusChange(isCardDataLoading)
-  }, [isCardDataLoading, onOneFetchStatusChange])
-  /** EmailCard */
-  const [unReadCount, isUnReadCountLoading] =
-    usePromise(getUnReadCount, undefined, [fetchDataControl])
-  useEffect(() => {
-    onOneFetchStatusChange(isUnReadCountLoading)
-  }, [isUnReadCountLoading, onOneFetchStatusChange])
-  /** ElectricityCard */
-  const [electricity, isElectricityLoading] =
-    usePromise(getElectricityApi, undefined, [fetchDataControl])
-  useEffect(() => {
-    onOneFetchStatusChange(isElectricityLoading)
-  }, [isElectricityLoading, onOneFetchStatusChange])
-  /** ElectricityCard */
-  const [dormitory, isDormitoryLoading] =
-    usePromise(getDormitoryApi, null, [fetchDataControl])
-  useEffect(() => {
-    onOneFetchStatusChange(isDormitoryLoading)
-  }, [isDormitoryLoading, onOneFetchStatusChange])
 
   // TODO: use memo
   return (
     <Block>
-      <NewMessageCard
-        onLoadingStatusChange={onOneFetchStatusChange}
-        reloadController={fetchDataControl} />
-      <CardListSortablePart>
+      <CardListSort>
+        <NewMessageCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
         <HomeSwiperCard
           onLoadingStatusChange={onOneFetchStatusChange}
           reloadController={fetchDataControl} />
         <TodayClass
           currentWeek={curDayAndWeek.curWeek || 0}
           dayOfTheWeek={curDayAndWeek.curDay || 0} />
-        <NetflowCard netFlow={netflowData} />
-        <ElectricityCard electricity={electricity} dormitory={dormitory?.room} />
+        <NewNetflowCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
+        <NewElectricityCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
         <NewCountdownCard
           onLoadingStatusChange={onOneFetchStatusChange}
           reloadController={fetchDataControl} />
-        <CampusCard info={cardData} />
-        <EmailCard unReadCount={unReadCount} />
+        <NewCampusCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
+        <NewEmailCard
+          onLoadingStatusChange={onOneFetchStatusChange}
+          reloadController={fetchDataControl} />
         <NewGradeCard
           onLoadingStatusChange={onOneFetchStatusChange}
           reloadController={fetchDataControl} />
-      </CardListSortablePart>
+      </CardListSort>
     </Block>
   )
 }
