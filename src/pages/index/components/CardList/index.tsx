@@ -147,6 +147,19 @@ const CardList: React.FC<CardListProps> = (
   { fetchDataControl, onFetchDataFinished }
 ) => {
 
+  const dispatch = useAppDispatch()
+  // notice?
+  // 暂时不跟踪loading状态
+  useEffect(() => {
+    (async () => {
+      try {
+        await dispatch(fetchNoticeThunk())
+      } finally {
+        //
+      }
+    })()
+  }, [dispatch, fetchDataControl])
+
   const childrenList = [
     NewMessageCard,
     HomeSwiperCard,
@@ -159,46 +172,11 @@ const CardList: React.FC<CardListProps> = (
     NewGradeCard,
   ];
 
-  const dispatch = useAppDispatch()
-
-  // 由于usePromise返回的isPending初始值是false
-  // 对于使用usePromise的请求而言
-  // 第一次渲染会触发onOneFetchStatusChange(false)
-  // 后续请求开始执行会触发onOneFetchStatusChange(true)
-  // 请求完成后会触发onOneFetchStatusChange(false)
-  // 需要设置一定的LoadingCount初始值
-  // 需要设置一定的时间防止onFetchDataFinished触发
-  const [isFetchDataFinished, onOneFetchStatusChange] =
-    useIsLoadingCountZero(childrenList.length);
-  const [enableOnFetchDataFinished, setEnableOnFetchDataFinished] =
-    useState(false);
-  useEffect(() => {
-    setEnableOnFetchDataFinished(false)
-    setTimeout(() => setEnableOnFetchDataFinished(true), 500)
-  }, [fetchDataControl])
-  useEffect(() => {
-    if (isFetchDataFinished && enableOnFetchDataFinished) {
-      onFetchDataFinished()
-    }
-  }, [isFetchDataFinished, enableOnFetchDataFinished, onFetchDataFinished]);
-
-  // notice?
-  // 暂时不跟踪loading状态
-  useEffect(() => {
-    (async () => {
-      try {
-        await dispatch(fetchNoticeThunk())
-      } finally {
-        //
-      }
-    })()
-  }, [dispatch, onOneFetchStatusChange, fetchDataControl])
-
   return (
     <Block>
       <CardListSort
         childrenList={childrenList}
-        onEachLoadingStatusChange={onOneFetchStatusChange}
+        onAllLoadFinished={onFetchDataFinished}
         reloadAllController={fetchDataControl} />
     </Block>
   )
