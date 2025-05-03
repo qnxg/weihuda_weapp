@@ -73,5 +73,6 @@ if (
         .difference(defaultCardSetting.dontShow)
         .size > 0
 ) {
-    console.error("首页卡片默认设置与实际卡片不匹配，请检查")
+    // hard error
+    throw "首页卡片默认设置与实际卡片不匹配，请检查"
 }

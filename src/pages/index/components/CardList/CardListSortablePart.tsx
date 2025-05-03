@@ -30,17 +30,6 @@ const CardListSortablePart = <K extends React.Key,>(props: {
     reloadAllController: unknown
 }) => {
 
-    const allCardKeys: Set<K> =
-        useMemo(
-            () => new Set(
-                props
-                    .customizableCardsConfig
-                    .customizableCards
-                    .keys()
-            )
-            , [props.customizableCardsConfig.customizableCards]
-        )
-
     // 如果主版本不匹配，则完全使用默认设置
     const useSetting =
         (props.customizableCardsConfig.configMajorVersion ==
@@ -64,15 +53,16 @@ const CardListSortablePart = <K extends React.Key,>(props: {
                 .show
                 .keys()
                 .flatMap(mapKeyInfo),
-            // 获取到的设置中没有设置要不要显示，但是实际上又存在的卡片
+            // 获取到的设置中没有设置要不要显示，
+            // 但是实际上默认设置又设置了要显示的卡片。
             // 有可能发生在小程序更新之后
-            ...allCardKeys
+            ...props.defaultCardDisplaySetting.show
                 .difference(useSetting.show)
                 .difference(useSetting.dontShow)
                 .keys()
                 .flatMap(mapKeyInfo)
         ],
-        [allCardKeys, mapKeyInfo, useSetting.dontShow, useSetting.show]
+        [props.defaultCardDisplaySetting.show, mapKeyInfo, useSetting.dontShow, useSetting.show]
     )
 
     const onAllLoadFinished = props.onAllLoadFinished;
