@@ -17,6 +17,7 @@ import CardProps from "../CardProps";
  */
 const configMajorVersion = "0"
 
+/** 这里应该列出所有可配置的卡片 */
 const cards = {
     MessageCard: MessageCard,
     HomeSwiperCard: HomeSwiperCard,

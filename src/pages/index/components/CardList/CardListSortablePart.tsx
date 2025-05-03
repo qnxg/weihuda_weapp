@@ -3,7 +3,8 @@ import CardProps, { useIsLoadingCountZero } from "../CardProps";
 
 export type CustomizableCardsConfig<K extends React.Key> = {
     /** 为了设置的后向兼容，
-     * 当该值与取到的设置中的值不同时用户设置会被忽略，
+     * 当该值与取到的`UserCardDisplaySetting`中的值不同时，
+     * 用户设置会被忽略，
      * 直到用户重新设置
      */
     configMajorVersion: string;
@@ -12,6 +13,11 @@ export type CustomizableCardsConfig<K extends React.Key> = {
 }
 
 export type UserCardDisplaySetting<K extends React.Key> = {
+    /** 为了设置的后向兼容，
+     * 当该值与取到的`CustomizableCardsConfig`中的值不同时，
+     * 用户设置会被忽略，
+     * 直到用户重新设置
+     */
     configMajorVersion: string
     show: Set<K>
     /** 为了设置的后向兼容，
@@ -38,6 +44,9 @@ const CardListSortablePart = <K extends React.Key,>(props: {
             props.userCardDisplaySetting :
             props.defaultCardDisplaySetting
 
+    /**
+     * 后向兼容：忽略所有不存在的卡片名称
+    */
     const mapKeyInfo = useCallback(
         (k: K): [K, React.FC<CardProps>][] => {
             const v = props.customizableCardsConfig.customizableCards.get(k)
@@ -66,12 +75,12 @@ const CardListSortablePart = <K extends React.Key,>(props: {
     )
 
     const onAllLoadFinished = props.onAllLoadFinished;
-    // 由于usePromise返回的isPending初始值是false
-    // 对于使用usePromise的请求而言
+    // 根据CardProp里的要求，
     // 第一次渲染会触发onOneFetchStatusChange(false)
     // 后续请求开始执行会触发onOneFetchStatusChange(true)
     // 请求完成后会触发onOneFetchStatusChange(false)
     // 需要设置一定的LoadingCount初始值
+    // 由于第一次渲染时loadingCount可能暂时会减到0
     // 需要设置一定的时间防止onFetchDataFinished触发
     const [isFetchDataFinished, onOneFetchStatusChange] =
         useIsLoadingCountZero(childrenList.length);
@@ -79,6 +88,7 @@ const CardListSortablePart = <K extends React.Key,>(props: {
         useState(false);
     useEffect(() => {
         setEnableOnFetchDataFinished(false)
+        // 500ms内不会认为请求完成
         setTimeout(() => setEnableOnFetchDataFinished(true), 500)
     }, [props.reloadAllController])
     useEffect(() => {
