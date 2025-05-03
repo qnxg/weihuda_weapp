@@ -2,17 +2,9 @@ import { useAppDispatch } from '@/hooks/redux'
 import { fetchNoticeThunk } from '@/models/notice'
 import { Block } from '@tarojs/components'
 import React, { useEffect } from 'react'
-import HomeSwiperCard from '../SwiperCard'
 import { CardListProps } from './interface'
-import CardListSort from './CardListSortablePart'
-import MessageCard from '../MessageCard'
-import CountdownCard from '../CountdownCard'
-import GradeCard from '../GradeCard'
-import NetflowCard from '../NetflowCard'
-import CampusCard from '../CampusCard'
-import EmailCard from '../EmailCard'
-import ElectricityCard from '../ElectricityCard'
-import TodayClassCard from '../TodayClassCard'
+import CardListSortablePart from './CardListSortablePart'
+import { customizableCardsConfig, defaultCardSetting } from './index.config'
 
 const CardList: React.FC<CardListProps> = (
   { fetchDataControl, onFetchDataFinished }
@@ -31,22 +23,12 @@ const CardList: React.FC<CardListProps> = (
     })()
   }, [dispatch, fetchDataControl])
 
-  const childrenList = [
-    MessageCard,
-    HomeSwiperCard,
-    TodayClassCard,
-    NetflowCard,
-    ElectricityCard,
-    CountdownCard,
-    CampusCard,
-    EmailCard,
-    GradeCard,
-  ];
-
   return (
     <Block>
-      <CardListSort
-        childrenList={childrenList}
+      <CardListSortablePart
+        customizableCardsConfig={customizableCardsConfig}
+        userCardDisplaySetting={defaultCardSetting}
+        defaultCardDisplaySetting={defaultCardSetting}
         onAllLoadFinished={onFetchDataFinished}
         reloadAllController={fetchDataControl} />
     </Block>
