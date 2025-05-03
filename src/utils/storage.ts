@@ -44,12 +44,12 @@ const enum KEY {
   USER_INFO = 'User-Info',
   VERSION = 'Version',
   TABLE_MODE = 'Table-Mode',
-  CARD_ORDER = 'CardOrder'
+  CARD_ORDER = 'Card-Order'
 }
 
 const getToken = () => {
   const token = Taro.getStorageSync(KEY.NEW_TOKEN)
-  if(token) return token
+  if (token) return token
   const oldToken = Taro.getStorageSync(KEY.TOKEN)
   Taro.setStorageSync(KEY.NEW_TOKEN, oldToken.token)
   return oldToken.token
@@ -74,8 +74,8 @@ const setClassTable = (year: number, term: number, v: any) => Taro.setStorageSyn
 const getTermStart = (year: number, term: number) => Taro.getStorageSync(`Table-${year}-${term}-Start`)
 const setTermStart = (year: number, term: number, v: any) => Taro.setStorageSync(`Table-${year}-${term}-Start`, v)
 
-const getCardOrder = () => Taro.getStorageSync(KEY.CARD_ORDER)
-const setCardOrder = (order: number[]) => Taro.setStorageSync(KEY.CARD_ORDER, order)
+const getCardOrder = (): string | undefined => Taro.getStorageSync(KEY.CARD_ORDER)
+const setCardOrder = (order: string) => Taro.setStorageSync(KEY.CARD_ORDER, order)
 
 export default {
   getToken,

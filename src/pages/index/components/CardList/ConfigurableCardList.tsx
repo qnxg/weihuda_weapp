@@ -28,6 +28,28 @@ export type UserCardDisplaySetting<K extends React.Key> = {
     dontShow: Set<K>
 };
 
+export function userCardDisplaySettingSerializer(
+    setting: UserCardDisplaySetting<string>
+): string {
+    return JSON.stringify({
+        configMajorVersion: setting.configMajorVersion,
+        show: [...setting.show],
+        dontShow: [...setting.dontShow]
+    })
+}
+
+export function userCardDisplaySettingDeserializer(
+    setting: string | undefined | null
+): UserCardDisplaySetting<string> | undefined {
+    if (!setting) { return undefined; }
+    const parsed = JSON.parse(setting)
+    return {
+        configMajorVersion: parsed.configMajorVersion,
+        show: new Set(parsed.show),
+        dontShow: new Set(parsed.dontShow)
+    }
+}
+
 const ConfigurableCardList = <K extends React.Key,>(props: {
     /** 置顶的卡片 */
     topCards: [K, React.FC<CardProps>][]
