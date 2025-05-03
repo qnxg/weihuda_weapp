@@ -13,7 +13,7 @@ import CardProps from "../CardProps";
 
 /** 置顶的，用户无法设置显示与否和顺序的卡片 */
 export const topCards: [string, React.FC<CardProps>][] =
-    [["MessageCard", MessageCard]]
+    [["消息盒子", MessageCard]]
 
 /** 如果更改这个值，
  * 则原本的用户设置都将被忽略，
@@ -22,16 +22,21 @@ export const topCards: [string, React.FC<CardProps>][] =
  */
 const configMajorVersion = "0"
 
-/** 这里应该列出所有可配置的卡片 */
+/** 
+ * 这里应该列出了所有可配置的卡片，
+ * 应该没有列出置顶的或无法配置的卡片，
+ * 这个对象中的键的文本用于卡片排序页面。
+ * 如果在此处添加了卡片，一定要一同修改卡片默认设置
+ */
 const cards = {
-    HomeSwiperCard: HomeSwiperCard,
-    TodayClassCard: TodayClassCard,
-    NetflowCard: NetflowCard,
-    ElectricityCard: ElectricityCard,
-    CountdownCard: CountdownCard,
-    CampusCard: CampusCard,
-    EmailCard: EmailCard,
-    GradeCard: GradeCard,
+    今日知湖: HomeSwiperCard,
+    今日课程: TodayClassCard,
+    本月流量: NetflowCard,
+    宿舍电量: ElectricityCard,
+    假期倒计时: CountdownCard,
+    校园卡余额: CampusCard,
+    校园邮箱: EmailCard,
+    成绩查询: GradeCard,
 }
 
 export type CardEnum = keyof typeof cards
@@ -46,19 +51,20 @@ export const customizableCardsConfig
         ),
 }
 
+/** 默认卡片设置，应该包含`cards`里所有的键 */
 export const defaultCardSetting
     : UserCardDisplaySetting<CardEnum> =
 {
     configMajorVersion: configMajorVersion,
     show: new Set([
-        'HomeSwiperCard',
-        'TodayClassCard',
-        'NetflowCard',
-        'ElectricityCard',
-        'CountdownCard',
-        'CampusCard',
-        'EmailCard',
-        'GradeCard',
+        '今日知湖',
+        '今日课程',
+        '本月流量',
+        '宿舍电量',
+        '假期倒计时',
+        '校园卡余额',
+        '校园邮箱',
+        '成绩查询',
     ]),
     dontShow: new Set(),
 }
