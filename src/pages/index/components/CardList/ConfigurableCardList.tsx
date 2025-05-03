@@ -28,11 +28,18 @@ export type UserCardDisplaySetting<K extends React.Key> = {
     dontShow: Set<K>
 };
 
-const CardListSortablePart = <K extends React.Key,>(props: {
+const ConfigurableCardList = <K extends React.Key,>(props: {
+    /** 置顶的卡片 */
+    topCards: [K, React.FC<CardProps>][]
+    /** 可配置的卡片列表 */
     customizableCardsConfig: CustomizableCardsConfig<K>
+    /** 用户的卡片设置 */
     userCardDisplaySetting: UserCardDisplaySetting<K>
+    /** 默认的卡片设置 */
     defaultCardDisplaySetting: UserCardDisplaySetting<K>
+    /** 在所有卡片（含置顶的和用户设置的）加载完成后触发 */
     onAllLoadFinished: () => unknown
+    /** 如果改变，则重新加载所有卡片的数据 */
     reloadAllController: unknown
 }) => {
 
@@ -57,6 +64,8 @@ const CardListSortablePart = <K extends React.Key,>(props: {
 
     const childrenList = useMemo(
         () => [
+            // 置顶的，用户无法设置的卡片
+            ...props.topCards,
             // 设置中设置了要显示的卡片
             ...useSetting
                 .show
@@ -71,7 +80,8 @@ const CardListSortablePart = <K extends React.Key,>(props: {
                 .keys()
                 .flatMap(mapKeyInfo)
         ],
-        [props.defaultCardDisplaySetting.show, mapKeyInfo, useSetting.dontShow, useSetting.show]
+        [props.topCards, props.defaultCardDisplaySetting.show,
+        useSetting.show, useSetting.dontShow, mapKeyInfo]
     )
 
     const onAllLoadFinished = props.onAllLoadFinished;
@@ -107,4 +117,4 @@ const CardListSortablePart = <K extends React.Key,>(props: {
     )}</>
 };
 
-export default CardListSortablePart;
+export default ConfigurableCardList;

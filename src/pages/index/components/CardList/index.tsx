@@ -3,8 +3,8 @@ import { fetchNoticeThunk } from '@/models/notice'
 import { Block } from '@tarojs/components'
 import React, { useEffect } from 'react'
 import { CardListProps } from './interface'
-import CardListSortablePart from './CardListSortablePart'
-import { customizableCardsConfig, defaultCardSetting } from './index.config'
+import ConfigurableCardList from './ConfigurableCardList'
+import { customizableCardsConfig, defaultCardSetting, topCards } from './index.config'
 
 const CardList: React.FC<CardListProps> = (
   { fetchDataControl, onFetchDataFinished }
@@ -15,17 +15,14 @@ const CardList: React.FC<CardListProps> = (
   // 暂时不跟踪loading状态
   useEffect(() => {
     (async () => {
-      try {
-        await dispatch(fetchNoticeThunk())
-      } finally {
-        //
-      }
+      await dispatch(fetchNoticeThunk())
     })()
   }, [dispatch, fetchDataControl])
 
   return (
     <Block>
-      <CardListSortablePart
+      <ConfigurableCardList
+        topCards={topCards}
         customizableCardsConfig={customizableCardsConfig}
         userCardDisplaySetting={defaultCardSetting}
         defaultCardDisplaySetting={defaultCardSetting}
