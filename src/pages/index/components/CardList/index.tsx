@@ -1,8 +1,8 @@
-import { useAppDispatch } from '@/hooks/redux'
+import { useAppDispatch } from '@/utils/hooks/redux'
 import { fetchNoticeThunk } from '@/models/notice'
 import { Block } from '@tarojs/components'
 import storage from '@/utils/storage'
-import usePromise from '@/utils/usePromise'
+import usePromise from '@/utils/hooks/usePromise'
 import React, { useCallback, useEffect, useMemo } from 'react'
 
 import { CardListProps } from './interface'

@@ -1,6 +1,6 @@
 import { IBtnConfigItem, INotice } from '@/apis/notice'
 import Button from '@/components/Button'
-import { useAppDispatch } from '@/hooks/redux'
+import { useAppDispatch } from '@/utils/hooks/redux'
 import { putNoticeByIdThunk } from '@/models/notice'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

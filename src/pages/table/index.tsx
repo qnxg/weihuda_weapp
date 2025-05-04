@@ -1,6 +1,6 @@
 import { getFlexTimeList } from '@/apis/back/flexTime'
 import PullRefresh from '@/components/PullRefresh'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
 import { offColor } from '@/utils/config'
 import { judgeOn } from '@/utils/day'

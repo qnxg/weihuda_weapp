@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import { saveClassTable } from '@/models/classTable'
 import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'

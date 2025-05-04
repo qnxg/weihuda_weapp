@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import CardEmpty from '../CardEmpty'

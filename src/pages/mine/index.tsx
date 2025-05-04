@@ -1,5 +1,5 @@
 import { postUnbind } from '@/apis/back/bind'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import arrow from '@/static/mine/arrow.svg'
 import { Block, Button, Image, Navigator, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

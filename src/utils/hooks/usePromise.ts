@@ -30,14 +30,13 @@ type PromiseErrorInfo = null | { thrown: unknown };
  * 
  * @example
  * ```tsx
- * async function fetchData() {
+ * const fetchData = useCallback(async () => {
  *   // do something
- * }
- * 
- * const fetchData1 = useCallback(fetchData, [])
+ * }, [])
  * 
  * const [data, isLoading, error] = usePromise(
- *   fetchData1,
+ *   fetchData,
+ *   undefined,
  *   [] // `fetchData1`不会被重新触发
  * );
  * 

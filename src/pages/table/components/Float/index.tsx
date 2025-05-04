@@ -1,5 +1,5 @@
 import { deleteCourseApi } from '@/apis/hdjw/classTable'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { ScrollView, Swiper, SwiperItem, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

@@ -1,6 +1,6 @@
 import { getCourseDetail } from '@/apis/hdjw/courseDetail'
 import DisplayCard from '@/components/DisplayCard'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import iconNoJK from '@/static/empty/no-exam.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

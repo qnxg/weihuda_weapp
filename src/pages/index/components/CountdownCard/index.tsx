@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { View } from '@tarojs/components';
 import icon from '@/static/index/icon/days-left.svg';
-import usePromise from '@/utils/usePromise';
+import usePromise from '@/utils/hooks/usePromise';
 import { getSmesterInfo, SmesterInfo } from '@/apis/info';
 import dayjs from 'dayjs';
 

@@ -1,7 +1,7 @@
 import { SmesterInfo, getSmesterInfo } from '@/apis/info'
 import Tabs from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import { staticBaseUrl as baseUrl } from '@/utils/url'
 import { Image, View } from '@tarojs/components'
 import dayjs from 'dayjs'

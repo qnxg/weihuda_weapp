@@ -1,6 +1,6 @@
 import { GradeRank, getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
 import PullRefresh from '@/components/PullRefresh'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import empty from '@/static/empty/no-ranking.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { View, Text } from '@tarojs/components'
 import icon from '@/static/index/icon/email.svg'
 import { getUnReadCount } from '@/apis/pt/email'
-import usePromise from '@/utils/usePromise'
+import usePromise from '@/utils/hooks/usePromise'
 
 import CardLayout from '../CardLayout'
 import styles from './index.module.scss'
