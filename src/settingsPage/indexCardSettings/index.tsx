@@ -21,6 +21,13 @@ const Index: React.FC = () => {
     const unchecked = mapSettings(cardSettings[1]);
 
     const [modified, setModified] = useState(false);
+    const [saved, setSaved] = useState(false);
+
+    Taro.useUnload(() => {
+        if (saved) {
+            Taro.reLaunch({ url: '/pages/index/index' })
+        }
+    })
 
     const handleCheck = useCallback((k: CardEnum) => {
         setModified(true)
@@ -38,6 +45,7 @@ const Index: React.FC = () => {
 
     const handleSave = useCallback(() => {
         setModified(false)
+        setSaved(true)
         saveCardSettings(cardSettings[0], cardSettings[1])
     }, [cardSettings]);
 
