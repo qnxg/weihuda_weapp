@@ -29,7 +29,7 @@ const customizableCards = {
     校园卡余额: CampusCard,
     校园邮箱: EmailCard,
     成绩查询: GradeCard,
-}
+} as const satisfies Record<string, React.FC<CardProps>>;
 
 export type CardEnum = keyof typeof customizableCards
 
