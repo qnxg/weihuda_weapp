@@ -1,7 +1,13 @@
 @import '~@/utils/scss/global.scss';
 
+.hint {
+    font-size: $fontBig;
+    color: var(--text-color-primary);
+}
+
 .actionButtonsContainer {
     display: flex;
+    margin-top: 20px;
 }
 
 .actionButton {

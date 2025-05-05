@@ -3,9 +3,10 @@ import CheckSortListDisplay from "@/components/CheckSortList"
 import { CardEnum } from "@/pages/index/components/CardList/index.config";
 import { computeFinalCardDisplay, saveCardSettings } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
-import { View } from "@tarojs/components";
-import { useCallback, useEffect, useState } from "react"
+import { Text, View } from "@tarojs/components";
+import { useCallback, useState } from "react"
 import Taro from "@tarojs/taro";
+import Card from "@/components/Card";
 
 import style from './index.module.scss'
 
@@ -78,6 +79,9 @@ const Index: React.FC = () => {
     }, []);
 
     return <>
+        <Card>
+            <Text className={style.hint}>点击列表可以切换首页卡片显示状态</Text>
+        </Card>
         <View className={style.actionButtonsContainer}>
             <Button
                 theme="primary"
