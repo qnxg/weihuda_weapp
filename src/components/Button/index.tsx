@@ -6,6 +6,7 @@ import styles from './index.module.scss'
 interface Props extends ButtonProps {
   theme?: 'primary' | 'default' | 'plain'
   // | 'danger' | 'success' | 'warning' | 'success'
+  disabled?: boolean
 }
 
 /**
@@ -13,7 +14,9 @@ interface Props extends ButtonProps {
  */
 const Button: React.FC<Props> = (props) => {
   props.theme = props.theme || 'primary'
-  props.className = classNames(props.className, styles.button, styles[props.theme])
+  props.className = classNames(props.className, styles.button, styles[props.theme], {
+    [styles.disabled]: props.disabled
+  })
   return <TaroButton {...props} hoverClass={styles.buttonActive}></TaroButton>
 }
 

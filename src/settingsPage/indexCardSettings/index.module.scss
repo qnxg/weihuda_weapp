@@ -1,0 +1,11 @@
+@import '~@/utils/scss/global.scss';
+
+.actionButtonsContainer {
+    display: flex;
+}
+
+.actionButton {
+    font-size: $fontBig !important; // 我不知道怎么回事，我只能想到这么写了
+    margin: auto;
+    flex-grow: 0 0 auto;
+}

@@ -3,7 +3,11 @@ import CheckSortListDisplay from "@/components/CheckSortList"
 import { CardEnum } from "@/pages/index/components/CardList/index.config";
 import { computeFinalCardDisplay, saveCardSettings } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
-import { useCallback, useState } from "react"
+import { View } from "@tarojs/components";
+import { useCallback, useEffect, useState } from "react"
+import Taro from "@tarojs/taro";
+
+import style from './index.module.scss'
 
 const Index: React.FC = () => {
     // Set的顺序是其插入顺序，刚好和我们这里想要的行为相同
@@ -16,23 +20,29 @@ const Index: React.FC = () => {
     const checked = mapSettings(cardSettings[0]);
     const unchecked = mapSettings(cardSettings[1]);
 
+    const [modified, setModified] = useState(false);
+
     const handleCheck = useCallback((k: CardEnum) => {
+        setModified(true)
         cardSettings[1].delete(k);
         cardSettings[0].add(k);
         setCardSettings([cardSettings[0], cardSettings[1]]);
     }, [cardSettings]);
 
     const handleUncheck = useCallback((k: CardEnum) => {
+        setModified(true)
         cardSettings[0].delete(k);
         cardSettings[1].add(k);
         setCardSettings([cardSettings[0], cardSettings[1]]);
     }, [cardSettings]);
 
     const handleSave = useCallback(() => {
+        setModified(false)
         saveCardSettings(cardSettings[0], cardSettings[1])
     }, [cardSettings]);
 
     const handleCheckAll = useCallback(() => {
+        setModified(true)
         cardSettings[1].forEach(k => {
             cardSettings[0].add(k);
         });
@@ -41,6 +51,7 @@ const Index: React.FC = () => {
     }, [cardSettings]);
 
     const handleUncheckAll = useCallback(() => {
+        setModified(true)
         cardSettings[0].forEach(k => {
             cardSettings[1].add(k);
         });
@@ -49,6 +60,7 @@ const Index: React.FC = () => {
     }, [cardSettings]);
 
     const handleReset = useCallback(() => {
+        setModified(true)
         setCardSettings([
             new Set(DEFAULT_INDEX_CARD_SETTINGS.show),
             new Set(DEFAULT_INDEX_CARD_SETTINGS.dontShow)
@@ -56,10 +68,38 @@ const Index: React.FC = () => {
     }, []);
 
     return <>
-        <Button onClick={handleSave}>保存</Button>
-        <Button onClick={handleCheckAll}>全选</Button>
-        <Button onClick={handleUncheckAll}>全不选</Button>
-        <Button onClick={handleReset}>重置为默认</Button>
+        <View className={style.actionButtonsContainer}>
+            <Button
+                theme="primary"
+                disabled={!modified}
+                className={style.actionButton}
+                onClick={handleSave}
+            >
+                保存
+            </Button>
+            <Button
+                theme="default"
+                className={style.actionButton}
+                onClick={handleCheckAll}
+            >
+                全选
+            </Button>
+            <Button
+
+                theme="default"
+                className={style.actionButton}
+                onClick={handleUncheckAll}
+            >
+                全不选
+            </Button>
+            <Button
+                theme="default"
+                className={style.actionButton}
+                onClick={handleReset}
+            >
+                重置为默认
+            </Button>
+        </View>
         <CheckSortListDisplay
             checked={checked}
             unchecked={unchecked}
