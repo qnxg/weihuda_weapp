@@ -49,10 +49,8 @@ const CardList: React.FC<CardListProps> = (
   return (
     <Block>
       <ConfigurableCardList
-        key={fetchDataControl
-          /* 后续可以考虑在设置完卡片顺序后
-             使用Taro.relaunch完全重新加载到首页，
-             这样就不用每次刷新都销毁并重新加载一遍组件了。 */}
+        // key={fetchDataControl}
+        // 注意：上面这行可以不加是因为目前设置卡片之后不可能直接返回到首页
         topCards={topCards}
         customizableCards={customizableCardsMap}
         CardsToShow={cardsToShow}

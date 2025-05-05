@@ -23,6 +23,8 @@ const Index: React.FC = () => {
     const [modified, setModified] = useState(false);
     const [saved, setSaved] = useState(false);
 
+    // 在设置后reLaunch
+    // important: 见首页ConfigurableCardList的描述
     Taro.useUnload(() => {
         if (saved) {
             Taro.reLaunch({ url: '/pages/index/index' })
