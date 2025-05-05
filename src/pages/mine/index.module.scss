@@ -25,6 +25,7 @@
 @mixin imageCommon($url) {
   height: 48px;
   width: 48px;
+
   background: {
     image: url($url);
     repeat: no-repeat;
@@ -33,113 +34,70 @@
   }
 }
 
-.options {
-  background: #fff;
-  border-radius: 8px;
-  box-sizing: border-box;
-  margin: 30px auto;
+
+.bindImg {
+  @include imageCommon('~@/static/mine/icon-link.svg');
+}
+
+.unBindImg {
+  @include imageCommon('~@/static/mine/icon-unlink.svg');
+}
+
+.cleanImg {
+  @include imageCommon('~@/static/mine/clean.svg');
+}
+
+.cusServiceImg {
+  @include imageCommon('~@/static/mine/icon-waiter.svg');
+}
+
+.feedback {
+  @include imageCommon('~@/static/mine/icon-feedback.svg');
+}
+
+.messageleft {
+  @include imageCommon('~@/static/mine/icon-messageleft.svg');
+}
+
+.roomBind {
+  @include imageCommon('~@/static/mine/icon-room-bind.svg');
+}
+
+.message {
+  @include imageCommon('~@/static/mine/icon-message.svg');
+}
+
+.jifen {
+  @include imageCommon('~@/static/mine/icon-jifen-new.svg');
+}
+
+.about {
+  @include imageCommon('~@/static/mine/icon-about.svg');
+}
+
+.liabilityImg {
+  @include imageCommon('~@/static/mine/icon-paper.svg');
+}
+
+.faImg {
+  @include imageCommon('~@/static/mine/fa.svg');
+}
+
+.changelogImg {
+  @include imageCommon('~@/static/mine/icon-changelog.svg');
+}
+
+.cusBut {
+  background: inherit;
+  color: inherit;
+  font-size: inherit;
+  padding: 0;
+  text-align: left;
   width: 100%;
-  overflow: hidden;
 
-  .divider {
-    height: 0;
-    width: 95%;
-    margin: 0 auto;
-    border-bottom: 1px solid rgb(241, 241, 241);
-  }
-
-  .optionItem {
-    @include flex(normal, stretch);
-    width: 100%;
-    height: 106px;
-    padding-left: 40px;
-    color: #3e3e3e;
-    font-size: $fontBig;
-    line-height: 36px;
-
-    .imgContainer {
-      @include flex(normal, center);
-    }
-
-    .titleContainer {
-      @include flex(space-between, center);
-      width: 100%;
-      margin-left: 16px;
-      padding-right: 32px;
-      line-height: 40px;
-      letter-spacing: 0.6px;
-
-      .arrow {
-        width: 18px;
-        height: 30px;
-      }
-    }
-  }
-
-  .bindImg {
-    @include imageCommon('~@/static/mine/icon-link.svg');
-  }
-
-  .unBindImg {
-    @include imageCommon('~@/static/mine/icon-unlink.svg');
-  }
-
-  .cleanImg {
-    @include imageCommon('~@/static/mine/clean.svg');
-  }
-
-  .cusServiceImg {
-    @include imageCommon('~@/static/mine/icon-waiter.svg');
-  }
-
-  .feedback {
-    @include imageCommon('~@/static/mine/icon-feedback.svg');
-  }
-
-  .messageleft {
-    @include imageCommon('~@/static/mine/icon-messageleft.svg');
-  }
-
-  .roomBind {
-    @include imageCommon('~@/static/mine/icon-room-bind.svg');
-  }
-
-  .message {
-    @include imageCommon('~@/static/mine/icon-message.svg');
-  }
-  
-  .jifen {
-    @include imageCommon('~@/static/mine/icon-jifen-new.svg');
-  }
-
-  .about {
-    @include imageCommon('~@/static/mine/icon-about.svg');
-  }
-
-  .cusBut {
-    background: inherit;
-    color: inherit;
-    font-size: inherit;
-    padding: 0;
-    text-align: left;
-    width: 100%;
-
-    &::after {
-      border: 0;
-      border-radius: 0;
-    }
-  }
-
-  .liabilityImg {
-    @include imageCommon('~@/static/mine/icon-paper.svg');
-  }
-
-  .faImg {
-    @include imageCommon('~@/static/mine/fa.svg');
-  }
-
-  .changelogImg {
-    @include imageCommon('~@/static/mine/icon-changelog.svg');
+  &::after {
+    border: 0;
+    border-radius: 0;
   }
 }
 
@@ -183,27 +141,6 @@
 @media (prefers-color-scheme: dark) {
   .personalInfo {
     color: $darkTextColor;
-  }
-
-  .options {
-    @include darkShadow;
-
-    .divider {
-      border-bottom: 1px solid rgb(53, 53, 53);
-    }
-
-    .optionItem {
-      background: $darkBgColor;
-      color: $darkTextColor;
-
-      .imgContainer {
-        filter: invert(100%);
-      }
-
-      .titleContainer {
-        border-bottom: none;
-      }
-    }
   }
 
   .version {

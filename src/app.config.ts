@@ -50,6 +50,13 @@ export default {
         'netflowDetail/index', // 校园网流量明细
         'electricity/index' // 剩余电量查询
       ]
+    },
+    {
+      root: 'settingsPage', // 小程序设置页面
+      pages: [
+        'index', // 设置目录页
+        'indexCardSettings/index', // 小程序首页卡片设置
+      ]
     }
   ],
   preloadRule: {

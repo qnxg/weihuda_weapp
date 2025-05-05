@@ -1,109 +1,43 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import CardProps, { useIsLoadingCountZero } from "../CardProps";
 
-export type CustomizableCardsConfig<K extends React.Key> = {
-    /** 为了设置的后向兼容，
-     * 当该值与取到的`UserCardDisplaySetting`中的值不同时，
-     * 用户设置会被忽略，
-     * 直到用户重新设置
-     */
-    configMajorVersion: string;
-    /** 首页可以自定义出现与否与顺序的卡片 */
-    customizableCards: Map<K, React.FC<CardProps>>
-}
-
-export type UserCardDisplaySetting<K extends React.Key> = {
-    /** 为了设置的后向兼容，
-     * 当该值与取到的`CustomizableCardsConfig`中的值不同时，
-     * 用户设置会被忽略，
-     * 直到用户重新设置
-     */
-    configMajorVersion: string
-    show: Set<K>
-    /** 为了设置的后向兼容，
-     * 如果一个卡片既没有在show中也没有在dontShow中，
-     * 它就会被添加到页面的末尾显示。
-     * 多个这种情况的卡片的排序按照默认设置中的优先级。
-     */
-    dontShow: Set<K>
-};
-
-export function userCardDisplaySettingSerializer(
-    setting: UserCardDisplaySetting<string>
-): string {
-    return JSON.stringify({
-        configMajorVersion: setting.configMajorVersion,
-        show: [...setting.show],
-        dontShow: [...setting.dontShow]
-    })
-}
-
-export function userCardDisplaySettingDeserializer(
-    setting: string | undefined | null
-): UserCardDisplaySetting<string> | undefined {
-    if (!setting) { return undefined; }
-    const parsed = JSON.parse(setting)
-    return {
-        configMajorVersion: parsed.configMajorVersion,
-        show: new Set(parsed.show),
-        dontShow: new Set(parsed.dontShow)
-    }
-}
-
+/** 半BUG: 当卡片内组件列表发生了变化时请销毁这个组件重新渲染（使用key），
+ * 否则loadingCount会出现异常。
+ * 这是由于loadingCount使用了useRef造成的
+ */
 const ConfigurableCardList = <K extends React.Key,>(props: {
     /** 置顶的卡片 */
-    topCards: [K, React.FC<CardProps>][]
+    topCards: [React.Key, React.FC<CardProps>][]
     /** 可配置的卡片列表 */
-    customizableCardsConfig: CustomizableCardsConfig<K>
-    /** 用户的卡片设置 */
-    userCardDisplaySetting: UserCardDisplaySetting<K>
-    /** 默认的卡片设置 */
-    defaultCardDisplaySetting: UserCardDisplaySetting<K>
+    customizableCards: Map<K, React.FC<CardProps>>
+    /** 卡片设置 */
+    CardsToShow: Set<K>
     /** 在所有卡片（含置顶的和用户设置的）加载完成后触发 */
     onAllLoadFinished: () => unknown
     /** 如果改变，则重新加载所有卡片的数据 */
     reloadAllController: unknown
 }) => {
-
-    // 如果主版本不匹配，则完全使用默认设置
-    const useSetting =
-        (props.customizableCardsConfig.configMajorVersion ==
-            props.userCardDisplaySetting.configMajorVersion
-        ) ?
-            props.userCardDisplaySetting :
-            props.defaultCardDisplaySetting
-
     /**
-     * 后向兼容：忽略所有不存在的卡片名称
+     * 忽略所有不存在的卡片名称
     */
     const mapKeyInfo = useCallback(
         (k: K): [K, React.FC<CardProps>][] => {
-            const v = props.customizableCardsConfig.customizableCards.get(k)
+            const v = props.customizableCards.get(k)
             return v ? [[k, v]] : []
         }
-        , [props.customizableCardsConfig.customizableCards]
+        , [props.customizableCards]
     )
 
     const childrenList = useMemo(
         () => [
             // 置顶的，用户无法设置的卡片
             ...props.topCards,
-            // 设置中设置了要显示的卡片
-            ...useSetting
-                .show
+            // 要显示的卡片
+            ...props.CardsToShow
                 .keys()
                 .flatMap(mapKeyInfo),
-            // 获取到的设置中没有设置要不要显示，
-            // 但是实际上默认设置又设置了要显示的卡片。
-            // 有可能发生在小程序更新之后
-            ...props.defaultCardDisplaySetting.show
-                .difference(useSetting.show)
-                .difference(useSetting.dontShow)
-                .keys()
-                .flatMap(mapKeyInfo)
         ],
-        [props.topCards, props.defaultCardDisplaySetting.show,
-        useSetting.show, useSetting.dontShow, mapKeyInfo]
+        [props.topCards, props.CardsToShow, mapKeyInfo]
     )
 
     const onAllLoadFinished = props.onAllLoadFinished;

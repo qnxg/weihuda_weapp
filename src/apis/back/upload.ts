@@ -1,4 +1,4 @@
-import storage from '@/utils/storage'
+import storage from '@/utils/storage/cache'
 import { urlUploadImg } from '@/utils/url'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'

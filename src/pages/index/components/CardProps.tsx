@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 export default interface CardProps {
     /** 这个函数应该先被触发一次false，
@@ -25,7 +25,7 @@ export default interface CardProps {
  * The hook updates the `isLoadingCountZero` state whenever the loading count changes.
  */
 export function useIsLoadingCountZero(
-    loadingCountInitial: number
+    loadingCountInitial: number,
 ):
     [
         boolean,

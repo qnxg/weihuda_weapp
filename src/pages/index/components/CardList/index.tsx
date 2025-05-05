@@ -1,34 +1,34 @@
+import Taro from '@tarojs/taro'
 import { useAppDispatch } from '@/utils/hooks/redux'
 import { fetchNoticeThunk } from '@/models/notice'
-import { Block } from '@tarojs/components'
-import storage from '@/utils/storage'
-import usePromise from '@/utils/hooks/usePromise'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import { Block, Text, View } from '@tarojs/components'
+import Card from '@/components/Card'
+import { computeFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay"
+import React, { useEffect, useMemo } from 'react'
 
-import { CardListProps } from './interface'
-import ConfigurableCardList, { userCardDisplaySettingDeserializer } from './ConfigurableCardList'
-import { customizableCardsConfig, defaultCardSetting, topCards } from './index.config'
+import ConfigurableCardList from './ConfigurableCardList'
+import { customizableCardsMap, topCards } from './index.config'
 
-/** 获取首页卡片顺序设置 */
-function useUserCardListSetting(deps: React.DependencyList) {
-  const settingFromStorage =
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useMemo(() => userCardDisplaySettingDeserializer(storage.getCardOrder()), deps)
-  const getUsableConfig = useCallback(async () => {
-    // 如果本地有设置就使用本地设置
-    if (settingFromStorage) { return settingFromStorage; }
-    // TODO: 本地没有设置时从后端请求设置
-    // await ...
-    // 如果后端也没有设置，那么就用默认设置
-    return defaultCardSetting
-  }, [settingFromStorage])
-  const [usableSetting] =
-    usePromise(
-      getUsableConfig,
-      settingFromStorage ?? defaultCardSetting,
-      [settingFromStorage]
-    )
-  return usableSetting
+import style from './index.module.scss'
+
+/** 跳转首页卡片设置的卡片 */
+const GoToCardSettings: React.FC = () =>
+  <View className={style.goToCardSettingsCard}>
+    <Card onClick={() => {
+      Taro.navigateTo({ url: '/settingsPage/indexCardSettings/index' })
+    }}>
+      <View className={style.goToCardSettingsContainer}>
+        <Text className={style.goToCardSettingsText}>
+          设置卡片…
+        </Text>
+      </View>
+    </Card>
+  </View>
+
+export interface CardListProps {
+  /** 如果变化则重新获取首页数据 */
+  fetchDataControl: any
+  onFetchDataFinished: any
 }
 
 const CardList: React.FC<CardListProps> = (
@@ -44,17 +44,21 @@ const CardList: React.FC<CardListProps> = (
     })()
   }, [dispatch, fetchDataControl])
 
-  const cardListSetting = useUserCardListSetting([fetchDataControl]);
+  const [cardsToShow] = useMemo(computeFinalCardDisplay, [fetchDataControl]);
 
   return (
     <Block>
       <ConfigurableCardList
+        key={fetchDataControl
+          /* 后续可以考虑在设置完卡片顺序后
+             使用Taro.relaunch完全重新加载到首页，
+             这样就不用每次刷新都销毁并重新加载一遍组件了。 */}
         topCards={topCards}
-        customizableCardsConfig={customizableCardsConfig}
-        userCardDisplaySetting={cardListSetting}
-        defaultCardDisplaySetting={defaultCardSetting}
+        customizableCards={customizableCardsMap}
+        CardsToShow={cardsToShow}
         onAllLoadFinished={onFetchDataFinished}
         reloadAllController={fetchDataControl} />
+      <GoToCardSettings />
     </Block>
   )
 }

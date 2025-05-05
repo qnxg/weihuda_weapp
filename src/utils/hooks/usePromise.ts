@@ -16,7 +16,7 @@ type PromiseErrorInfo = null | { thrown: unknown };
  * @param deps - 触发重调用`fn`的依赖。
  *   如果为undefined，则每次渲染都会触发`fn`。
  *   否则，`fn`仅会在`deps`中的依赖或者`fn`变化时触发。
- *   和`useEffect`的依赖用法大致相同
+ *   除了不能（不应该）省略它以外和`useEffect`的依赖用法大致相同
  * 
  * @returns A tuple containing:
  * - `T`: Promise resolve的结果。
@@ -48,7 +48,7 @@ type PromiseErrorInfo = null | { thrown: unknown };
 export default function usePromise<T>(
     fn: () => Promise<T>,
     initialValue: T | (() => T),
-    deps?: DependencyList | undefined
+    deps: DependencyList | undefined
 ): [
         T,
         boolean,

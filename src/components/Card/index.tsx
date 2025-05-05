@@ -8,13 +8,18 @@ interface Props extends ViewProps {
    * 外部容器类名
    */
   wrapperClassName?: string
+  /**
+   * 是否需要卡片内的内边距，默认为true
+   */
+  needExtraPadding?: boolean
 }
 
 /**
- * 按钮组件
+ * 卡片组件
  */
 const Card: React.FC<Props> = (props) => {
-  props.className = classNames(props.className, styles.card)
+  const needExtrapadding = props.needExtraPadding ?? true
+  props.className = classNames(props.className, styles.card, { [styles.extraPadding]: needExtrapadding })
   const wrapperClassName = classNames(styles.cardWrapper, props.wrapperClassName)
   return <View className={wrapperClassName}>
     <View {...props}></View>
