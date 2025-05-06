@@ -8,5 +8,6 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     "react/jsx-curly-brace-presence": "off",
+    'import/first': [ 'error', 'disable-absolute-first' ]
   }
 };
