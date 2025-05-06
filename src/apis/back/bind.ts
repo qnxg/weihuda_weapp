@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from './request'
 
 // TODO: 绑定数据类型为any
 

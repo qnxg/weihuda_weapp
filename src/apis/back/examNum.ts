@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from './request';
 
 /**
  * ExamNumItem，考号预存

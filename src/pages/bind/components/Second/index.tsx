@@ -1,5 +1,5 @@
 import { postBind } from '@/apis/back/bind'
-import { getTokenApi } from '@/apis/back/token'
+import { getTokenApi } from '@/apis/back/request'
 import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useRef } from 'react'

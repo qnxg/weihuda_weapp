@@ -1,4 +1,4 @@
-import request from "@/utils/request"
+import request from '../back/request';
 
 /**
  * RawGradeItem，项目成绩

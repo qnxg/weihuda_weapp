@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from './request';
 
 // 调休的接口
 export interface FlexTime {
