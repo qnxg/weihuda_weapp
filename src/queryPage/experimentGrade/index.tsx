@@ -5,7 +5,7 @@ import TabBar from '@/components/TabBar'
 import empty from '@/static/empty/no-grade.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 
 const Index: React.FC = () => {
@@ -18,7 +18,7 @@ const Index: React.FC = () => {
   /**
    * 获取数据
    */
-  const getData = async () => {
+  const getData = useCallback(async () => {
     Taro.showLoading({
       mask: true,
       title: '加载中...'
@@ -39,11 +39,11 @@ const Index: React.FC = () => {
       setShow(false)
     }
     Taro.hideLoading()
-  }
+  }, [index])
 
   useEffect(() => {
     getData()
-  }, [index])
+  }, [getData, index])
 
   const onRefresh = async (close) => {
     await getData()
