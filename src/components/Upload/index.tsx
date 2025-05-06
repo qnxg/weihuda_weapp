@@ -32,7 +32,7 @@ interface IUploadProps {
  */
 export const Upload: React.FC<IUploadProps> = (props) => {
   const { label, required, value, onChoose } = props
-  const [imgUrl, setImgUrl] = useState(props.value || '')
+  const [, setImgUrl] = useState(props.value || '')
 
   // 选择图片
   const handleChoose = () => {
