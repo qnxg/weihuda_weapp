@@ -46,7 +46,7 @@ const CheckSortListItem: React.FC<{
  * 
  * checked和unchecked两个数组总共的所有key必须互不相同
  */
-export const CheckSortListDisplay = <K1 extends Key, K2 extends Key>(props: {
+const CheckSortListDisplay = <K1 extends Key, K2 extends Key>(props: {
     checked: ReactNodeWithKey<K1>[],
     unchecked: ReactNodeWithKey<K2>[],
     onCheck: (key: K2) => unknown,
