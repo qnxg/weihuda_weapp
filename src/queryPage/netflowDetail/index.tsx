@@ -5,7 +5,7 @@ import icon from '@/static/mine/icon-sjjxbind.svg'
 import { Picker, Text, View } from '@tarojs/components'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import dayjs from 'dayjs'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { month2020, monthAll } from './config'
 import styles from './index.module.scss'
 import { LineData, SelectorItem } from './interface'
@@ -76,7 +76,7 @@ const Index: React.FC = () => {
   /**
    * 获取数据
    */
-  const getData = async () => {
+  const getData = useCallback(async () => {
     Taro.showLoading({
       mask: true,
       title: '加载中...'
@@ -104,11 +104,11 @@ const Index: React.FC = () => {
       })
     }
     Taro.hideLoading()
-  }
+  }, [byDay, byMonth, isDay])
 
   useEffect(() => {
     getData()
-  }, [isDay, byDay, byMonth])
+  }, [isDay, byDay, byMonth, getData])
 
   // const { data, run, loading } = useGraphql<MonthDetailObject>({
   //   query: `query monthDetail($year: Int!, $month: Int!${isDay ? ', $day: Int!' : ''}) {
