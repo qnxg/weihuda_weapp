@@ -1,5 +1,5 @@
+import DateType, { ExamArrange } from '@/apis/hdjw/examArrange';
 import dayjs from 'dayjs';
-import DateType, { ExamArrange } from './interface';
 
 /**星期英文简写标题 */
 export const dayTitles: Array<string> = ['日', '一', '二', '三', '四', '五', '六'];

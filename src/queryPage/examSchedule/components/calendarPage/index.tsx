@@ -8,9 +8,10 @@ import location from '@/static/icon/location.svg';
 
 import Calendar from '../calendar';
 import { initialDisplayDate, initialHighlight, prevBlank, nextBlank, datesInMonth } from '../../util';
+import { ExamArrange } from '@/apis/hdjw/examArrange';
 
 interface Props {
-  exam: unknown[];
+  exam: ExamArrange[];
 }
 
 const Index: React.FC<Props> = (props) => {
@@ -46,7 +47,7 @@ const Index: React.FC<Props> = (props) => {
   if (
     checkedHighlight.date == highlight.date &&
     checkedHighlight.day == highlight.day &&
-    checkedHighlight.exams.length != highlight.exams.length
+    (checkedHighlight.exams ?? []).length != (highlight.exams ?? []).length
   ) {
     setHighlight(() => checkedHighlight);
   }

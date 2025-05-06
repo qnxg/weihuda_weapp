@@ -7,15 +7,16 @@ import shiftRight from '@/static/calendar/shift-right.svg';
 
 import { dayTitles, totalCells } from '../../util';
 import styles from './index.module.scss';
+import DateType from '@/apis/hdjw/examArrange';
 
 interface Props {
   display;
   setDisplay: any;
   highlight;
   setHighlight: any;
-  prev: unknown[];
-  valid: unknown[];
-  next: unknown[];
+  prev: DateType[];
+  valid: DateType[];
+  next: DateType[];
 }
 
 /**
