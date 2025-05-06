@@ -10,7 +10,7 @@
   "scripts": {
     "build": "taro build --type weapp",
     "dev": "taro build --type weapp --watch",
-    "lint": "tsc --noEmit && eslint ./src",
+    "lint": "tsc --noEmit && eslint ./src && echo 🎉🎉没有错误🎉🎉",
     "postinstall": "weapp-tw patch"
   },
   "browserslist": [
