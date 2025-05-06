@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import { fetchNoticeThunk } from '@/models/notice'
 import icon from '@/static/mine/icon-date.svg'
 import { Navigator, View } from '@tarojs/components'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import MessageItem from '../../components/MessageItem'
 import styles from './index.module.scss'
 
@@ -43,18 +43,21 @@ const Index: React.FC = () => {
   /**
    * 获取消息通知
    */
-  const getNotice = async () => {
+  const getNotice = useCallback(async () => {
     if (notice.data.length) return
     dispatch(fetchNoticeThunk())
-  }
+  }, [dispatch, notice.data.length])
 
   useEffect(() => {
     getMessageData()
-    getNotice()
   }, [])
 
+  useEffect(() => {
+    getNotice()
+  }, [getNotice])
+
   return (
-    <View style={{paddingBottom: '20px'}}>
+    <View style={{ paddingBottom: '20px' }}>
       <Card className={styles.countInfo}>
         共有{countInfo.total}条消息，含有 {countInfo.message} 条公告，{countInfo.unread} 条未读消息。
       </Card>
