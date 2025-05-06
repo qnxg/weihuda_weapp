@@ -42,7 +42,7 @@ export const putNoticeByIdThunk = createAsyncThunk('notice/putNoticeById', async
   }
 })
 
-export const notice = createSlice({
+const notice = createSlice({
   name: 'notice',
   initialState,
   reducers: {

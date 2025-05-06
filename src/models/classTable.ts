@@ -176,7 +176,7 @@ export const refreshClassTableThunk = createAsyncThunk('classTable/refreshClassT
   }
 })
 
-export const classTable = createSlice({
+const classTable = createSlice({
   name: 'classTable',
   initialState,
   reducers: {
