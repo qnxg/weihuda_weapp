@@ -1,13 +1,33 @@
 /* eslint-disable import/no-commonjs */
 module.exports = {
-  extends: ['taro/react', 'prettier'],
+  extends: [
+    'taro/react',
+    'prettier',
+    'plugin:import/recommended',
+    "plugin:import/typescript"
+  ],
   plugins: ['prettier'],
+  "settings": {
+    "import/resolver": {
+      "typescript": true,
+      "node": true,
+    },
+    "import/extensions": [
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+    ]
+  },
   rules: {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     "react/jsx-curly-brace-presence": "off",
-    'import/first': [ 'error', 'disable-absolute-first' ]
+    'import/first': ['error', 'disable-absolute-first'],
+    'import/no-cycle': ['error', { maxDepth: 3 }],
+    'import/no-self-import': "error",
+    'import/no-named-as-default-member': "off"
   }
 };
