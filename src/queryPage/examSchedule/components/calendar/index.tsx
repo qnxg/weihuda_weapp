@@ -5,18 +5,17 @@ import { View, Image } from '@tarojs/components';
 import shiftLeft from '@/static/calendar/shift-left.svg';
 import shiftRight from '@/static/calendar/shift-right.svg';
 
-import DateType from '../../interface';
 import { dayTitles, totalCells } from '../../util';
 import styles from './index.module.scss';
 
 interface Props {
-  display: DateType;
+  display;
   setDisplay: any;
-  highlight: DateType;
+  highlight;
   setHighlight: any;
-  prev: DateType[];
-  valid: DateType[];
-  next: DateType[];
+  prev: unknown[];
+  valid: unknown[];
+  next: unknown[];
 }
 
 /**
@@ -63,7 +62,7 @@ const Index: React.FC<Props> = (props) => {
   };
 
   /** 处理点击日期 */
-  const onClickCell = (d: DateType): void => {
+  const onClickCell = (d): void => {
     if (d.date !== highlight.date || d.month !== highlight.month || d.year !== highlight.year) {
       if (d.month !== highlight.month) {
         setDisplay({

@@ -7,11 +7,10 @@ import { onColors } from '@/utils/config';
 import location from '@/static/icon/location.svg';
 
 import Calendar from '../calendar';
-import DateType, { ExamArrange } from '../../interface';
 import { initialDisplayDate, initialHighlight, prevBlank, nextBlank, datesInMonth } from '../../util';
 
 interface Props {
-  exam: ExamArrange[];
+  exam: unknown[];
 }
 
 const Index: React.FC<Props> = (props) => {
@@ -19,12 +18,12 @@ const Index: React.FC<Props> = (props) => {
    * 当前展示的月份
    * 注意 display 使不包含考试信息的
    */
-  const [display, setDisplay] = useState<DateType>(initialDisplayDate());
+  const [display, setDisplay] = useState(initialDisplayDate());
   /**
    * 当前高亮的日期
    * 包含highlight当天的考试信息
    */
-  const [highlight, setHighlight] = useState<DateType>(initialHighlight(props.exam));
+  const [highlight, setHighlight] = useState(initialHighlight(props.exam));
 
   const prev = useMemo(() => {
     return prevBlank(display, props.exam);
