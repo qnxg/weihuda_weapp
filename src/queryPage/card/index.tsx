@@ -7,7 +7,7 @@ import { months } from '@/utils/config'
 import { Image, Navigator, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import PickerArea from './components/PickerArea'
 import styles from './index.module.scss'
 
@@ -35,17 +35,18 @@ const Index: React.FC = () => {
 
   const [data, setData] = useState<CardHistoryData | null>(null)
 
+  const yearPicker0 = year[picker[0]];
   /**
    * 获取数据
    */
-  const getData = async () => {
+  const getData = useCallback(async () => {
     Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
     try {
       const res = await getCardHistory({
-        year: year[picker[0]],
+        year: yearPicker0,
         month: months[picker[1]],
         type: String(index + 1)
       })
@@ -63,11 +64,11 @@ const Index: React.FC = () => {
       setShow(false)
     }
     Taro.hideLoading()
-  }
+  }, [index, picker, yearPicker0])
 
   useEffect(() => {
     getData()
-  }, [index, picker])
+  }, [getData, index, picker])
 
   const onRefresh = async (close) => {
     await getData()
