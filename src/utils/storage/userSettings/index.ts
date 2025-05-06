@@ -1,7 +1,6 @@
 import Taro from "@tarojs/taro";
-import { DEFAULT_SETTINGS } from "./defaults";
-import { SettingsItem, UserSettings } from "./defaults/index.type";
-
+import { DEFAULT_SETTINGS, UserSettings } from "./defaults";
+import { SettingsItem } from "./defaults/index.type";
 
 const USER_SETTINGS_KEY = 'User-Settings'
 /** 获取部分设置

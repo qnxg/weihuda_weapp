@@ -1,7 +1,13 @@
-import { UserSettings } from "./index.type";
+import { Settings } from "./index.type";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "./indexCardSettings";
 
 
-export const DEFAULT_SETTINGS: UserSettings = {
+export const DEFAULT_SETTINGS = {
     indexCardSettings: DEFAULT_INDEX_CARD_SETTINGS
-}
+} satisfies Settings
+
+/** 当前小程序的所有用户配置项目列于此处
+ *
+ * 由于微信小程序以及后端实现限制，配置必须可以正确的被JSON.stringyfy
+ */
+export type UserSettings = typeof DEFAULT_SETTINGS

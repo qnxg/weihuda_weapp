@@ -3,7 +3,7 @@ import storage from '@/utils/storage/cache'
 import { BASE_URL } from '@/utils/url'
 import Taro from '@tarojs/taro'
 
-// 需要重构：getTokenApi和request.get的相互依赖令人迷惑
+// 需要重构甚至重写：getTokenApi和request.get的相互依赖令人迷惑
 
 // 避免多次请求
 let getTokenPromise: Promise<any> | null = null
@@ -80,7 +80,7 @@ const whiteList = ['/bind', '/token', '/feedback/no-auth']
  * @param options 请求配置项
  */
 
-async function request<T extends Data>(options: Taro.request.Option<Response>, noToken?: false): Promise<T> {
+async function request<T extends Data>(options: Taro.request.Option<Response>): Promise<T> {
   // 获取url
   const url = options.url
 
