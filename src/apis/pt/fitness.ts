@@ -75,24 +75,6 @@ enum Class {
 }
 
 /**
- * 记录
- */
-interface Report {
-  /**
-   * 描述
-   */
-  desc: string
-  /**
-   * 状态
-   */
-  status: string
-  /**
-   * 类型
-   */
-  type: string
-}
-
-/**
  * 学生信息
  */
 interface Student {
