@@ -1,7 +1,7 @@
 import { getBoundingClientRect, getScrollOffset } from '@/utils/tool'
 import { ScrollView, View, ViewProps } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 
 interface ITabsProps extends ViewProps {
@@ -79,7 +79,7 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
   }
 
   // 更新 activeLine 的位置
-  const updateActiveLine = async (newValue) => {
+  const updateActiveLine = useCallback(async (newValue) => {
     const { scrollLeft } = await getScrollOffset('.tabsScrollView')
     const scrollViewRects = await getBoundingClientRect('.tabsScrollView')
     const rects = await getBoundingClientRect('.tab-item')
@@ -89,7 +89,7 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
     setActiveLineLeft(
       activeRect.left + scrollLeft - scrollViewRects[0].left + activeRect.width / 2 - activeLineRects[0].width / 2
     )
-  }
+  }, [panels])
 
   const handleTabClick = async (value) => {
     await updateActiveLine(value)
@@ -101,7 +101,7 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
 
   useEffect(() => {
     updateActiveLine(initialTabIndex)
-  }, [])
+  }, [initialTabIndex, updateActiveLine])
 
   return (
     <View>

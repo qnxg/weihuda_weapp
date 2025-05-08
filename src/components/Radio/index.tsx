@@ -120,14 +120,14 @@ const RadioGroups: React.FC<RadioGroupsProps> = (props) => {
   };
   return (
     <View style={style}>
-      {children.map((v, i) => {
-        let { label, value, checked, style } = v.props;
+      {children.map((v) => {
+        let { label, value, checked, style: style1 } = v.props;
         if (label === undefined) label = value;
         if (checked === undefined) {
           checked = value == current;
         }
         return (
-          <Radio style={style} key={value} label={label} value={value} checked={checked} handleClick={handleClick} />
+          <Radio style={style1} key={value} label={label} value={value} checked={checked} handleClick={handleClick} />
         );
       })}
     </View>

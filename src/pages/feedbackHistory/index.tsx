@@ -68,6 +68,7 @@ const Index: React.FC = () => {
 
     // 请求数据
     getData(stuId)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

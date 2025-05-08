@@ -7,7 +7,7 @@ import empty from '@/static/empty/no-grade.svg'
 import notStart from '@/static/empty/term-not-start.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import style from './index.module.scss'
 import { State } from './interface'
 
@@ -34,16 +34,18 @@ const Index: React.FC = () => {
   const [isNotStart, setIsNotStart] = useState<boolean>(false)
   const [data, setData] = useState<RawGradeItem[]>([])
 
+
+  const yearsCurrentYear = years[state.currentYear];
   /**
    * 获取数据
    */
-  const getData = async () => {
+  const getData = useCallback(async () => {
     Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
     try {
-      const res = await getRawGrade(years[state.currentYear], state.currentTerm + 1)
+      const res = await getRawGrade(yearsCurrentYear, state.currentTerm + 1)
       if (!res || res.length === 0) {
         setShow(false)
       } else {
@@ -58,11 +60,11 @@ const Index: React.FC = () => {
       setShow(false)
     }
     Taro.hideLoading()
-  }
+  }, [state.currentTerm, yearsCurrentYear])
 
   useEffect(() => {
     getData()
-  }, [state.currentTerm, state.currentYear])
+  }, [getData, state.currentTerm, state.currentYear])
 
   const { currentYear, currentTerm } = state
   const onChangeFirstTab = (index: number): void => {

@@ -98,45 +98,46 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
 
   const [currentDate, setCurrentDate] = useState(new Date())
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setCurrentDate(new Date())
-      }, 60 * 1000) // 每分钟更新一次
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentDate(new Date())
+    }, 60 * 1000) // 每分钟更新一次
 
-      return () => {
-        clearTimeout(timer)
-      }
-    }, [currentDate])
-
-  // 是否已经出现了一次特殊类型，防止同时出现正在进行和即将开始
-  let hasSpecial = false
-  // 获取课程显示类型
-  const getType = (startTime: string, endTime: string) => {
-    const start = dayjs(startTime, 'HH:mm')
-    const end = dayjs(endTime, 'HH:mm')
-    const current = dayjs()
-    // 如果是结束时间之后，已结束
-    if (current.isAfter(end)) {
-      return 'end'
+    return () => {
+      clearTimeout(timer)
     }
-    if (hasSpecial) {
-      return 'normal'
-    }
-    // 如果介于开始时间和结束时间之间，即正在进行
-    if (current.isBefore(end) && current.isAfter(start)) {
-      hasSpecial = true
-      return 'doing'
-    }
-    // 如果当前时间小于开始时间30分钟之内，即将开始
-    const diffOfStart = start.diff(current, 'minute')
-    if (diffOfStart <= 30 && diffOfStart >= 0) {
-      hasSpecial = true
-      return 'will'
-    }
-    return 'normal'
-  }
+  }, [currentDate])
 
   const formattedData = useMemo<Array<FormatData>>(() => {
+
+    // 是否已经出现了一次特殊类型，防止同时出现正在进行和即将开始
+    let hasSpecial = false
+    // 获取课程显示类型
+    const getType = (startTime: string, endTime: string) => {
+      const start = dayjs(startTime, 'HH:mm')
+      const end = dayjs(endTime, 'HH:mm')
+      const current = dayjs()
+      // 如果是结束时间之后，已结束
+      if (current.isAfter(end)) {
+        return 'end'
+      }
+      if (hasSpecial) {
+        return 'normal'
+      }
+      // 如果介于开始时间和结束时间之间，即正在进行
+      if (current.isBefore(end) && current.isAfter(start)) {
+        hasSpecial = true
+        return 'doing'
+      }
+      // 如果当前时间小于开始时间30分钟之内，即将开始
+      const diffOfStart = start.diff(current, 'minute')
+      if (diffOfStart <= 30 && diffOfStart >= 0) {
+        hasSpecial = true
+        return 'will'
+      }
+      return 'normal'
+    }
+
     if (todayClass.length !== 0) {
       const tempArray: Array<FormatData> = []
       todayClass.map((item) => {
@@ -165,7 +166,7 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
     } else {
       return []
     }
-  }, [todayClass, currentDate])
+  }, [todayClass])
 
   return (
     <Card>

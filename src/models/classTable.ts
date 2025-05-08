@@ -4,6 +4,8 @@ import storage from '@/utils/storage/cache'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
+// 需要重构：循环依赖
+// eslint-disable-next-line import/no-cycle
 import { RootState } from '.'
 
 export enum EDayType {
@@ -174,7 +176,7 @@ export const refreshClassTableThunk = createAsyncThunk('classTable/refreshClassT
   }
 })
 
-export const classTable = createSlice({
+const classTable = createSlice({
   name: 'classTable',
   initialState,
   reducers: {

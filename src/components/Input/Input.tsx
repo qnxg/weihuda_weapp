@@ -1,4 +1,4 @@
-import { ButtonProps, InputProps, Input as TaroInput, View } from '@tarojs/components'
+import { InputProps, Input as TaroInput, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import styles from './index.module.scss'

@@ -52,7 +52,7 @@ const initialState: StateType = {
   sex: ''
 }
 
-export const userInfo = createSlice({
+const userInfo = createSlice({
   name: 'userInfo',
   initialState,
   reducers: {

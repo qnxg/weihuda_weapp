@@ -4,7 +4,7 @@ import Card from '@/components/Card'
 import { Image, Text, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 
 const Index: React.FC = () => {
@@ -16,7 +16,7 @@ const Index: React.FC = () => {
   const [status, setStatus] = useState<AuthQrcodeStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const getQrCodeStatus = async () => {
+  const getQrCodeStatus = useCallback(async () => {
     try {
       const res = await getAuthQrcodeStatusApi(code)
       if (res === 'used') {
@@ -28,12 +28,12 @@ const Index: React.FC = () => {
     } catch (e) {
       setError('二维码已失效')
     }
-  }
+  }, [code])
 
   // 获取二维码状态
   useEffect(() => {
     getQrCodeStatus()
-  }, [])
+  }, [getQrCodeStatus])
 
   // 回到首页
   const goHome = () => {

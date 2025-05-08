@@ -1,4 +1,4 @@
-import { ButtonProps, TextareaProps, Textarea as TaroTextarea, View } from '@tarojs/components'
+import { TextareaProps, Textarea as TaroTextarea, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import styles from './index.module.scss'

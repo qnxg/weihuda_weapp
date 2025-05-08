@@ -3,7 +3,6 @@ import Card from '@/components/Card'
 import { RichText, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import dayjs from 'dayjs'
-import * as entities from 'entities'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 

@@ -7,8 +7,8 @@ import { onColors } from '@/utils/config';
 import iconNoK from '@/static/empty/no-exam.svg';
 import location from '@/static/icon/location.svg';
 
-import { ExamArrange } from '../../interface';
 import styles from './index.module.scss';
+import { ExamArrange } from '@/apis/hdjw/examArrange';
 
 interface Props {
   exam: ExamArrange[];

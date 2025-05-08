@@ -1,7 +1,7 @@
 import { ExamNumItem, deleteExamNumApi, getExamNumList } from '@/apis/back/examNum'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ExamId } from './interface'
 
 /**

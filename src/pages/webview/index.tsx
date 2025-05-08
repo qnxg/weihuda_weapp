@@ -7,15 +7,18 @@ const Index: React.FC = () => {
   const { params } = useRouter()
   const { url, title, from } = params
   useEffect(() => {
+    let cleanUp = () => { };
     if (from === 'zhihu') {
-      setTimeout(() => {
+      const w = setTimeout(() => {
         getJifenWebviewReadApi({ url: url! })
       }, 5000)
+      cleanUp = () => clearTimeout(w)
     }
     if (title) {
       Taro.setNavigationBarTitle({ title: title! })
     }
-  }, [])
+    return cleanUp
+  }, [from, title, url])
   return (
     <View>
       <WebView src={url!} />

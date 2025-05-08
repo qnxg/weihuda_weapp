@@ -73,9 +73,9 @@ const Index: React.FC = () => {
   // 点击提交按钮
   const handleSubmit = async () => {
     // 订阅通知
-    const subscribeRes = await Taro.requestSubscribeMessage({
-      tmplIds: ['FYeNexjH9UgnFYJFhHMJk-KFxKJtEb-3ca8x7A5HYdE']
-    })
+    // const subscribeRes = await Taro.requestSubscribeMessage({
+    //   tmplIds: ['FYeNexjH9UgnFYJFhHMJk-KFxKJtEb-3ca8x7A5HYdE']
+    // })
 
     // 验证
     if (noAuth && data.stuId === '') {

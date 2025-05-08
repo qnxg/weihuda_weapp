@@ -1,10 +1,4 @@
-import { CardEnum } from "@/pages/index/components/CardList/index.config"
-import { SettingsItem } from "./index.type"
-
-export interface IndexCardSettings extends SettingsItem {
-  show: CardEnum[]
-  dontShow: CardEnum[]
-}
+import { IndexCardSettings } from "./IndexCardSettings.type"
 
 /** 默认卡片设置，应该列举了所有能配置的卡片 */
 export const DEFAULT_INDEX_CARD_SETTINGS: IndexCardSettings = {

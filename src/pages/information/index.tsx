@@ -84,6 +84,7 @@ const Index: React.FC = () => {
   useEffect(() => {
     getData(queryData, true)
     getTags()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 下拉刷新

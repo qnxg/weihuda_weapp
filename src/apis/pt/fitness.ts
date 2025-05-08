@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '../back/request'
 
 /**
  * 具体数据，请求失败时为null
@@ -72,24 +72,6 @@ export interface FitnessItem {
 enum Class {
   Green = 'green',
   Red = 'red'
-}
-
-/**
- * 记录
- */
-interface Report {
-  /**
-   * 描述
-   */
-  desc: string
-  /**
-   * 状态
-   */
-  status: string
-  /**
-   * 类型
-   */
-  type: string
 }
 
 /**

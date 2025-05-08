@@ -42,6 +42,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
       if (item) return item.height
       return 120
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notice, message])
 
   // 滑块切换

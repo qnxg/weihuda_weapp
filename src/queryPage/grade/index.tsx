@@ -7,7 +7,7 @@ import empty from '@/static/empty/no-grade.svg'
 import notStart from '@/static/empty/term-not-start.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import styles from './index.module.scss'
 import { GradeState } from './interface'
 
@@ -34,13 +34,15 @@ const Index: React.FC = () => {
 
   const [show, setShow] = useState(false)
 
-  const getData = async () => {
+  const yearsCurrentYear = years[gradeState.currentYear]
+
+  const getData = useCallback(async () => {
     Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
     try {
-      const res = await getGrade(years[gradeState.currentYear], gradeState.currentSemester)
+      const res = await getGrade(yearsCurrentYear, gradeState.currentSemester)
       if (!res || res.length === 0) {
         setShow(false)
       } else {
@@ -56,11 +58,11 @@ const Index: React.FC = () => {
       setShow(false)
     }
     Taro.hideLoading()
-  }
+  }, [gradeState.currentSemester, yearsCurrentYear])
 
   useEffect(() => {
     getData()
-  }, [gradeState.currentSemester, gradeState.currentYear])
+  }, [getData, gradeState.currentSemester, gradeState.currentYear])
 
   const { currentYear, currentSemester, isNotStart } = gradeState
 

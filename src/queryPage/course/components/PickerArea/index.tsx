@@ -2,10 +2,9 @@ import React from 'react';
 import { CommonEventFunction } from '@tarojs/components/types/common';
 import { View, Text, Picker, Image, Input } from '@tarojs/components';
 import iconFinger from '@/static/emptyRoom/icon-finger.svg';
-import { useSelector } from 'react-redux';
 
 import styles from './index.module.scss';
-import { GlobalStore } from '../../../../../types/global-store';
+import { useAppSelector } from '@/utils/hooks/redux';
 
 interface Props {
   currentSem: number;
@@ -15,7 +14,7 @@ interface Props {
 
 const PickerArea: React.FC<Props> = (props) => {
   const { currentSem, setSemester, setKeyword } = props;
-  const { semesters } = useSelector((state: GlobalStore) => state.classTable);
+  const { semesters } = useAppSelector((state) => state.classTable);
   /**
    * picker的值发生改变
    * @param e
