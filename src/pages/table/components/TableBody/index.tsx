@@ -2,7 +2,7 @@ import { Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
 
-import { useAppDispatch } from '@/hooks/redux'
+import { useAppDispatch } from '@/utils/hooks/redux'
 import { saveClassTable } from '@/models/classTable'
 import { FormatTable } from '../../interface'
 import Day from '../Day'

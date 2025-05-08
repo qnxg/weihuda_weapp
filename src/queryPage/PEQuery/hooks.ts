@@ -1,5 +1,5 @@
 import { Fitness, getFitness } from '@/apis/pt/fitness'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import Taro from '@tarojs/taro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 

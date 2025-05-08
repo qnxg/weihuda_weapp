@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
-import storage from '@/utils/storage'
+import storage from '@/utils/storage/cache'
 import { Picker, Switch, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'

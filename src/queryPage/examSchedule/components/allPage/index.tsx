@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Image, Block } from '@tarojs/components';
-import LineDivideCard from '@/components/LineDivideCard';
-import LeftPart from '@/components/LineDivideCard/components/LeftPart';
-import RightPart from '@/components/LineDivideCard/components/RightPart';
+import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard';
+import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart';
+import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart';
 import { onColors } from '@/utils/config';
 import iconNoK from '@/static/empty/no-exam.svg';
 import location from '@/static/icon/location.svg';
@@ -24,7 +24,7 @@ const Index: React.FC<Props> = (props) => {
           const end = item.endTime.split(' ');
           const day = start[0].replace(/-/g, '/');
           return (
-            <LineDivideCard
+            <LineDividedLeftRightCard
               key={`${item.name}${1000 - index}`}
               className={styles.cardOuter}
               lineColor={onColors[index % onColors.length]}

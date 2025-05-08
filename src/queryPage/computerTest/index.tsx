@@ -1,7 +1,7 @@
 import { ExamArrange, getComputerExam } from '@/apis/hdjw/computerExam'
-import LineDivideCard from '@/components/LineDivideCard'
-import LeftPart from '@/components/LineDivideCard/components/LeftPart'
-import RightPart from '@/components/LineDivideCard/components/RightPart'
+import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard'
+import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart'
+import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart'
 import PullRefresh from '@/components/PullRefresh'
 import iconNoJK from '@/static/empty/no-exam.svg'
 import location from '@/static/icon/location.svg'
@@ -60,7 +60,7 @@ const Index: React.FC = () => {
             const end = item.endTime.split(' ')
             const day = start[0].replace(/-/g, '/')
             return (
-              <LineDivideCard
+              <LineDividedLeftRightCard
                 key={item.name}
                 className={styles.cardOuter}
                 lineColor={onColors[index % onColors.length]}

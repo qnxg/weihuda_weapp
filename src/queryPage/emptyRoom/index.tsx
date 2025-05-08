@@ -1,5 +1,5 @@
 import { EmptyRoomItem, getEmptyRoom } from '@/apis/hdjw/emptyRoom'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import { multiObject } from '@/utils/config'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

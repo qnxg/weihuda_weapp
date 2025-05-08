@@ -1,6 +1,6 @@
 import { getSmesterInfo } from '@/apis/info'
 import { dayOfWeek, nowWeek } from '@/utils/day'
-import storage from '@/utils/storage'
+import storage from '@/utils/storage/cache'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'

@@ -27,24 +27,26 @@ const CardLayout: React.FC<CardLayoutProps> = (props) => {
   }, [props.url]);
 
   return (
-    <View className={styles.outer} onClick={navigate}>
-      <View className={styles.header}>
-        <View className={styles.titlePart}>
-          <Image className={styles.icon} src={props.icon} />
-          <View className={styles.title}>{props.title}</View>
-        </View>
-        {props.moreUrl && (
-          <View
-            className={styles.moreTitle}
-            onClick={() => {
-              Taro.navigateTo({ url: props.moreUrl || '/pages/index/index' });
-            }}
-          >
-            {props.moreTitle || '查看更多'}
+    <View className={styles.cardItem}>
+      <View className={styles.outer} onClick={navigate}>
+        <View className={styles.header}>
+          <View className={styles.titlePart}>
+            <Image className={styles.icon} src={props.icon} />
+            <View className={styles.title}>{props.title}</View>
           </View>
-        )}
+          {props.moreUrl && (
+            <View
+              className={styles.moreTitle}
+              onClick={() => {
+                Taro.navigateTo({ url: props.moreUrl || '/pages/index/index' });
+              }}
+            >
+              {props.moreTitle || '查看更多'}
+            </View>
+          )}
+        </View>
+        {props.children}
       </View>
-      {props.children}
     </View>
   );
 };

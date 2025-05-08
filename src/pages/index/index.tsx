@@ -1,24 +1,24 @@
 import PullRefresh, { RefProps } from '@/components/PullRefresh'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
 import { getSmesterInfoThunk } from '@/models/smester'
 import { getUserInfoThunk } from '@/models/userInfo'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { Fragment, memo, useCallback, useEffect, useRef } from 'react'
+import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import CardList from './components/CardList'
 import DateBar from './components/DateBar'
 import styles from './index.module.scss'
-import useRefreshKey from '@/utils/useRefreshKey'
+
+const CardListMemo = memo(CardList);
 
 const Index: React.FC = () => {
-  const [fetchDataListener, fetchDataTrigger] = useRefreshKey();
-  const { dayOfWeek } = useAppSelector((state) => state.smester)
+  const [fetchDataControl, fetchDataTrigger] = useRefreshKey();
   const { isBind } = useAppSelector((state) => state.userInfo)
-  const { currentWeek, semesters: terms } = useAppSelector((state) => state.classTable)
-
+  
   const dispatch = useAppDispatch()
-
+  
   /** 拉取基本信息 */
   useEffect(() => {
     dispatch(getUserInfoThunk())
@@ -26,7 +26,8 @@ const Index: React.FC = () => {
       dispatch(initClassTableThunk())
     })
   }, [dispatch])
-
+  
+  const { currentWeek, semesters: terms } = useAppSelector((state) => state.classTable)
   useEffect(() => {
     if (isBind) {
       if (terms && terms.length > 0) {
@@ -36,7 +37,7 @@ const Index: React.FC = () => {
       }
     }
   }, [isBind, terms, dispatch])
-
+  
   useEffect(() => {
     if (currentWeek !== undefined && currentWeek !== null) {
       Taro.setNavigationBarTitle({
@@ -47,17 +48,18 @@ const Index: React.FC = () => {
 
   const scrollRef = useRef<RefProps | null>(null)
 
+  const onFetchDataFinished = useCallback(() => {
+    scrollRef.current?.stop()
+  }, [])
+
   return (
     <Fragment>
       <DateBar />
       <PullRefresh ref={scrollRef} topGap={100} runFunc={fetchDataTrigger}>
         <View className={styles.contentOuter}>
-          <CardList
-            onFetchDataFinished={() => {
-              scrollRef.current?.stop()
-            }}
-            fetchDataListener={fetchDataListener}
-            curDayAndWeek={{ curWeek: currentWeek, curDay: dayOfWeek }}
+          <CardListMemo
+            onFetchDataFinished={onFetchDataFinished}
+            fetchDataControl={fetchDataControl}
           />
         </View>
       </PullRefresh>

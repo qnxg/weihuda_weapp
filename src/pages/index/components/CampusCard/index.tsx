@@ -1,15 +1,18 @@
-import { CardInfo } from '@/apis/pt/card'
+import { CardInfo, getCardInfo } from '@/apis/pt/card'
 import icon from '@/static/index/icon/card.svg'
 import { Text, View } from '@tarojs/components'
-import React from 'react'
+import usePromise from '@/utils/hooks/usePromise'
+import React, { useEffect } from 'react'
 import CardLayout from '../CardLayout'
 import styles from './index.module.scss'
+import CardProps from '../CardProps'
 
-interface CardProps {
+interface DisplayProps {
   info?: CardInfo
 }
 
-const CampusCard: React.FC<CardProps> = ({ info }) => {
+/** 校园卡余额卡片 */
+const CampusCardDisplay: React.FC<DisplayProps> = ({ info }) => {
   return (
     <CardLayout icon={icon} title='校园卡余额' moreUrl='/queryPage/card/index' moreTitle='查看账单'>
       <View className={styles.outer}>
@@ -22,6 +25,15 @@ const CampusCard: React.FC<CardProps> = ({ info }) => {
       </View>
     </CardLayout>
   )
+}
+
+const CampusCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [cardData, isCardDataLoading] =
+    usePromise(getCardInfo, undefined, [reloadController]);
+  useEffect(() => {
+    onLoadingStatusChange(isCardDataLoading)
+  }, [isCardDataLoading, onLoadingStatusChange])
+  return <CampusCardDisplay info={cardData} />
 }
 
 export default CampusCard

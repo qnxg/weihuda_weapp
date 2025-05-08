@@ -2,7 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-view,page,navigator {
+@import 'utils/scss/global.scss';
+
+view,
+page,
+navigator {
   box-sizing: border-box;
 }
 
@@ -10,9 +14,9 @@ page {
   background: #f9f9f9;
   height: 100vh;
   font-family: "Source Han Sans", sans-serif;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-  & > view {
+  &>view {
     margin: 0;
     padding: 0;
   }
@@ -30,4 +34,10 @@ view {
 
 .hover-class {
   background: none;
+}
+
+// 理论上应该避免使用默认字体
+// 这里作为兜底，让忘记设置字体时默认字体至少具有适应屏幕的特性
+page {
+  font-size: $fontBig;
 }

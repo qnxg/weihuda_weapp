@@ -1,9 +1,9 @@
 import Taro from '@tarojs/taro';
 import React, { useMemo, useState } from 'react';
 import { Block, Image, ITouchEvent, View } from '@tarojs/components';
-import LineDivideCard from '@/components/LineDivideCard';
-import LeftPart from '@/components/LineDivideCard/components/LeftPart';
-import RightPart from '@/components/LineDivideCard/components/RightPart';
+import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard';
+import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart';
+import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart';
 import topStar from '@/static/examId/top-star.svg';
 import { ExamId } from '../../interface';
 import { useShowModal } from '../modal';
@@ -125,7 +125,7 @@ const Index: React.FC<Props> = (props) => {
         className={styles.lineWrapper}
         style={{ marginLeft: `${leftOffset}rpx`, transition: `ease-out ${transitionTime}ms` }}
       >
-        <LineDivideCard
+        <LineDividedLeftRightCard
           lineColor={lineColor}
           renderLeft={<LeftPart title={examIdItem.sub} content={examIdItem.examDate} />}
           style='flex-shrink:0;margin:0;box-shadow:none;border-top-right-radius:0;border-bottom-right-radius:0;'

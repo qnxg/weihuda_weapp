@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text } from '@tarojs/components'
 import icon from '@/static/index/icon/email.svg'
+import { getUnReadCount } from '@/apis/pt/email'
+import usePromise from '@/utils/hooks/usePromise'
 
 import CardLayout from '../CardLayout'
 import styles from './index.module.scss'
+import CardProps from '../CardProps'
 
-interface CardProps {
+interface DisplayProps {
   unReadCount?: number
 }
 
-const EmailCard: React.FC<CardProps> = (props) => {
+const EmailCardDisplay: React.FC<DisplayProps> = (props) => {
   const { unReadCount } = props
   return (
     <CardLayout icon={icon} title='校园邮箱'>
@@ -20,6 +23,15 @@ const EmailCard: React.FC<CardProps> = (props) => {
       </View>
     </CardLayout>
   )
+}
+
+const EmailCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
+  const [unReadCount, isUnReadCountLoading] =
+    usePromise(getUnReadCount, undefined, [reloadController])
+  useEffect(() => {
+    onLoadingStatusChange(isUnReadCountLoading)
+  }, [isUnReadCountLoading, onLoadingStatusChange])
+  return <EmailCardDisplay unReadCount={unReadCount} />
 }
 
 export default EmailCard

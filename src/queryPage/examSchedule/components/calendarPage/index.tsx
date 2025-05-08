@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { View, Block } from '@tarojs/components';
-import LineDivideCard from '@/components/LineDivideCard';
-import LeftPart from '@/components/LineDivideCard/components/LeftPart';
-import RightPart from '@/components/LineDivideCard/components/RightPart';
+import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard';
+import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart';
+import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart';
 import { onColors } from '@/utils/config';
 import location from '@/static/icon/location.svg';
 
@@ -70,7 +70,7 @@ const Index: React.FC<Props> = (props) => {
             const end = item.endTime.split(' ');
             const day = start[0].replace(/-/g, '/');
             return (
-              <LineDivideCard
+              <LineDividedLeftRightCard
                 key={item.name}
                 style={{
                   boxShadow: '0 0 20px 0 rgba(226, 226, 226, 0.34)',

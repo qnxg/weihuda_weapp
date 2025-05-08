@@ -1,7 +1,7 @@
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import useGraphql from '@/hooks/useGraphql'
 import iconNoJK from '@/static/empty/no-exam.svg'
 import { Image, View } from '@tarojs/components'

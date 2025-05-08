@@ -1,6 +1,6 @@
 import { getTokenApi } from '@/apis/back/token'
 import Taro from '@tarojs/taro'
-import storage from './storage'
+import storage from './storage/cache'
 import { BASE_URL } from './url'
 
 /**

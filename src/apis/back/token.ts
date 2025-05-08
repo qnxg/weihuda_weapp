@@ -1,6 +1,6 @@
 import getLoginCode from '@/utils/getLoginCode'
 import request from '@/utils/request'
-import storage from '@/utils/storage'
+import storage from '@/utils/storage/cache'
 
 // 避免多次请求
 let getTokenPromise: Promise<any> | null = null

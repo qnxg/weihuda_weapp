@@ -1,0 +1,38 @@
+@import '~@/utils/scss/global.scss';
+
+.checkSortListContainer {
+    padding-bottom: 20px;
+}
+
+.checkSortItemContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkSortItemNumberContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkSortItemNumber {
+    font-size: $fontBig;
+}
+
+.checkedSortListItemContentContainer {
+    flex: 6;
+    opacity: 1;
+}
+
+.uncheckedSortListItemContentContainer {
+    flex: 6;
+    opacity: 0.4;
+}
+
+.card {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

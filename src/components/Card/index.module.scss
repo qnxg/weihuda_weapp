@@ -3,9 +3,13 @@
   padding: 20px;
   padding-bottom: 0;
 }
+
 .card {
   width: 100%;
-  padding: 20px;
   border-radius: 8px;
   background: var(--bg-color-container);
+}
+
+.card.extraPadding {
+  padding: 20px;
 }

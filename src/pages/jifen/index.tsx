@@ -1,7 +1,7 @@
 import { getJifenTotalApi } from '@/apis/jifen'
 import Card from '@/components/Card'
 import { TabPanel, Tabs } from '@/components/Tabs'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import { View } from '@tarojs/components'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'

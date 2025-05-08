@@ -1,5 +1,5 @@
 import { postCourseApi } from '@/apis/hdjw/classTable'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import Taro from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
