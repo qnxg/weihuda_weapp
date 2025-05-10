@@ -1,4 +1,4 @@
-import { postUnbind } from '@/apis/back/bind'
+import { postUnbind } from '@/apis/bind'
 import { useAppSelector } from '@/utils/hooks/redux'
 import { Block, Button, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

@@ -1,4 +1,4 @@
-import { postExamNumApi } from '@/apis/back/examNum'
+import { postExamNumApi } from '@/apis/examNum'
 import { Input, Picker, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'

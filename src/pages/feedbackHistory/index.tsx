@@ -1,4 +1,4 @@
-import { FeedbackData, getFeedbackPageApi } from '@/apis/back/feedback'
+import { FeedbackData, getFeedbackPageApi } from '@/apis/feedback'
 import Button from '@/components/Button'
 import { Input, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'

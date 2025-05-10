@@ -1,4 +1,4 @@
-import request from '../back/request'
+import request from '../request'
 
 /**
  * 请求参数

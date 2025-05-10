@@ -1,4 +1,4 @@
-import { Message, getMessage } from '@/apis/back/message'
+import { Message, getMessage } from '@/apis/message'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import Empty from '@/components/Empty'

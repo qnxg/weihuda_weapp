@@ -1,4 +1,4 @@
-import request from '../back/request'
+import request from '../request'
 
 /**
  * 获取实验安排

@@ -1,4 +1,4 @@
-import { getFlexTimeList } from '@/apis/back/flexTime'
+import { getFlexTimeList } from '@/apis/flexTime'
 import PullRefresh from '@/components/PullRefresh'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'

@@ -1,4 +1,4 @@
-import { uploadImgApi } from '@/apis/back/upload'
+import { uploadImgApi } from '@/apis/upload'
 import { postZhihuApi } from '@/apis/zhihu'
 import Button from '@/components/Button'
 import Card from '@/components/Card'

@@ -1,4 +1,4 @@
-import { IMessageLeft, postMessageLeftApi } from '@/apis/back/messageleft'
+import { IMessageLeft, postMessageLeftApi } from '@/apis/messageleft'
 import Button from '@/components/Button'
 import { useAppSelector } from '@/utils/hooks/redux'
 import { Picker, Radio, RadioGroup, Text, Textarea, View } from '@tarojs/components'

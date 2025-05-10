@@ -1,4 +1,4 @@
-import { getMessage, Message } from '@/apis/back/message'
+import { getMessage, Message } from '@/apis/message'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import { useAppSelector } from '@/utils/hooks/redux'

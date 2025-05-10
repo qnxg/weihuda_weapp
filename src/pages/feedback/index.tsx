@@ -1,5 +1,5 @@
-import { FeedbackData, postFeedback } from '@/apis/back/feedback'
-import { uploadImgApi } from '@/apis/back/upload'
+import { FeedbackData, postFeedback } from '@/apis/feedback'
+import { uploadImgApi } from '@/apis/upload'
 import Button from '@/components/Button'
 import { useAppSelector } from '@/utils/hooks/redux'
 import { Image, Input, Navigator, Text, Textarea, View } from '@tarojs/components'

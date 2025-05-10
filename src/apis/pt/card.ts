@@ -1,4 +1,4 @@
-import request from '../back/request'
+import request from '../request'
 
 /**
  * CardInfo，校园卡余额

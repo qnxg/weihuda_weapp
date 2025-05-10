@@ -1,4 +1,4 @@
-import request from '../back/request';
+import request from '../request';
 
 /**
  * 具体数据，请求失败时为null

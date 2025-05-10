@@ -1,4 +1,4 @@
-import { ExamNumItem, deleteExamNumApi, getExamNumList } from '@/apis/back/examNum'
+import { ExamNumItem, deleteExamNumApi, getExamNumList } from '@/apis/examNum'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useEffect, useMemo, useState } from 'react'
