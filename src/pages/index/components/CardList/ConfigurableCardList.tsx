@@ -3,12 +3,7 @@ import CardProps, { useIsLoadingCountZero } from "../CardProps";
 
 /** 半BUG: 当卡片内组件列表发生了变化时请销毁这个组件重新渲染（使用key），
  * 否则loadingCount会出现异常。
- * 这是由于loadingCount使用了useRef造成的
- * 
- * edit: 
- * 现在卡片设置页面在保存退出后会重新加载首页，
- * 这样一来用户不需要设置后还回到首页刷新，
- * 也不需要用key来使这个组件在刷新前销毁了
+ * 这是loadingCount使用了useRef造成的
  */
 const ConfigurableCardList = <K extends React.Key,>(props: {
     /** 置顶的卡片 */

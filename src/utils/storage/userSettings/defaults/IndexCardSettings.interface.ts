@@ -1,5 +1,5 @@
 import { CardEnum } from "@/pages/index/components/CardList/index.config";
-import { SettingsItem } from "./index.type";
+import { SettingsItem } from "./index.interface";
 
 
 export interface IndexCardSettings extends SettingsItem {

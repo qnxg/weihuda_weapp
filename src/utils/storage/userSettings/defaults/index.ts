@@ -1,8 +1,9 @@
-import { Settings } from "./index.type";
+import { Settings } from "./index.interface";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "./indexCardSettings";
 
 
 export const DEFAULT_SETTINGS = {
+    /** 首页卡片设置 */
     indexCardSettings: DEFAULT_INDEX_CARD_SETTINGS
 } satisfies Settings
 

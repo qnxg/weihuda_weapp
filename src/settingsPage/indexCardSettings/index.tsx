@@ -1,10 +1,10 @@
 import Button from "@/components/Button";
 import CheckSortListDisplay from "@/components/CheckSortList"
 import { CardEnum } from "@/pages/index/components/CardList/index.config";
-import { computeFinalCardDisplay, saveCardSettings } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
+import { saveCardSettings, useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
 import { Text, View } from "@tarojs/components";
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Taro from "@tarojs/taro";
 import Card from "@/components/Card";
 
@@ -12,7 +12,14 @@ import style from './index.module.scss'
 
 const Index: React.FC = () => {
     // Set的顺序是其插入顺序，刚好和我们这里想要的行为相同
-    const [cardSettings, setCardSettings] = useState(computeFinalCardDisplay);
+    const [cardSettings, setCardSettings] =
+        useState<[Set<CardEnum>, Set<CardEnum>]>([new Set(), new Set()]);
+
+    const currentSettings = useFinalCardDisplay([])
+    useEffect(() => {
+        setCardSettings(currentSettings);
+    }, [currentSettings])
+
     const mapSettings = (s: Set<CardEnum>) =>
         Array.from(s.keys().map(k => ({
             key: k,
@@ -21,39 +28,48 @@ const Index: React.FC = () => {
     const checked = mapSettings(cardSettings[0]);
     const unchecked = mapSettings(cardSettings[1]);
 
-    const [modified, setModified] = useState(false);
-    const [saved, setSaved] = useState(false);
+    const [canSave, setCanSave] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [shouldRelaunchIndex, setShouldRelaunchIndex] = useState(false);
 
-    // 在设置后reLaunch
-    // important: 见首页ConfigurableCardList的描述
+    // 在设置后reLaunch到首页
+    // 作用：
+    // 1. 用户不用在首页手动刷新才能看到卡片变化
     Taro.useUnload(() => {
-        if (saved) {
-            Taro.reLaunch({ url: '/pages/index/index' })
+        if (shouldRelaunchIndex) {
+            void Taro.reLaunch({ url: '/pages/index/index' })
         }
     })
 
     const handleCheck = useCallback((k: CardEnum) => {
-        setModified(true)
+        setCanSave(true)
         cardSettings[1].delete(k);
         cardSettings[0].add(k);
         setCardSettings([cardSettings[0], cardSettings[1]]);
     }, [cardSettings]);
 
     const handleUncheck = useCallback((k: CardEnum) => {
-        setModified(true)
+        setCanSave(true)
         cardSettings[0].delete(k);
         cardSettings[1].add(k);
         setCardSettings([cardSettings[0], cardSettings[1]]);
     }, [cardSettings]);
 
     const handleSave = useCallback(() => {
-        setModified(false)
-        setSaved(true)
-        saveCardSettings(cardSettings[0], cardSettings[1])
+        void (async () => {
+            setSaving(true);
+            try {
+                await saveCardSettings(cardSettings[0], cardSettings[1])
+                setCanSave(false)
+                setShouldRelaunchIndex(true)
+            } finally {
+                setSaving(false)
+            }
+        })();
     }, [cardSettings]);
 
     const handleCheckAll = useCallback(() => {
-        setModified(true)
+        setCanSave(true)
         cardSettings[1].forEach(k => {
             cardSettings[0].add(k);
         });
@@ -62,7 +78,7 @@ const Index: React.FC = () => {
     }, [cardSettings]);
 
     const handleUncheckAll = useCallback(() => {
-        setModified(true)
+        setCanSave(true)
         cardSettings[0].forEach(k => {
             cardSettings[1].add(k);
         });
@@ -71,7 +87,7 @@ const Index: React.FC = () => {
     }, [cardSettings]);
 
     const handleReset = useCallback(() => {
-        setModified(true)
+        setCanSave(true)
         setCardSettings([
             new Set(DEFAULT_INDEX_CARD_SETTINGS.show),
             new Set(DEFAULT_INDEX_CARD_SETTINGS.dontShow)
@@ -85,9 +101,10 @@ const Index: React.FC = () => {
         <View className={style.actionButtonsContainer}>
             <Button
                 theme="primary"
-                disabled={!modified}
+                disabled={!canSave}
                 className={style.actionButton}
                 onClick={handleSave}
+                loading={saving}
             >
                 保存
             </Button>

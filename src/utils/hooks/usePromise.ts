@@ -60,7 +60,7 @@ export default function usePromise<T>(
 
     useEffect(() => {
         let isMounted = true;
-        ; (async () => {
+        void (async () => {
             try {
                 setPromiseError(null);
                 setIsPromisePending(true);
