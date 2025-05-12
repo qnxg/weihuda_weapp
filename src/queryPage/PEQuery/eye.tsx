@@ -8,7 +8,7 @@ const Eye: React.FC = () => {
   const params = router.params
 
   useEffect(() => {
-    Taro.setNavigationBarTitle({
+    void Taro.setNavigationBarTitle({
       title: '体质测试 视力查询'
     })
   })

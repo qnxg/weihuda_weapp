@@ -32,11 +32,11 @@ const HomeSwiperCard: React.FC<CardProps> =
     // 点击轮播图跳转到详情页
     const handleClick = (item: IZhihu) => {
       if (item.type === 'link') {
-        Taro.navigateTo({
+        void Taro.navigateTo({
           url: `/pages/webview/index?url=${item.content}&title=${item.title}&from=zhihu`
         })
       } else {
-        Taro.navigateTo({
+        void Taro.navigateTo({
           url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`
         })
       }

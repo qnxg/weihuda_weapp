@@ -39,7 +39,7 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
 
   // 标记为已读
   const markAsRead = async (id: number) => {
-    dispatch(
+    void dispatch(
       putNoticeByIdThunk({
         id,
         status: 1
@@ -55,12 +55,12 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
   const onBtnClick = async (id: number, type: IBtnConfigItem['type'], value: IBtnConfigItem['value']) => {
     if (type === 'link') {
       // 跳转到链接
-      Taro.navigateTo({
+      void Taro.navigateTo({
         url: value!
       })
     } else if (type === 'button' && value !== undefined) {
       // 更新数据
-      dispatch(
+      void dispatch(
         putNoticeByIdThunk({
           id,
           status: 1,

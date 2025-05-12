@@ -27,12 +27,12 @@ const JifenRecord: React.FC<IJifenRecordProps> = (props) => {
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   // 通过ref暴露给父组件调用
   const updateJifenRecord = () => {
-    getData()
+    void getData()
   }
   if (props.jifenRecordRef) {
     props.jifenRecordRef.current = { updateJifenRecord }

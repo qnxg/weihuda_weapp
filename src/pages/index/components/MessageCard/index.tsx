@@ -48,7 +48,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   // 滑块切换
   const handleSwiperChange = (e) => {
     setCurrent(e.detail.current)
-    calcedHeights.then((res) => {
+    void calcedHeights.then((res) => {
       setHeight(res[e.detail.current])
     })
   }
@@ -62,7 +62,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
             footer={
               <View
                 onClick={() => {
-                  Taro.navigateTo({ url: '/pages/messageBox/index' })
+                  void Taro.navigateTo({ url: '/pages/messageBox/index' })
                 }}
               >
                 查看更多
@@ -88,7 +88,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
                 <SwiperItem
                   key={item.title}
                   onClick={() => {
-                    Taro.navigateTo({ url: item.url ? item.url : '/pages/messageBox/index' })
+                    void Taro.navigateTo({ url: item.url ? item.url : '/pages/messageBox/index' })
                   }}
                 >
                   <View className={styles.messageItem}>

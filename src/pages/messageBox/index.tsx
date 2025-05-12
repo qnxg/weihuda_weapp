@@ -45,15 +45,15 @@ const Index: React.FC = () => {
    */
   const getNotice = useCallback(async () => {
     if (notice.data.length) return
-    dispatch(fetchNoticeThunk())
+    void dispatch(fetchNoticeThunk())
   }, [dispatch, notice.data.length])
 
   useEffect(() => {
-    getMessageData()
+    void getMessageData()
   }, [])
 
   useEffect(() => {
-    getNotice()
+    void getNotice()
   }, [getNotice])
 
   return (

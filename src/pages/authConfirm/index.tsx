@@ -23,7 +23,7 @@ const Index: React.FC = () => {
         setError('二维码已失效')
       } else {
         setStatus(res)
-        putAuthQrcodeStatusApi(code, 'using')
+        await putAuthQrcodeStatusApi(code, 'using')
       }
     } catch (e) {
       setError('二维码已失效')
@@ -32,12 +32,12 @@ const Index: React.FC = () => {
 
   // 获取二维码状态
   useEffect(() => {
-    getQrCodeStatus()
+    void getQrCodeStatus()
   }, [getQrCodeStatus])
 
   // 回到首页
   const goHome = () => {
-    Taro.switchTab({
+    void Taro.switchTab({
       url: '/pages/index/index'
     })
   }
@@ -47,7 +47,7 @@ const Index: React.FC = () => {
     if (!code && status === 'used') return
     await putAuthQrcodeStatusApi(code, 'confirmed')
     setStatus('used')
-    Taro.showToast({
+    await Taro.showToast({
       title: '授权成功'
     })
     setTimeout(() => {
@@ -60,7 +60,7 @@ const Index: React.FC = () => {
     if (!code && status === 'used') return
     await putAuthQrcodeStatusApi(code, 'canceled')
     setStatus('used')
-    Taro.showToast({
+    await Taro.showToast({
       title: '取消成功'
     })
     setTimeout(() => {

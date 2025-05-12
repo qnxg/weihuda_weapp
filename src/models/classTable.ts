@@ -130,7 +130,7 @@ export const refreshClassTableThunk = createAsyncThunk('classTable/refreshClassT
   const { semesters, currentSem } = state.classTable
   const xn = semesters[currentSem].xn.toString()
   const xq = semesters[currentSem].xq
-  Taro.showLoading({
+  await Taro.showLoading({
     title: '加载中...',
     mask: true
   })

@@ -10,12 +10,12 @@ const Index: React.FC = () => {
     let cleanUp = () => { };
     if (from === 'zhihu') {
       const w = setTimeout(() => {
-        getJifenWebviewReadApi({ url: url! })
+        void getJifenWebviewReadApi({ url: url! })
       }, 5000)
       cleanUp = () => clearTimeout(w)
     }
     if (title) {
-      Taro.setNavigationBarTitle({ title: title! })
+      void Taro.setNavigationBarTitle({ title: title! })
     }
     return cleanUp
   }, [from, title, url])

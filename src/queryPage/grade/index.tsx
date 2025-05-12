@@ -37,7 +37,7 @@ const Index: React.FC = () => {
   const yearsCurrentYear = years[gradeState.currentYear]
 
   const getData = useCallback(async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -51,17 +51,17 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
+      setShow(false)
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
-      setShow(false)
     }
     Taro.hideLoading()
   }, [gradeState.currentSemester, yearsCurrentYear])
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [getData, gradeState.currentSemester, gradeState.currentYear])
 
   const { currentYear, currentSemester, isNotStart } = gradeState

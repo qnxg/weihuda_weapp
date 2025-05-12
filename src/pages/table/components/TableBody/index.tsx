@@ -55,7 +55,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
       onLongPress={() => {
-        Taro.navigateTo({
+        void Taro.navigateTo({
           url: '/pages/addCourse/index'
         })
       }}

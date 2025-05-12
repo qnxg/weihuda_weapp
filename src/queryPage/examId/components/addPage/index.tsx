@@ -23,17 +23,18 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
         date: newItem.examDate.replace(/\//g, '-'),
         num: newItem.examId || ' '
       })
-      Taro.showToast({
+      await Taro.showToast({
         title: '添加成功',
         duration: 1000
       })
     } catch (error) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: error.toString()
       })
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   const editExamName = useCallback((e) => {

@@ -21,9 +21,9 @@ const Index: React.FC = () => {
   
   /** 拉取基本信息 */
   useEffect(() => {
-    dispatch(getUserInfoThunk())
-    dispatch(getSmesterInfoThunk()).then(() => {
-      dispatch(initClassTableThunk())
+    void dispatch(getUserInfoThunk())
+    void dispatch(getSmesterInfoThunk()).then(() => {
+      void dispatch(initClassTableThunk())
     })
   }, [dispatch])
   
@@ -31,16 +31,16 @@ const Index: React.FC = () => {
   useEffect(() => {
     if (isBind) {
       if (terms && terms.length > 0) {
-        dispatch(refreshClassTableThunk())
+        void dispatch(refreshClassTableThunk())
       } else {
-        dispatch(initClassTableThunk())
+        void dispatch(initClassTableThunk())
       }
     }
   }, [isBind, terms, dispatch])
   
   useEffect(() => {
     if (currentWeek !== undefined && currentWeek !== null) {
-      Taro.setNavigationBarTitle({
+      void Taro.setNavigationBarTitle({
         title: currentWeek >= 0 ? `第${currentWeek}周` : `距开学${-currentWeek}周`
       })
     }

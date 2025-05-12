@@ -30,7 +30,7 @@ const Index: React.FC = () => {
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   return (

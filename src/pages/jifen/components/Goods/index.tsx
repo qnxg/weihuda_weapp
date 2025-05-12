@@ -45,19 +45,19 @@ const Goods: React.FC<IGoodsProps> = (props) => {
       setExchangeLoading(false)
       return
     }
-    Taro.showLoading({ title: '兑换中...' })
+    await Taro.showLoading({ title: '兑换中...' })
     const res = await postGoodsRecordApi({
       goodsId: id,
       exchangeTime: dayjs().format('YYYY-MM-DD HH:mm:ss')
     })
     console.log(res)
     if (res) {
-      Taro.showToast({
+      await Taro.showToast({
         title: '兑换成功',
         icon: 'success'
       })
       setExchangeLoading(false)
-      getData()
+      await getData()
       if (props.updateTotal) {
         props.updateTotal()
       }
@@ -78,7 +78,7 @@ const Goods: React.FC<IGoodsProps> = (props) => {
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   return (

@@ -38,21 +38,21 @@ const Index: React.FC = () => {
   const onSubmit = async () => {
     // 非空校验
     if (!title || title.trim() === '') {
-      Taro.showToast({
+      await Taro.showToast({
         title: '请输入标题',
         icon: 'none'
       })
       return
     }
     if (!content || content.trim() === '') {
-      Taro.showToast({
+      await Taro.showToast({
         title: '请输入内容',
         icon: 'none'
       })
       return
     }
     if (!selectedTag) {
-      Taro.showToast({
+      await Taro.showToast({
         title: '请选择分类',
         icon: 'none'
       })
@@ -62,12 +62,12 @@ const Index: React.FC = () => {
     let uploadedImgUrl = ''
     if (imgUrl) {
       // 如果有图片那就先上传图片，拿到图片地址后再提交表单
-      Taro.showToast({ title: '正在上传图片', icon: 'loading' })
+      await Taro.showToast({ title: '正在上传图片', icon: 'loading' })
       try {
         uploadedImgUrl = await uploadImgApi(imgUrl)
-        Taro.showToast({ title: '上传图片成功', icon: 'none' })
+        await Taro.showToast({ title: '上传图片成功', icon: 'none' })
       } catch (error) {
-        Taro.showToast({ title: '上传图片失败', icon: 'none' })
+        await Taro.showToast({ title: '上传图片失败', icon: 'none' })
         return
       }
     }
@@ -99,13 +99,13 @@ const Index: React.FC = () => {
     setImgUrl('')
     setSelectedTag('')
     // 提示用户
-    Taro.showToast({
+    void Taro.showToast({
       title: '发布成功',
       icon: 'success'
     })
     // 返回上一页
     setTimeout(() => {
-      Taro.navigateBack()
+      void Taro.navigateBack()
     }, 1000)
   }
 

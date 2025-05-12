@@ -75,8 +75,8 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
                   <View className={styles.optionContainer}>
                     <View
                       className={styles.options}
-                      onClick={(): void => {
-                        deleteCourse(item.id)
+                      onClick={() => {
+                        void deleteCourse(item.id)
                       }}
                     >
                       <View className={styles.removeIcon} />

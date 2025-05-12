@@ -11,7 +11,7 @@ interface Props {
 
 const First: React.FC<Props> = (props) => {
   const nextStep = (): void => {
-    Taro.getUserProfile({
+    void Taro.getUserProfile({
       desc: '授权后可正常使用微生活小程序',
       success: () => {
         props.setStep(2);

@@ -22,7 +22,7 @@ export interface CardLayoutProps {
 const CardLayout: React.FC<CardLayoutProps> = (props) => {
   const navigate = useCallback(() => {
     if (props.url) {
-      Taro.navigateTo({ url: props.url });
+      void Taro.navigateTo({ url: props.url });
     }
   }, [props.url]);
 
@@ -38,7 +38,7 @@ const CardLayout: React.FC<CardLayoutProps> = (props) => {
             <View
               className={styles.moreTitle}
               onClick={() => {
-                Taro.navigateTo({ url: props.moreUrl || '/pages/index/index' });
+                void Taro.navigateTo({ url: props.moreUrl || '/pages/index/index' });
               }}
             >
               {props.moreTitle || '查看更多'}

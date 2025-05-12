@@ -15,7 +15,7 @@ const App: React.FC = ({ children }: React.PropsWithChildren) => {
     dayjs.extend(customParseFormat)
 
     Taro.onPageNotFound(() => {
-      Taro.redirectTo({ url: '/pages/404/index' })
+      void Taro.redirectTo({ url: '/pages/404/index' })
     })
 
   });

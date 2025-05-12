@@ -40,7 +40,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = useCallback(async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -53,17 +53,17 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
-        icon: 'none',
-        title: err.toString()
-      })
       setShow(false)
+      await Taro.showToast({
+        icon: 'none',
+        title: err.toString(),
+      })
     }
     Taro.hideLoading()
   }, [state.currentTerm, yearsCurrentYear])
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [getData, state.currentTerm, state.currentYear])
 
   const { currentYear, currentTerm } = state

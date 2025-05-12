@@ -23,7 +23,7 @@ const Index: React.FC = () => {
   const [date, setDate] = useState<string | null>('')
   const [content, setContent] = useState('')
   useEffect(() => {
-    ;(async () => {
+    void (async () => {
       const { id, title: _title, publishTime } = router.params
       await Taro.setNavigationBarTitle({
         title: _title as string

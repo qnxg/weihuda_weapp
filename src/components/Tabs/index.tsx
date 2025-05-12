@@ -100,7 +100,7 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
   }
 
   useEffect(() => {
-    updateActiveLine(initialTabIndex)
+    void updateActiveLine(initialTabIndex)
   }, [initialTabIndex, updateActiveLine])
 
   return (

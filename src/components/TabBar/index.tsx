@@ -26,7 +26,7 @@ const TabBar: React.FC<Props> = (props) => {
     (index: number) => () => {
       onClick(index);
       if (preIndexRef.current === index) {
-        Taro.pageScrollTo({
+        void Taro.pageScrollTo({
           scrollTop: 0,
           duration: 400
         });

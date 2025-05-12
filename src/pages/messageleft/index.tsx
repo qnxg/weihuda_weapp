@@ -63,12 +63,12 @@ const Index: React.FC = () => {
     }
     try {
       await postMessageLeftApi(reqData)
-      Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
+      await Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
       setTimeout(() => {
-        Taro.navigateBack()
+        void Taro.navigateBack()
       }, 1000)
     } catch (error) {
-      Taro.showToast({ title: '提交失败', icon: 'none' })
+      await Taro.showToast({ title: '提交失败', icon: 'none' })
     }
   }
 
@@ -76,13 +76,13 @@ const Index: React.FC = () => {
   const handleSubmit = async () => {
     // 验证
     if (data.desc === '') {
-      Taro.showToast({ title: '请填写留言内容', icon: 'none' })
+      await Taro.showToast({ title: '请填写留言内容', icon: 'none' })
       return
     }
 
-    Taro.showLoading({ title: '正在提交' })
+    await Taro.showLoading({ title: '正在提交' })
     console.log('提交数据', data)
-    submitData({
+    await submitData({
       ...data
     })
   }

@@ -45,7 +45,7 @@ const Index: React.FC<Props> = (props) => {
 
   // 长按复制考号
   const handleLongPress = () => {
-    Taro.setClipboardData({
+    void Taro.setClipboardData({
       data: examIdItem.examId
     });
   };

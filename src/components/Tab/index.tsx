@@ -32,7 +32,7 @@ const Index: React.FC<Props> = (props) => {
     (index: number, e?: ITouchEvent) => {
       onChange(index, e);
       if (preIndexRef.current === index) {
-        Taro.pageScrollTo({
+        void Taro.pageScrollTo({
           scrollTop: 0,
           duration: 400
         });

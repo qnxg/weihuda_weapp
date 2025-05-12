@@ -77,7 +77,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = useCallback(async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -98,16 +98,17 @@ const Index: React.FC = () => {
         setData(res)
       }
     } catch (err) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }, [byDay, byMonth, isDay])
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [isDay, byDay, byMonth, getData])
 
   // const { data, run, loading } = useGraphql<MonthDetailObject>({
@@ -173,11 +174,11 @@ const Index: React.FC = () => {
         num={0}
         onClick={(i) => {
           const duration = 300 + (dataList?.length || 0)
-          Taro.pageScrollTo({
+          setIsDay(i)
+          void Taro.pageScrollTo({
             scrollTop: 0,
             duration: duration > 1000 ? 1000 : duration
           })
-          setIsDay(i)
         }}
         current={isDay}
       />

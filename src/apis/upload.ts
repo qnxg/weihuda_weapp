@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 
 export const uploadImgApi = async (filePath: any) => {
-  return new Promise<string>((resolve, reject) => {
+  return new Promise<string>((resolve, reject) =>
     Taro.uploadFile({
       url: urlUploadImg,
       filePath: filePath,
@@ -25,5 +25,5 @@ export const uploadImgApi = async (filePath: any) => {
         resolve(resData.data.url)
       }
     })
-  })
+  )
 }

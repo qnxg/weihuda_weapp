@@ -20,13 +20,13 @@ const Index: React.FC = () => {
 
   // 请求反馈历史列表
   const getData = async (stuIdParam: string) => {
-    Taro.showLoading()
+    await Taro.showLoading()
     try {
       const res = await getFeedbackPageApi(stuIdParam)
       if (res) {
         setData(res.rows)
         Taro.hideLoading()
-        Taro.showToast({
+        await Taro.showToast({
           title: '查询成功',
           icon: 'success'
         })
@@ -40,7 +40,7 @@ const Index: React.FC = () => {
   const handleSubmit = async () => {
     // 非空检查
     if (stuId.trim() === '') {
-      Taro.showToast({
+      await Taro.showToast({
         title: '学号不能为空',
         icon: 'none'
       })
@@ -49,7 +49,7 @@ const Index: React.FC = () => {
 
     // 长度检查
     if (stuId.trim().length !== 12) {
-      Taro.showToast({
+      await Taro.showToast({
         title: '学号必须是12位',
         icon: 'none'
       })
@@ -57,7 +57,7 @@ const Index: React.FC = () => {
     }
 
     // 请求数据
-    getData(stuId)
+    await getData(stuId)
   }
 
   // 进入页面时发起请求
@@ -67,7 +67,7 @@ const Index: React.FC = () => {
     }
 
     // 请求数据
-    getData(stuId)
+    void getData(stuId)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

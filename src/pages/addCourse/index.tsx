@@ -99,12 +99,12 @@ const Index: React.FC = () => {
     const { classname } = state
     const { week, section } = formatValue
     if (classname === '' || section === '' || week === '') {
-      Taro.showToast({
+      void Taro.showToast({
         title: '请检查必填项',
         icon: 'none'
       })
     } else {
-      run()
+      void run()
     }
   }
 
@@ -197,9 +197,8 @@ const Index: React.FC = () => {
               onChange={pickerChange}
             >
               <View>
-                {`${addCoursePicker[0][state.picker[0]]} ${addCoursePicker[1][state.picker[1]]}-${
-                  addCoursePicker[2][state.picker[2]]
-                }`}
+                {`${addCoursePicker[0][state.picker[0]]} ${addCoursePicker[1][state.picker[1]]}-${addCoursePicker[2][state.picker[2]]
+                  }`}
               </View>
             </Picker>
           </View>

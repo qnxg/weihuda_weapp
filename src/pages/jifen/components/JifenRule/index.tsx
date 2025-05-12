@@ -11,11 +11,10 @@ const JifenRule: React.FC = () => {
   const [exteraRule, setExteraRule] = React.useState<string>('')
 
   const getData = async () => {
-    getMiniConfigPageApi({
+    await getMiniConfigPageApi({
       key: 'exteraJifenRules'
     }).then((res) => {
-      if (res.rows.length === 0) return
-
+      if (res.rows.length === 0) return;
       setExteraRule(res.rows[0].value)
     })
     const res = await getJifenRulePageApi({
@@ -29,7 +28,7 @@ const JifenRule: React.FC = () => {
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   return (

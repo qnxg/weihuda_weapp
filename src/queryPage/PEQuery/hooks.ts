@@ -46,7 +46,7 @@ const usePE = () => {
   const [state, setState] = useState<Fitness[]>(initState(years.length))
 
   const run = useCallback(async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -62,17 +62,18 @@ const usePE = () => {
       newData[current] = res
       setState(newData)
     } catch (error) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: error.toString()
       })
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }, [current, sex, state, years])
 
   useEffect(() => {
     if (JSON.stringify(state[current]) === JSON.stringify(init)) {
-      run()
+      void run()
     }
   }, [current, run, state])
 

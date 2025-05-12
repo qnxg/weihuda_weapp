@@ -28,8 +28,8 @@ const Index: React.FC = () => {
     useEffect(() => {
         let previousDay = dayjs().day(); // 初始化为当前的星期几
         // 定义一个函数来获取调休信息
-        const fetchFlexTimeList = () => {
-            getFlexTimeList().then((res) => {
+        const fetchFlexTimeList = async () => {
+            await getFlexTimeList().then((res) => {
                 if (res && res.length > 0) {
                     let day = dayjs().day() as number; // 获取今天是星期几
                     if (day === 0) {
@@ -53,13 +53,13 @@ const Index: React.FC = () => {
             });
         };
         // 初次加载时获取调休信息
-        fetchFlexTimeList();
+        void fetchFlexTimeList();
         // 设置一个定时器，每隔一分钟检测 dayjs().day() 是否变化
         const intervalId = setInterval(() => {
             const currentDay = dayjs().day();
             if (currentDay !== previousDay) {
                 previousDay = currentDay; // 更新 previousDay
-                fetchFlexTimeList(); // 重新获取调休信息
+                void fetchFlexTimeList(); // 重新获取调休信息
             }
         }, 60000); // 每隔一分钟检测一次
         // 清理定时器
@@ -69,7 +69,7 @@ const Index: React.FC = () => {
     // 初始化
     useEffect(() => {
         if (!semesters || semesters.length === 0) {
-            dispatch(initClassTableThunk())
+            void dispatch(initClassTableThunk())
         }
     }, [dispatch, semesters])
 

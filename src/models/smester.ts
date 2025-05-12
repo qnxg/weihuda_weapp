@@ -53,7 +53,7 @@ export const getSmesterInfoThunk = createAsyncThunk('smester/getSmesterInfo', as
 
   // 无缓存或者当前缓存的学期已过期
   if (!termConfig || isOverdue) {
-    Taro.showLoading({
+    await Taro.showLoading({
       title: '加载中...',
       mask: true
     })

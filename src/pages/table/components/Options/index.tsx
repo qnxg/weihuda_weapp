@@ -37,7 +37,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
         currentWeeks: 1
       })
     )
-    dispatch(refreshClassTableThunk())
+    void dispatch(refreshClassTableThunk())
   }
 
   /**

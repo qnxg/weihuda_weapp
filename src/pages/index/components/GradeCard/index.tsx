@@ -39,7 +39,7 @@ const GradeCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadControlle
     onLoadingStatusChange(false)
   }, [onLoadingStatusChange])
   useEffect(() => {
-    (async () => {
+    void (async () => {
       // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
       if (!termType) return;
       onLoadingStatusChange(true)
