@@ -30,7 +30,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    // 想强制消除这个错误，请在没有await的promise前使用void关键字
+    // 想消除这个错误，请在不需要await的promise前使用void关键字
     '@typescript-eslint/no-floating-promises': ['error'],
     "react/jsx-curly-brace-presence": "off",
     'import/first': ['error', 'disable-absolute-first'],

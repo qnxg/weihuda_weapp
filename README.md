@@ -20,29 +20,29 @@
 ```shell
 src
 ├─ apis                                 # 网络请求
-│  ├─ back                              # 后端有关的请求
 │  ├─ hdjw                              # 教务系统有关的请求
 │  ├─ pt                                # 个人门户有关的请求
 │  └─ \*\*                              # 其他未分类的请求
-├─ components                           # 项目中通用的组件
-├─ hooks                                # 项目中通用的hook
+├─ components                           # 项目中通用的组件，具体用法见注释和项目中已有的示例
 ├─ models                               # 数据仓库
-├─ pages                                # 小程序页面，参考app.config.ts
-├─ queryPage                            # 分包页面，参考app.config.t
+├─ pages                                # 小程序主要页面，参考app.config.ts
+├─ queryPage                            # 分包页面，主要包括查询相关，参考app.config.ts
+├─ settingsPage                         # 分包页面，包括小程序设置页面，参考app.config.ts
 ├─ static                               # 静态资源目录
 ├─ utils                                # 项目中通用的一些工具函数集
+│  ├─ hooks                             # 项目中常用的自定义hook
 │  ├─ scss                              # sass全局变量、工具集
+│  ├─ storage                           # 本地存储和小程序设置相关
 │  ├─ config.ts                         # 一些业务有关的全局配置
 │  ├─ day.ts                            # 计算日期相关的函数封装
-│  ├─ request.ts                        # 请求处理函数封装
-│  ├─ storage.ts                        # 本地存储相关的函数封装
+│  ├─ getLoginCode.ts                   # 封装Taro.login()操作
 │  ├─ tool.ts                           # 通用的工具函数
-│  ├─ url.ts                            # BASE_URL
-│  └─ getLoginCode.ts                   # 封装Taro.login()操作
+│  └─ url.ts                            # BASE_URL
 ├─ app.config.ts                        # 小程序入口，相当于小程序中的app.json
 ├─ app.scss                             # 全局样式
 ├─ app.tsx                              # 入口文件
 ├─ index.html                           # index.html
+├─ theme.scss                           # 全局样式
 └─ theme.json                           # 主题变量
 ```
 
@@ -90,13 +90,17 @@ npx yarn dev
 
 ## 3. 代码检查
 
-本项目配置了typescript和eslint。编辑时可以让编辑器安装相关插件（vscode自带typescript支持，可以附加安装eslint插件），减少引入bug的可能。
+Typescript是基于JavaScript的开源编程语言，它通过添加静态类型检查让开发者在编译阶段就能捕捉到很多潜在的错误，从而大大提升代码的安全性和可维护性。
 
-如果想要在命令行触发检查，本项目提供了`lint`命令：
+ESLint是一个JavaScript和TypeScript的静态检查工具。它能够帮助开发者发现和修复潜在的语法错误、代码风格问题以及可能导致 bug 的不规范写法。通过制定统一的代码风格和规则，可以及时发现问题，确保团队之间保持代码一致性，降低维护成本。
+
+本项目配置了Typescript和ESlint规则。编辑时可以在编辑器上安装相关插件。如果你使用的是VSCode（自带Typescript支持），考虑附加安装ESlint插件，减少引入bug的可能。
+
+如果想要在命令行触发代码检查，本项目提供了`lint`命令：
 ```shell
 npx yarn lint
 ```
-该命令在运行后会先进行typescript检查，如果通过会继续进行eslint检查。
+该命令在运行后会先进行Typescript检查，如果通过会继续进行ESlint检查。
 
 ## 4. 测试
 
