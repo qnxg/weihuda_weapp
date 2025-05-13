@@ -52,7 +52,12 @@ const config = {
       }
     },
     webpackChain(chain, webpack) {
-      // 复制这块区域到你的配置代码中 region start
+      chain.merge({
+        performance: {
+          // 生成文件的体积警告 500kb
+          maxAssetSize: 512000,
+        },
+      });
       chain.merge({
         plugin: {
           install: {
@@ -65,7 +70,6 @@ const config = {
           }
         }
       })
-      // region end
     }
   }
 }
