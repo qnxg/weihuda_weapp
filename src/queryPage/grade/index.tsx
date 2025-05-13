@@ -1,15 +1,15 @@
-import { GradeItem, getGrade } from '@/apis/hdjw/grade'
-import PullRefresh from '@/components/PullRefresh'
-import TabBar from '@/components/TabBar'
-import Tag from '@/components/Tag'
-import { useAppSelector } from '@/utils/hooks/redux'
-import empty from '@/static/empty/no-grade.svg'
-import notStart from '@/static/empty/term-not-start.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import styles from './index.module.scss'
 import { GradeState } from './interface'
+import { GradeItem, getGrade } from '@/apis/hdjw/grade'
+import PullRefresh from '@/components/PullRefresh'
+import TabBar from '@/components/TabBar'
+import Tag from '@/components/Tag'
+import empty from '@/static/empty/no-grade.svg'
+import notStart from '@/static/empty/term-not-start.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const semester = ['秋季学期', '春季学期', '夏季学期']
 

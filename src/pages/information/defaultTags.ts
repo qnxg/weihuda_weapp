@@ -1,5 +1,5 @@
-import { parseJSON } from '@/utils/tool'
 import Taro from '@tarojs/taro'
+import { parseJSON } from '@/utils/tool'
 
 export interface TagItem {
   label: string

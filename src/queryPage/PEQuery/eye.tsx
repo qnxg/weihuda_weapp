@@ -1,7 +1,7 @@
-import DisplayCard from '@/components/DisplayCard'
 import { Text, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import React, { useEffect } from 'react'
+import DisplayCard from '@/components/DisplayCard'
 
 const Eye: React.FC = () => {
   const router = useRouter()

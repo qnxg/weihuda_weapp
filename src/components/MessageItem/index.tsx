@@ -1,13 +1,13 @@
-import { IBtnConfigItem, INotice } from '@/apis/notice'
-import Button from '@/components/Button'
-import { useAppDispatch } from '@/utils/hooks/redux'
-import { putNoticeByIdThunk } from '@/models/notice'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
+import { IBtnConfigItem, INotice } from '@/apis/notice'
+import Button from '@/components/Button'
+import { putNoticeByIdThunk } from '@/models/notice'
+import { useAppDispatch } from '@/utils/hooks/redux'
 
 interface IMessageItemProps {
   /**

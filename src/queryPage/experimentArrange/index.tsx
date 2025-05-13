@@ -1,13 +1,13 @@
-import { getLabArrange } from '@/apis/pt/labArrange'
-import DisplayCard from '@/components/DisplayCard'
-import PullRefresh from '@/components/PullRefresh'
-import TabBar from '@/components/TabBar'
-import empty from '@/static/empty/no-grade.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getLabArrange } from '@/apis/pt/labArrange'
+import DisplayCard from '@/components/DisplayCard'
+import PullRefresh from '@/components/PullRefresh'
+import TabBar from '@/components/TabBar'
+import empty from '@/static/empty/no-grade.svg'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)

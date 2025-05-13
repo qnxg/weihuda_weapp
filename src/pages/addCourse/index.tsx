@@ -1,10 +1,10 @@
-import { addCoursePicker } from '@/utils/config'
 import { Input, Picker, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import React from 'react'
 import useAddCourse from './hooks'
 import styles from './index.module.scss'
+import { addCoursePicker } from '@/utils/config'
 
 const Index: React.FC = () => {
   const { state, setState, formatValue, run } = useAddCourse()

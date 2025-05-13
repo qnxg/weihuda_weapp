@@ -1,7 +1,3 @@
-import TabBar from '@/components/TabBar'
-import iconNoCard from '@/static/empty/no-id-card.svg'
-import addImg from '@/static/index/add.svg'
-import { onColors } from '@/utils/config'
 import { Block, Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
@@ -13,6 +9,10 @@ import Unfinished from './components/unfinished'
 import { useDeleteId, useExamId } from './hooks'
 import styles from './index.module.scss'
 import { ExamId } from './interface'
+import TabBar from '@/components/TabBar'
+import iconNoCard from '@/static/empty/no-id-card.svg'
+import addImg from '@/static/index/add.svg'
+import { onColors } from '@/utils/config'
 
 const LOCAL_STORAGE_KEY = 'ExamId-Topping'
 

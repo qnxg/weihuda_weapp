@@ -1,6 +1,6 @@
+import { Canvas } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
-import { Canvas } from '@tarojs/components';
 import { CanvasObject } from '@/components/Chart/canvas';
 
 const wrapTouch = (event) => {

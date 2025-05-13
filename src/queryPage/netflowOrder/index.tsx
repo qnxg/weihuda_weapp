@@ -1,8 +1,8 @@
-import { NtflowOrderItem, getNetflowOrder } from '@/apis/netflow'
-import DisplayCard from '@/components/DisplayCard'
 import { View } from '@tarojs/components'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
+import { NtflowOrderItem, getNetflowOrder } from '@/apis/netflow'
+import DisplayCard from '@/components/DisplayCard'
 
 const Index: React.FC = () => {
   const [data, setData] = useState<NtflowOrderItem[] | null>(null)

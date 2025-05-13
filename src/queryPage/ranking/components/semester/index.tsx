@@ -1,5 +1,5 @@
-import React from 'react';
 import { View, Text, ScrollView } from '@tarojs/components';
+import React from 'react';
 
 import { Semester } from '../../interface';
 import style from './index.module.scss';

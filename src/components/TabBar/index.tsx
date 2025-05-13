@@ -1,7 +1,7 @@
-import Taro from '@tarojs/taro';
-import React, { useCallback, useRef } from 'react';
-import classNames from 'classnames';
 import { View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import classNames from 'classnames';
+import React, { useCallback, useRef } from 'react';
 
 import styles from './index.module.scss';
 

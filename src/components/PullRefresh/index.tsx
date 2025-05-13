@@ -1,7 +1,7 @@
-import Taro from '@tarojs/taro'
-import React, { useState, useImperativeHandle, forwardRef } from 'react'
-import classNames from 'classnames'
 import { ScrollView, ScrollViewProps, Slot, View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import classNames from 'classnames'
+import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import styles from './index.module.scss'
 
 export interface Props {

@@ -1,3 +1,7 @@
+import { Block, Image, View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import React, { useEffect, useState } from 'react'
+import styles from './index.module.scss'
 import { ExamArrange, getComputerExam } from '@/apis/hdjw/computerExam'
 import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard'
 import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart'
@@ -6,10 +10,6 @@ import PullRefresh from '@/components/PullRefresh'
 import iconNoJK from '@/static/empty/no-exam.svg'
 import location from '@/static/icon/location.svg'
 import { onColors } from '@/utils/config'
-import { Block, Image, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import React, { useEffect, useState } from 'react'
-import styles from './index.module.scss'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)

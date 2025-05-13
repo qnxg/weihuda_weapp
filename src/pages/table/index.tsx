@@ -1,9 +1,3 @@
-import { getFlexTimeList } from '@/apis/flexTime'
-import PullRefresh from '@/components/PullRefresh'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
-import { offColor } from '@/utils/config'
-import { judgeOn } from '@/utils/day'
 import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import BubbleNotification from './components/FlexTimeBubble'
@@ -12,6 +6,12 @@ import Header from './components/Header'
 import Options from './components/Options'
 import TableBody from './components/TableBody'
 import { CurDatesOfWeek, FormatTable } from './interface'
+import { getFlexTimeList } from '@/apis/flexTime'
+import PullRefresh from '@/components/PullRefresh'
+import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
+import { offColor } from '@/utils/config'
+import { judgeOn } from '@/utils/day'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
     const { semesters, classTable, currentWeeks, mode, currentStart, showFloat, showOptions, currentWeek } = useAppSelector(

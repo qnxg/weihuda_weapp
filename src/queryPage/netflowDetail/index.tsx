@@ -1,7 +1,3 @@
-import { NetflowDetail, getNetflowDay, getNetflowMonth } from '@/apis/netflow'
-import DisplayCard from '@/components/DisplayCard'
-import TabBar from '@/components/TabBar'
-import icon from '@/static/mine/icon-sjjxbind.svg'
 import { Picker, Text, View } from '@tarojs/components'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import dayjs from 'dayjs'
@@ -9,6 +5,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { month2020, monthAll } from './config'
 import styles from './index.module.scss'
 import { LineData, SelectorItem } from './interface'
+import { NetflowDetail, getNetflowDay, getNetflowMonth } from '@/apis/netflow'
+import DisplayCard from '@/components/DisplayCard'
+import TabBar from '@/components/TabBar'
+import icon from '@/static/mine/icon-sjjxbind.svg'
 
 const tabs = ['按月查询', '按天查询']
 

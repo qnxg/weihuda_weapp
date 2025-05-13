@@ -1,10 +1,10 @@
-import { postExamNumApi } from '@/apis/examNum'
 import { Input, Picker, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useCallback, useState } from 'react'
 import { ExamId } from '../../interface'
 import styles from './index.module.scss'
+import { postExamNumApi } from '@/apis/examNum'
 
 interface AddPageProps {
   cancelHandle?: () => void

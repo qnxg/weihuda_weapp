@@ -1,14 +1,14 @@
-import { Message, getMessage } from '@/apis/message'
-import Card from '@/components/Card'
-import CardHeader from '@/components/Card/CardHeader'
-import Empty from '@/components/Empty'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import { fetchNoticeThunk } from '@/models/notice'
-import icon from '@/static/mine/icon-date.svg'
 import { Navigator, View } from '@tarojs/components'
 import React, { useCallback, useEffect, useState } from 'react'
 import MessageItem from '../../components/MessageItem'
 import styles from './index.module.scss'
+import { Message, getMessage } from '@/apis/message'
+import Card from '@/components/Card'
+import CardHeader from '@/components/Card/CardHeader'
+import Empty from '@/components/Empty'
+import { fetchNoticeThunk } from '@/models/notice'
+import icon from '@/static/mine/icon-date.svg'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
   // 公告数据

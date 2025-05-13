@@ -1,10 +1,10 @@
-import { postUnbind } from '@/apis/bind'
-import { useAppSelector } from '@/utils/hooks/redux'
 import { Block, Button, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { LineDividedButtonList } from '@/components/LineDividedButtonList'
 import React from 'react'
 import styles from './index.module.scss'
+import { postUnbind } from '@/apis/bind'
+import { LineDividedButtonList } from '@/components/LineDividedButtonList'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const postData = async () => {
   return await postUnbind()

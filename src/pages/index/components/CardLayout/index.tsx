@@ -1,6 +1,6 @@
+import { Image, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useCallback } from 'react';
-import { Image, View } from '@tarojs/components';
 
 import styles from './index.module.scss';
 

@@ -1,9 +1,9 @@
-import { postBind } from '@/apis/bind'
-import { getTokenApi } from '@/apis/request'
 import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useRef } from 'react'
 import styles from './index.module.scss'
+import { postBind } from '@/apis/bind'
+import { getTokenApi } from '@/apis/request'
 import getLoginCode from '@/utils/getLoginCode'
 
 const Second: React.FC = () => {

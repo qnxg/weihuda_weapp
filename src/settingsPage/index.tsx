@@ -1,6 +1,6 @@
-import { LineDividedButtonList } from "@/components/LineDividedButtonList"
 import { Text } from "@tarojs/components"
 import Taro from "@tarojs/taro"
+import { LineDividedButtonList } from "@/components/LineDividedButtonList"
 
 const nav = (url: string) => () => Taro.navigateTo({ url: url })
 

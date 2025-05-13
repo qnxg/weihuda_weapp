@@ -1,8 +1,8 @@
 import { Image, View } from '@tarojs/components'
 import React from 'react'
 
-import img from '@/static/404.svg'
 import styles from './index.module.scss'
+import img from '@/static/404.svg'
 
 const Index: React.FC = () => {
   return (

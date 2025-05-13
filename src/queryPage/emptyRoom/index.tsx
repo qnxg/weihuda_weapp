@@ -1,6 +1,3 @@
-import { EmptyRoomItem, getEmptyRoom } from '@/apis/hdjw/emptyRoom'
-import { useAppSelector } from '@/utils/hooks/redux'
-import { multiObject } from '@/utils/config'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
@@ -8,6 +5,9 @@ import PickerArea from './components/PickerArea'
 import ResultArea from './components/ResultArea'
 import { initFunction } from './config'
 import { EmptyRoom, Radio as IRadio } from './interface'
+import { EmptyRoomItem, getEmptyRoom } from '@/apis/hdjw/emptyRoom'
+import { multiObject } from '@/utils/config'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
   /**

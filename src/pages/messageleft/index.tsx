@@ -1,11 +1,11 @@
-import { IMessageLeft, postMessageLeftApi } from '@/apis/messageleft'
-import Button from '@/components/Button'
-import { useAppSelector } from '@/utils/hooks/redux'
 import { Picker, Radio, RadioGroup, Text, Textarea, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import styles from './index.module.scss'
+import { IMessageLeft, postMessageLeftApi } from '@/apis/messageleft'
+import Button from '@/components/Button'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
   const { stuId } = useAppSelector((state) => state.userInfo)

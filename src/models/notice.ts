@@ -1,5 +1,5 @@
-import { INotice, getNoticePageApi, putNoticeByIdApi } from '@/apis/notice'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { INotice, getNoticePageApi, putNoticeByIdApi } from '@/apis/notice'
 
 export interface StateType {
   total: number

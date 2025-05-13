@@ -1,7 +1,7 @@
-import storage from '@/utils/storage/cache'
-import { urlUploadImg } from '@/utils/url'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
+import storage from '@/utils/storage/cache'
+import { urlUploadImg } from '@/utils/url'
 
 export const uploadImgApi = async (filePath: any) => {
   return new Promise<string>((resolve, reject) =>

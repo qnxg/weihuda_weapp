@@ -1,7 +1,7 @@
-import { CardEnum } from "@/pages/index/components/CardList/index.config";
+import { DependencyList, useMemo } from "react";
 import { getUserSettings, modifyUserSettings } from "..";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "../defaults/indexCardSettings";
-import { DependencyList, useMemo } from "react";
+import { CardEnum } from "@/pages/index/components/CardList/index.config";
 import usePromise from "@/utils/hooks/usePromise";
 
 async function computeFinalCardDisplay(): Promise<[Set<CardEnum>, Set<CardEnum>]> {

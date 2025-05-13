@@ -1,12 +1,12 @@
-import { getCourseDetail } from '@/apis/hdjw/courseDetail'
-import DisplayCard from '@/components/DisplayCard'
-import { useAppSelector } from '@/utils/hooks/redux'
-import iconNoJK from '@/static/empty/no-exam.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
 import PickerArea from './components/PickerArea'
 import styles from './index.module.scss'
+import { getCourseDetail } from '@/apis/hdjw/courseDetail'
+import DisplayCard from '@/components/DisplayCard'
+import iconNoJK from '@/static/empty/no-exam.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
   const { semesters, currentSem } = useAppSelector((state) => state.classTable)

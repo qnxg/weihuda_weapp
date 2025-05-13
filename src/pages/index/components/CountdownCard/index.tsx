@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
 import { View } from '@tarojs/components';
-import icon from '@/static/index/icon/days-left.svg';
-import usePromise from '@/utils/hooks/usePromise';
-import { getSmesterInfo, SmesterInfo } from '@/apis/info';
 import dayjs from 'dayjs';
+import React, { useEffect, useMemo } from 'react';
 
 import CardLayout from '../CardLayout';
-import styles from './index.module.scss';
 import CardProps from '../CardProps';
+import styles from './index.module.scss';
+import { getSmesterInfo, SmesterInfo } from '@/apis/info';
+import icon from '@/static/index/icon/days-left.svg';
+import usePromise from '@/utils/hooks/usePromise';
 
 interface Props {
   daysLeft: number;

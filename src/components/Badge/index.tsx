@@ -1,5 +1,5 @@
-import classNames from "classnames"
 import { Text } from "@tarojs/components"
+import classNames from "classnames"
 import { ReactNode } from "react"
 import style from './index.module.scss'
 

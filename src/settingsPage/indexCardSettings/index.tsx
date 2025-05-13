@@ -1,14 +1,14 @@
+import { Text, View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
+import { useCallback, useEffect, useState } from "react"
+import style from './index.module.scss'
 import Button from "@/components/Button";
+import Card from "@/components/Card";
 import CheckSortListDisplay from "@/components/CheckSortList"
 import { CardEnum } from "@/pages/index/components/CardList/index.config";
 import { saveCardSettings, useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
-import { Text, View } from "@tarojs/components";
-import { useCallback, useEffect, useState } from "react"
-import Taro from "@tarojs/taro";
-import Card from "@/components/Card";
 
-import style from './index.module.scss'
 
 const Index: React.FC = () => {
     // Set的顺序是其插入顺序，刚好和我们这里想要的行为相同

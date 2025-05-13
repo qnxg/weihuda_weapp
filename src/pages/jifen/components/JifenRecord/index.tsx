@@ -1,9 +1,9 @@
-import { IJifenRecord, getJifenRecordPageApi } from '@/apis/jifen'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
+import { IJifenRecord, getJifenRecordPageApi } from '@/apis/jifen'
 
 interface IJifenRecordProps {
   updateTotal?: () => void

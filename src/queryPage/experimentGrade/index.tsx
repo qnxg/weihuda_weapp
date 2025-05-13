@@ -1,12 +1,12 @@
+import { Image, View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import styles from './index.module.scss'
 import { LabGradeData, getLabGrade } from '@/apis/pt/labGrade'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
 import empty from '@/static/empty/no-grade.svg'
-import { Image, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import React, { Fragment, useCallback, useEffect, useState } from 'react'
-import styles from './index.module.scss'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)

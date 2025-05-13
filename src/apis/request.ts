@@ -1,7 +1,7 @@
+import Taro from '@tarojs/taro'
 import getLoginCode from '@/utils/getLoginCode'
 import storage from '@/utils/storage/cache'
 import { BASE_URL } from '@/utils/url'
-import Taro from '@tarojs/taro'
 
 // 需要重构甚至重写：getTokenApi和request.get的相互依赖令人迷惑
 

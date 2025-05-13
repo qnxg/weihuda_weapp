@@ -1,10 +1,10 @@
-import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
-import Button from '@/components/Button'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
+import Button from '@/components/Button'
 
 const btnText = {
   loading: '加载中',

@@ -1,9 +1,9 @@
+import { View, ScrollView, Image } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React from 'react';
-import { View, ScrollView, Image } from '@tarojs/components';
+import styles from './index.module.scss';
 import logo1000 from '@/static/mine/logo.jpg';
 
-import styles from './index.module.scss';
 
 interface Props {
   setStep: any;

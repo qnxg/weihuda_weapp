@@ -1,13 +1,13 @@
+import { Block, Image, ITouchEvent, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React, { useMemo, useState } from 'react';
-import { Block, Image, ITouchEvent, View } from '@tarojs/components';
+import { ExamId } from '../../interface';
+import { useShowModal } from '../modal';
+import styles from './index.module.scss';
 import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard';
 import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart';
 import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart';
 import topStar from '@/static/examId/top-star.svg';
-import { ExamId } from '../../interface';
-import { useShowModal } from '../modal';
-import styles from './index.module.scss';
 
 interface Props {
   index: number;

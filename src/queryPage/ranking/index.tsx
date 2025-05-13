@@ -1,13 +1,13 @@
-import { GradeRank, getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
-import PullRefresh from '@/components/PullRefresh'
-import { useAppSelector } from '@/utils/hooks/redux'
-import empty from '@/static/empty/no-ranking.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import Semester from './components/semester'
 import Report from './components/total'
 import style from './index.module.scss'
+import { GradeRank, getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
+import PullRefresh from '@/components/PullRefresh'
+import empty from '@/static/empty/no-ranking.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)

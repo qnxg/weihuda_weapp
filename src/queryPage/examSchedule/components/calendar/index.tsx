@@ -1,13 +1,13 @@
-import React from 'react';
-import dayjs from 'dayjs';
-import classnames from 'classnames';
 import { View, Image } from '@tarojs/components';
-import shiftLeft from '@/static/calendar/shift-left.svg';
-import shiftRight from '@/static/calendar/shift-right.svg';
+import classnames from 'classnames';
+import dayjs from 'dayjs';
+import React from 'react';
 
 import { dayTitles, totalCells } from '../../util';
 import styles from './index.module.scss';
 import DateType from '@/apis/hdjw/examArrange';
+import shiftLeft from '@/static/calendar/shift-left.svg';
+import shiftRight from '@/static/calendar/shift-right.svg';
 
 interface Props {
   display;

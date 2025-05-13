@@ -1,8 +1,8 @@
-import { getBoundingClientRect, getScrollOffset } from '@/utils/tool'
 import { ScrollView, View, ViewProps } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getBoundingClientRect, getScrollOffset } from '@/utils/tool'
 
 interface ITabsProps extends ViewProps {
   /**

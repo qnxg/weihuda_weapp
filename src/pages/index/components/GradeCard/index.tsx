@@ -1,13 +1,13 @@
-import { getGrade, GradeItem } from '@/apis/hdjw/grade'
-import empty from '@/static/empty/no-grade.svg'
-import cardIcon from '@/static/index/icon/grade.svg'
 import { Block } from '@tarojs/components'
-import { useAppSelector } from '@/utils/hooks/redux'
 import React, { useEffect, useState } from 'react'
 import CardEmpty from '../CardEmpty'
 import CardLayout from '../CardLayout'
-import GradeBanner from './components/GradeBanner'
 import CardProps from '../CardProps'
+import GradeBanner from './components/GradeBanner'
+import { getGrade, GradeItem } from '@/apis/hdjw/grade'
+import empty from '@/static/empty/no-grade.svg'
+import cardIcon from '@/static/index/icon/grade.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 interface GradeCardProps {
   grade?: GradeItem[]

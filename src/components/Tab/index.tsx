@@ -1,8 +1,8 @@
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import { ITouchEvent } from '@tarojs/components/types/common';
 import classNames from 'classnames';
 import React, { useCallback, useRef, Fragment } from 'react';
-import { View } from '@tarojs/components';
-import { ITouchEvent } from '@tarojs/components/types/common';
 
 import styles from './index.module.scss';
 

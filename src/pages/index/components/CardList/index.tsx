@@ -1,15 +1,15 @@
-import Taro from '@tarojs/taro'
-import { useAppDispatch } from '@/utils/hooks/redux'
-import { fetchNoticeThunk } from '@/models/notice'
 import { Block, Text, View } from '@tarojs/components'
-import Card from '@/components/Card'
-import { useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay"
+import Taro from '@tarojs/taro'
 import React, { Key, useEffect } from 'react'
 
 import ConfigurableCardList from './ConfigurableCardList'
 import { customizableCardsMap, topCards } from './index.config'
 
 import style from './index.module.scss'
+import Card from '@/components/Card'
+import { fetchNoticeThunk } from '@/models/notice'
+import { useAppDispatch } from '@/utils/hooks/redux'
+import { useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay"
 
 /** 跳转首页卡片设置的卡片 */
 const GoToCardSettings: React.FC = () =>

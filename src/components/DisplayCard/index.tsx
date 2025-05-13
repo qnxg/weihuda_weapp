@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
 import { View, Image } from '@tarojs/components'
+import React, { ReactNode } from 'react'
 
 import styles from './index.module.scss'
 

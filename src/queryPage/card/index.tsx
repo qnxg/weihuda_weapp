@@ -1,15 +1,15 @@
-import { CardHistoryData, getCardHistory } from '@/apis/pt/card'
-import DisplayCard from '@/components/DisplayCard'
-import PullRefresh from '@/components/PullRefresh'
-import TabBar from '@/components/TabBar'
-import empty from '@/static/empty/no-grade.svg'
-import { months } from '@/utils/config'
 import { Image, Navigator, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import PickerArea from './components/PickerArea'
 import styles from './index.module.scss'
+import { CardHistoryData, getCardHistory } from '@/apis/pt/card'
+import DisplayCard from '@/components/DisplayCard'
+import PullRefresh from '@/components/PullRefresh'
+import TabBar from '@/components/TabBar'
+import empty from '@/static/empty/no-grade.svg'
+import { months } from '@/utils/config'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)

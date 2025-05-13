@@ -1,7 +1,7 @@
 import { Image, ITouchEvent, View } from '@tarojs/components';
-import arrow from '@/static/mine/arrow.svg'
 import React, { ReactNode } from 'react';
 import style from './index.module.scss'
+import arrow from '@/static/mine/arrow.svg'
 
 interface LineDividedListProps {
     items: {

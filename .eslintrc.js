@@ -36,6 +36,15 @@ module.exports = {
     'import/first': ['error', 'disable-absolute-first'],
     'import/no-cycle': ['error', { maxDepth: 3 }],
     'import/no-self-import': "error",
-    'import/no-named-as-default-member': "off"
+    'import/no-named-as-default-member': "off",
+    // import/order规则是解决编译时css顺序问题所必须的
+    // 这些警告通常有自动修复，使用eslint的--fix或者vscode上点击相关选项即可
+    "import/order": ["warn", {
+      groups: ["builtin", "external", "parent", "sibling", "index", "internal", "object", "type"],
+      alphabetize: {
+        order: 'asc',
+        caseInsensitive: true,
+      },
+    }],
   }
 };

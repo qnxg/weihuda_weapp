@@ -1,6 +1,6 @@
-import React from 'react';
-import classNames from 'classnames';
 import { View } from '@tarojs/components';
+import classNames from 'classnames';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FormatTable } from '../../interface';

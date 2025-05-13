@@ -1,7 +1,7 @@
-import { getJifenWebviewReadApi } from '@/apis/jifen'
 import { View, WebView } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import React, { useEffect } from 'react'
+import { getJifenWebviewReadApi } from '@/apis/jifen'
 
 const Index: React.FC = () => {
   const { params } = useRouter()

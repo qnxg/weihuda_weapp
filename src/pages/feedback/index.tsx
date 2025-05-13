@@ -1,12 +1,12 @@
-import { FeedbackData, postFeedback } from '@/apis/feedback'
-import { uploadImgApi } from '@/apis/upload'
-import Button from '@/components/Button'
-import { useAppSelector } from '@/utils/hooks/redux'
 import { Image, Input, Navigator, Text, Textarea, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import styles from './index.module.scss'
+import { FeedbackData, postFeedback } from '@/apis/feedback'
+import { uploadImgApi } from '@/apis/upload'
+import Button from '@/components/Button'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
   const { params } = useRouter()

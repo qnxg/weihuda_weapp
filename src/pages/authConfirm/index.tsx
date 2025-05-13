@@ -1,11 +1,11 @@
-import { AuthQrcodeStatus, getAuthQrcodeStatusApi, putAuthQrcodeStatusApi } from '@/apis/authQrcode'
-import Button from '@/components/Button'
-import Card from '@/components/Card'
 import { Image, Text, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import classNames from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { AuthQrcodeStatus, getAuthQrcodeStatusApi, putAuthQrcodeStatusApi } from '@/apis/authQrcode'
+import Button from '@/components/Button'
+import Card from '@/components/Card'
 
 const Index: React.FC = () => {
   // 获取query参数

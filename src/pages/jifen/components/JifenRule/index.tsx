@@ -1,9 +1,9 @@
-import { IJifenRule, getJifenRulePageApi } from '@/apis/jifen'
-import { getMiniConfigPageApi } from '@/apis/miniConfig'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
+import { IJifenRule, getJifenRulePageApi } from '@/apis/jifen'
+import { getMiniConfigPageApi } from '@/apis/miniConfig'
 
 const JifenRule: React.FC = () => {
   const [loading, setLoading] = React.useState(true)
