@@ -2,11 +2,11 @@ import { Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
 
-import { FormatTable } from '../../interface'
 import Day from '../Day'
 import styles from './index.module.scss'
 import { saveClassTable } from '@/models/classTable'
 import { useAppDispatch } from '@/utils/hooks/redux'
+import type { FormatTable } from '../../interface'
 
 /**
  * @interface TableBody Component Props

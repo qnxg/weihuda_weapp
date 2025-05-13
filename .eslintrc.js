@@ -3,7 +3,7 @@ module.exports = {
   "parserOptions": {
     ecmaVersion: "latest",
     sourceType: "module",
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    project: ['./tsconfig.json'],
     parser: '@typescript-eslint/parser',
   },
   extends: [
@@ -26,12 +26,19 @@ module.exports = {
     ]
   },
   rules: {
+    'prefer-const': ['warn'],
+    'no-var': ['error'],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'no-shadow': 'off',
+    '@typescript-eslint/ban-ts-comment': ['warn'],
+    '@typescript-eslint/ban-types': ['warn'],
+    '@typescript-eslint/no-explicit-any': "off",
     '@typescript-eslint/no-shadow': ['error'],
     // 想消除这个警告，请在不需要await的promise前使用void关键字
     '@typescript-eslint/no-floating-promises': ['warn'],
+    // 这个规则能够降低循环依赖的风险
+    '@typescript-eslint/consistent-type-imports': ['warn'],
     "react/jsx-curly-brace-presence": "off",
     'import/first': ['error', 'disable-absolute-first'],
     'import/no-cycle': ['error', { maxDepth: 3 }],

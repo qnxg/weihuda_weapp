@@ -3,9 +3,10 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import styles from './index.module.scss'
-import { IMessageLeft, postMessageLeftApi } from '@/apis/messageleft'
+import { postMessageLeftApi } from '@/apis/messageleft'
 import Button from '@/components/Button'
 import { useAppSelector } from '@/utils/hooks/redux'
+import type { IMessageLeft} from '@/apis/messageleft';
 
 const Index: React.FC = () => {
   const { stuId } = useAppSelector((state) => state.userInfo)
@@ -54,7 +55,7 @@ const Index: React.FC = () => {
 
     // 拼接用户选择的日期和当前的时分秒
     const fullDateTime = `${data.sendTime} ${currentTime}`
-    let reqData: Partial<IMessageLeft> = {
+    const reqData: Partial<IMessageLeft> = {
       isAgree: data.isAgree ? 1 : 0,
       desc: data.desc,
       isSend: data.isSend ? 1 : 0,

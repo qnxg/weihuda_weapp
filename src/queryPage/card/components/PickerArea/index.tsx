@@ -1,9 +1,9 @@
 import { View, Text, Picker, Image } from '@tarojs/components'
-import { CommonEventFunction } from '@tarojs/components/types/common'
 import React from 'react'
 import styles from './index.module.scss'
 import iconFinger from '@/static/emptyRoom/icon-finger.svg'
 import { months } from '@/utils/config'
+import type { CommonEventFunction } from '@tarojs/components/types/common'
 
 
 interface Props {

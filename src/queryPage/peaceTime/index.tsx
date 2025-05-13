@@ -2,14 +2,15 @@ import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import style from './index.module.scss'
-import { State } from './interface'
-import { RawGradeItem, getRawGrade } from '@/apis/hdjw/rawGrade'
+import { getRawGrade } from '@/apis/hdjw/rawGrade'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
 import empty from '@/static/empty/no-grade.svg'
 import notStart from '@/static/empty/term-not-start.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
+import type { State } from './interface'
+import type { RawGradeItem} from '@/apis/hdjw/rawGrade';
 
 const semester = ['秋季学期', '春季学期', '夏季学期']
 

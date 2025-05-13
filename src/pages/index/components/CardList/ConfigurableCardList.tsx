@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import CardProps, { useIsLoadingCountZero } from "../CardProps";
+import { useIsLoadingCountZero } from "../CardProps";
+import type CardProps from "../CardProps";
 
 /** 半BUG: 当卡片内组件列表发生了变化时请销毁这个组件重新渲染（使用key），
  * 否则loadingCount会出现异常。

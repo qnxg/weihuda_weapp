@@ -2,11 +2,12 @@ import { Image, View } from '@tarojs/components'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { SmesterInfo, getSmesterInfo } from '@/apis/info'
+import { getSmesterInfo } from '@/apis/info'
 import Tabs from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import { useAppSelector } from '@/utils/hooks/redux'
 import { staticBaseUrl as baseUrl } from '@/utils/url'
+import type { SmesterInfo} from '@/apis/info';
 
 const pages = ['秋季', '寒假', '春季', '夏季']
 const urls = [

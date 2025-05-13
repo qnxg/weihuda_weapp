@@ -1,4 +1,5 @@
-import { DependencyList, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { DependencyList} from "react";
 
 type PromiseErrorInfo = null | { thrown: unknown };
 

@@ -1,5 +1,5 @@
 import request from "./request"
-import { UserSettings } from "@/utils/storage/userSettings/defaults"
+import type { UserSettings } from "@/utils/storage/userSettings/defaults"
 
 export const getAllUserSettingsApi = () => {
     return request.get<UserSettings>('/user-settings/all')

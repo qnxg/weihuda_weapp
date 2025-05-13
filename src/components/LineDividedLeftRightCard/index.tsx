@@ -1,7 +1,8 @@
 import { View } from '@tarojs/components';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
 import styles from './index.module.scss';
+import type { CSSProperties } from 'react';
 
 interface Props {
   key?: string | number;

@@ -1,4 +1,5 @@
-import Taro, { NodesRef } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
+import type { NodesRef } from '@tarojs/taro';
 
 export const isPlainObject = (value) => {
   if (value == null || typeof value !== 'object' || Object.prototype.toString.call(value) != '[object Object]') {

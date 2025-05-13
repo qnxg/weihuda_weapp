@@ -1,13 +1,13 @@
 import { View, Image, Block } from '@tarojs/components';
 import React from 'react';
 import styles from './index.module.scss';
-import { ExamArrange } from '@/apis/hdjw/examArrange';
 import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard';
 import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart';
 import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart';
 import iconNoK from '@/static/empty/no-exam.svg';
 import location from '@/static/icon/location.svg';
 import { onColors } from '@/utils/config';
+import type { ExamArrange } from '@/apis/hdjw/examArrange';
 
 
 interface Props {

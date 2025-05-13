@@ -3,7 +3,8 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
-import { IJifenRecord, getJifenRecordPageApi } from '@/apis/jifen'
+import { getJifenRecordPageApi } from '@/apis/jifen'
+import type { IJifenRecord} from '@/apis/jifen';
 
 interface IJifenRecordProps {
   updateTotal?: () => void

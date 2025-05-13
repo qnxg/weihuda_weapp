@@ -3,10 +3,11 @@ import Taro, { useRouter } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import styles from './index.module.scss'
-import { FeedbackData, postFeedback } from '@/apis/feedback'
+import { postFeedback } from '@/apis/feedback'
 import { uploadImgApi } from '@/apis/upload'
 import Button from '@/components/Button'
 import { useAppSelector } from '@/utils/hooks/redux'
+import type { FeedbackData} from '@/apis/feedback';
 
 const Index: React.FC = () => {
   const { params } = useRouter()
@@ -51,7 +52,7 @@ const Index: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const submitData = async (data: any) => {
     // 初始化
-    let reqData: Partial<FeedbackData> = {
+    const reqData: Partial<FeedbackData> = {
       type: data.type,
       desc: data.desc,
       contact: data.contact != '' ? data.contact : null,

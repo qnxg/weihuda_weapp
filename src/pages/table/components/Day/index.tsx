@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { FormatTable } from '../../interface';
 import styles from './index.module.scss';
+import type { FormatTable } from '../../interface';
 
 /**
  * @interface Day Component Props

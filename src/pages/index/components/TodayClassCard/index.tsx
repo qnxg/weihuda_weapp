@@ -3,16 +3,16 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useEffect, useMemo, useState } from 'react'
 import CardEmpty from '../CardEmpty'
-import CardProps from '../CardProps'
 import styles from './index.module.scss'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
-import { Subject } from '@/models/classTable'
 import empty from '@/static/empty/no-today-class.svg'
 import cardIcon from '@/static/index/icon/today-class.svg'
 import { judgeOn } from '@/utils/day'
 
 import { useAppSelector } from '@/utils/hooks/redux'
+import type CardProps from '../CardProps'
+import type { Subject } from '@/models/classTable'
 
 interface TodayClassProps {
   currentWeek: number

@@ -1,7 +1,8 @@
 import Taro from '@tarojs/taro'
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getUserInfo } from '@/apis/info'
 import storage from '@/utils/storage/cache'
+import type { PayloadAction} from '@reduxjs/toolkit';
 
 export interface StateType {
   name: string

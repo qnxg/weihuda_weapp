@@ -4,9 +4,10 @@ import React, { useEffect, useMemo, useState } from 'react'
 import echarts from './echarts'
 import styles from './index.module.scss'
 import getOption from './options'
-import { Chart, getChart } from '@/apis/hdjw/chart'
+import { getChart } from '@/apis/hdjw/chart'
 import EChart from '@/components/Chart'
 import PullRefresh from '@/components/PullRefresh'
+import type { Chart} from '@/apis/hdjw/chart';
 
 const range = ['全部课程加权平均', '全部课程平均绩点', '核心课程加权平均']
 

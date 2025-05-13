@@ -1,14 +1,15 @@
 import { Image, Text, View } from '@tarojs/components'
 import React, { useEffect } from 'react'
 import CardLayout from '../CardLayout'
-import CardProps from '../CardProps'
 import GradeBanner from './components/GradeBanner'
 import styles from './index.module.scss'
-import { getNetflow, NetflowData } from '@/apis/netflow'
+import { getNetflow } from '@/apis/netflow'
 import downloadIcon from '@/static/icon/download.svg'
 import uploadIcon from '@/static/icon/upload.svg'
 import icon from '@/static/index/icon/network.svg'
 import usePromise from '@/utils/hooks/usePromise'
+import type CardProps from '../CardProps'
+import type { NetflowData } from '@/apis/netflow';
 
 interface NetFlowCardProps {
   netFlow?: NetflowData

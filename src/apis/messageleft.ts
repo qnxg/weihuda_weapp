@@ -1,5 +1,5 @@
-import { IPageQueryData } from './interface'
 import request from './request'
+import type { IPageQueryData } from './interface'
 
 export interface IMessageLeft {
   /** id */

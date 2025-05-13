@@ -1,11 +1,12 @@
 import { Text, View } from '@tarojs/components'
 import React, { useEffect } from 'react'
 import CardLayout from '../CardLayout'
-import CardProps from '../CardProps'
 import styles from './index.module.scss'
-import { CardInfo, getCardInfo } from '@/apis/pt/card'
+import { getCardInfo } from '@/apis/pt/card'
 import icon from '@/static/index/icon/card.svg'
 import usePromise from '@/utils/hooks/usePromise'
+import type CardProps from '../CardProps'
+import type { CardInfo} from '@/apis/pt/card';
 
 interface DisplayProps {
   info?: CardInfo

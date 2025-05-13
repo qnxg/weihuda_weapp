@@ -4,11 +4,12 @@ import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { month2020, monthAll } from './config'
 import styles from './index.module.scss'
-import { LineData, SelectorItem } from './interface'
-import { NetflowDetail, getNetflowDay, getNetflowMonth } from '@/apis/netflow'
+import { getNetflowDay, getNetflowMonth } from '@/apis/netflow'
 import DisplayCard from '@/components/DisplayCard'
 import TabBar from '@/components/TabBar'
 import icon from '@/static/mine/icon-sjjxbind.svg'
+import type { LineData, SelectorItem } from './interface'
+import type { NetflowDetail} from '@/apis/netflow';
 
 const tabs = ['按月查询', '按天查询']
 
@@ -144,7 +145,7 @@ const Index: React.FC = () => {
   })
 
   const dataList: LineData[] | undefined = useMemo(() => {
-    let list = data?.FloatDetailList
+    const list = data?.FloatDetailList
     return list?.map((item) => {
       let c1 = ''
       let c2 = ''

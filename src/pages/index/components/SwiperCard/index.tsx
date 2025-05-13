@@ -2,13 +2,14 @@ import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect } from 'react'
-import CardProps from '../CardProps'
 import styles from './index.module.scss'
-import { getZhihuPageApi, IZhihu } from '@/apis/zhihu'
+import { getZhihuPageApi } from '@/apis/zhihu'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import cardIcon from '@/static/index/icon/information.svg'
 import usePromise from '@/utils/hooks/usePromise'
+import type CardProps from '../CardProps'
+import type { IZhihu } from '@/apis/zhihu';
 
 const HomeSwiperCard: React.FC<CardProps> =
   ({ onLoadingStatusChange,

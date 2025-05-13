@@ -1,4 +1,4 @@
-import { SelectorItem } from '@/queryPage/netflowDetail/interface';
+import type { SelectorItem } from '@/queryPage/netflowDetail/interface';
 
 export const monthAll: SelectorItem[] = [
   {

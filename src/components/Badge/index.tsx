@@ -1,7 +1,7 @@
 import { Text } from "@tarojs/components"
 import classNames from "classnames"
-import { ReactNode } from "react"
 import style from './index.module.scss'
+import type { ReactNode } from "react"
 
 /**
  * 带文字的徽章

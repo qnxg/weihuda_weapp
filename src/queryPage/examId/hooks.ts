@@ -1,8 +1,9 @@
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useEffect, useMemo, useState } from 'react'
-import { ExamId } from './interface'
-import { ExamNumItem, deleteExamNumApi, getExamNumList } from '@/apis/examNum'
+import { deleteExamNumApi, getExamNumList } from '@/apis/examNum'
+import type { ExamId } from './interface'
+import type { ExamNumItem} from '@/apis/examNum';
 
 /**
  * 计算天数差

@@ -1,10 +1,10 @@
 import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
-import { CurDatesOfWeek } from '../../interface'
 import styles from './index.module.scss'
 import { saveClassTable } from '@/models/classTable'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import type { CurDatesOfWeek } from '../../interface'
 
 /**
  * @interface Props

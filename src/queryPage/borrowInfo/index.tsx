@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getLibraryApi, LibraryRes } from '@/apis/library'
+import { getLibraryApi } from '@/apis/library'
 import DisplayCard from '@/components/DisplayCard'
 import Card from '@/components/LineDividedLeftRightCard'
 import Left from '@/components/LineDividedLeftRightCard/components/LeftPart'
@@ -13,6 +13,7 @@ import Tab from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import book from '@/static/empty/book.svg'
 import { onColors } from '@/utils/config'
+import type { LibraryRes } from '@/apis/library';
 
 const items = ['在借图书', '借阅清单', '借阅账单']
 

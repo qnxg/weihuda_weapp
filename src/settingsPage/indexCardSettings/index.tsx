@@ -5,9 +5,9 @@ import style from './index.module.scss'
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import CheckSortListDisplay from "@/components/CheckSortList"
-import { CardEnum } from "@/pages/index/components/CardList/index.config";
 import { saveCardSettings, useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
+import type { CardEnum } from "@/pages/index/components/CardList/index.config";
 
 /** 小程序首页卡片设置页面  */
 const Index: React.FC = () => {

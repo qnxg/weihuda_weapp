@@ -4,10 +4,10 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
-import { IBtnConfigItem, INotice } from '@/apis/notice'
 import Button from '@/components/Button'
 import { putNoticeByIdThunk } from '@/models/notice'
 import { useAppDispatch } from '@/utils/hooks/redux'
+import type { IBtnConfigItem, INotice } from '@/apis/notice'
 
 interface IMessageItemProps {
   /**

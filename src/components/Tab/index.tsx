@@ -1,10 +1,10 @@
 import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { ITouchEvent } from '@tarojs/components/types/common';
 import classNames from 'classnames';
 import React, { useCallback, useRef, Fragment } from 'react';
 
 import styles from './index.module.scss';
+import type { ITouchEvent } from '@tarojs/components/types/common';
 
 const MIN_DISTANCE = 100;
 const MAX_INTERVAL = 10;

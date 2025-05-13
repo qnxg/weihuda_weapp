@@ -1,11 +1,11 @@
 import { View, Text } from '@tarojs/components'
 import React, { useEffect } from 'react'
 import CardLayout from '../CardLayout'
-import CardProps from '../CardProps'
 import styles from './index.module.scss'
 import { getUnReadCount } from '@/apis/pt/email'
 import icon from '@/static/index/icon/email.svg'
 import usePromise from '@/utils/hooks/usePromise'
+import type CardProps from '../CardProps'
 
 
 interface DisplayProps {

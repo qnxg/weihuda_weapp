@@ -17,7 +17,7 @@ export const uploadImgApi = async (filePath: any) => {
         time: dayjs().format('YYYY-MM-DD HH:mm:ss')
       },
       success(res) {
-        let resData = JSON.parse(res.data)
+        const resData = JSON.parse(res.data)
         if (resData.code !== 200 || resData.data == null) {
           reject('图片上传失败')
           return

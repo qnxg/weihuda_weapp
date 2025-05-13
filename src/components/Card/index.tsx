@@ -1,7 +1,8 @@
-import { View, ViewProps } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
+import type { ViewProps } from '@tarojs/components';
 
 interface Props extends ViewProps {
   /**

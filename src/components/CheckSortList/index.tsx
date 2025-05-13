@@ -1,9 +1,9 @@
 import { View } from "@tarojs/components"
 import Taro from "@tarojs/taro"
-import { Key, ReactNode } from "react"
 import Badge from "../Badge"
 import Card from "../Card"
 import style from './index.module.scss'
+import type { Key, ReactNode } from "react"
 
 export type ReactNodeWithKey<K extends Key> = {
     node: ReactNode,

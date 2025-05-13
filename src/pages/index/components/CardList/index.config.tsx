@@ -1,6 +1,4 @@
-import React from "react";
 import CampusCard from "../CampusCard";
-import CardProps from "../CardProps";
 import CountdownCard from "../CountdownCard";
 import ElectricityCard from "../ElectricityCard";
 import EmailCard from "../EmailCard";
@@ -9,6 +7,8 @@ import MessageCard from "../MessageCard";
 import NetflowCard from "../NetflowCard";
 import HomeSwiperCard from "../SwiperCard";
 import TodayClassCard from "../TodayClassCard";
+import type CardProps from "../CardProps";
+import type React from "react";
 
 /** 置顶的，用户无法设置显示与否和顺序的卡片 */
 export const topCards: [string, React.FC<CardProps>][] =

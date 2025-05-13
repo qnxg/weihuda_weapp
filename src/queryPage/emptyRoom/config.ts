@@ -1,4 +1,4 @@
-import { EmptyRoomState, Radio } from './interface';
+import type { EmptyRoomState, Radio } from './interface';
 
 export const radio: Radio[] = [
   {

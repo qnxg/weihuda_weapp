@@ -4,12 +4,13 @@ import dayjs from 'dayjs'
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import PickerArea from './components/PickerArea'
 import styles from './index.module.scss'
-import { CardHistoryData, getCardHistory } from '@/apis/pt/card'
+import { getCardHistory } from '@/apis/pt/card'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
 import empty from '@/static/empty/no-grade.svg'
 import { months } from '@/utils/config'
+import type { CardHistoryData} from '@/apis/pt/card';
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)

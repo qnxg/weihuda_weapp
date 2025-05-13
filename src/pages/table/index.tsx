@@ -5,13 +5,13 @@ import Float from './components/Float'
 import Header from './components/Header'
 import Options from './components/Options'
 import TableBody from './components/TableBody'
-import { CurDatesOfWeek, FormatTable } from './interface'
 import { getFlexTimeList } from '@/apis/flexTime'
 import PullRefresh from '@/components/PullRefresh'
 import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
 import { offColor } from '@/utils/config'
 import { judgeOn } from '@/utils/day'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import type { CurDatesOfWeek, FormatTable } from './interface'
 
 const Index: React.FC = () => {
     const { semesters, classTable, currentWeeks, mode, currentStart, showFloat, showOptions, currentWeek } = useAppSelector(

@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react'
 import Semester from './components/semester'
 import Report from './components/total'
 import style from './index.module.scss'
-import { GradeRank, getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
+import { getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
 import PullRefresh from '@/components/PullRefresh'
 import empty from '@/static/empty/no-ranking.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
+import type { GradeRank} from '@/apis/hdjw/gradeRank';
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -15,7 +16,7 @@ const Index: React.FC = () => {
 
   const [newShow, setNewShow] = useState(false)
   const [newData, setNewData] = useState<string[] | null>(null)
-  var { termYear, termType} = useAppSelector((state) => state.smester)
+  let { termYear, termType} = useAppSelector((state) => state.smester)
   if (termType == 1) {
     termYear -= 1
   }

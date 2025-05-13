@@ -1,11 +1,11 @@
 import { View, Image, Text } from '@tarojs/components';
 import classnames from 'classnames';
 import React, { useState } from 'react';
-import { EmptyRoom } from '../../interface';
 import styles from './index.module.scss';
 import DisplayCard from '@/components/DisplayCard';
 import iconNo from '@/static/empty/no-room.svg';
 import iconFilter from '@/static/emptyRoom/icon-filter.svg';
+import type { EmptyRoom } from '../../interface';
 
 
 interface Props {

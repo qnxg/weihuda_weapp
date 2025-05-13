@@ -1,8 +1,9 @@
-import { TextareaProps, Textarea as TaroTextarea, View } from '@tarojs/components'
+import { Textarea as TaroTextarea, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
 import Label from './Label'
+import type { TextareaProps} from '@tarojs/components';
 
 interface Props extends TextareaProps {
   /**

@@ -4,10 +4,11 @@ import React, { useState } from 'react'
 import PickerArea from './components/PickerArea'
 import ResultArea from './components/ResultArea'
 import { initFunction } from './config'
-import { EmptyRoom, Radio as IRadio } from './interface'
-import { EmptyRoomItem, getEmptyRoom } from '@/apis/hdjw/emptyRoom'
+import { getEmptyRoom } from '@/apis/hdjw/emptyRoom'
 import { multiObject } from '@/utils/config'
 import { useAppSelector } from '@/utils/hooks/redux'
+import type { EmptyRoom, Radio as IRadio } from './interface'
+import type { EmptyRoomItem} from '@/apis/hdjw/emptyRoom';
 
 const Index: React.FC = () => {
   /**

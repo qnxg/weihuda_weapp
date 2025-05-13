@@ -2,8 +2,9 @@ import { Input, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { FeedbackData, getFeedbackPageApi } from '@/apis/feedback'
+import { getFeedbackPageApi } from '@/apis/feedback'
 import Button from '@/components/Button'
+import type { FeedbackData} from '@/apis/feedback';
 
 const statusMap = {
   0: '待确认',

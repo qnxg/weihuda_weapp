@@ -1,7 +1,8 @@
 import { View, Image } from '@tarojs/components'
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 import styles from './index.module.scss'
+import type { ReactNode } from 'react';
 
 interface Props extends React.PropsWithChildren<{}> {
   title?: string

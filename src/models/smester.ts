@@ -1,9 +1,10 @@
 import Taro from '@tarojs/taro'
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 import { getSmesterInfo } from '@/apis/info'
 import { dayOfWeek, nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
+import type { PayloadAction} from '@reduxjs/toolkit';
 
 /**
  * SmesterInfo，本学期信息

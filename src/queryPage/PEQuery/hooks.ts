@@ -1,7 +1,8 @@
 import Taro from '@tarojs/taro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Fitness, getFitness } from '@/apis/pt/fitness'
+import { getFitness } from '@/apis/pt/fitness'
 import { useAppSelector } from '@/utils/hooks/redux'
+import type { Fitness} from '@/apis/pt/fitness';
 
 const init = {
   student: {

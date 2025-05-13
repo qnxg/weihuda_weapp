@@ -5,9 +5,9 @@ import React from 'react';
 
 import { dayTitles, totalCells } from '../../util';
 import styles from './index.module.scss';
-import DateType from '@/apis/hdjw/examArrange';
 import shiftLeft from '@/static/calendar/shift-left.svg';
 import shiftRight from '@/static/calendar/shift-right.svg';
+import type DateType from '@/apis/hdjw/examArrange';
 
 interface Props {
   display;

@@ -1,9 +1,9 @@
 import { View } from '@tarojs/components';
 import React from 'react';
 
-import { Report } from '../../interface';
 import styles from './index.module.scss';
 import Score from './score';
+import type { Report } from '../../interface';
 
 interface Props {
   report: Report;

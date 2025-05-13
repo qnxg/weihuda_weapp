@@ -1,6 +1,6 @@
 
-import { Chart } from '@/apis/hdjw/chart';
 import type { ECOption } from './echarts';
+import type { Chart } from '@/apis/hdjw/chart';
 
 export default function (mode: number, data: Chart): ECOption {
   return {

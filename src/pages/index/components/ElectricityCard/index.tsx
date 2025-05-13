@@ -1,11 +1,11 @@
 import { Text, View } from '@tarojs/components'
 import React, { useCallback, useEffect } from 'react'
 import CardLayout from '../CardLayout'
-import CardProps from '../CardProps'
 import styles from './index.module.scss'
 import { getElectricityApi, getDormitoryApi } from '@/apis/electricity'
 import icon from '@/static/index/icon/electricity.svg'
 import usePromise from '@/utils/hooks/usePromise'
+import type CardProps from '../CardProps'
 
 interface DisplayProps {
   electricity: string

@@ -2,10 +2,11 @@ import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import AllPage from './components/allPage'
 import CalenderPage from './components/calendarPage'
-import { ExamArrange, getExamArrange } from '@/apis/hdjw/examArrange'
+import { getExamArrange } from '@/apis/hdjw/examArrange'
 import PullRefresh from '@/components/PullRefresh'
 import Tabs from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
+import type { ExamArrange} from '@/apis/hdjw/examArrange';
 
 
 const pages = ['全部考试', '考试日历']

@@ -1,4 +1,4 @@
-import { Chart } from './interface';
+import type { Chart } from './interface';
 
 export default function (data: Chart): object {
   return {

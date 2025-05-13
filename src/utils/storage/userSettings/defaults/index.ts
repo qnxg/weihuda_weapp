@@ -1,5 +1,5 @@
-import { Settings } from "./index.interface";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "./indexCardSettings";
+import type { Settings } from "./index.interface";
 
 /** 总的小程序默认设置 */
 export const DEFAULT_SETTINGS = {

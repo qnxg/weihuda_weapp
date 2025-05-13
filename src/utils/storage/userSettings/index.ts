@@ -1,7 +1,8 @@
 import Taro from "@tarojs/taro";
-import { DEFAULT_SETTINGS, UserSettings } from "./defaults";
-import { SettingsItem } from "./defaults/index.interface";
+import { DEFAULT_SETTINGS } from "./defaults";
 import { getAllUserSettingsApi, setAllUserSettingsApi } from "@/apis/userSettings";
+import type { UserSettings } from "./defaults";
+import type { SettingsItem } from "./defaults/index.interface";
 
 /** 异步获取某个storage项目
  * 

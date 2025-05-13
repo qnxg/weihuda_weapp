@@ -3,8 +3,9 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { IJifenGoods, getJifenGoodsPageApi, postGoodsRecordApi } from '@/apis/jifen'
+import { getJifenGoodsPageApi, postGoodsRecordApi } from '@/apis/jifen'
 import Button from '@/components/Button'
+import type { IJifenGoods} from '@/apis/jifen';
 
 interface IGoodsProps {
   total?: number

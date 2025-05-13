@@ -5,12 +5,13 @@ import React, { useEffect, useState } from 'react'
 import defaultTags from './defaultTags'
 import styles from './index.module.scss'
 import { getMiniConfigPageApi } from '@/apis/miniConfig'
-import { IZhihu, getZhihuPageApi } from '@/apis/zhihu'
+import { getZhihuPageApi } from '@/apis/zhihu'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import { TabPanel, Tabs } from '@/components/Tabs'
 import { getBoundingClientRect, parseJSON } from '@/utils/tool'
+import type { IZhihu} from '@/apis/zhihu';
 
 const Index: React.FC = () => {
   // 标签

@@ -4,12 +4,13 @@ import React, { Fragment, memo, useCallback, useEffect, useRef } from 'react'
 import CardList from './components/CardList'
 import DateBar from './components/DateBar'
 import styles from './index.module.scss'
-import PullRefresh, { RefProps } from '@/components/PullRefresh'
+import PullRefresh from '@/components/PullRefresh'
 import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
 import { getSmesterInfoThunk } from '@/models/smester'
 import { getUserInfoThunk } from '@/models/userInfo'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
+import type { RefProps } from '@/components/PullRefresh';
 
 const CardListMemo = memo(CardList);
 

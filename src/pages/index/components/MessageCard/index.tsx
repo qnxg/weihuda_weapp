@@ -2,15 +2,16 @@ import { Swiper, SwiperItem, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useMemo, useState } from 'react'
 import MessageItem from '../../../../components/MessageItem'
-import CardProps from '../CardProps'
 import styles from './index.module.scss'
-import { getMessage, Message } from '@/apis/message'
+import { getMessage } from '@/apis/message'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import icon from '@/static/index/icon/message.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
 import usePromise from '@/utils/hooks/usePromise'
 import { getBoundingClientRect } from '@/utils/tool'
+import type CardProps from '../CardProps'
+import type { Message } from '@/apis/message';
 
 interface IProps {
   message: Message[]

@@ -2,12 +2,12 @@ import { View, Block } from '@tarojs/components';
 import React, { useState, useMemo } from 'react';
 import { initialDisplayDate, initialHighlight, prevBlank, nextBlank, datesInMonth } from '../../util';
 import Calendar from '../calendar';
-import { ExamArrange } from '@/apis/hdjw/examArrange';
 import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard';
 import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart';
 import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart';
 import location from '@/static/icon/location.svg';
 import { onColors } from '@/utils/config';
+import type { ExamArrange } from '@/apis/hdjw/examArrange';
 
 
 interface Props {

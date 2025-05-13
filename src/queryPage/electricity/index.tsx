@@ -1,9 +1,10 @@
 import { Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
-import { Dormitory, getDormitoryApi, getElectricityApi, updateDormitoryApi } from '@/apis/electricity'
+import { getDormitoryApi, getElectricityApi, updateDormitoryApi } from '@/apis/electricity'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
+import type { Dormitory} from '@/apis/electricity';
 
 const Index: React.FC = () => {
   const [electricity, setElectricity] = useState<string>()
