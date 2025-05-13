@@ -28,13 +28,14 @@ module.exports = {
   rules: {
     'prefer-const': ['warn'],
     'no-var': ['error'],
+    'no-shadow': 'off',
+    'no-shadow-restricted-names': ["error"],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
-    'no-shadow': 'off',
     '@typescript-eslint/ban-ts-comment': ['warn'],
     '@typescript-eslint/ban-types': ['warn'],
     '@typescript-eslint/no-explicit-any': "off",
-    '@typescript-eslint/no-shadow': ['error'],
+    '@typescript-eslint/no-shadow': ['off'],
     // 想消除这个警告，请在不需要await的promise前使用void关键字
     '@typescript-eslint/no-floating-promises': ['warn'],
     // 这个规则能够降低循环依赖的风险
