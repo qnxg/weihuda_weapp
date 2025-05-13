@@ -79,7 +79,8 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
   // 获取按钮
   const getBtn = (id: number, btnConfigItem: IBtnConfigItem) => {
     if (!btnConfigItem || data.result) return null
-    let { text, theme, type, value } = btnConfigItem
+    let { theme, type } = btnConfigItem
+    const { text, value } = btnConfigItem
     // 如果text为空，则不显示按钮
     if (!text || text.trim() === '') return null
     // 如果theme为空，则默认为primary

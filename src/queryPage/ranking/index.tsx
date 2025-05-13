@@ -8,7 +8,7 @@ import { getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
 import PullRefresh from '@/components/PullRefresh'
 import empty from '@/static/empty/no-ranking.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
-import type { GradeRank} from '@/apis/hdjw/gradeRank';
+import type { GradeRank } from '@/apis/hdjw/gradeRank';
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -16,10 +16,9 @@ const Index: React.FC = () => {
 
   const [newShow, setNewShow] = useState(false)
   const [newData, setNewData] = useState<string[] | null>(null)
-  let { termYear, termType} = useAppSelector((state) => state.smester)
-  if (termType == 1) {
-    termYear -= 1
-  }
+  const termRes = useAppSelector((state) => state.smester)
+  const termType = termRes.termType
+  const termYear = termType == 1 ? termRes.termYear - 1 : termRes.termYear
 
   /**
    * 获取数据
@@ -68,7 +67,7 @@ const Index: React.FC = () => {
     <PullRefresh runFunc={onRefresh}>
       {data && show ? (
         <View className={style.layout}>
-          <Report report={data.total} must={newData} year={termYear} show={newShow}/>
+          <Report report={data.total} must={newData} year={termYear} show={newShow} />
           <Semester semseter={data.semesters} />
         </View>
       ) : (

@@ -10,7 +10,7 @@ import type { EmptyRoom } from '../../interface';
 
 interface Props {
   roomList: EmptyRoom[];
-  run: Function;
+  run: () => unknown;
   highlight: EmptyRoom;
   setHighlight: any;
 }

@@ -11,7 +11,7 @@ const MAX_INTERVAL = 10;
 
 interface Props {
   children: React.ReactNode;
-  onChange: Function;
+  onChange: (n: number, e?: ITouchEvent) => void;
   current: number;
   items: any[];
   swipeable?: boolean;
