@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import BubbleNotification from './components/FlexTimeBubble'
 import Float from './components/Float'
 import Header from './components/Header'
@@ -25,33 +25,33 @@ const Index: React.FC = () => {
 
     const dispatch = useAppDispatch()
 
+    const fetchFlexTimeList = useCallback(async () => {
+        const res = await getFlexTimeList();
+        if (res && res.length > 0) {
+            let day = dayjs().day() as number; // 获取今天是星期几
+            if (day === 0) {
+                day = 7; // 将星期天转换为7
+            }
+            // 根据今天的周数和星期几来判断是否有调休
+            for (const item of res) {
+                console.log(currentWeek);
+                if (
+                    item.to.week == currentWeek &&
+                    item.to.day == day &&
+                    item.time.xn == termYear &&
+                    item.time.xq == termType
+                ) {
+                    setShowBubble(true);
+                    setBubbleText(item.desc);
+                    break;
+                }
+            }
+        }
+    }, [currentWeek, termType, termYear]);
+
     useEffect(() => {
         let previousDay = dayjs().day(); // 初始化为当前的星期几
         // 定义一个函数来获取调休信息
-        const fetchFlexTimeList = async () => {
-            await getFlexTimeList().then((res) => {
-                if (res && res.length > 0) {
-                    let day = dayjs().day() as number; // 获取今天是星期几
-                    if (day === 0) {
-                        day = 7; // 将星期天转换为7
-                    }
-                    // 根据今天的周数和星期几来判断是否有调休
-                    for (const item of res) {
-                        console.log(currentWeek);
-                        if (
-                            item.to.week == currentWeek &&
-                            item.to.day == day &&
-                            item.time.xn == termYear &&
-                            item.time.xq == termType
-                        ) {
-                            setShowBubble(true);
-                            setBubbleText(item.desc);
-                            break;
-                        }
-                    }
-                }
-            });
-        };
         // 初次加载时获取调休信息
         void fetchFlexTimeList();
         // 设置一个定时器，每隔一分钟检测 dayjs().day() 是否变化
@@ -64,7 +64,7 @@ const Index: React.FC = () => {
         }, 60000); // 每隔一分钟检测一次
         // 清理定时器
         return () => clearInterval(intervalId);
-    }, [currentWeek, termYear, termType]);
+    }, [currentWeek, termYear, termType, fetchFlexTimeList]);
 
     // 初始化
     useEffect(() => {
@@ -75,7 +75,7 @@ const Index: React.FC = () => {
 
     const onRefresh = async (close) => {
         await dispatch(refreshClassTableThunk())
-        setShowBubble(true)
+        void fetchFlexTimeList();
         close()
     }
 
