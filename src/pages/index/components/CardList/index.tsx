@@ -50,7 +50,7 @@ const CardList: React.FC<CardListProps> = (
     <Block>
       <ConfigurableCardList
         // key的设置是重要的：见ConfigurableCardList的描述
-        key={fetchDataControl + Array.from(cardsToShow).join(' ')}
+        key={Array.from(cardsToShow).join(' ')}
         topCards={topCards}
         customizableCards={customizableCardsMap}
         CardsToShow={cardsToShow}
