@@ -1,8 +1,9 @@
+import { ScrollView, Slot, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import classNames from 'classnames'
-import { ScrollView, ScrollViewProps, Slot, View } from '@tarojs/components'
+import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import styles from './index.module.scss'
+import type { ScrollViewProps} from '@tarojs/components';
 
 export interface Props {
   runFunc: (closer: () => void) => any

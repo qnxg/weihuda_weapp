@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import classnames from 'classnames';
 import { View, Image, Text } from '@tarojs/components';
+import classnames from 'classnames';
+import React, { useState } from 'react';
+import styles from './index.module.scss';
+import DisplayCard from '@/components/DisplayCard';
 import iconNo from '@/static/empty/no-room.svg';
 import iconFilter from '@/static/emptyRoom/icon-filter.svg';
-import DisplayCard from '@/components/DisplayCard';
+import type { EmptyRoom } from '../../interface';
 
-import { EmptyRoom } from '../../interface';
-import styles from './index.module.scss';
 
 interface Props {
   roomList: EmptyRoom[];
-  run: Function;
+  run: () => unknown;
   highlight: EmptyRoom;
   setHighlight: any;
 }

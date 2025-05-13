@@ -1,5 +1,5 @@
-import React from 'react';
 import { View } from '@tarojs/components';
+import React from 'react';
 
 import style from './score.module.scss';
 

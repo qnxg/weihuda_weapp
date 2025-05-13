@@ -1,15 +1,16 @@
-import { CardHistoryData, getCardHistory } from '@/apis/pt/card'
-import DisplayCard from '@/components/DisplayCard'
-import PullRefresh from '@/components/PullRefresh'
-import TabBar from '@/components/TabBar'
-import empty from '@/static/empty/no-grade.svg'
-import { months } from '@/utils/config'
 import { Image, Navigator, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import PickerArea from './components/PickerArea'
 import styles from './index.module.scss'
+import { getCardHistory } from '@/apis/pt/card'
+import DisplayCard from '@/components/DisplayCard'
+import PullRefresh from '@/components/PullRefresh'
+import TabBar from '@/components/TabBar'
+import empty from '@/static/empty/no-grade.svg'
+import { months } from '@/utils/config'
+import type { CardHistoryData} from '@/apis/pt/card';
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -40,7 +41,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = useCallback(async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -57,17 +58,18 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
+      setShow(false)
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
-      setShow(false)
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }, [index, picker, yearPicker0])
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [getData, index, picker])
 
   const onRefresh = async (close) => {

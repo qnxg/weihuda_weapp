@@ -1,13 +1,14 @@
-import { EmptyRoomItem, getEmptyRoom } from '@/apis/hdjw/emptyRoom'
-import { useAppSelector } from '@/utils/hooks/redux'
-import { multiObject } from '@/utils/config'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
 import PickerArea from './components/PickerArea'
 import ResultArea from './components/ResultArea'
 import { initFunction } from './config'
-import { EmptyRoom, Radio as IRadio } from './interface'
+import { getEmptyRoom } from '@/apis/hdjw/emptyRoom'
+import { multiObject } from '@/utils/config'
+import { useAppSelector } from '@/utils/hooks/redux'
+import type { EmptyRoom, Radio as IRadio } from './interface'
+import type { EmptyRoomItem} from '@/apis/hdjw/emptyRoom';
 
 const Index: React.FC = () => {
   /**
@@ -38,7 +39,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -59,13 +60,14 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
+      setShow(false)
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
-      setShow(false)
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   return (

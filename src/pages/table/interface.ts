@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Subject } from '@/models/classTable';
+import type { Subject } from '@/models/classTable';
 
 /**
  * @interface CurDatesOfWeek 定义Header组件显示的日期格式

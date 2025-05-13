@@ -1,10 +1,12 @@
-import { CardEnum } from "@/pages/index/components/CardList/index.config";
-import { getUserSettingsSync, modifyUserSettingsSync } from "..";
+import { useMemo } from "react";
+import { getUserSettings, modifyUserSettings } from "..";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "../defaults/indexCardSettings";
+import usePromise from "@/utils/hooks/usePromise";
+import type { CardEnum } from "@/pages/index/components/CardList/index.config";
+import type { DependencyList} from "react";
 
-
-export function computeFinalCardDisplay(): [Set<CardEnum>, Set<CardEnum>] {
-  const userCardSettings = getUserSettingsSync(s => s.indexCardSettings);
+async function computeFinalCardDisplay(): Promise<[Set<CardEnum>, Set<CardEnum>]> {
+  const userCardSettings = await getUserSettings(s => s.indexCardSettings);
   const defaultShow = new Set(DEFAULT_INDEX_CARD_SETTINGS.show);
   const defaultDontShow = new Set(DEFAULT_INDEX_CARD_SETTINGS.dontShow);
 
@@ -21,8 +23,8 @@ export function computeFinalCardDisplay(): [Set<CardEnum>, Set<CardEnum>] {
   return [shouldShow, shouldNotShow];
 }
 
-export function saveCardSettings(show: Set<CardEnum>, dontShow: Set<CardEnum>) {
-  modifyUserSettingsSync(s => {
+export async function saveCardSettings(show: Set<CardEnum>, dontShow: Set<CardEnum>) {
+  await modifyUserSettings(s => {
     s.indexCardSettings = {
       settingsMajorVersion:
         DEFAULT_INDEX_CARD_SETTINGS.settingsMajorVersion,
@@ -31,4 +33,15 @@ export function saveCardSettings(show: Set<CardEnum>, dontShow: Set<CardEnum>) {
     }
     return s
   })
+}
+
+export function useFinalCardDisplay(deps: DependencyList) {
+  const computeFinalCardDisplayMemo = useMemo(computeFinalCardDisplay, [...deps]);
+  const [cardsToDisplay] =
+    usePromise<[Set<CardEnum>, Set<CardEnum>]>(
+      () => computeFinalCardDisplayMemo,
+      () => [new Set(), new Set()],
+      [...deps]
+    );
+  return cardsToDisplay
 }

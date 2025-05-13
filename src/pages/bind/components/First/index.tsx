@@ -1,9 +1,9 @@
+import { View, ScrollView, Image } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import React from 'react';
-import { View, ScrollView, Image } from '@tarojs/components';
+import styles from './index.module.scss';
 import logo1000 from '@/static/mine/logo.jpg';
 
-import styles from './index.module.scss';
 
 interface Props {
   setStep: any;
@@ -11,7 +11,7 @@ interface Props {
 
 const First: React.FC<Props> = (props) => {
   const nextStep = (): void => {
-    Taro.getUserProfile({
+    void Taro.getUserProfile({
       desc: '授权后可正常使用微生活小程序',
       success: () => {
         props.setStep(2);

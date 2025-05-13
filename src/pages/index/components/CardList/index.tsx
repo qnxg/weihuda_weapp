@@ -1,21 +1,22 @@
-import Taro from '@tarojs/taro'
-import { useAppDispatch } from '@/utils/hooks/redux'
-import { fetchNoticeThunk } from '@/models/notice'
 import { Block, Text, View } from '@tarojs/components'
-import Card from '@/components/Card'
-import { computeFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay"
-import React, { useEffect, useMemo } from 'react'
+import Taro from '@tarojs/taro'
+import React, { useEffect } from 'react'
 
 import ConfigurableCardList from './ConfigurableCardList'
 import { customizableCardsMap, topCards } from './index.config'
 
 import style from './index.module.scss'
+import Card from '@/components/Card'
+import { fetchNoticeThunk } from '@/models/notice'
+import { useAppDispatch } from '@/utils/hooks/redux'
+import { useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay"
+import type { Key} from 'react';
 
 /** 跳转首页卡片设置的卡片 */
 const GoToCardSettings: React.FC = () =>
   <View className={style.goToCardSettingsCard}>
     <Card onClick={() => {
-      Taro.navigateTo({ url: '/settingsPage/indexCardSettings/index' })
+      void Taro.navigateTo({ url: '/settingsPage/indexCardSettings/index' })
     }}>
       <View className={style.goToCardSettingsContainer}>
         <Text className={style.goToCardSettingsText}>
@@ -27,7 +28,7 @@ const GoToCardSettings: React.FC = () =>
 
 export interface CardListProps {
   /** 如果变化则重新获取首页数据 */
-  fetchDataControl: any
+  fetchDataControl: Key
   onFetchDataFinished: any
 }
 
@@ -39,18 +40,18 @@ const CardList: React.FC<CardListProps> = (
   // notice?
   // 暂时不跟踪loading状态
   useEffect(() => {
-    (async () => {
+    void (async () => {
       await dispatch(fetchNoticeThunk())
     })()
   }, [dispatch, fetchDataControl])
 
-  const [cardsToShow] = useMemo(computeFinalCardDisplay, [fetchDataControl]);
+  const [cardsToShow] = useFinalCardDisplay([fetchDataControl])
 
   return (
     <Block>
       <ConfigurableCardList
-        // key={fetchDataControl}
-        // 注意：上面这行可以不加是因为目前设置卡片之后不可能直接返回到首页
+        // key的设置是重要的：见ConfigurableCardList的描述
+        key={JSON.stringify(Array.from(cardsToShow))}
         topCards={topCards}
         customizableCards={customizableCardsMap}
         CardsToShow={cardsToShow}

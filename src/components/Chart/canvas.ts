@@ -1,6 +1,7 @@
-import { CanvasContext as TaroCanvasContext } from '@tarojs/taro';
+import type { CanvasContext as TaroCanvasContext } from '@tarojs/taro';
 
 interface CanvasContext extends TaroCanvasContext {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   createRadialGradient?: Function;
 }
 

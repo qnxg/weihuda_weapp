@@ -1,12 +1,13 @@
-import { getClassStartDate, getClassTable } from '@/apis/hdjw/classTable'
-import { multiArray, onColors } from '@/utils/config'
-import storage from '@/utils/storage/cache'
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 // 需要重构：循环依赖
 // eslint-disable-next-line import/no-cycle
-import { RootState } from '.'
+import { getClassStartDate, getClassTable } from '@/apis/hdjw/classTable'
+import { multiArray, onColors } from '@/utils/config'
+import storage from '@/utils/storage/cache'
+import type { RootState } from '.'
+import type { PayloadAction} from '@reduxjs/toolkit';
 
 export enum EDayType {
   sunday = '1',
@@ -130,7 +131,7 @@ export const refreshClassTableThunk = createAsyncThunk('classTable/refreshClassT
   const { semesters, currentSem } = state.classTable
   const xn = semesters[currentSem].xn.toString()
   const xq = semesters[currentSem].xq
-  Taro.showLoading({
+  await Taro.showLoading({
     title: '加载中...',
     mask: true
   })

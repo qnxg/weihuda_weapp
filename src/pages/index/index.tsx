@@ -1,15 +1,16 @@
-import PullRefresh, { RefProps } from '@/components/PullRefresh'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
-import { getSmesterInfoThunk } from '@/models/smester'
-import { getUserInfoThunk } from '@/models/userInfo'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { Fragment, memo, useCallback, useEffect, useRef } from 'react'
-import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import CardList from './components/CardList'
 import DateBar from './components/DateBar'
 import styles from './index.module.scss'
+import PullRefresh from '@/components/PullRefresh'
+import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
+import { getSmesterInfoThunk } from '@/models/smester'
+import { getUserInfoThunk } from '@/models/userInfo'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import useRefreshKey from '@/utils/hooks/useRefreshKey'
+import type { RefProps } from '@/components/PullRefresh';
 
 const CardListMemo = memo(CardList);
 
@@ -21,9 +22,9 @@ const Index: React.FC = () => {
   
   /** 拉取基本信息 */
   useEffect(() => {
-    dispatch(getUserInfoThunk())
-    dispatch(getSmesterInfoThunk()).then(() => {
-      dispatch(initClassTableThunk())
+    void dispatch(getUserInfoThunk())
+    void dispatch(getSmesterInfoThunk()).then(() => {
+      void dispatch(initClassTableThunk())
     })
   }, [dispatch])
   
@@ -31,16 +32,16 @@ const Index: React.FC = () => {
   useEffect(() => {
     if (isBind) {
       if (terms && terms.length > 0) {
-        dispatch(refreshClassTableThunk())
+        void dispatch(refreshClassTableThunk())
       } else {
-        dispatch(initClassTableThunk())
+        void dispatch(initClassTableThunk())
       }
     }
   }, [isBind, terms, dispatch])
   
   useEffect(() => {
     if (currentWeek !== undefined && currentWeek !== null) {
-      Taro.setNavigationBarTitle({
+      void Taro.setNavigationBarTitle({
         title: currentWeek >= 0 ? `第${currentWeek}周` : `距开学${-currentWeek}周`
       })
     }

@@ -1,8 +1,9 @@
-import { NtflowOrderItem, getNetflowOrder } from '@/apis/netflow'
-import DisplayCard from '@/components/DisplayCard'
 import { View } from '@tarojs/components'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
+import { getNetflowOrder } from '@/apis/netflow'
+import DisplayCard from '@/components/DisplayCard'
+import type { NtflowOrderItem} from '@/apis/netflow';
 
 const Index: React.FC = () => {
   const [data, setData] = useState<NtflowOrderItem[] | null>(null)
@@ -11,7 +12,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -21,20 +22,21 @@ const Index: React.FC = () => {
         setData(res)
       }
     } catch (err) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   usePullDownRefresh(() => {
-    getData()
+    void getData()
     Taro.stopPullDownRefresh()
   })
 

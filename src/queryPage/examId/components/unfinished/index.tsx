@@ -1,9 +1,9 @@
-import React from 'react';
-import { onColors } from '@/utils/config';
 import { View } from '@tarojs/components';
-import { ExamId } from '../../interface';
+import React from 'react';
 import ContentLine from '../contentLine';
 import styles from './index.module.scss';
+import { onColors } from '@/utils/config';
+import type { ExamId } from '../../interface';
 
 interface Props {
   unExamIds?: ExamId[];

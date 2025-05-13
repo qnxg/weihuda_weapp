@@ -1,4 +1,9 @@
-import { getLibraryApi, LibraryRes } from '@/apis/library'
+import { Image, View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import dayjs from 'dayjs'
+import React, { useEffect, useState } from 'react'
+import styles from './index.module.scss'
+import { getLibraryApi } from '@/apis/library'
 import DisplayCard from '@/components/DisplayCard'
 import Card from '@/components/LineDividedLeftRightCard'
 import Left from '@/components/LineDividedLeftRightCard/components/LeftPart'
@@ -8,11 +13,7 @@ import Tab from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import book from '@/static/empty/book.svg'
 import { onColors } from '@/utils/config'
-import { Image, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
-import styles from './index.module.scss'
+import type { LibraryRes } from '@/apis/library';
 
 const items = ['在借图书', '借阅清单', '借阅账单']
 
@@ -26,7 +27,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -39,17 +40,18 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
+      setShow(false)
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
-      setShow(false)
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   const handleChangCurrent = (index: number): void => {

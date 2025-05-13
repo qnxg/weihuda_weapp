@@ -1,8 +1,10 @@
-import { getBoundingClientRect, getScrollOffset } from '@/utils/tool'
-import { ScrollView, View, ViewProps } from '@tarojs/components'
+import { ScrollView, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { ReactNode, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getBoundingClientRect, getScrollOffset } from '@/utils/tool'
+import type { ViewProps } from '@tarojs/components';
+import type { ReactNode} from 'react';
 
 interface ITabsProps extends ViewProps {
   /**
@@ -100,7 +102,7 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
   }
 
   useEffect(() => {
-    updateActiveLine(initialTabIndex)
+    void updateActiveLine(initialTabIndex)
   }, [initialTabIndex, updateActiveLine])
 
   return (

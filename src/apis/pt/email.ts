@@ -1,4 +1,4 @@
-import request from '../back/request'
+import request from '../request'
 
 /**
  * 获取未读邮件数量

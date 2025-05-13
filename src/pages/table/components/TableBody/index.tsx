@@ -2,11 +2,11 @@ import { Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
 
-import { useAppDispatch } from '@/utils/hooks/redux'
-import { saveClassTable } from '@/models/classTable'
-import { FormatTable } from '../../interface'
 import Day from '../Day'
 import styles from './index.module.scss'
+import { saveClassTable } from '@/models/classTable'
+import { useAppDispatch } from '@/utils/hooks/redux'
+import type { FormatTable } from '../../interface'
 
 /**
  * @interface TableBody Component Props
@@ -55,7 +55,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
       onLongPress={() => {
-        Taro.navigateTo({
+        void Taro.navigateTo({
           url: '/pages/addCourse/index'
         })
       }}

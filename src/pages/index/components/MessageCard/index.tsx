@@ -1,16 +1,17 @@
-import { getMessage, Message } from '@/apis/back/message'
-import Card from '@/components/Card'
-import CardHeader from '@/components/Card/CardHeader'
-import { useAppSelector } from '@/utils/hooks/redux'
-import icon from '@/static/index/icon/message.svg'
-import { getBoundingClientRect } from '@/utils/tool'
 import { Swiper, SwiperItem, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import usePromise from '@/utils/hooks/usePromise'
 import React, { useEffect, useMemo, useState } from 'react'
 import MessageItem from '../../../../components/MessageItem'
 import styles from './index.module.scss'
-import CardProps from '../CardProps'
+import { getMessage } from '@/apis/message'
+import Card from '@/components/Card'
+import CardHeader from '@/components/Card/CardHeader'
+import icon from '@/static/index/icon/message.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
+import { getBoundingClientRect } from '@/utils/tool'
+import type CardProps from '../CardProps'
+import type { Message } from '@/apis/message';
 
 interface IProps {
   message: Message[]
@@ -48,7 +49,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   // 滑块切换
   const handleSwiperChange = (e) => {
     setCurrent(e.detail.current)
-    calcedHeights.then((res) => {
+    void calcedHeights.then((res) => {
       setHeight(res[e.detail.current])
     })
   }
@@ -62,7 +63,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
             footer={
               <View
                 onClick={() => {
-                  Taro.navigateTo({ url: '/pages/messageBox/index' })
+                  void Taro.navigateTo({ url: '/pages/messageBox/index' })
                 }}
               >
                 查看更多
@@ -88,7 +89,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
                 <SwiperItem
                   key={item.title}
                   onClick={() => {
-                    Taro.navigateTo({ url: item.url ? item.url : '/pages/messageBox/index' })
+                    void Taro.navigateTo({ url: item.url ? item.url : '/pages/messageBox/index' })
                   }}
                 >
                   <View className={styles.messageItem}>

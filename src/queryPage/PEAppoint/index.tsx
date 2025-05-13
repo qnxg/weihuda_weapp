@@ -1,11 +1,12 @@
-import { FitnessAppointItem, getFitnessAppoint } from '@/apis/pt/fitness'
-import DisplayCard from '@/components/DisplayCard'
-import PullRefresh from '@/components/PullRefresh'
-import iconNoJK from '@/static/empty/no-exam.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getFitnessAppoint } from '@/apis/pt/fitness'
+import DisplayCard from '@/components/DisplayCard'
+import PullRefresh from '@/components/PullRefresh'
+import iconNoJK from '@/static/empty/no-exam.svg'
+import type { FitnessAppointItem} from '@/apis/pt/fitness';
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -16,7 +17,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -29,17 +30,18 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
+      setShow(false)
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
-      setShow(false)
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   // const { data, error, loading, run } = useGraphql<RootObject>({

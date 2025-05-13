@@ -1,9 +1,9 @@
 import { View } from "@tarojs/components"
 import Taro from "@tarojs/taro"
-import { Key, ReactNode } from "react"
+import Badge from "../Badge"
 import Card from "../Card"
 import style from './index.module.scss'
-import Badge from "../Badge"
+import type { Key, ReactNode } from "react"
 
 export type ReactNodeWithKey<K extends Key> = {
     node: ReactNode,
@@ -42,14 +42,20 @@ const CheckSortListItem: React.FC<{
 }
 
 /** 
- * 这是受控组件
+ * 可选择/取消选择项目的排序列表
+ * 
+ * 这是“受控组件”。列表项目和响应事件由调用方提供。
  * 
  * checked和unchecked两个数组总共的所有key必须互不相同
  */
 const CheckSortListDisplay = <K1 extends Key, K2 extends Key>(props: {
+    /** 选中的项目列表 */
     checked: ReactNodeWithKey<K1>[],
+    /** 未选中的项目列表 */
     unchecked: ReactNodeWithKey<K2>[],
+    /** 点击了一个未选中项目的回调函数 */
     onCheck: (key: K2) => unknown,
+    /** 点击了一个已选中项目的回调函数 */
     onUncheck: (idx: K1) => unknown,
 }) => {
     return <View className={style.checkSortListContainer}>

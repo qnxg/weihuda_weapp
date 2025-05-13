@@ -1,12 +1,12 @@
-import { getCourseDetail } from '@/apis/hdjw/courseDetail'
-import DisplayCard from '@/components/DisplayCard'
-import { useAppSelector } from '@/utils/hooks/redux'
-import iconNoJK from '@/static/empty/no-exam.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
 import PickerArea from './components/PickerArea'
 import styles from './index.module.scss'
+import { getCourseDetail } from '@/apis/hdjw/courseDetail'
+import DisplayCard from '@/components/DisplayCard'
+import iconNoJK from '@/static/empty/no-exam.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
   const { semesters, currentSem } = useAppSelector((state) => state.classTable)
@@ -21,7 +21,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -36,13 +36,14 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
+      setShow(false)
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
-      setShow(false)
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   return (
@@ -50,8 +51,8 @@ const Index: React.FC = () => {
       <PickerArea setSemester={setSemester} setKeyword={setKeyword} currentSem={semester} />
       <View
         className={styles.button}
-        onClick={(): void => {
-          getData()
+        onClick={async () => {
+          await getData()
           setSearched(true)
         }}
       >

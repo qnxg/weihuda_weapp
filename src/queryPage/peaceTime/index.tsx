@@ -1,15 +1,16 @@
-import { RawGradeItem, getRawGrade } from '@/apis/hdjw/rawGrade'
-import DisplayCard from '@/components/DisplayCard'
-import PullRefresh from '@/components/PullRefresh'
-import TabBar from '@/components/TabBar'
-import { useAppSelector } from '@/utils/hooks/redux'
-import empty from '@/static/empty/no-grade.svg'
-import notStart from '@/static/empty/term-not-start.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import style from './index.module.scss'
-import { State } from './interface'
+import { getRawGrade } from '@/apis/hdjw/rawGrade'
+import DisplayCard from '@/components/DisplayCard'
+import PullRefresh from '@/components/PullRefresh'
+import TabBar from '@/components/TabBar'
+import empty from '@/static/empty/no-grade.svg'
+import notStart from '@/static/empty/term-not-start.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
+import type { State } from './interface'
+import type { RawGradeItem} from '@/apis/hdjw/rawGrade';
 
 const semester = ['秋季学期', '春季学期', '夏季学期']
 
@@ -40,7 +41,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = useCallback(async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -53,17 +54,17 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
-        icon: 'none',
-        title: err.toString()
-      })
       setShow(false)
+      await Taro.showToast({
+        icon: 'none',
+        title: err.toString(),
+      })
     }
     Taro.hideLoading()
   }, [state.currentTerm, yearsCurrentYear])
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [getData, state.currentTerm, state.currentYear])
 
   const { currentYear, currentTerm } = state

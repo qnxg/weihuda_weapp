@@ -1,17 +1,17 @@
+import { View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import classNames from 'classnames';
 import React, { useCallback, useRef, Fragment } from 'react';
-import { View } from '@tarojs/components';
-import { ITouchEvent } from '@tarojs/components/types/common';
 
 import styles from './index.module.scss';
+import type { ITouchEvent } from '@tarojs/components/types/common';
 
 const MIN_DISTANCE = 100;
 const MAX_INTERVAL = 10;
 
 interface Props {
   children: React.ReactNode;
-  onChange: Function;
+  onChange: (n: number, e?: ITouchEvent) => void;
   current: number;
   items: any[];
   swipeable?: boolean;
@@ -32,7 +32,7 @@ const Index: React.FC<Props> = (props) => {
     (index: number, e?: ITouchEvent) => {
       onChange(index, e);
       if (preIndexRef.current === index) {
-        Taro.pageScrollTo({
+        void Taro.pageScrollTo({
           scrollTop: 0,
           duration: 400
         });

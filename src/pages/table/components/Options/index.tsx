@@ -1,10 +1,10 @@
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
-import storage from '@/utils/storage/cache'
 import { Picker, Switch, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
+import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import storage from '@/utils/storage/cache'
 
 export interface OptionProps {
   showOption: boolean
@@ -37,7 +37,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
         currentWeeks: 1
       })
     )
-    dispatch(refreshClassTableThunk())
+    void dispatch(refreshClassTableThunk())
   }
 
   /**

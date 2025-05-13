@@ -1,10 +1,10 @@
-import React from 'react';
-import { CommonEventFunction } from '@tarojs/components/types/common';
 import { View, Text, Picker, Image, Input } from '@tarojs/components';
+import React from 'react';
+import styles from './index.module.scss';
 import iconFinger from '@/static/emptyRoom/icon-finger.svg';
 
-import styles from './index.module.scss';
 import { useAppSelector } from '@/utils/hooks/redux';
+import type { CommonEventFunction } from '@tarojs/components/types/common';
 
 interface Props {
   currentSem: number;

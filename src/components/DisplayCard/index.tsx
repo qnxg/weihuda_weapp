@@ -1,9 +1,10 @@
-import React, { ReactNode } from 'react'
 import { View, Image } from '@tarojs/components'
+import React from 'react'
 
 import styles from './index.module.scss'
+import type { ReactNode } from 'react';
 
-interface Props extends React.PropsWithChildren<{}> {
+interface Props extends React.PropsWithChildren<NonNullable<unknown>> {
   title?: string
   subTitle?: string | null
   footer?: string | ReactNode

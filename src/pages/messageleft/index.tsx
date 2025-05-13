@@ -1,11 +1,12 @@
-import { IMessageLeft, postMessageLeftApi } from '@/apis/back/messageleft'
-import Button from '@/components/Button'
-import { useAppSelector } from '@/utils/hooks/redux'
 import { Picker, Radio, RadioGroup, Text, Textarea, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import styles from './index.module.scss'
+import { postMessageLeftApi } from '@/apis/messageleft'
+import Button from '@/components/Button'
+import { useAppSelector } from '@/utils/hooks/redux'
+import type { IMessageLeft} from '@/apis/messageleft';
 
 const Index: React.FC = () => {
   const { stuId } = useAppSelector((state) => state.userInfo)
@@ -54,7 +55,7 @@ const Index: React.FC = () => {
 
     // 拼接用户选择的日期和当前的时分秒
     const fullDateTime = `${data.sendTime} ${currentTime}`
-    let reqData: Partial<IMessageLeft> = {
+    const reqData: Partial<IMessageLeft> = {
       isAgree: data.isAgree ? 1 : 0,
       desc: data.desc,
       isSend: data.isSend ? 1 : 0,
@@ -63,12 +64,12 @@ const Index: React.FC = () => {
     }
     try {
       await postMessageLeftApi(reqData)
-      Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
+      await Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
       setTimeout(() => {
-        Taro.navigateBack()
+        void Taro.navigateBack()
       }, 1000)
     } catch (error) {
-      Taro.showToast({ title: '提交失败', icon: 'none' })
+      await Taro.showToast({ title: '提交失败', icon: 'none' })
     }
   }
 
@@ -76,13 +77,13 @@ const Index: React.FC = () => {
   const handleSubmit = async () => {
     // 验证
     if (data.desc === '') {
-      Taro.showToast({ title: '请填写留言内容', icon: 'none' })
+      await Taro.showToast({ title: '请填写留言内容', icon: 'none' })
       return
     }
 
-    Taro.showLoading({ title: '正在提交' })
+    await Taro.showLoading({ title: '正在提交' })
     console.log('提交数据', data)
-    submitData({
+    await submitData({
       ...data
     })
   }

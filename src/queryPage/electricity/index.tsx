@@ -1,9 +1,10 @@
 import { Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
-import PullRefresh from '@/components/PullRefresh'
+import { getDormitoryApi, getElectricityApi, updateDormitoryApi } from '@/apis/electricity'
 import DisplayCard from '@/components/DisplayCard'
-import { Dormitory, getDormitoryApi, getElectricityApi, updateDormitoryApi } from '@/apis/electricity'
+import PullRefresh from '@/components/PullRefresh'
+import type { Dormitory} from '@/apis/electricity';
 
 const Index: React.FC = () => {
   const [electricity, setElectricity] = useState<string>()
@@ -12,7 +13,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async (update = false) => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -24,16 +25,17 @@ const Index: React.FC = () => {
         setElectricity(await getElectricityApi(true))
       }
     } catch (err) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   const onRefresh = async (close) => {
@@ -43,7 +45,7 @@ const Index: React.FC = () => {
 
   const updateInfo = async () => {
     await getData(true)
-    Taro.showModal({
+    await Taro.showModal({
       title: '提示',
       content: '已重新更新宿舍信息。如宿舍信息仍无法获取或获取失败，请前往"我的-反馈建议"上报问题。'
     })

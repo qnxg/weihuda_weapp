@@ -1,16 +1,17 @@
+import { Image, View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import dayjs from 'dayjs'
+import React, { useEffect, useState } from 'react'
+import defaultTags from './defaultTags'
+import styles from './index.module.scss'
 import { getMiniConfigPageApi } from '@/apis/miniConfig'
-import { IZhihu, getZhihuPageApi } from '@/apis/zhihu'
+import { getZhihuPageApi } from '@/apis/zhihu'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import { TabPanel, Tabs } from '@/components/Tabs'
 import { getBoundingClientRect, parseJSON } from '@/utils/tool'
-import { Image, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
-import styles from './index.module.scss'
-import defaultTags from './defaultTags'
+import type { IZhihu} from '@/apis/zhihu';
 
 const Index: React.FC = () => {
   // 标签
@@ -58,17 +59,17 @@ const Index: React.FC = () => {
   const handleChange = (value: string) => {
     const newQueryData = { ...queryData, tags: value, page: 1 }
     setQueryData(newQueryData)
-    getData(newQueryData, true)
+    void getData(newQueryData, true)
   }
 
   // 点击卡片，跳转到详情页
   const handleClick = (item: IZhihu) => {
     if (item.type === 'link') {
-      Taro.navigateTo({
+      void Taro.navigateTo({
         url: `/pages/webview/index?url=${item.content}&title=${item.title}&from=zhihu`
       })
     } else {
-      Taro.navigateTo({
+      void Taro.navigateTo({
         url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`
       })
     }
@@ -78,12 +79,12 @@ const Index: React.FC = () => {
     if (data.length >= total) return
     const newQueryData = { ...queryData, page: queryData.page + 1 }
     setQueryData(newQueryData)
-    getData(newQueryData)
+    void getData(newQueryData)
   }
 
   useEffect(() => {
-    getData(queryData, true)
-    getTags()
+    void getData(queryData, true)
+    void getTags()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -102,7 +103,7 @@ const Index: React.FC = () => {
     setPaddingTop(rects[0].height + 4)
   }
   useEffect(() => {
-    updatePaddingTop()
+    void updatePaddingTop()
   }, [])
 
   return (

@@ -1,10 +1,10 @@
-import { deleteCourseApi } from '@/apis/hdjw/classTable'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { ScrollView, Swiper, SwiperItem, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React from 'react'
 import styles from './index.module.scss'
+import { deleteCourseApi } from '@/apis/hdjw/classTable'
+import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 
 export interface FloatProps {
   showFloat: boolean
@@ -75,8 +75,8 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
                   <View className={styles.optionContainer}>
                     <View
                       className={styles.options}
-                      onClick={(): void => {
-                        deleteCourse(item.id)
+                      onClick={() => {
+                        void deleteCourse(item.id)
                       }}
                     >
                       <View className={styles.removeIcon} />

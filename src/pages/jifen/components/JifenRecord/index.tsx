@@ -1,9 +1,10 @@
-import { IJifenRecord, getJifenRecordPageApi } from '@/apis/jifen'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
+import { getJifenRecordPageApi } from '@/apis/jifen'
+import type { IJifenRecord} from '@/apis/jifen';
 
 interface IJifenRecordProps {
   updateTotal?: () => void
@@ -27,12 +28,12 @@ const JifenRecord: React.FC<IJifenRecordProps> = (props) => {
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   // 通过ref暴露给父组件调用
   const updateJifenRecord = () => {
-    getData()
+    void getData()
   }
   if (props.jifenRecordRef) {
     props.jifenRecordRef.current = { updateJifenRecord }

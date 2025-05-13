@@ -1,10 +1,10 @@
-import { getZhihuByIdApi } from '@/apis/zhihu'
-import Card from '@/components/Card'
 import { RichText, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getZhihuByIdApi } from '@/apis/zhihu'
+import Card from '@/components/Card'
 
 const regCloseSelf = /\/ *>$/
 
@@ -23,7 +23,7 @@ const Index: React.FC = () => {
   const [date, setDate] = useState<string | null>('')
   const [content, setContent] = useState('')
   useEffect(() => {
-    ;(async () => {
+    void (async () => {
       const { id, title: _title, publishTime } = router.params
       await Taro.setNavigationBarTitle({
         title: _title as string

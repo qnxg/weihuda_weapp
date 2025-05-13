@@ -1,10 +1,10 @@
-import { postExamNumApi } from '@/apis/back/examNum'
 import { Input, Picker, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useCallback, useState } from 'react'
-import { ExamId } from '../../interface'
 import styles from './index.module.scss'
+import { postExamNumApi } from '@/apis/examNum'
+import type { ExamId } from '../../interface'
 
 interface AddPageProps {
   cancelHandle?: () => void
@@ -23,17 +23,18 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
         date: newItem.examDate.replace(/\//g, '-'),
         num: newItem.examId || ' '
       })
-      Taro.showToast({
+      await Taro.showToast({
         title: '添加成功',
         duration: 1000
       })
     } catch (error) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: error.toString()
       })
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   const editExamName = useCallback((e) => {

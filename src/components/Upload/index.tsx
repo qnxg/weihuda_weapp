@@ -1,8 +1,8 @@
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
-import styles from './index.module.scss'
 import Label from '../Input/Label'
+import styles from './index.module.scss'
 
 interface IUploadProps {
   /**
@@ -36,7 +36,7 @@ export const Upload: React.FC<IUploadProps> = (props) => {
 
   // 选择图片
   const handleChoose = () => {
-    Taro.chooseImage({
+    void Taro.chooseImage({
       count: 1,
       success(res) {
         const filePath = res.tempFilePaths[0]

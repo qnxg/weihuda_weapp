@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
 
-interface TagProps extends React.PropsWithChildren<{}> {
+interface TagProps extends React.PropsWithChildren<NonNullable<unknown>> {
   /**
    * 标签颜色
    */

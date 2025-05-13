@@ -1,17 +1,17 @@
-import { getFlexTimeList } from '@/apis/back/flexTime'
-import PullRefresh from '@/components/PullRefresh'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
-import { offColor } from '@/utils/config'
-import { judgeOn } from '@/utils/day'
 import dayjs from 'dayjs'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import BubbleNotification from './components/FlexTimeBubble'
 import Float from './components/Float'
 import Header from './components/Header'
 import Options from './components/Options'
 import TableBody from './components/TableBody'
-import { CurDatesOfWeek, FormatTable } from './interface'
+import { getFlexTimeList } from '@/apis/flexTime'
+import PullRefresh from '@/components/PullRefresh'
+import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
+import { offColor } from '@/utils/config'
+import { judgeOn } from '@/utils/day'
+import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import type { CurDatesOfWeek, FormatTable } from './interface'
 
 const Index: React.FC = () => {
     const { semesters, classTable, currentWeeks, mode, currentStart, showFloat, showOptions, currentWeek } = useAppSelector(
@@ -25,57 +25,57 @@ const Index: React.FC = () => {
 
     const dispatch = useAppDispatch()
 
+    const fetchFlexTimeList = useCallback(async () => {
+        const res = await getFlexTimeList();
+        if (res && res.length > 0) {
+            let day = dayjs().day() as number; // 获取今天是星期几
+            if (day === 0) {
+                day = 7; // 将星期天转换为7
+            }
+            // 根据今天的周数和星期几来判断是否有调休
+            for (const item of res) {
+                console.log(currentWeek);
+                if (
+                    item.to.week == currentWeek &&
+                    item.to.day == day &&
+                    item.time.xn == termYear &&
+                    item.time.xq == termType
+                ) {
+                    setShowBubble(true);
+                    setBubbleText(item.desc);
+                    break;
+                }
+            }
+        }
+    }, [currentWeek, termType, termYear]);
+
     useEffect(() => {
         let previousDay = dayjs().day(); // 初始化为当前的星期几
         // 定义一个函数来获取调休信息
-        const fetchFlexTimeList = () => {
-            getFlexTimeList().then((res) => {
-                if (res && res.length > 0) {
-                    let day = dayjs().day() as number; // 获取今天是星期几
-                    if (day === 0) {
-                        day = 7; // 将星期天转换为7
-                    }
-                    // 根据今天的周数和星期几来判断是否有调休
-                    for (const item of res) {
-                        console.log(currentWeek);
-                        if (
-                            item.to.week == currentWeek &&
-                            item.to.day == day &&
-                            item.time.xn == termYear &&
-                            item.time.xq == termType
-                        ) {
-                            setShowBubble(true);
-                            setBubbleText(item.desc);
-                            break;
-                        }
-                    }
-                }
-            });
-        };
         // 初次加载时获取调休信息
-        fetchFlexTimeList();
+        void fetchFlexTimeList();
         // 设置一个定时器，每隔一分钟检测 dayjs().day() 是否变化
         const intervalId = setInterval(() => {
             const currentDay = dayjs().day();
             if (currentDay !== previousDay) {
                 previousDay = currentDay; // 更新 previousDay
-                fetchFlexTimeList(); // 重新获取调休信息
+                void fetchFlexTimeList(); // 重新获取调休信息
             }
         }, 60000); // 每隔一分钟检测一次
         // 清理定时器
         return () => clearInterval(intervalId);
-    }, [currentWeek, termYear, termType]);
+    }, [currentWeek, termYear, termType, fetchFlexTimeList]);
 
     // 初始化
     useEffect(() => {
         if (!semesters || semesters.length === 0) {
-            dispatch(initClassTableThunk())
+            void dispatch(initClassTableThunk())
         }
     }, [dispatch, semesters])
 
     const onRefresh = async (close) => {
         await dispatch(refreshClassTableThunk())
-        setShowBubble(true)
+        void fetchFlexTimeList();
         close()
     }
 

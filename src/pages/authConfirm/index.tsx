@@ -1,11 +1,12 @@
-import { AuthQrcodeStatus, getAuthQrcodeStatusApi, putAuthQrcodeStatusApi } from '@/apis/authQrcode'
-import Button from '@/components/Button'
-import Card from '@/components/Card'
 import { Image, Text, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import classNames from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getAuthQrcodeStatusApi, putAuthQrcodeStatusApi } from '@/apis/authQrcode'
+import Button from '@/components/Button'
+import Card from '@/components/Card'
+import type { AuthQrcodeStatus} from '@/apis/authQrcode';
 
 const Index: React.FC = () => {
   // 获取query参数
@@ -23,7 +24,7 @@ const Index: React.FC = () => {
         setError('二维码已失效')
       } else {
         setStatus(res)
-        putAuthQrcodeStatusApi(code, 'using')
+        await putAuthQrcodeStatusApi(code, 'using')
       }
     } catch (e) {
       setError('二维码已失效')
@@ -32,12 +33,12 @@ const Index: React.FC = () => {
 
   // 获取二维码状态
   useEffect(() => {
-    getQrCodeStatus()
+    void getQrCodeStatus()
   }, [getQrCodeStatus])
 
   // 回到首页
   const goHome = () => {
-    Taro.switchTab({
+    void Taro.switchTab({
       url: '/pages/index/index'
     })
   }
@@ -47,7 +48,7 @@ const Index: React.FC = () => {
     if (!code && status === 'used') return
     await putAuthQrcodeStatusApi(code, 'confirmed')
     setStatus('used')
-    Taro.showToast({
+    await Taro.showToast({
       title: '授权成功'
     })
     setTimeout(() => {
@@ -60,7 +61,7 @@ const Index: React.FC = () => {
     if (!code && status === 'used') return
     await putAuthQrcodeStatusApi(code, 'canceled')
     setStatus('used')
-    Taro.showToast({
+    await Taro.showToast({
       title: '取消成功'
     })
     setTimeout(() => {

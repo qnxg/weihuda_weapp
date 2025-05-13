@@ -1,8 +1,9 @@
-import { InputProps, Input as TaroInput, View } from '@tarojs/components'
+import { Input as TaroInput, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
 import Label from './Label'
+import type { InputProps} from '@tarojs/components';
 
 interface Props extends InputProps {
   /**

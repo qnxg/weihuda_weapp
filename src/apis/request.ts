@@ -1,7 +1,7 @@
+import Taro from '@tarojs/taro'
 import getLoginCode from '@/utils/getLoginCode'
 import storage from '@/utils/storage/cache'
 import { BASE_URL } from '@/utils/url'
-import Taro from '@tarojs/taro'
 
 // 需要重构甚至重写：getTokenApi和request.get的相互依赖令人迷惑
 
@@ -59,13 +59,13 @@ export type Datum = any[] | boolean | number | { [key: string]: any } | null | s
 // 跳转到bind界面
 const toBind = () => {
   const duration = 700
-  Taro.showToast({
+  void Taro.showToast({
     title: '登录过期，请重新登录',
     icon: 'none',
     duration
   })
   setTimeout(() => {
-    Taro.reLaunch({
+    void Taro.reLaunch({
       url: '/pages/bind/index',
       fail: function (err) {
         console.log(err)
@@ -119,7 +119,7 @@ async function request<T extends Data>(options: Taro.request.Option<Response>): 
     // 有些请求不需要弹出提示，例如知湖阅读文章获取积分的请求
     // 不用弹出提示的请求会在msg中包含NO_TOAST
     if (!response.data.msg.includes('NO_TOAST')) {
-      Taro.showToast({
+      await Taro.showToast({
         title: response.data.msg,
         icon: 'none'
       })

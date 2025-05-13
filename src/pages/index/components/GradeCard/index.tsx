@@ -1,13 +1,14 @@
-import { getGrade, GradeItem } from '@/apis/hdjw/grade'
-import empty from '@/static/empty/no-grade.svg'
-import cardIcon from '@/static/index/icon/grade.svg'
 import { Block } from '@tarojs/components'
-import { useAppSelector } from '@/utils/hooks/redux'
 import React, { useEffect, useState } from 'react'
 import CardEmpty from '../CardEmpty'
 import CardLayout from '../CardLayout'
 import GradeBanner from './components/GradeBanner'
-import CardProps from '../CardProps'
+import { getGrade } from '@/apis/hdjw/grade'
+import empty from '@/static/empty/no-grade.svg'
+import cardIcon from '@/static/index/icon/grade.svg'
+import { useAppSelector } from '@/utils/hooks/redux'
+import type CardProps from '../CardProps'
+import type { GradeItem } from '@/apis/hdjw/grade';
 
 interface GradeCardProps {
   grade?: GradeItem[]
@@ -39,7 +40,7 @@ const GradeCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadControlle
     onLoadingStatusChange(false)
   }, [onLoadingStatusChange])
   useEffect(() => {
-    (async () => {
+    void (async () => {
       // 初始的termType为null的时候不用去获取数据，所以需要跳过第一次获取
       if (!termType) return;
       onLoadingStatusChange(true)

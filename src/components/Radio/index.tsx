@@ -19,7 +19,7 @@ export interface RadioProps {
   /**
    * 选中时的回调，把新值传递给该函数的第一个参数
    */
-  handleClick?: Function;
+  handleClick?: (arg0: string) => unknown;
   /**
    * 内联样式
    */
@@ -34,7 +34,8 @@ export interface RadioProps {
  * 一个单选框，你应该跟RadioGroups组件配合使用该组件，而不应该单独使用，详情见RadioGroups组件的使用方法
  */
 const Radio: React.FC<RadioProps> = (props) => {
-  let { label, value, checked, style, className } = props;
+  let { label, checked } = props;
+  const { value, style, className } = props;
   if (label === undefined) label = value;
   if (checked === undefined) checked = false;
 
@@ -84,7 +85,7 @@ export interface RadioGroupsProps {
   /**
    * 选中新单选框时的回调，新值会传递给该函数的第一个参数
    */
-  onChange?: Function;
+  onChange?: (arg0: string) => unknown;
   /**
    * 子组件，该组件内只能包含Radio组件
    */
@@ -121,6 +122,7 @@ const RadioGroups: React.FC<RadioGroupsProps> = (props) => {
   return (
     <View style={style}>
       {children.map((v) => {
+        // eslint-disable-next-line prefer-const
         let { label, value, checked, style: style1 } = v.props;
         if (label === undefined) label = value;
         if (checked === undefined) {

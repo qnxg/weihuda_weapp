@@ -1,8 +1,8 @@
-import { postCourseApi } from '@/apis/hdjw/classTable'
-import { useAppSelector } from '@/utils/hooks/redux'
 import Taro from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { postCourseApi } from '@/apis/hdjw/classTable'
+import { useAppSelector } from '@/utils/hooks/redux'
 
 const useAddCourse = () => {
   // 全局状态
@@ -60,7 +60,7 @@ const useAddCourse = () => {
       xq: semesters[currentSem].xq
     }
 
-    Taro.showLoading({
+    await Taro.showLoading({
       title: 'loading...',
       mask: true
     })
@@ -68,7 +68,7 @@ const useAddCourse = () => {
     try {
       // 发起请求
       await postCourseApi(data)
-      Taro.showToast({
+      await Taro.showToast({
         title: '添加成功',
         duration: 1500
       })
@@ -76,10 +76,10 @@ const useAddCourse = () => {
         type: 'classTable/handleRefreshTable'
       })
       setTimeout(() => {
-        Taro.navigateBack()
+        void Taro.navigateBack()
       }, 1500)
     } catch (error) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: error.toString()
       })

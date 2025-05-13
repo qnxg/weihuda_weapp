@@ -1,15 +1,14 @@
-import { postUnbind } from '@/apis/back/bind'
-import { useAppSelector } from '@/utils/hooks/redux'
 import { Block, Button, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { LineDividedButtonList } from '@/components/LineDividedButtonList'
 import React from 'react'
 import styles from './index.module.scss'
+import { postUnbind } from '@/apis/bind'
+import { LineDividedButtonList } from '@/components/LineDividedButtonList'
+import { useAppSelector } from '@/utils/hooks/redux'
 
-const postData = async () => {
-  return await postUnbind()
-}
-
+/**
+ * 解绑操作
+ */
 const unBind = async (): Promise<void> => {
   const res = await Taro.showModal({
     title: '确认解绑',
@@ -22,7 +21,7 @@ const unBind = async (): Promise<void> => {
       await Taro.showLoading({
         title: '加载中'
       })
-      await postData()
+      await postUnbind()
       Taro.clearStorageSync()
       Taro.hideLoading()
       await Taro.reLaunch({
@@ -35,6 +34,11 @@ const unBind = async (): Promise<void> => {
   }
 }
 
+/**
+ * 清除缓存操作
+ * 
+ * 实际上是清除了所有storage，所以本地保存的小程序设置也会被清空。
+ */
 const clean = async () => {
   const res = await Taro.showModal({
     title: '确认清除',
@@ -55,6 +59,7 @@ const clean = async () => {
 
 const nav = (url: string) => () => Taro.navigateTo({ url: url })
 
+/** 操作列表 */
 const OptionsList: React.FC<{ messageUnread: number }> = (props) =>
   <LineDividedButtonList items={[
     {

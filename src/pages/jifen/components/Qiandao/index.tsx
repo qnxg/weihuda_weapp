@@ -1,10 +1,10 @@
-import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
-import Button from '@/components/Button'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
+import Button from '@/components/Button'
 
 const btnText = {
   loading: '加载中',
@@ -46,23 +46,23 @@ const Qiandao: React.FC<IQiandaoProps> = (props) => {
   // 签到
   const handleClick = async () => {
     if (status !== 'unsigned') return
-    Taro.showLoading({ title: '签到中' })
+    await Taro.showLoading({ title: '签到中' })
     const res = await postJifenRecordApi({
       key: 'qiandao',
       param: dayjs().format('YYYY-MM-DD'),
       createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     })
     if (res) {
-      Taro.showToast({ title: '签到成功' })
       setStatus('signed')
       updateTotalAndRecord()
+      await Taro.showToast({ title: '签到成功' })
       return
     }
     Taro.hideLoading()
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   return (

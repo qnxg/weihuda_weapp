@@ -1,7 +1,8 @@
-import Taro from '@tarojs/taro';
-import React, { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import { Canvas } from '@tarojs/components';
+import Taro from '@tarojs/taro';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CanvasObject } from '@/components/Chart/canvas';
+import type { CSSProperties} from 'react';
 
 const wrapTouch = (event) => {
   for (let i = 0; i < event.touches.length; ++i) {

@@ -1,5 +1,5 @@
-import request from './back/request'
-import { IPageQueryData } from './interface'
+import request from './request'
+import type { IPageQueryData } from './interface'
 
 export interface IBtnConfigItem {
     /** 文本 */

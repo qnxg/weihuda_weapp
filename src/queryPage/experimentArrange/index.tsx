@@ -1,13 +1,13 @@
-import { getLabArrange } from '@/apis/pt/labArrange'
-import DisplayCard from '@/components/DisplayCard'
-import PullRefresh from '@/components/PullRefresh'
-import TabBar from '@/components/TabBar'
-import empty from '@/static/empty/no-grade.svg'
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useState } from 'react'
 import styles from './index.module.scss'
+import { getLabArrange } from '@/apis/pt/labArrange'
+import DisplayCard from '@/components/DisplayCard'
+import PullRefresh from '@/components/PullRefresh'
+import TabBar from '@/components/TabBar'
+import empty from '@/static/empty/no-grade.svg'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -24,7 +24,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -45,17 +45,18 @@ const Index: React.FC = () => {
         setShow(true)
       }
     } catch (err) {
-      Taro.showToast({
+      setShow(false)
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
-      setShow(false)
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [index])
 
   const onRefresh = async (close) => {

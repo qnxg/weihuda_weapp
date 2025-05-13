@@ -1,18 +1,18 @@
-import { Subject } from '@/models/classTable'
+import { View } from '@tarojs/components'
+import classNames from 'classnames'
+import dayjs from 'dayjs'
+import React, { useEffect, useMemo, useState } from 'react'
+import CardEmpty from '../CardEmpty'
+import styles from './index.module.scss'
+import Card from '@/components/Card'
+import CardHeader from '@/components/Card/CardHeader'
 import empty from '@/static/empty/no-today-class.svg'
 import cardIcon from '@/static/index/icon/today-class.svg'
 import { judgeOn } from '@/utils/day'
-import { View } from '@tarojs/components'
-import React, { useEffect, useMemo, useState } from 'react'
 
-import Card from '@/components/Card'
-import CardHeader from '@/components/Card/CardHeader'
 import { useAppSelector } from '@/utils/hooks/redux'
-import classNames from 'classnames'
-import dayjs from 'dayjs'
-import CardEmpty from '../CardEmpty'
-import styles from './index.module.scss'
-import CardProps from '../CardProps'
+import type CardProps from '../CardProps'
+import type { Subject } from '@/models/classTable'
 
 interface TodayClassProps {
   currentWeek: number

@@ -1,13 +1,13 @@
-import { IBtnConfigItem, INotice } from '@/apis/notice'
-import Button from '@/components/Button'
-import { useAppDispatch } from '@/utils/hooks/redux'
-import { putNoticeByIdThunk } from '@/models/notice'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
+import Button from '@/components/Button'
+import { putNoticeByIdThunk } from '@/models/notice'
+import { useAppDispatch } from '@/utils/hooks/redux'
+import type { IBtnConfigItem, INotice } from '@/apis/notice'
 
 interface IMessageItemProps {
   /**
@@ -39,7 +39,7 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
 
   // 标记为已读
   const markAsRead = async (id: number) => {
-    dispatch(
+    void dispatch(
       putNoticeByIdThunk({
         id,
         status: 1
@@ -55,12 +55,12 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
   const onBtnClick = async (id: number, type: IBtnConfigItem['type'], value: IBtnConfigItem['value']) => {
     if (type === 'link') {
       // 跳转到链接
-      Taro.navigateTo({
+      void Taro.navigateTo({
         url: value!
       })
     } else if (type === 'button' && value !== undefined) {
       // 更新数据
-      dispatch(
+      void dispatch(
         putNoticeByIdThunk({
           id,
           status: 1,
@@ -79,7 +79,8 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
   // 获取按钮
   const getBtn = (id: number, btnConfigItem: IBtnConfigItem) => {
     if (!btnConfigItem || data.result) return null
-    let { text, theme, type, value } = btnConfigItem
+    let { theme, type } = btnConfigItem
+    const { text, value } = btnConfigItem
     // 如果text为空，则不显示按钮
     if (!text || text.trim() === '') return null
     // 如果theme为空，则默认为primary

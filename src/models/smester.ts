@@ -1,9 +1,10 @@
+import Taro from '@tarojs/taro'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
 import { getSmesterInfo } from '@/apis/info'
 import { dayOfWeek, nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import Taro from '@tarojs/taro'
-import dayjs from 'dayjs'
+import type { PayloadAction} from '@reduxjs/toolkit';
 
 /**
  * SmesterInfo，本学期信息
@@ -53,7 +54,7 @@ export const getSmesterInfoThunk = createAsyncThunk('smester/getSmesterInfo', as
 
   // 无缓存或者当前缓存的学期已过期
   if (!termConfig || isOverdue) {
-    Taro.showLoading({
+    await Taro.showLoading({
       title: '加载中...',
       mask: true
     })

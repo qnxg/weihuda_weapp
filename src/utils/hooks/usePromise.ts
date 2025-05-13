@@ -1,4 +1,5 @@
-import { DependencyList, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { DependencyList} from "react";
 
 type PromiseErrorInfo = null | { thrown: unknown };
 
@@ -60,7 +61,7 @@ export default function usePromise<T>(
 
     useEffect(() => {
         let isMounted = true;
-        ; (async () => {
+        void (async () => {
             try {
                 setPromiseError(null);
                 setIsPromisePending(true);

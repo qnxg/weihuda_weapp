@@ -1,14 +1,14 @@
+import { View } from '@tarojs/components'
+import React, { useEffect } from 'react'
+import Goods from './components/Goods'
+import JifenRecord from './components/JifenRecord'
+import JifenRule from './components/JifenRule'
+import Qiandao from './components/Qiandao'
+import styles from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
 import Card from '@/components/Card'
 import { TabPanel, Tabs } from '@/components/Tabs'
 import { useAppSelector } from '@/utils/hooks/redux'
-import { View } from '@tarojs/components'
-import React, { useEffect } from 'react'
-import styles from './index.module.scss'
-import Qiandao from './components/Qiandao'
-import Goods from './components/Goods'
-import JifenRecord from './components/JifenRecord'
-import JifenRule from './components/JifenRule'
 
 const Index: React.FC = () => {
   const userInfo = useAppSelector((state) => state.userInfo)
@@ -30,7 +30,7 @@ const Index: React.FC = () => {
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   return (

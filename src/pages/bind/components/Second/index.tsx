@@ -1,9 +1,9 @@
-import { postBind } from '@/apis/back/bind'
-import { getTokenApi } from '@/apis/back/request'
 import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useRef } from 'react'
 import styles from './index.module.scss'
+import { postBind } from '@/apis/bind'
+import { getTokenApi } from '@/apis/request'
 import getLoginCode from '@/utils/getLoginCode'
 
 const Second: React.FC = () => {
@@ -11,7 +11,7 @@ const Second: React.FC = () => {
   const stuPassRef = useRef('')
 
   const postData = async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -26,10 +26,10 @@ const Second: React.FC = () => {
 
       console.log('res', res)
       await getTokenApi()
-      Taro.reLaunch({
+      Taro.hideLoading()
+      await Taro.reLaunch({
         url: '/pages/index/index'
       })
-      Taro.hideLoading()
     } catch(err) {
       console.log(err)
     }
@@ -42,7 +42,7 @@ const Second: React.FC = () => {
   const submit = async () => {
     if (stuIdRef.current === '' || stuPassRef.current === '' 
     ) {
-      Taro.showToast({
+      await Taro.showToast({
         title: '请检查必填项',
         icon: 'none',
         duration: 2000,

@@ -1,4 +1,4 @@
-import request from './back/request'
+import request from './request'
 
 export interface Dormitory {
   park: string
@@ -11,7 +11,7 @@ export const getDormitoryApi = async () => {
 }
 
 export const updateDormitoryApi = async () => {
-  request.get('/dormitory/update')
+  await request.get('/dormitory/update')
 }
 
 export const getElectricityApi = async (refresh = false) => {

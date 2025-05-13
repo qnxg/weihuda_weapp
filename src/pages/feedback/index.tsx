@@ -1,12 +1,13 @@
-import { FeedbackData, postFeedback } from '@/apis/back/feedback'
-import { uploadImgApi } from '@/apis/back/upload'
-import Button from '@/components/Button'
-import { useAppSelector } from '@/utils/hooks/redux'
 import { Image, Input, Navigator, Text, Textarea, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import styles from './index.module.scss'
+import { postFeedback } from '@/apis/feedback'
+import { uploadImgApi } from '@/apis/upload'
+import Button from '@/components/Button'
+import { useAppSelector } from '@/utils/hooks/redux'
+import type { FeedbackData} from '@/apis/feedback';
 
 const Index: React.FC = () => {
   const { params } = useRouter()
@@ -36,7 +37,7 @@ const Index: React.FC = () => {
 
   // 选择图片
   const handleChoose = () => {
-    Taro.chooseImage({
+    void Taro.chooseImage({
       count: 1,
       success(res) {
         const imgUrl = res.tempFilePaths[0]
@@ -51,7 +52,7 @@ const Index: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const submitData = async (data: any) => {
     // 初始化
-    let reqData: Partial<FeedbackData> = {
+    const reqData: Partial<FeedbackData> = {
       type: data.type,
       desc: data.desc,
       contact: data.contact != '' ? data.contact : null,
@@ -61,12 +62,12 @@ const Index: React.FC = () => {
     }
     try {
       await postFeedback(reqData, !!noAuth)
-      Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
+      await Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
       setTimeout(() => {
-        Taro.navigateBack()
+        void Taro.navigateBack()
       }, 1000)
     } catch (error) {
-      Taro.showToast({ title: '提交失败', icon: 'none' })
+      await Taro.showToast({ title: '提交失败', icon: 'none' })
     }
   }
 
@@ -79,30 +80,30 @@ const Index: React.FC = () => {
 
     // 验证
     if (noAuth && data.stuId === '') {
-      Taro.showToast({ title: '请填写学号', icon: 'none' })
+      await Taro.showToast({ title: '请填写学号', icon: 'none' })
       return
     }
     if (data.desc === '') {
-      Taro.showToast({ title: '请填写反馈内容', icon: 'none' })
+      await Taro.showToast({ title: '请填写反馈内容', icon: 'none' })
       return
     }
 
     // 上传图片
     if (data.imgUrl !== '') {
       // 如果有图片那就先上传图片，拿到图片地址后再提交表单
-      Taro.showToast({ title: '正在上传图片', icon: 'loading' })
+      await Taro.showToast({ title: '正在上传图片', icon: 'loading' })
       try {
         const uploadUrl = await uploadImgApi(data.imgUrl)
         data.imgUrl = uploadUrl
-        Taro.showToast({ title: '上传图片成功', icon: 'none' })
+        await Taro.showToast({ title: '上传图片成功', icon: 'none' })
       } catch (error) {
-        Taro.showToast({ title: '上传图片失败', icon: 'none' })
+        await Taro.showToast({ title: '上传图片失败', icon: 'none' })
         return
       }
     }
     // 没有选择图片直接提交
-    Taro.showLoading({ title: '正在提交' })
-    submitData({
+    await Taro.showLoading({ title: '正在提交' })
+    await submitData({
       ...data
     })
   }

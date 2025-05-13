@@ -1,8 +1,8 @@
-import React from 'react';
 import { View, Text, ScrollView } from '@tarojs/components';
+import React from 'react';
 
-import { Semester } from '../../interface';
 import style from './index.module.scss';
+import type { Semester } from '../../interface';
 
 interface Props {
   semseter: Semester[];

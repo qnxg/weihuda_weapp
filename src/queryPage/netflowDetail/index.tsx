@@ -1,14 +1,15 @@
-import { NetflowDetail, getNetflowDay, getNetflowMonth } from '@/apis/netflow'
-import DisplayCard from '@/components/DisplayCard'
-import TabBar from '@/components/TabBar'
-import icon from '@/static/mine/icon-sjjxbind.svg'
 import { Picker, Text, View } from '@tarojs/components'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { month2020, monthAll } from './config'
 import styles from './index.module.scss'
-import { LineData, SelectorItem } from './interface'
+import { getNetflowDay, getNetflowMonth } from '@/apis/netflow'
+import DisplayCard from '@/components/DisplayCard'
+import TabBar from '@/components/TabBar'
+import icon from '@/static/mine/icon-sjjxbind.svg'
+import type { LineData, SelectorItem } from './interface'
+import type { NetflowDetail} from '@/apis/netflow';
 
 const tabs = ['按月查询', '按天查询']
 
@@ -77,7 +78,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = useCallback(async () => {
-    Taro.showLoading({
+    await Taro.showLoading({
       mask: true,
       title: '加载中...'
     })
@@ -98,16 +99,17 @@ const Index: React.FC = () => {
         setData(res)
       }
     } catch (err) {
-      Taro.showToast({
+      await Taro.showToast({
         icon: 'none',
         title: err.toString()
       })
+    } finally {
+      Taro.hideLoading()
     }
-    Taro.hideLoading()
   }, [byDay, byMonth, isDay])
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [isDay, byDay, byMonth, getData])
 
   // const { data, run, loading } = useGraphql<MonthDetailObject>({
@@ -143,7 +145,7 @@ const Index: React.FC = () => {
   })
 
   const dataList: LineData[] | undefined = useMemo(() => {
-    let list = data?.FloatDetailList
+    const list = data?.FloatDetailList
     return list?.map((item) => {
       let c1 = ''
       let c2 = ''
@@ -173,11 +175,11 @@ const Index: React.FC = () => {
         num={0}
         onClick={(i) => {
           const duration = 300 + (dataList?.length || 0)
-          Taro.pageScrollTo({
+          setIsDay(i)
+          void Taro.pageScrollTo({
             scrollTop: 0,
             duration: duration > 1000 ? 1000 : duration
           })
-          setIsDay(i)
         }}
         current={isDay}
       />

@@ -1,11 +1,11 @@
-import PullRefresh from '@/components/PullRefresh'
-import Tab from '@/components/Tab'
-import Panel from '@/components/Tab/components/Panel'
 import { Navigator } from '@tarojs/components'
 import React from 'react'
 import Card from './components/Card'
 import HalfCard from './components/HalfCard'
 import usePE from './hooks'
+import PullRefresh from '@/components/PullRefresh'
+import Tab from '@/components/Tab'
+import Panel from '@/components/Tab/components/Panel'
 
 // 把对象用&连接起来
 const obj2query = (obj: any): string => {

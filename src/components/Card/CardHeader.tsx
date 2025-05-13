@@ -1,7 +1,8 @@
-import { Image, View, ViewProps } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './cardHeader.module.scss'
+import type { ViewProps } from '@tarojs/components';
 
 interface ICardTitleProps extends ViewProps {
   /**
