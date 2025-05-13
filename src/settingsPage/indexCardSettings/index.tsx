@@ -9,7 +9,7 @@ import { CardEnum } from "@/pages/index/components/CardList/index.config";
 import { saveCardSettings, useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
 
-
+/** 小程序首页卡片设置页面  */
 const Index: React.FC = () => {
     // Set的顺序是其插入顺序，刚好和我们这里想要的行为相同
     const [cardSettings, setCardSettings] =

@@ -3,8 +3,13 @@ import { DEFAULT_SETTINGS, UserSettings } from "./defaults";
 import { SettingsItem } from "./defaults/index.interface";
 import { getAllUserSettingsApi, setAllUserSettingsApi } from "@/apis/userSettings";
 
+/** 异步获取某个storage项目
+ * 
+ * 遇到错误（例如找不到项目）时log错误并返回undefined。
+ * 这个函数不会抛出错误。
+ */
 export async function getStorageAsyncNoExcept(key: string): Promise<unknown> {
-    const logErr = e => console.log(
+    const logErr = (e: string) => console.log(
         `Cannot find data of ${key} in storage: ${e}\n` +
         `Returning undefined.`
     )
@@ -23,6 +28,7 @@ export async function getStorageAsyncNoExcept(key: string): Promise<unknown> {
     )
 }
 
+/** 异步设置一个storage项目 */
 export async function setStorageAsync(key: string, data: any) {
     return new Promise((res, rej) =>
         Taro.setStorage({
@@ -41,7 +47,6 @@ const USER_SETTINGS_KEY = 'User-Settings'
  * @example
  * const someSettings = getUserSettingSync(s => s.someSettings)
  */
-
 export async function getUserSettings<T extends SettingsItem>(
     selector: (userSettings: UserSettings) => T | undefined
 ): Promise<T>
@@ -83,7 +88,11 @@ export async function getUserSettings<T extends SettingsItem>(
     }
 }
 
-/** 调用该函数前请确认是否将待设置的版本与默认配置版本同步 */
+/** 
+ * 使用一个对象覆盖设置整个用户小程序设置
+ * 
+ * 调用该函数前请确认是否将待设置的版本与默认配置版本同步 
+*/
 export const setAllUserSettings = async (
     newUserSettings: UserSettings
 ) => {
@@ -91,7 +100,11 @@ export const setAllUserSettings = async (
     await setAllUserSettingsApi(newUserSettings)
 }
 
-/** 调用该函数时请确认是否将待设置的版本与默认配置版本同步 */
+/** 
+ * 更改小程序设置。使用回调形式，可以在修改对象后返回而不必重建整个对象。
+ * 
+ * 调用该函数时请确认是否将待设置的版本与默认配置版本同步
+ */
 export const modifyUserSettings =
     async (modifier: (oldUserSettings: UserSettings) => UserSettings) =>
         setAllUserSettings(modifier(await getUserSettings()))

@@ -1,7 +1,7 @@
 import { Settings } from "./index.interface";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "./indexCardSettings";
 
-
+/** 总的小程序默认设置 */
 export const DEFAULT_SETTINGS = {
     /** 首页卡片设置 */
     indexCardSettings: DEFAULT_INDEX_CARD_SETTINGS

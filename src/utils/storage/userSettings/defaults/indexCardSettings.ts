@@ -1,4 +1,4 @@
-import { IndexCardSettings } from "./IndexCardSettings.interface"
+import type { IndexCardSettings } from "./IndexCardSettings.interface"
 
 /** 默认卡片设置，应该列举了所有能配置的卡片 */
 export const DEFAULT_INDEX_CARD_SETTINGS: IndexCardSettings = {
