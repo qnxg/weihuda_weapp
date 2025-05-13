@@ -8,9 +8,9 @@
     "css": "sass"
   },
   "scripts": {
-    "build": "taro build --type weapp",
+    "build": "yarn lint && taro build --type weapp",
     "dev": "taro build --type weapp --watch",
-    "lint": "tsc --noEmit && eslint ./src && echo 没有错误。",
+    "lint": "tsc --noEmit && eslint ./src",
     "postinstall": "weapp-tw patch"
   },
   "browserslist": [
