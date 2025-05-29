@@ -1,9 +1,16 @@
 import { useCallback, useRef, useState } from "react"
 
+/**
+ * 首页卡片应该满足这个`契约`。
+ * 
+ * 详见字段上的注释。
+ */
 export default interface CardProps {
     /** 这个函数应该先被触发一次false，
      * 然后后续每次开始请求时触发一次true，
      * 请求结束触发一次false 
+     * 
+     * 满足这个要求的最简单方式是使用`usePromise`管理你的请求。
     */
     onLoadingStatusChange: (isLoading: boolean) => any
     /** 当这一项变化时，卡片应该重新请求数据 */

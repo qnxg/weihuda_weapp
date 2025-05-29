@@ -8,4 +8,4 @@ export type ECOption = echarts.ComposeOption<
   LineSeriesOption | GridComponentOption | TooltipComponentOption | LegendComponentOption
 >;
 
-export default echarts;
+export default echarts

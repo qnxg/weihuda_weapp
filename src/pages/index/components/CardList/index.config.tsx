@@ -5,6 +5,7 @@ import EmailCard from "../EmailCard";
 import GradeCard from "../GradeCard";
 import MessageCard from "../MessageCard";
 import NetflowCard from "../NetflowCard";
+import SignInCard from "../SignInCard";
 import HomeSwiperCard from "../SwiperCard";
 import TodayClassCard from "../TodayClassCard";
 import type CardProps from "../CardProps";
@@ -18,9 +19,10 @@ export const topCards: [string, React.FC<CardProps>][] =
  * 这里应该列出了所有可配置的卡片，
  * 应该没有列出置顶的或无法配置的卡片，
  * 这个对象中的键的文本用于卡片排序页面。
- * 如果在此处添加了卡片，一定要一同修改卡片默认设置
+ * 如果在此处添加/删除/修改了字段，一定要一同修改卡片默认设置
  */
 const customizableCards = {
+    签到卡片: SignInCard,
     今日知湖: HomeSwiperCard,
     今日课程: TodayClassCard,
     本月流量: NetflowCard,

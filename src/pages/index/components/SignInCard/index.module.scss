@@ -1,0 +1,24 @@
+@import '~@/utils/scss/global.scss';
+
+.text {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.button {
+    height: 60px;
+    font-size: $fontBig;
+    width: 180px;
+    flex: initial;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

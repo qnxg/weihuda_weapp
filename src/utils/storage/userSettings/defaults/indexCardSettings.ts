@@ -4,6 +4,7 @@ import type { IndexCardSettings } from "./IndexCardSettings.interface"
 export const DEFAULT_INDEX_CARD_SETTINGS: IndexCardSettings = {
   settingsMajorVersion: "0",
   show: [
+    '签到卡片',
     '今日知湖',
     '今日课程',
     '本月流量',

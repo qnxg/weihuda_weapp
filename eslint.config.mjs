@@ -83,6 +83,7 @@ export default defineConfig([{
             maxDepth: 3,
         }],
         "import/no-self-import": "error",
+        // 这个名称难以理解，但是遇到这个警告有一种情况是你导出（export）+ 默认导出（export default）了同一个东西
         "import/no-named-as-default-member": "warn",
         "import/no-commonjs": "error",
         // import/order规则解决编译时css顺序问题
