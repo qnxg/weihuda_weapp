@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 // 需要重构：循环依赖
-// eslint-disable-next-line import/no-cycle
+ 
 import classTable from './classTable'
 import notice from './notice'
 import smester from './smester'

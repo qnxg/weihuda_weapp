@@ -1,5 +1,5 @@
-import Taro from '@tarojs/taro'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { getSmesterInfo } from '@/apis/info'
 import { dayOfWeek, nowWeek } from '@/utils/day'

@@ -1,5 +1,5 @@
-import Taro from '@tarojs/taro'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import Taro from '@tarojs/taro'
 import { getUserInfo } from '@/apis/info'
 import storage from '@/utils/storage/cache'
 import type { PayloadAction} from '@reduxjs/toolkit';

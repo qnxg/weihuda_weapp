@@ -1,8 +1,6 @@
-import Taro from '@tarojs/taro'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-// 需要重构：循环依赖
-// eslint-disable-next-line import/no-cycle
 import { getClassStartDate, getClassTable } from '@/apis/hdjw/classTable'
 import { multiArray, onColors } from '@/utils/config'
 import storage from '@/utils/storage/cache'

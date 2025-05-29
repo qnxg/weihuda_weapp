@@ -49,7 +49,6 @@ const Index: React.FC = () => {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const submitData = async (data: any) => {
     // 初始化
     const reqData: Partial<FeedbackData> = {
