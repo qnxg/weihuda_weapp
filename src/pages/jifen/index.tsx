@@ -33,6 +33,11 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
+  function signedCallback() {
+    void getData();
+    updateJifenRecord();
+  }
+
   return (
     <View className={styles.wrapper}>
       {/* 积分数展示卡片 */}
@@ -47,7 +52,7 @@ const Index: React.FC = () => {
       </Card>
       {/* 签到 */}
       <Card className={styles.qiandao}>
-        <Qiandao updateTotal={getData} updateJifenRecord={updateJifenRecord} />
+        <Qiandao signedCallback={signedCallback} />
       </Card>
       {/* 兑换奖品，积分记录，积分规则 */}
       <Card wrapperClassName={styles.jifenActionsCard}>

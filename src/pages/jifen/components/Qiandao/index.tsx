@@ -1,7 +1,7 @@
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
 import Button from '@/components/Button'
@@ -13,35 +13,42 @@ const btnText = {
 }
 
 interface IQiandaoProps {
-  updateTotal?: () => void
-  updateJifenRecord?: () => void
+  signedCallback?: () => void,
 }
 
 const Qiandao: React.FC<IQiandaoProps> = (props) => {
+
+  return (
+    <View className={styles.qiandaoCard}>
+      <View>今日签到</View>
+      <View>
+        <SignButton className={styles.btn} signActionCallback={props.signedCallback} />
+      </View>
+    </View>
+  )
+}
+
+const SignButton: React.FC<{ className: string, signActionCallback?: () => void }> = (props) => {
   // 加载，已签到，未签到
   const [status, setStatus] = useState<'loading' | 'unsigned' | 'signed'>('loading')
 
-  const updateTotalAndRecord = () => {
-    if (props.updateTotal) {
-      props.updateTotal()
-    }
-    if (props.updateJifenRecord) {
-      props.updateJifenRecord()
-    }
-  }
-
-  // 获取签到状态
-  const getData = async () => {
+  const fetchStatus = useCallback(async () => {
     const res = await getJifenRecordPageApi({
       key: 'qiandao',
       param: dayjs().format('YYYY-MM-DD')
     })
     if (res.rows.length > 0) {
-      setStatus('signed')
+      return 'signed'
     } else {
-      setStatus('unsigned')
+      return 'unsigned'
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    void (async () => {
+      setStatus(await fetchStatus())
+    })();
+  }, [fetchStatus])
 
   // 签到
   const handleClick = async () => {
@@ -53,30 +60,21 @@ const Qiandao: React.FC<IQiandaoProps> = (props) => {
       createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     })
     if (res) {
-      setStatus('signed')
-      updateTotalAndRecord()
+      setStatus('signed');
+      if (props.signActionCallback) {
+        props.signActionCallback()
+      }
       await Taro.showToast({ title: '签到成功' })
       return
     }
     Taro.hideLoading()
   }
 
-  useEffect(() => {
-    void getData()
-  }, [])
-
-  return (
-    <View className={styles.qiandaoCard}>
-      <View>今日签到</View>
-      <View>
-        <Button className={styles.btn} theme={status !== 'unsigned' ? 'default' : 'primary'}
-          onClick={handleClick} disabled={status !== 'unsigned'}
-        >
-          {btnText[status]}
-        </Button>
-      </View>
-    </View>
-  )
+  return <Button className={props.className} theme={status !== 'unsigned' ? 'default' : 'primary'}
+    onClick={handleClick} disabled={status !== 'unsigned'} loading={status == 'loading'}
+  >
+    {btnText[status]}
+  </Button>
 }
 
 export default Qiandao
