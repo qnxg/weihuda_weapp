@@ -22,9 +22,9 @@ const SignInCard: React.FC<CardProps> = (props) => {
     );
     return <Card>
         <View className={style.container}>
-            <Text className={style.text}>
+            <View className={style.text}>
                 当前积分：{loadingJifen || error ? '未知' : +jifen}
-            </Text>
+            </View>
             <SignButton className={style.button} key={props.reloadController} />
         </View>
     </Card>

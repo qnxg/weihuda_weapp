@@ -6,6 +6,11 @@
   color: var(--text-color-anti);
   border-radius: var(--radius-medium);
   background: var(--brand-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
   border: none;
   outline: none;
 
