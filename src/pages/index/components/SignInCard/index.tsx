@@ -22,6 +22,7 @@ const SignInCard: React.FC<CardProps> = (props) => {
     );
     return <Card>
         <View className={style.container}>
+            <View className={style.icon} />
             <View className={style.text}>
                 当前积分：{loadingJifen || error ? '未知' : +jifen}
             </View>
