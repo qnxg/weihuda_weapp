@@ -19,7 +19,7 @@ const ConfigurableCardList = <K extends React.Key,>(props: {
     reloadAllController: unknown
 }) => {
     /**
-     * 忽略所有不存在的卡片名称
+     * 忽略所有不存在于可配置列表的卡片名称
     */
     const mapKeyInfo = useCallback(
         (k: K): [K, React.FC<CardProps>][] => {

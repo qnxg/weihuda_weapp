@@ -1,14 +1,16 @@
 import { useMemo } from "react";
 import { getUserSettings, modifyUserSettings } from "..";
 import { DEFAULT_INDEX_CARD_SETTINGS } from "../defaults/indexCardSettings";
+import { type CardEnum } from "@/pages/index/CardList/index.config";
 import usePromise from "@/utils/hooks/usePromise";
-import type { CardEnum } from "@/pages/index/CardList/index.config";
-import type { DependencyList} from "react";
+import type { DependencyList } from "react";
+
 
 async function computeFinalCardDisplay(): Promise<[Set<CardEnum>, Set<CardEnum>]> {
   const userCardSettings = await getUserSettings(s => s.indexCardSettings);
   const defaultShow = new Set(DEFAULT_INDEX_CARD_SETTINGS.show);
   const defaultDontShow = new Set(DEFAULT_INDEX_CARD_SETTINGS.dontShow);
+  const existingCards = defaultShow.union(defaultDontShow)
 
   // 最终综合考虑后要显示的卡片
   const shouldShow = new Set(userCardSettings.show)
@@ -16,9 +18,13 @@ async function computeFinalCardDisplay(): Promise<[Set<CardEnum>, Set<CardEnum>]
     .union(
       defaultShow
         .difference(new Set(userCardSettings.dontShow))
-    );
+    )
+    .intersection(existingCards);
   // 最终综合考虑后不显示的卡片
-  const shouldNotShow = defaultDontShow.union(defaultShow).difference(shouldShow);
+  const shouldNotShow = defaultDontShow
+    .union(defaultShow)
+    .difference(shouldShow)
+    .intersection(existingCards);
 
   return [shouldShow, shouldNotShow];
 }

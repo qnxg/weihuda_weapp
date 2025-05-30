@@ -1,10 +1,16 @@
-import type { IndexCardSettings } from "./IndexCardSettings.interface"
+import { type CardEnum } from "@/pages/index/CardList/index.config"
+import type { SettingsItem } from ".";
+
+/** 首页卡片设置的结构 */
+export interface IndexCardSettings extends SettingsItem {
+  show: CardEnum[];
+  dontShow: CardEnum[];
+}
 
 /** 默认卡片设置，应该列举了所有能配置的卡片 */
 export const DEFAULT_INDEX_CARD_SETTINGS: IndexCardSettings = {
   settingsMajorVersion: "0",
   show: [
-    '签到卡片',
     '今日知湖',
     '今日课程',
     '本月流量',
@@ -16,4 +22,3 @@ export const DEFAULT_INDEX_CARD_SETTINGS: IndexCardSettings = {
   ],
   dontShow: []
 }
-

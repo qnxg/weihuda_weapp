@@ -8,12 +8,16 @@ import NetflowCard from "./cards/NetflowCard";
 import SignInCard from "./cards/SignInCard";
 import HomeSwiperCard from "./cards/SwiperCard";
 import TodayClassCard from "./cards/TodayClassCard";
+import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
 import type CardProps from "./CardProps";
 import type React from "react";
 
-/** 置顶的，用户无法设置显示与否和顺序的卡片 */
+/** 置顶的，用户无法从统一卡片设置页面设置显示与否或顺序的卡片 */
 export const topCards: [string, React.FC<CardProps>][] =
-    [["消息盒子", MessageCard]]
+    [
+        ["签到卡片", SignInCard],
+        ["消息盒子", MessageCard],
+    ]
 
 /** 
  * 这里应该列出了所有可配置的卡片，
@@ -22,7 +26,6 @@ export const topCards: [string, React.FC<CardProps>][] =
  * 如果在此处添加/删除/修改了字段，一定要一同修改卡片默认设置
  */
 const customizableCards = {
-    签到卡片: SignInCard,
     今日知湖: HomeSwiperCard,
     今日课程: TodayClassCard,
     本月流量: NetflowCard,
@@ -37,3 +40,12 @@ export type CardEnum = keyof typeof customizableCards
 
 export const customizableCardsMap =
     new Map(Object.entries(customizableCards)) as Map<CardEnum, React.FC<CardProps>>
+
+const show = new Set(DEFAULT_INDEX_CARD_SETTINGS.show);
+const dontShow = new Set(DEFAULT_INDEX_CARD_SETTINGS.dontShow);
+if (
+  show.intersection(dontShow).size != 0 ||
+  show.union(dontShow).symmetricDifference(customizableCardsMap).size != 0
+) {
+  throw "首页卡片默认配置有误"
+}
