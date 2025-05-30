@@ -1,6 +1,5 @@
-// eslint-disable-next-line import/no-commonjs
-const path = require('path')
-const { UnifiedWebpackPluginV5 } = require('weapp-tailwindcss/webpack')
+import { resolve } from 'path';
+import { UnifiedWebpackPluginV5 } from 'weapp-tailwindcss/webpack';
 
 const config = {
   projectName: 'hnu_query',
@@ -16,7 +15,7 @@ const config = {
   plugins: [],
   defineConstants: {},
   alias: {
-    '@': path.resolve(__dirname, '..', 'src')
+    '@': resolve(__dirname, '..', 'src')
   },
   copy: {
     patterns: [{ from: 'src/static/tab/', to: 'dist/static/tab/' }]
@@ -51,7 +50,7 @@ const config = {
         }
       }
     },
-    webpackChain(chain, webpack) {
+    webpackChain(chain, _webpack) {
       chain.merge({
         performance: {
           // 生成文件的体积警告 500kb
@@ -74,7 +73,7 @@ const config = {
   }
 }
 
-module.exports = function (merge) {
+export default function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'))
   }
