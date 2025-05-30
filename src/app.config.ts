@@ -56,6 +56,7 @@ export default {
       pages: [
         'index', // 设置目录页
         'indexCardSettings/index', // 小程序首页卡片设置
+        'indexCardSettings/normalCardSettings/index', // 常规卡片排序
       ]
     }
   ],
