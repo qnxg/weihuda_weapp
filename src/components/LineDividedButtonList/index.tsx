@@ -1,13 +1,14 @@
-import { Image, View } from '@tarojs/components';
+import { Image } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import React from 'react';
-import style from './index.module.scss'
+import LineDividedList from '../LineDividedList';
 import arrow from '@/static/mine/arrow.svg'
-import type { ITouchEvent} from '@tarojs/components';
+import type { ITouchEvent } from '@tarojs/components';
 import type { ReactNode } from 'react';
 
-interface LineDividedListProps {
+interface LineDividedButtonListProps {
     items: {
-        /** 按钮内容 */
+        /** 按钮标题 */
         title: ReactNode
         /** 按钮图标 */
         icon?: ReactNode
@@ -19,24 +20,21 @@ interface LineDividedListProps {
 /**
  * 用分割线纵向组织的长按钮的列表，按钮尾部有“>”的导航符号。
  */
-export const LineDividedButtonList: React.FC<LineDividedListProps> = ({ items }) => {
-    const res: ReactNode[] = [];
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        res.push(
-            <View className={style.item} onClick={item.onClick}>
-                <View className={style.imgContainer}>
-                    {item.icon ?? <></>}
-                </View>
-                <View className={style.titleContainer}>
-                    {item.title}
-                    <Image src={arrow} className={style.arrow} />
-                </View>
-            </View>
-        )
-        if (i != items.length - 1) {
-            res.push(<View className={style.divider} />)
+export const LineDividedButtonList: React.FC<LineDividedButtonListProps> = ({ items }) => {
+    return <LineDividedList items={items.map(node => (
+        {
+            content: <>
+                {node.title}
+                <Image
+                    src={arrow}
+                    style={{
+                        width: Taro.pxTransform(18),
+                        height: Taro.pxTransform(30)
+                    }}
+                />
+            </>,
+            icon: node.icon,
+            onClick: node.onClick,
         }
-    }
-    return <View className={style.list}>{res}</View>;
+    ))} />
 };
