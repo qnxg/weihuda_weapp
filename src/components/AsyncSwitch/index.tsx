@@ -1,6 +1,6 @@
 import { Switch } from "@tarojs/components";
 import classNames from "classnames";
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState } from "react";
 import style from "./index.module.scss"
 import useStateCallback from "@/utils/hooks/useStateCallback";
 import type { BaseEventOrig, SwitchProps } from "@tarojs/components";

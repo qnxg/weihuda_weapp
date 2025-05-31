@@ -65,7 +65,7 @@ const Index: React.FC = () => {
       setTimeout(() => {
         void Taro.navigateBack()
       }, 1000)
-    } catch (error) {
+    } catch {
       await Taro.showToast({ title: '提交失败', icon: 'none' })
     }
   }
@@ -95,7 +95,7 @@ const Index: React.FC = () => {
         const uploadUrl = await uploadImgApi(data.imgUrl)
         data.imgUrl = uploadUrl
         await Taro.showToast({ title: '上传图片成功', icon: 'none' })
-      } catch (error) {
+      } catch {
         await Taro.showToast({ title: '上传图片失败', icon: 'none' })
         return
       }

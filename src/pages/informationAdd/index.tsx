@@ -66,7 +66,7 @@ const Index: React.FC = () => {
       try {
         uploadedImgUrl = await uploadImgApi(imgUrl)
         await Taro.showToast({ title: '上传图片成功', icon: 'none' })
-      } catch (error) {
+      } catch {
         await Taro.showToast({ title: '上传图片失败', icon: 'none' })
         return
       }

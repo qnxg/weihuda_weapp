@@ -62,6 +62,16 @@ export default defineConfig([{
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {
+                "argsIgnorePattern": "^_",
+                "caughtErrorsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_",
+                "varsIgnorePattern": "^_",
+            }
+        ],
         "@typescript-eslint/ban-ts-comment": ["warn"],
         "@typescript-eslint/no-empty-object-type": ["warn"],
         "@typescript-eslint/no-unsafe-function-type": ["warn"],

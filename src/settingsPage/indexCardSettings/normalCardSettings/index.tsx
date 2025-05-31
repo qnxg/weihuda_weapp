@@ -1,5 +1,4 @@
 import { Text, View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import { useCallback, useEffect, useState } from "react"
 import style from './index.module.scss'
 import Button from "@/components/Button";

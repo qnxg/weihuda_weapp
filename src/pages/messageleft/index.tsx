@@ -67,7 +67,7 @@ const Index: React.FC = () => {
       setTimeout(() => {
         void Taro.navigateBack()
       }, 1000)
-    } catch (error) {
+    } catch {
       await Taro.showToast({ title: '提交失败', icon: 'none' })
     }
   }

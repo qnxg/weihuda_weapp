@@ -26,7 +26,7 @@ const Index: React.FC = () => {
         setStatus(res)
         await putAuthQrcodeStatusApi(code, 'using')
       }
-    } catch (e) {
+    } catch {
       setError('二维码已失效')
     }
   }, [code])

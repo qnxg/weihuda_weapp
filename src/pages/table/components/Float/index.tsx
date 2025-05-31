@@ -41,7 +41,7 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
         await deleteCourseApi(parseInt(id))
         await dispatch(refreshClassTableThunk())
         Taro.hideLoading()
-      } catch (err) {
+      } catch {
         Taro.hideLoading()
       }
     }
