@@ -1,9 +1,9 @@
 import { View, Image, Block } from '@tarojs/components';
 import React from 'react';
 import styles from './index.module.scss';
-import LineDividedLeftRightCard from '@/components/LineDividedLeftRightCard';
-import LeftPart from '@/components/LineDividedLeftRightCard/components/LeftPart';
-import RightPart from '@/components/LineDividedLeftRightCard/components/RightPart';
+import LineDividedLeftRightCard from '@/components/LeftRightCard';
+import LeftPart from '@/components/LeftRightCard/components/LeftPart';
+import RightPart from '@/components/LeftRightCard/components/RightPart';
 import iconNoK from '@/static/empty/no-exam.svg';
 import location from '@/static/icon/location.svg';
 import { onColors } from '@/utils/config';
