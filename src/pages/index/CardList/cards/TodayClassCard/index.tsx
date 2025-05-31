@@ -52,7 +52,7 @@ const startTimesArr = [
   '19:00',
   '19:55',
   '20:50',
-  '21:35'
+  '21:35',
 ]
 
 const endTimesArr = [
@@ -67,24 +67,29 @@ const endTimesArr = [
   '19:45',
   '20:40',
   '21:35',
-  '22:20'
+  '22:20',
 ]
 
-const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
+const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
   const { currentWeek = 0, dayOfTheWeek = 0 } = props
 
-  const { classTable } = useAppSelector((state) => state.classTable)
+  const { classTable } = useAppSelector(state => state.classTable)
   const todayClass = useMemo<Subject[]>(() => {
     if (classTable) {
       // 取出今日课程
-      const temp = classTable.filter((item) => {
-        if (judgeOn(item.week, currentWeek) && dayOfTheWeek === (item.day === 7 ? 0 : item.day)) {
+      const temp = classTable.filter(item => {
+        if (
+          judgeOn(item.week, currentWeek) &&
+          dayOfTheWeek === (item.day === 7 ? 0 : item.day)
+        ) {
           return item
         }
       })
       // 进行排序 注意返回的数据格式不太统一，转化为Int型进行比较
       temp.sort((x, y) => {
-        if (parseInt(x.section.split(',')[0]) > parseInt(y.section.split(',')[0])) {
+        if (
+          parseInt(x.section.split(',')[0]) > parseInt(y.section.split(',')[0])
+        ) {
           return 1
         } else {
           return -1
@@ -109,7 +114,6 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
   }, [currentDate])
 
   const formattedData = useMemo<Array<FormatData>>(() => {
-
     // 是否已经出现了一次特殊类型，防止同时出现正在进行和即将开始
     let hasSpecial = false
     // 获取课程显示类型
@@ -140,14 +144,15 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
 
     if (todayClass.length !== 0) {
       const tempArray: Array<FormatData> = []
-      todayClass.map((item) => {
+      todayClass.map(item => {
         // 去重
-        if (tempArray.some((i) => i.id === item.id)) {
+        if (tempArray.some(i => i.id === item.id)) {
           return
         }
         const tempSection: Array<string> = item.section.split(',')
         const startTime = startTimesArr[parseInt(tempSection[0]) - 1]
-        const endTime = endTimesArr[parseInt(tempSection[tempSection.length - 1]) - 1]
+        const endTime =
+          endTimesArr[parseInt(tempSection[tempSection.length - 1]) - 1]
 
         const temp: FormatData = {
           id: item.id,
@@ -158,7 +163,7 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
           location: item.location,
           color: item.bgColor!,
           teachers: item.teachers,
-          type: getType(startTime, endTime)
+          type: getType(startTime, endTime),
         }
         tempArray.push(temp)
       })
@@ -173,8 +178,11 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = (props) => {
       <CardHeader title='今日课程' icon={cardIcon} />
       {formattedData && formattedData.length > 0 ? (
         <View style={{ marginTop: 8 }}>
-          {formattedData.map((item) => (
-            <View key={item.name} className={classNames(styles.outer, styles[item.type!])}>
+          {formattedData.map(item => (
+            <View
+              key={item.name}
+              className={classNames(styles.outer, styles[item.type!])}
+            >
               <View className={styles.leftPart}>
                 <View className={styles.startTime}>{item.startTime}</View>
                 <View className={styles.endTime}>{item.endTime}</View>
@@ -208,12 +216,15 @@ const TodayClassCard: React.FC<CardProps> = ({ onLoadingStatusChange }) => {
     onLoadingStatusChange(false)
   }, [onLoadingStatusChange])
 
-  const { dayOfWeek } = useAppSelector((state) => state.smester)
-  const { currentWeek } = useAppSelector((state) => state.classTable)
+  const { dayOfWeek } = useAppSelector(state => state.smester)
+  const { currentWeek } = useAppSelector(state => state.classTable)
 
-  return <TodayClassCardDisplay
-    currentWeek={currentWeek || 0}
-    dayOfTheWeek={dayOfWeek || 0} />
+  return (
+    <TodayClassCardDisplay
+      currentWeek={currentWeek || 0}
+      dayOfTheWeek={dayOfWeek || 0}
+    />
+  )
 }
 
 export default TodayClassCard

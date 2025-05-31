@@ -1,19 +1,19 @@
 @import '~@/utils/scss/global.scss';
 
 .goToCardSettingsCard {
-    padding-bottom: 12px;
+  padding-bottom: 12px;
 }
 
 .goToCardSettingsContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .goToCardSettingsText {
-    color: $primaryBlue;
-    opacity: 0.75;
-    font-size: $fontLarge;
-    margin: auto
+  color: $primaryBlue;
+  opacity: 0.75;
+  font-size: $fontLarge;
+  margin: auto;
 }

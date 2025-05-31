@@ -67,11 +67,15 @@ const setLocalVersion = (v: string) => Taro.setStorageSync(KEY.VERSION, v)
 const getTableMode = () => Taro.getStorageSync<boolean>(KEY.TABLE_MODE)
 const setTableMode = (v: boolean) => Taro.setStorageSync(KEY.TABLE_MODE, v)
 
-const getClassTable = (year: number, term: number) => Taro.getStorageSync(`Table-${year}-${term}-List`)
-const setClassTable = (year: number, term: number, v: any) => Taro.setStorageSync(`Table-${year}-${term}-List`, v)
+const getClassTable = (year: number, term: number) =>
+  Taro.getStorageSync(`Table-${year}-${term}-List`)
+const setClassTable = (year: number, term: number, v: any) =>
+  Taro.setStorageSync(`Table-${year}-${term}-List`, v)
 
-const getTermStart = (year: number, term: number) => Taro.getStorageSync(`Table-${year}-${term}-Start`)
-const setTermStart = (year: number, term: number, v: any) => Taro.setStorageSync(`Table-${year}-${term}-Start`, v)
+const getTermStart = (year: number, term: number) =>
+  Taro.getStorageSync(`Table-${year}-${term}-Start`)
+const setTermStart = (year: number, term: number, v: any) =>
+  Taro.setStorageSync(`Table-${year}-${term}-Start`, v)
 
 export default {
   getToken,

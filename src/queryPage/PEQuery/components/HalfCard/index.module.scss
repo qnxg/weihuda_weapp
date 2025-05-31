@@ -1,4 +1,4 @@
-@import "~@/utils/scss/global.scss";
+@import '~@/utils/scss/global.scss';
 
 .container {
   @include shadow;
@@ -57,7 +57,6 @@
     @include darkShadow;
 
     .titleContainer {
-
       .title {
         color: #a6a6a6;
       }

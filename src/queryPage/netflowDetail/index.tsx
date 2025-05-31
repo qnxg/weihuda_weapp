@@ -9,7 +9,7 @@ import DisplayCard from '@/components/DisplayCard'
 import TabBar from '@/components/TabBar'
 import icon from '@/static/mine/icon-sjjxbind.svg'
 import type { LineData, SelectorItem } from './interface'
-import type { NetflowDetail} from '@/apis/netflow';
+import type { NetflowDetail } from '@/apis/netflow'
 
 const tabs = ['按月查询', '按天查询']
 
@@ -31,7 +31,7 @@ const getTodayDate = () => {
   return {
     year: today.getFullYear(),
     month: today.getMonth() + 1,
-    day: today.getDate()
+    day: today.getDate(),
   }
 }
 
@@ -41,15 +41,28 @@ const Index: React.FC = () => {
   const todayDate = getTodayDate()
   const [isDay, setIsDay] = useState<number>(0)
   const [byMonth, setByMonth] = useState([todayDate.year, todayDate.month])
-  const [byDay, setByDay] = useState([todayDate.year, todayDate.month, todayDate.day])
-  const [sltByMonth, setSltByMonth] = useState({ year: 0, month: todayDate.month - 1 })
-  const [sltByDay, setSltByDay] = useState({ year: 0, month: todayDate.month - 1, day: todayDate.day - 1 })
+  const [byDay, setByDay] = useState([
+    todayDate.year,
+    todayDate.month,
+    todayDate.day,
+  ])
+  const [sltByMonth, setSltByMonth] = useState({
+    year: 0,
+    month: todayDate.month - 1,
+  })
+  const [sltByDay, setSltByDay] = useState({
+    year: 0,
+    month: todayDate.month - 1,
+    day: todayDate.day - 1,
+  })
 
   const yearSltData = useMemo<SelectorItem[]>(() => {
-    return new Array(todayDate.year - 2019).fill(todayDate.year).map((item, index) => ({
-      name: `${item - index}年`,
-      value: item - index
-    }))
+    return new Array(todayDate.year - 2019)
+      .fill(todayDate.year)
+      .map((item, index) => ({
+        name: `${item - index}年`,
+        value: item - index,
+      }))
   }, [todayDate.year])
 
   const monthSltData = useMemo<SelectorItem[]>(
@@ -63,11 +76,13 @@ const Index: React.FC = () => {
   )
 
   const daySltData = useMemo<SelectorItem[]>(() => {
-    const length = dayjs(`${todayDate.year - sltByDay.year}-${fmt2width(sltByDay.month + 1)}-01`).daysInMonth()
+    const length = dayjs(
+      `${todayDate.year - sltByDay.year}-${fmt2width(sltByDay.month + 1)}-01`
+    ).daysInMonth()
     return new Array(length).fill(0).map((_, index) => {
       return {
         name: `${index + 1}日`,
-        value: index + 1
+        value: index + 1,
       }
     })
   }, [sltByDay.month, sltByDay.year, todayDate.year])
@@ -80,7 +95,7 @@ const Index: React.FC = () => {
   const getData = useCallback(async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       let year = byMonth[0]
@@ -101,7 +116,7 @@ const Index: React.FC = () => {
     } catch (err) {
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -146,7 +161,7 @@ const Index: React.FC = () => {
 
   const dataList: LineData[] | undefined = useMemo(() => {
     const list = data?.FloatDetailList
-    return list?.map((item) => {
+    return list?.map(item => {
       let c1 = ''
       let c2 = ''
       if (item.App[0] === '/') {
@@ -163,7 +178,7 @@ const Index: React.FC = () => {
       return {
         c1,
         c2,
-        data: fmtFlow(item.Download)
+        data: fmtFlow(item.Download),
       }
     })
   }, [data])
@@ -173,12 +188,12 @@ const Index: React.FC = () => {
       <TabBar
         items={tabs}
         num={0}
-        onClick={(i) => {
+        onClick={i => {
           const duration = 300 + (dataList?.length || 0)
           setIsDay(i)
           void Taro.pageScrollTo({
             scrollTop: 0,
-            duration: duration > 1000 ? 1000 : duration
+            duration: duration > 1000 ? 1000 : duration,
           })
         }}
         current={isDay}
@@ -191,20 +206,32 @@ const Index: React.FC = () => {
             range={[yearSltData, monthByDaySltData, daySltData]}
             rangeKey='name'
             value={[sltByDay.year, sltByDay.month, sltByDay.day]}
-            onColumnChange={(e) => {
+            onColumnChange={e => {
               if (e.detail.column === 0) {
-                setSltByDay({ year: e.detail.value, month: 0, day: 0 })
+                setSltByDay({
+                  year: e.detail.value,
+                  month: 0,
+                  day: 0,
+                })
                 return
               }
               if (e.detail.column === 1) {
-                setSltByDay((prevState) => ({ ...prevState, month: e.detail.value, day: 0 }))
+                setSltByDay(prevState => ({
+                  ...prevState,
+                  month: e.detail.value,
+                  day: 0,
+                }))
                 return
               }
             }}
-            onChange={(value) => {
+            onChange={value => {
               const [yi, mi, di] = value.detail.value
               setSltByDay({ year: yi, month: mi, day: di })
-              setByDay([yearSltData[yi].value, monthByDaySltData[mi].value, daySltData[di].value])
+              setByDay([
+                yearSltData[yi].value,
+                monthByDaySltData[mi].value,
+                daySltData[di].value,
+              ])
             }}
           >
             {`${byDay[0]}年-${fmt2width(byDay[1])}月-${fmt2width(byDay[2])}日`}
@@ -216,12 +243,15 @@ const Index: React.FC = () => {
             range={[yearSltData, monthSltData]}
             rangeKey='name'
             value={[sltByMonth.year, sltByMonth.month]}
-            onColumnChange={(e) => {
+            onColumnChange={e => {
               if (e.detail.column === 0) {
-                setSltByMonth({ year: e.detail.value, month: 0 })
+                setSltByMonth({
+                  year: e.detail.value,
+                  month: 0,
+                })
               }
             }}
-            onChange={(value) => {
+            onChange={value => {
               const [yi, mi] = value.detail.value
               setSltByMonth({ year: yi, month: mi })
               setByMonth([yearSltData[yi].value, monthSltData[mi].value])
@@ -238,9 +268,11 @@ const Index: React.FC = () => {
             <Text className={styles.num}>{dataList?.length || 0}</Text>
             <Text>个项目</Text>
           </View>
-          <View className={styles.all}>{`总量：${fmtFlow(data?.AllDownload)}`}</View>
+          <View
+            className={styles.all}
+          >{`总量：${fmtFlow(data?.AllDownload)}`}</View>
         </View>
-        {dataList?.map((item) => {
+        {dataList?.map(item => {
           return (
             <View key={item.c1 + item.data} className={styles.content}>
               <View className={styles.left}>

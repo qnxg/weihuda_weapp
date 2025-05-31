@@ -1,20 +1,23 @@
-import { View } from '@tarojs/components';
-import React from 'react';
-import ContentLine from '../contentLine';
-import styles from './index.module.scss';
-import { onColors } from '@/utils/config';
-import type { ExamId } from '../../interface';
+import { View } from '@tarojs/components'
+import React from 'react'
+import ContentLine from '../contentLine'
+import styles from './index.module.scss'
+import { onColors } from '@/utils/config'
+import type { ExamId } from '../../interface'
 
 interface Props {
-  unExamIds?: ExamId[];
-  topExamIds?: ExamId[];
-  addTopping: (index: number) => void;
-  deleteTopping: (index: number) => void;
-  deleteItem: (index: number, type: 'topping' | 'unfinished' | 'finished') => void;
+  unExamIds?: ExamId[]
+  topExamIds?: ExamId[]
+  addTopping: (index: number) => void
+  deleteTopping: (index: number) => void
+  deleteItem: (
+    index: number,
+    type: 'topping' | 'unfinished' | 'finished'
+  ) => void
 }
 
-const Index: React.FC<Props> = (props) => {
-  const { unExamIds, topExamIds, addTopping, deleteTopping, deleteItem } = props;
+const Index: React.FC<Props> = props => {
+  const { unExamIds, topExamIds, addTopping, deleteTopping, deleteItem } = props
 
   return (
     <View className={styles.container}>
@@ -33,7 +36,9 @@ const Index: React.FC<Props> = (props) => {
       {unExamIds?.map((item, index) => (
         <ContentLine
           key={item.keyId}
-          lineColor={onColors[(index + (topExamIds?.length || 0)) % onColors.length]}
+          lineColor={
+            onColors[(index + (topExamIds?.length || 0)) % onColors.length]
+          }
           examIdItem={item}
           index={index}
           addTopping={addTopping}
@@ -43,7 +48,7 @@ const Index: React.FC<Props> = (props) => {
         />
       ))}
     </View>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

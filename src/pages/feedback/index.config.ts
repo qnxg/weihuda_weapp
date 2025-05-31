@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '反馈建议'
-};
+  navigationBarTitleText: '反馈建议',
+}

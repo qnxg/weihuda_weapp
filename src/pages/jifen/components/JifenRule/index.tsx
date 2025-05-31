@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import styles from './index.module.scss'
 import { getJifenRulePageApi } from '@/apis/jifen'
 import { getMiniConfigPageApi } from '@/apis/miniConfig'
-import type { IJifenRule} from '@/apis/jifen';
+import type { IJifenRule } from '@/apis/jifen'
 
 const JifenRule: React.FC = () => {
   const [loading, setLoading] = React.useState(true)
@@ -13,14 +13,14 @@ const JifenRule: React.FC = () => {
 
   const getData = async () => {
     await getMiniConfigPageApi({
-      key: 'exteraJifenRules'
-    }).then((res) => {
-      if (res.rows.length === 0) return;
+      key: 'exteraJifenRules',
+    }).then(res => {
+      if (res.rows.length === 0) return
       setExteraRule(res.rows[0].value)
     })
     const res = await getJifenRulePageApi({
       page: 1,
-      pageSize: 20
+      pageSize: 20,
     })
     setLoading(false)
     if (res) {
@@ -39,12 +39,12 @@ const JifenRule: React.FC = () => {
           <View className={styles.ruleDesc}>动作</View>
           <View className={classNames(styles.ruleJifen)}>积分</View>
         </View>
-        {data.map((item) => (
+        {data.map(item => (
           <View key={item.id} className={styles.ruleItem}>
             <View className={styles.ruleDesc}>{item.name}</View>
             <View
               className={classNames(styles.ruleJifen, {
-                [styles.reduce]: item.jifen < 0
+                [styles.reduce]: item.jifen < 0,
               })}
             >
               {item.jifen > 0 ? '+' : ''}

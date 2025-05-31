@@ -8,16 +8,23 @@ import { getEmptyRoom } from '@/apis/hdjw/emptyRoom'
 import { multiObject } from '@/utils/config'
 import { useAppSelector } from '@/utils/hooks/redux'
 import type { EmptyRoom, Radio as IRadio } from './interface'
-import type { EmptyRoomItem} from '@/apis/hdjw/emptyRoom';
+import type { EmptyRoomItem } from '@/apis/hdjw/emptyRoom'
 
 const Index: React.FC = () => {
   /**
    * 获得全局状态, 初始化当前状态
    */
-  const { termYear, termType, weekNum, dayOfWeek } = useAppSelector((state) => state.smester)
+  const { termYear, termType, weekNum, dayOfWeek } = useAppSelector(
+    state => state.smester
+  )
   const [state, setState] = useState(() => initFunction(weekNum, dayOfWeek))
   const [show, setShow] = useState(false)
-  const [highlight, setHighlight] = useState<EmptyRoom>({ name: '', type: '', examSeat: 0, seat: 0 })
+  const [highlight, setHighlight] = useState<EmptyRoom>({
+    name: '',
+    type: '',
+    examSeat: 0,
+    seat: 0,
+  })
 
   /**
    * 获取课时的选择
@@ -41,17 +48,17 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
-      if (termType === null) throw "null termYear";
+      if (termType === null) throw 'null termYear'
       const res = await getEmptyRoom({
         xn: termYear,
         xq: termType,
         week: state.pickerValue[1] + 1,
         day: state.pickerValue[2],
         jc: getJc(state.radioValue),
-        buildId: multiObject[state.pickerValue[0]].id
+        buildId: multiObject[state.pickerValue[0]].id,
       })
       if (!res) {
         setShow(false)
@@ -63,7 +70,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -72,8 +79,17 @@ const Index: React.FC = () => {
 
   return (
     <View style={{ paddingBottom: '48rpx' }}>
-      <PickerArea setState={setState} pickerValue={state.pickerValue} radioValue={state.radioValue} />
-      <ResultArea run={getData} roomList={show && data ? data : []} highlight={highlight} setHighlight={setHighlight} />
+      <PickerArea
+        setState={setState}
+        pickerValue={state.pickerValue}
+        radioValue={state.radioValue}
+      />
+      <ResultArea
+        run={getData}
+        roomList={show && data ? data : []}
+        highlight={highlight}
+        setHighlight={setHighlight}
+      />
     </View>
   )
 }

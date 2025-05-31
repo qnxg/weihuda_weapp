@@ -9,7 +9,7 @@ const Eye: React.FC = () => {
 
   useEffect(() => {
     void Taro.setNavigationBarTitle({
-      title: '体质测试 视力查询'
+      title: '体质测试 视力查询',
     })
   })
 

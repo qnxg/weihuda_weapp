@@ -7,7 +7,7 @@ import { useAppSelector } from '@/utils/hooks/redux'
 const useAddCourse = () => {
   // 全局状态
   const dispatch = useDispatch()
-  const { semesters, currentSem } = useAppSelector((s) => s.classTable)
+  const { semesters, currentSem } = useAppSelector(s => s.classTable)
 
   /**
    * classname 课程名称
@@ -23,7 +23,7 @@ const useAddCourse = () => {
     teachers: '',
     week: Array(16).fill(false),
     mode: true,
-    picker: Array(3).fill(0)
+    picker: Array(3).fill(0),
   })
 
   const formatValue = useMemo(() => {
@@ -44,7 +44,7 @@ const useAddCourse = () => {
     const stringSection = section.join(',')
     return {
       week: stringWeek,
-      section: stringSection
+      section: stringSection,
     }
   }, [state])
 
@@ -57,12 +57,12 @@ const useAddCourse = () => {
       section: formatValue.section,
       day: String(state.picker[0] === 0 ? 7 : state.picker[0]),
       xn: semesters[currentSem].xn,
-      xq: semesters[currentSem].xq
+      xq: semesters[currentSem].xq,
     }
 
     await Taro.showLoading({
       title: 'loading...',
-      mask: true
+      mask: true,
     })
 
     try {
@@ -70,10 +70,10 @@ const useAddCourse = () => {
       await postCourseApi(data)
       await Taro.showToast({
         title: '添加成功',
-        duration: 1500
+        duration: 1500,
       })
       dispatch({
-        type: 'classTable/handleRefreshTable'
+        type: 'classTable/handleRefreshTable',
       })
       setTimeout(() => {
         void Taro.navigateBack()
@@ -81,7 +81,7 @@ const useAddCourse = () => {
     } catch (error) {
       await Taro.showToast({
         icon: 'none',
-        title: error.toString()
+        title: error.toString(),
       })
     }
 
@@ -92,7 +92,7 @@ const useAddCourse = () => {
     state,
     setState,
     formatValue,
-    run
+    run,
   }
 }
 

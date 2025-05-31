@@ -10,7 +10,7 @@ import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
 import empty from '@/static/empty/no-grade.svg'
 import { months } from '@/utils/config'
-import type { CardHistoryData} from '@/apis/pt/card';
+import type { CardHistoryData } from '@/apis/pt/card'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -22,10 +22,10 @@ const Index: React.FC = () => {
     year.unshift(String(dayjs('2020-01-01').add(i, 'year').year()))
   }
   const temp = Array(2).fill(0)
-  temp[0] = year.findIndex((item) => {
+  temp[0] = year.findIndex(item => {
     return item == String(dayjs().year())
   })
-  temp[1] = months.findIndex((item) => {
+  temp[1] = months.findIndex(item => {
     return item == String(dayjs().month() + 1)
   }) //返回的月份范围是0~11
   const [picker, setPicker] = useState(temp)
@@ -36,20 +36,20 @@ const Index: React.FC = () => {
 
   const [data, setData] = useState<CardHistoryData | null>(null)
 
-  const yearPicker0 = year[picker[0]];
+  const yearPicker0 = year[picker[0]]
   /**
    * 获取数据
    */
   const getData = useCallback(async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getCardHistory({
         year: yearPicker0,
         month: months[picker[1]],
-        type: String(index + 1)
+        type: String(index + 1),
       })
       if (!res) {
         setShow(false)
@@ -61,7 +61,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -72,7 +72,7 @@ const Index: React.FC = () => {
     void getData()
   }, [getData, index, picker])
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -89,15 +89,22 @@ const Index: React.FC = () => {
                 ? `共有${data.items.length}次消费，消费了${data.total}元`
                 : `共有${data.items.length}次充值，充值了${data.total}元`}
             </View>
-            {data.items.map((item) => {
+            {data.items.map(item => {
               return (
                 <View key={1}>
                   {index == 0 ? (
                     <Navigator
                       url={`/queryPage/card/detail?tranAmt=${item.tranAmt}&effectDate=${item.effectDate}&jourDate=${item.jourDate}&tranname=${item.tranname}&tranLocation=${item.tranLocation}&jourName=${item.jourName}&jourNum=${item.jourNum}`}
                     >
-                      <DisplayCard title={item.effectDate} subTitle={String(item.tranAmt)} key={Math.random()}>
-                        <View>消费地点：{item.tranLocation}</View>
+                      <DisplayCard
+                        title={item.effectDate}
+                        subTitle={String(item.tranAmt)}
+                        key={Math.random()}
+                      >
+                        <View>
+                          消费地点：
+                          {item.tranLocation}
+                        </View>
                         <View>消费后余额：{item.nowAmt}</View>
                       </DisplayCard>
                     </Navigator>
@@ -105,7 +112,11 @@ const Index: React.FC = () => {
                     <Navigator
                       url={`/queryPage/card/detail?tranAmt=${item.tranAmt}&effectDate=${item.effectDate}&jourDate=${item.jourDate}&tranname=${item.tranname}&tranLocation=${item.tranLocation}&jourName=${item.jourName}&jourNum=${item.jourNum}`}
                     >
-                      <DisplayCard title={item.effectDate} subTitle={String(item.tranAmt)} key={Math.random()}>
+                      <DisplayCard
+                        title={item.effectDate}
+                        subTitle={String(item.tranAmt)}
+                        key={Math.random()}
+                      >
                         <View>充值方式：{item.tranname}</View>
                         <View>充值前余额：{item.nowAmt}</View>
                       </DisplayCard>
@@ -119,7 +130,10 @@ const Index: React.FC = () => {
           <View className={styles.empty}>
             <Image src={empty} className={styles.img} />
             <View className={styles.text}>
-              {dayjs().year(Number(year[picker[0]])).month(Number(months[picker[1]])).isBefore('2020-10-01', 'month')
+              {dayjs()
+                .year(Number(year[picker[0]]))
+                .month(Number(months[picker[1]]))
+                .isBefore('2020-10-01', 'month')
                 ? '暂仅支持查询2020年9月及以后的账单'
                 : '没有找到相关记录'}
             </View>

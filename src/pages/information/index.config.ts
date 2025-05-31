@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '知湖'
+  navigationBarTitleText: '知湖',
 }

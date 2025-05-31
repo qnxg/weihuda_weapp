@@ -9,7 +9,7 @@ import uploadIcon from '@/static/icon/upload.svg'
 import icon from '@/static/index/icon/network.svg'
 import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
-import type { NetflowData } from '@/apis/netflow';
+import type { NetflowData } from '@/apis/netflow'
 
 interface NetFlowCardProps {
   netFlow?: NetflowData
@@ -17,7 +17,12 @@ interface NetFlowCardProps {
 
 const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
   return (
-    <CardLayout icon={icon} title='本月流量' moreUrl='/queryPage/netflowDetail/index' moreTitle='流量详情'>
+    <CardLayout
+      icon={icon}
+      title='本月流量'
+      moreUrl='/queryPage/netflowDetail/index'
+      moreTitle='流量详情'
+    >
       <View className={styles.outer}>
         <View className={styles.row}>
           <View className={`${styles.item} ${styles.left}`}>
@@ -38,7 +43,9 @@ const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
           </View>
           <View className={`${styles.item} ${styles.right}`}>
             <Text>{`超出流量：${
-              netFlow?.thisMonth?.extendPackageUsed !== undefined ? `${netFlow.thisMonth.extendPackageUsed}G` : '无数据'
+              netFlow?.thisMonth?.extendPackageUsed !== undefined
+                ? `${netFlow.thisMonth.extendPackageUsed}G`
+                : '无数据'
             }`}</Text>
           </View>
         </View>
@@ -47,7 +54,7 @@ const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
             grade={{
               name: '免费流量：',
               score: (netFlow?.thisMonth?.basePackageUsedPer ?? 0) * 100,
-              content: `${netFlow?.thisMonth?.basePackageUsed ?? '--'}G`
+              content: `${netFlow?.thisMonth?.basePackageUsed ?? '--'}G`,
             }}
           />
         </View>
@@ -56,9 +63,15 @@ const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
   )
 }
 
-const NetflowCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
-  const [netflowData, isNetflowDataLoading] =
-    usePromise(getNetflow, undefined, [reloadController])
+const NetflowCard: React.FC<CardProps> = ({
+  onLoadingStatusChange,
+  reloadController,
+}) => {
+  const [netflowData, isNetflowDataLoading] = usePromise(
+    getNetflow,
+    undefined,
+    [reloadController]
+  )
   useEffect(() => {
     onLoadingStatusChange(isNetflowDataLoading)
   }, [isNetflowDataLoading, onLoadingStatusChange])

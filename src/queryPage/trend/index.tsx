@@ -7,7 +7,7 @@ import getOption from './options'
 import { getChart } from '@/apis/hdjw/chart'
 import EChart from '@/components/Chart'
 import PullRefresh from '@/components/PullRefresh'
-import type { Chart} from '@/apis/hdjw/chart';
+import type { Chart } from '@/apis/hdjw/chart'
 
 const range = ['全部课程加权平均', '全部课程平均绩点', '核心课程加权平均']
 
@@ -23,7 +23,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getChart()
@@ -36,7 +36,7 @@ const Index: React.FC = () => {
     } catch (err) {
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
       setShow(false)
     }
@@ -47,8 +47,7 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
-
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -77,7 +76,13 @@ const Index: React.FC = () => {
           </Picker>
           <View className={styles.subTitle}>点击查看详情</View>
         </View>
-        <View style={{ width: '592rpx', height: '416rpx', margin: '0 auto' }}>
+        <View
+          style={{
+            width: '592rpx',
+            height: '416rpx',
+            margin: '0 auto',
+          }}
+        >
           <EChart echarts={echarts} option={options} />
         </View>
       </View>

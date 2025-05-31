@@ -1,43 +1,46 @@
-import Taro from "@tarojs/taro";
-import { DEFAULT_SETTINGS } from "./defaults";
-import { getAllUserSettingsApi, setAllUserSettingsApi } from "@/apis/userSettings";
-import type { UserSettings, SettingsItem } from "./defaults";
+import Taro from '@tarojs/taro'
+import { DEFAULT_SETTINGS } from './defaults'
+import {
+  getAllUserSettingsApi,
+  setAllUserSettingsApi,
+} from '@/apis/userSettings'
+import type { UserSettings, SettingsItem } from './defaults'
 
 /** 异步获取某个storage项目
- * 
+ *
  * 遇到错误（例如找不到项目）时log错误并返回undefined。
  * 这个函数不会抛出错误。
  */
 export async function getStorageAsyncNoExcept(key: string): Promise<unknown> {
-    const logErr = (e: string) => console.log(
-        `Cannot find data of ${key} in storage: ${e}\n` +
-        `Returning undefined.`
+  const logErr = (e: string) =>
+    console.log(
+      `Cannot find data of ${key} in storage: ${e}\n` + `Returning undefined.`
     )
-    return new Promise((res, _rej) =>
-        Taro.getStorage({
-            key: key,
-            success: v => res(v.data),
-            fail: v => {
-                logErr(v.errMsg)
-                res(undefined)
-            }
-        }).catch(e => {
-            logErr(e)
-            res(undefined)
-        })
-    )
+  return new Promise((res, _rej) =>
+    Taro.getStorage({
+      key: key,
+      success: v => res(v.data),
+      fail: v => {
+        logErr(v.errMsg)
+        res(undefined)
+      },
+    }).catch(e => {
+      logErr(e)
+      res(undefined)
+    })
+  )
 }
 
 /** 异步设置一个storage项目 */
 export async function setStorageAsync(key: string, data: any) {
-    return new Promise((res, rej) =>
-        Taro.setStorage({
-            key: key,
-            data: data,
-            success: res,
-            fail: v => rej(v.errMsg)
-        })
-    )
+  return new Promise((res, rej) =>
+    Taro.setStorage({
+      key: key,
+      data: data,
+      success: res,
+      fail: v => rej(v.errMsg),
+    })
+  )
 }
 
 const USER_SETTINGS_KEY = 'User-Settings'
@@ -48,7 +51,7 @@ const USER_SETTINGS_KEY = 'User-Settings'
  * const someSettings = getUserSettingSync(s => s.someSettings)
  */
 export async function getUserSettings<const T extends SettingsItem>(
-    selector: (userSettings: UserSettings) => T | undefined
+  selector: (userSettings: UserSettings) => T | undefined
 ): Promise<T>
 /** 获取所有设置
  *
@@ -59,63 +62,62 @@ export async function getUserSettings<const T extends SettingsItem>(
  */
 export async function getUserSettings(): Promise<UserSettings>
 export async function getUserSettings<T extends SettingsItem>(
-    selector?: (userSettings: UserSettings) => T | undefined
+  selector?: (userSettings: UserSettings) => T | undefined
 ) {
-    if (selector == undefined) {
-        const settingsFromStorage = await getStorageAsyncNoExcept(USER_SETTINGS_KEY)
-        if (settingsFromStorage == undefined || settingsFromStorage === "") {
-            const settingsFromDb = await getAllUserSettingsApi() ?? {}
-            await setStorageAsync(USER_SETTINGS_KEY, settingsFromDb)
-            return settingsFromDb
-        }
-        return settingsFromStorage
-    } else {
-        const selectStorageResult = selector(await getUserSettings())
-        const selectDefaultResult = selector(DEFAULT_SETTINGS)
-        if (selectDefaultResult == undefined) {
-            throw new Error(
-                `不正确的默认配置或不正确的selector实现。 ` +
-                `selector: ${selector.toString()} ` +
-                `DEFAULT_SETTINGS: ${JSON.stringify(DEFAULT_SETTINGS)}`
-            )
-        }
-        if (selectStorageResult == undefined ||
-            selectStorageResult.settingsMajorVersion != selectDefaultResult.settingsMajorVersion) {
-            console.log(
-                `由于storage中设置不存在或者版本不匹配，使用默认设置。 ` +
-                `selector: ${selector.toString()} ` +
-                `DEFAULT_SETTINGS: ${JSON.stringify(DEFAULT_SETTINGS)} `
-            )
-            return selectDefaultResult
-        } else {
-            return selectStorageResult
-        }
+  if (selector == undefined) {
+    const settingsFromStorage = await getStorageAsyncNoExcept(USER_SETTINGS_KEY)
+    if (settingsFromStorage == undefined || settingsFromStorage === '') {
+      const settingsFromDb = (await getAllUserSettingsApi()) ?? {}
+      await setStorageAsync(USER_SETTINGS_KEY, settingsFromDb)
+      return settingsFromDb
     }
+    return settingsFromStorage
+  } else {
+    const selectStorageResult = selector(await getUserSettings())
+    const selectDefaultResult = selector(DEFAULT_SETTINGS)
+    if (selectDefaultResult == undefined) {
+      throw new Error(
+        `不正确的默认配置或不正确的selector实现。 ` +
+          `selector: ${selector.toString()} ` +
+          `DEFAULT_SETTINGS: ${JSON.stringify(DEFAULT_SETTINGS)}`
+      )
+    }
+    if (
+      selectStorageResult == undefined ||
+      selectStorageResult.settingsMajorVersion !=
+        selectDefaultResult.settingsMajorVersion
+    ) {
+      console.log(
+        `由于storage中设置不存在或者版本不匹配，使用默认设置。 ` +
+          `selector: ${selector.toString()} ` +
+          `DEFAULT_SETTINGS: ${JSON.stringify(DEFAULT_SETTINGS)} `
+      )
+      return selectDefaultResult
+    } else {
+      return selectStorageResult
+    }
+  }
 }
 
-/** 
+/**
  * 使用一个对象覆盖设置整个用户小程序设置
- * 
- * 调用该函数前请确认是否将待设置的版本与默认配置版本同步 
- * 
+ *
+ * 调用该函数前请确认是否将待设置的版本与默认配置版本同步
+ *
  * 大部分情况下你可能想要使用`modifyUserSettings`
-*/
-const setAllUserSettings = async (
-    newUserSettings: UserSettings
-) => {
-    await setStorageAsync(USER_SETTINGS_KEY, newUserSettings)
-    await setAllUserSettingsApi(newUserSettings)
+ */
+const setAllUserSettings = async (newUserSettings: UserSettings) => {
+  await setStorageAsync(USER_SETTINGS_KEY, newUserSettings)
+  await setAllUserSettingsApi(newUserSettings)
 }
 
-/** 
+/**
  * 更改小程序设置。使用回调形式。
- * 
+ *
  * 重要：调用该函数时请确认是否将待设置的版本与默认配置版本同步
  */
-export const modifyUserSettings =
-    async <T extends UserSettings>(
-        modifier:
-            (oldUserSettings: UserSettings) =>
-                T & Record<Exclude<keyof T, keyof UserSettings>, never>
-    ) =>
-        setAllUserSettings(modifier(await getUserSettings()))
+export const modifyUserSettings = async <T extends UserSettings>(
+  modifier: (
+    oldUserSettings: UserSettings
+  ) => T & Record<Exclude<keyof T, keyof UserSettings>, never>
+) => setAllUserSettings(modifier(await getUserSettings()))

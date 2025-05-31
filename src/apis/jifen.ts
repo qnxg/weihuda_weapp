@@ -23,7 +23,9 @@ export interface IJifenRecordPageResponseData {
   rows: IJifenRecord[]
 }
 
-export interface IJifenRecordPageQueryData extends IPageQueryData, Partial<IJifenRecord> {}
+export interface IJifenRecordPageQueryData
+  extends IPageQueryData,
+    Partial<IJifenRecord> {}
 
 /**
  * 获取总积分
@@ -35,9 +37,11 @@ export const getJifenTotalApi = async () => {
 /**
  * 获取积分记录
  */
-export const getJifenRecordPageApi = async (queryData: IJifenRecordPageQueryData) => {
+export const getJifenRecordPageApi = async (
+  queryData: IJifenRecordPageQueryData
+) => {
   return request.get<IJifenRecordPageResponseData>('/jifen/record', {
-    data: queryData
+    data: queryData,
   })
 }
 
@@ -46,7 +50,7 @@ export const getJifenRecordPageApi = async (queryData: IJifenRecordPageQueryData
  */
 export const postJifenRecordApi = async (postData: Partial<IJifenRecord>) => {
   return request.post<IJifenRecordPageResponseData>('/jifen', {
-    data: postData
+    data: postData,
   })
 }
 
@@ -54,11 +58,9 @@ export const postJifenRecordApi = async (postData: Partial<IJifenRecord>) => {
  * 阅读文章获取积分，（webview页面的阅读事件除了现在用来获得积分外，未来
  * 还有可能用来统计用户的阅读行为，比如阅读时长，阅读次数等，所以单独提取出来一个请求）
  */
-export const getJifenWebviewReadApi = async (queryData: {
-  url: string
-}) => {
+export const getJifenWebviewReadApi = async (queryData: { url: string }) => {
   return request.get<IJifenRecordPageResponseData>('/jifen/webview-read', {
-    data: queryData
+    data: queryData,
   })
 }
 
@@ -82,14 +84,18 @@ export interface IJifenGoodsPageResponseData {
   rows: IJifenGoods[]
 }
 
-export interface IJifenGoodsPageQueryData extends IPageQueryData, Partial<IJifenGoods> {}
+export interface IJifenGoodsPageQueryData
+  extends IPageQueryData,
+    Partial<IJifenGoods> {}
 
 /**
  * 获取积分奖品列表分页
  */
-export const getJifenGoodsPageApi = async (queryData: IJifenGoodsPageQueryData) => {
+export const getJifenGoodsPageApi = async (
+  queryData: IJifenGoodsPageQueryData
+) => {
   return request.get<IJifenGoodsPageResponseData>('/jifen/goods', {
-    data: queryData
+    data: queryData,
   })
 }
 
@@ -115,14 +121,18 @@ export interface IJifenRulePageResponseData {
   rows: IJifenRule[]
 }
 
-export interface IJifenRulePageQueryData extends IPageQueryData, Partial<IJifenRule> {}
+export interface IJifenRulePageQueryData
+  extends IPageQueryData,
+    Partial<IJifenRule> {}
 
 /**
  * 获取积分规则列表分页
  */
-export const getJifenRulePageApi = async (queryData: IJifenRulePageQueryData) => {
+export const getJifenRulePageApi = async (
+  queryData: IJifenRulePageQueryData
+) => {
   return request.get<IJifenRulePageResponseData>('/jifen/rules', {
-    data: queryData
+    data: queryData,
   })
 }
 export interface IGoodsRecord {
@@ -147,14 +157,18 @@ export interface IGoodsRecordPageResponseData {
   rows: IGoodsRecord[]
 }
 
-export interface IGoodsRecordPageQueryData extends IPageQueryData, Partial<IGoodsRecord> {}
+export interface IGoodsRecordPageQueryData
+  extends IPageQueryData,
+    Partial<IGoodsRecord> {}
 
 /**
  * 获取兑换记录列表分页
  */
-export const getGoodsRecordPageApi = async (queryData: IGoodsRecordPageQueryData) => {
+export const getGoodsRecordPageApi = async (
+  queryData: IGoodsRecordPageQueryData
+) => {
   return request.get<IGoodsRecordPageResponseData>('/jifen/goods-record', {
-    data: queryData
+    data: queryData,
   })
 }
 
@@ -162,5 +176,7 @@ export const getGoodsRecordPageApi = async (queryData: IGoodsRecordPageQueryData
  * 新增兑换记录（兑换奖品）
  */
 export const postGoodsRecordApi = async (postData: Partial<IGoodsRecord>) => {
-  return request.post<IGoodsRecordPageResponseData>('/jifen/goods-record', { data: postData })
+  return request.post<IGoodsRecordPageResponseData>('/jifen/goods-record', {
+    data: postData,
+  })
 }

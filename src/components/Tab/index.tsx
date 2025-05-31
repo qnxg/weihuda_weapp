@@ -1,94 +1,98 @@
-import { View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import classNames from 'classnames';
-import React, { useCallback, useRef, Fragment } from 'react';
+import { View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import classNames from 'classnames'
+import React, { useCallback, useRef, Fragment } from 'react'
 
-import styles from './index.module.scss';
-import type { ITouchEvent } from '@tarojs/components/types/common';
+import styles from './index.module.scss'
+import type { ITouchEvent } from '@tarojs/components/types/common'
 
-const MIN_DISTANCE = 100;
-const MAX_INTERVAL = 10;
+const MIN_DISTANCE = 100
+const MAX_INTERVAL = 10
 
 interface Props {
-  children: React.ReactNode;
-  onChange: (n: number, e?: ITouchEvent) => void;
-  current: number;
-  items: any[];
-  swipeable?: boolean;
+  children: React.ReactNode
+  onChange: (n: number, e?: ITouchEvent) => void
+  current: number
+  items: any[]
+  swipeable?: boolean
 }
 
-const Index: React.FC<Props> = (props) => {
-  const { current, onChange, items = [], swipeable = true } = props;
+const Index: React.FC<Props> = props => {
+  const { current, onChange, items = [], swipeable = true } = props
 
   // 一些滑动需要的 ref
-  const _touchDot = useRef<number>(0);
-  const _timer = useRef<NodeJS.Timeout>();
-  const _interval = useRef<number>(0);
-  const _isMoving = useRef(false);
+  const _touchDot = useRef<number>(0)
+  const _timer = useRef<NodeJS.Timeout>()
+  const _interval = useRef<number>(0)
+  const _isMoving = useRef(false)
 
-  const preIndexRef = useRef<number | null>(0);
+  const preIndexRef = useRef<number | null>(0)
 
   const changeItem = useCallback(
     (index: number, e?: ITouchEvent) => {
-      onChange(index, e);
+      onChange(index, e)
       if (preIndexRef.current === index) {
         void Taro.pageScrollTo({
           scrollTop: 0,
-          duration: 400
-        });
+          duration: 400,
+        })
       }
-      preIndexRef.current = index;
+      preIndexRef.current = index
     },
     [onChange]
-  );
+  )
 
   const handleTouchStart = useCallback(
     (e: ITouchEvent) => {
       if (!swipeable) {
-        return;
+        return
       }
       // 获取触摸时的原点
-      _touchDot.current = e.touches[0].pageX;
+      _touchDot.current = e.touches[0].pageX
       // 使用js计时器记录时间
       _timer.current = setInterval(() => {
-        _interval.current++;
-      }, 100);
+        _interval.current++
+      }, 100)
     },
     [swipeable]
-  );
+  )
 
   const handleTouchMove = useCallback(
     (e: ITouchEvent) => {
       if (!swipeable) {
-        return;
+        return
       }
-      const touchMove = e.touches[0].pageX;
-      const moveDistance = touchMove - _touchDot.current;
-      const maxIndex = items.length;
+      const touchMove = e.touches[0].pageX
+      const moveDistance = touchMove - _touchDot.current
+      const maxIndex = items.length
 
-      if (!_isMoving.current && _interval.current < MAX_INTERVAL && _touchDot.current > 20) {
+      if (
+        !_isMoving.current &&
+        _interval.current < MAX_INTERVAL &&
+        _touchDot.current > 20
+      ) {
         if (current + 1 < maxIndex && moveDistance <= -MIN_DISTANCE) {
           // 向左滑动
-          _isMoving.current = true;
-          changeItem(current + 1, e);
+          _isMoving.current = true
+          changeItem(current + 1, e)
         } else if (current - 1 >= 0 && moveDistance >= MIN_DISTANCE) {
           // 向右滑动
-          _isMoving.current = true;
-          changeItem(current - 1, e);
+          _isMoving.current = true
+          changeItem(current - 1, e)
         }
       }
     },
     [changeItem, current, items.length, swipeable]
-  );
+  )
 
   const handleTouchEnd = useCallback(() => {
     if (!swipeable) {
-      return;
+      return
     }
-    clearInterval(_timer.current as NodeJS.Timeout);
-    _interval.current = 0;
-    _isMoving.current = false;
-  }, [swipeable]);
+    clearInterval(_timer.current as NodeJS.Timeout)
+    _interval.current = 0
+    _isMoving.current = false
+  }, [swipeable])
 
   // 底部小滑块左边的宽度
   // 如果每一个tab里的文字长度一样，则可以设置成 100 / items.length * current
@@ -101,13 +105,17 @@ const Index: React.FC<Props> = (props) => {
           {items.map((item, index) => {
             const cx = classNames({
               [styles.item]: true,
-              [styles.select]: index === current
-            });
+              [styles.select]: index === current,
+            })
             return (
-              <View key={item} className={cx} onClick={(): void => changeItem(index)}>
+              <View
+                key={item}
+                className={cx}
+                onClick={(): void => changeItem(index)}
+              >
                 {item}
               </View>
-            );
+            )
           })}
           <View
             className={styles.line}
@@ -115,7 +123,7 @@ const Index: React.FC<Props> = (props) => {
               // 如果每一个tab里的文字长度一样，则可以设置成 100 / items.length * current
               // 否则手动设置为 ${tabsLeftPersentage[current]}
               left: `${(100 / items.length) * current}%`,
-              marginLeft: `${50 / items.length - 2.666}%`
+              marginLeft: `${50 / items.length - 2.666}%`,
             }}
           />
         </View>
@@ -130,7 +138,7 @@ const Index: React.FC<Props> = (props) => {
         {props.children}
       </View>
     </Fragment>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

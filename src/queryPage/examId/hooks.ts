@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useEffect, useMemo, useState } from 'react'
 import { deleteExamNumApi, getExamNumList } from '@/apis/examNum'
 import type { ExamId } from './interface'
-import type { ExamNumItem} from '@/apis/examNum';
+import type { ExamNumItem } from '@/apis/examNum'
 
 /**
  * 计算天数差
@@ -31,7 +31,7 @@ export const useExamId = (): [ExamId[], () => any] => {
     } catch (error) {
       await Taro.showToast({
         icon: 'none',
-        title: error.toString()
+        title: error.toString(),
       })
     }
   }
@@ -40,12 +40,12 @@ export const useExamId = (): [ExamId[], () => any] => {
   const formatData = useMemo((): ExamId[] => {
     let result: ExamId[] = []
     if (data) {
-      result = data.map((item) => ({
+      result = data.map(item => ({
         examName: item.name,
         examDate: item.date.replace(/-/g, '/'),
         examId: item.num,
         keyId: item.id,
-        sub: calcDaysLeft(item.date)
+        sub: calcDaysLeft(item.date),
       }))
     }
     return result
@@ -60,18 +60,17 @@ export const useExamId = (): [ExamId[], () => any] => {
 
 /** @returns [执行删除操作的函数] */
 export const useDeleteId = () => {
-
   const runExamIdDelete = async (deleteId: number) => {
     try {
       await deleteExamNumApi(deleteId)
       await Taro.showToast({
         title: '删除成功',
-        duration: 1500
+        duration: 1500,
       })
     } catch (error) {
       await Taro.showToast({
         icon: 'none',
-        title: error.toString()
+        title: error.toString(),
       })
     }
   }

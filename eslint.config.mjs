@@ -4,7 +4,6 @@ import js from "@eslint/js";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import { defineConfig, globalIgnores } from "eslint/config";
-import prettier from "eslint-plugin-prettier";
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -30,7 +29,6 @@ export default defineConfig([{
     },
 
     extends: fixupConfigRules(compat.extends(
-        "prettier",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended-legacy",
         "plugin:import/recommended",
@@ -39,7 +37,6 @@ export default defineConfig([{
     )),
 
     plugins: {
-        prettier,
         "@typescript-eslint": tsPlugin,
     },
 
@@ -62,6 +59,7 @@ export default defineConfig([{
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
+        // 关闭，因为在下面的@typescript-eslint规则中配置了
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": [
             "warn",

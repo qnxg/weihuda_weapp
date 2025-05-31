@@ -21,8 +21,6 @@
     margin-right: 8px;
   }
 
-  
-
   .submitButton {
     width: 50%;
     flex: 1;
@@ -53,7 +51,8 @@
 
 @media (prefers-color-scheme: dark) {
   .container {
-    .input,.historyCard {
+    .input,
+    .historyCard {
       background: #333333;
     }
   }

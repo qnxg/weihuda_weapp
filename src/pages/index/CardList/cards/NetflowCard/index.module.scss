@@ -1,4 +1,4 @@
-@import "~@/utils/scss/global.scss";
+@import '~@/utils/scss/global.scss';
 
 .outer {
   @include flex(normal, center, column);
@@ -10,7 +10,7 @@
   font-weight: normal;
   font-stretch: normal;
   line-height: 54px;
-  color: rgb(62, 62, 62);;
+  color: rgb(62, 62, 62);
 
   .row {
     @include flex(space-between, center);

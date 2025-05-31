@@ -34,7 +34,6 @@
   }
 }
 
-
 .bindImg {
   @include imageCommon('~@/static/mine/icon-link.svg');
 }
@@ -130,7 +129,7 @@
   .logo1000 {
     width: 70px;
     height: 48px;
-    background-image: url("~@/static/mine/1000-light.svg");
+    background-image: url('~@/static/mine/1000-light.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 70px auto;
@@ -151,7 +150,7 @@
     color: #404040;
 
     .logo1000 {
-      background-image: url("~@/static/mine/1000-dark.svg");
+      background-image: url('~@/static/mine/1000-dark.svg');
     }
   }
 }

@@ -26,7 +26,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getLabArrange()
@@ -34,7 +34,7 @@ const Index: React.FC = () => {
         setShow(false)
       } else {
         const nowDate = dayjs()
-        res.forEach((value) => {
+        res.forEach(value => {
           if (nowDate.isAfter(dayjs(value.date), 'day')) {
             value.finished = 1
           } else {
@@ -48,7 +48,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -59,7 +59,7 @@ const Index: React.FC = () => {
     void getData()
   }, [index])
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -70,14 +70,23 @@ const Index: React.FC = () => {
       <PullRefresh runFunc={onRefresh} topGap={68}>
         {data && show && data.length > 0 ? (
           <View style={{ padding: 0 }}>
-            {data.map((item) => {
+            {data.map(item => {
               const temp = item.date.split('/')
-              const rest = dayjs(new Date(+temp[0], +temp[1] - 1, +temp[2])).diff(dayjs(), 'day')
+              const rest = dayjs(
+                new Date(+temp[0], +temp[1] - 1, +temp[2])
+              ).diff(dayjs(), 'day')
               if (item.finished === index) {
                 return (
-                  <DisplayCard title={item.name} key={Math.random()} subTitle={rest >= 0 ? `${rest}天` : ''}>
+                  <DisplayCard
+                    title={item.name}
+                    key={Math.random()}
+                    subTitle={rest >= 0 ? `${rest}天` : ''}
+                  >
                     <View>实验地点：{item.place}</View>
-                    <View>实验时间：{`${item.date}  ${item.time}`}</View>
+                    <View>
+                      实验时间：
+                      {`${item.date}  ${item.time}`}
+                    </View>
                     <view>
                       课程：{item.classname} {item.classtype}
                     </view>

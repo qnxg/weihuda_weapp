@@ -10,7 +10,7 @@ import PullRefresh from '@/components/PullRefresh'
 import iconNoJK from '@/static/empty/no-exam.svg'
 import location from '@/static/icon/location.svg'
 import { onColors } from '@/utils/config'
-import type { ExamArrange} from '@/apis/hdjw/computerExam';
+import type { ExamArrange } from '@/apis/hdjw/computerExam'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -23,7 +23,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getComputerExam()
@@ -37,7 +37,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -48,7 +48,7 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -66,12 +66,16 @@ const Index: React.FC = () => {
                 key={item.name}
                 className={styles.cardOuter}
                 lineColor={onColors[index % onColors.length]}
-                renderLeft={<LeftPart title={day} content={`${start[1]}-${end[1]}`} />}
+                renderLeft={
+                  <LeftPart title={day} content={`${start[1]}-${end[1]}`} />
+                }
                 renderRight={
                   <RightPart
                     title={item.name}
                     subTitle={item.number}
-                    renderContent={<Block>{`${item.classroom} 座位${item.seat}号`}</Block>}
+                    renderContent={
+                      <Block>{`${item.classroom} 座位${item.seat}号`}</Block>
+                    }
                     icon={location}
                   />
                 }

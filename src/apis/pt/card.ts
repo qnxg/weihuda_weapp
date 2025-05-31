@@ -97,6 +97,6 @@ interface CardHistoryParams {
  */
 export const getCardHistory = async (params: CardHistoryParams) => {
   return request.get<CardHistoryData>('/pt/card-history', {
-    data: params
+    data: params,
   })
 }

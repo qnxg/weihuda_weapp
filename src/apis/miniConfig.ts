@@ -21,13 +21,17 @@ export interface IMiniConfigPageResponseData {
   rows: IMiniConfig[]
 }
 
-export interface IMiniConfigPageQueryData extends IPageQueryData, Partial<IMiniConfig> {}
+export interface IMiniConfigPageQueryData
+  extends IPageQueryData,
+    Partial<IMiniConfig> {}
 
 /**
  * 获取小程序配置列表分页
  */
-export const getMiniConfigPageApi = async (queryData: IMiniConfigPageQueryData) => {
+export const getMiniConfigPageApi = async (
+  queryData: IMiniConfigPageQueryData
+) => {
   return request.get<IMiniConfigPageResponseData>('/config', {
-    data: queryData
+    data: queryData,
   })
 }

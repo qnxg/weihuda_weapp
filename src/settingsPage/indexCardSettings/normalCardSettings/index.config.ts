@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '常规卡片排序'
-};
+  navigationBarTitleText: '常规卡片排序',
+}

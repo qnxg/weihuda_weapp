@@ -71,7 +71,7 @@ export interface FitnessItem {
  */
 enum Class {
   Green = 'green',
-  Red = 'red'
+  Red = 'red',
 }
 
 /**
@@ -109,8 +109,8 @@ export interface Total {
 export const getFitness = async (xn: string | number) => {
   return request.get<Fitness>('/pt/fitness', {
     data: {
-      xn
-    }
+      xn,
+    },
   })
 }
 
@@ -121,27 +121,27 @@ export interface FitnessAppointItem {
   /**
    * 预约说明
    */
-  appo_desc: string;
+  appo_desc: string
   /**
    * 班级
    */
-  class_name: string;
+  class_name: string
   /**
    * 预约日期
    */
-  show_time: string;
+  show_time: string
   /**
    * 状态
    */
-  status: string;
+  status: string
   /**
    * 测试时间
    */
-  test_time: string;
+  test_time: string
   /**
    * 测试项目
    */
-  test_type: string;
+  test_type: string
 }
 
 /**

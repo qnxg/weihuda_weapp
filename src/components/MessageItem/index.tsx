@@ -24,7 +24,11 @@ interface IMessageItemProps {
   className?: string
 }
 
-const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, afterMarkAsRead }) => {
+const MessageItem: React.FC<IMessageItemProps> = ({
+  data: propsData,
+  className,
+  afterMarkAsRead,
+}) => {
   const [data, setData] = useState<INotice>(propsData)
   const dispatch = useAppDispatch()
 
@@ -42,21 +46,25 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
     void dispatch(
       putNoticeByIdThunk({
         id,
-        status: 1
+        status: 1,
       })
     )
     setData({
       ...data,
-      status: 1
+      status: 1,
     })
   }
 
   // 当按钮点击时
-  const onBtnClick = async (id: number, type: IBtnConfigItem['type'], value: IBtnConfigItem['value']) => {
+  const onBtnClick = async (
+    id: number,
+    type: IBtnConfigItem['type'],
+    value: IBtnConfigItem['value']
+  ) => {
     if (type === 'link') {
       // 跳转到链接
       void Taro.navigateTo({
-        url: value!
+        url: value!,
       })
     } else if (type === 'button' && value !== undefined) {
       // 更新数据
@@ -64,14 +72,14 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
         putNoticeByIdThunk({
           id,
           status: 1,
-          result: value
+          result: value,
         })
       )
       handleAfterMarkAsRead(id)
       setData({
         ...data,
         status: 1,
-        result: value!
+        result: value!,
       })
     }
   }
@@ -89,7 +97,11 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
     if (!type) type = 'button'
 
     const ResultButton = (
-      <Button className={styles.btn} theme={theme} onClick={() => onBtnClick(id, type, value)}>
+      <Button
+        className={styles.btn}
+        theme={theme}
+        onClick={() => onBtnClick(id, type, value)}
+      >
         {text}
       </Button>
     )
@@ -103,26 +115,42 @@ const MessageItem: React.FC<IMessageItemProps> = ({ data: propsData, className, 
 
   return (
     <View className={classNames(styles.messageItem, className)}>
-      <View className={classNames(styles.content, {
-        [styles.read]: data.status === 1
-      })}>{data.content}</View>
+      <View
+        className={classNames(styles.content, {
+          [styles.read]: data.status === 1,
+        })}
+      >
+        {data.content}
+      </View>
       <View className={styles.btnWrapper}>
         <View className={styles.left}>
-          <View className={classNames(styles.sendTime, styles.btn)}>{dayjs(data.sendTime).format('YYYY-MM-DD')}</View>
-          <View className={classNames(styles.status, styles.btn)}>{data.status === 0 ? '未读' : '已读'}</View>
+          <View className={classNames(styles.sendTime, styles.btn)}>
+            {dayjs(data.sendTime).format('YYYY-MM-DD')}
+          </View>
+          <View className={classNames(styles.status, styles.btn)}>
+            {data.status === 0 ? '未读' : '已读'}
+          </View>
         </View>
         <View className={styles.right}>
           {data.status === 0 && (
-            <Button className={styles.btn} theme='plain' onClick={() => markAsRead(data.id)}>
+            <Button
+              className={styles.btn}
+              theme='plain'
+              onClick={() => markAsRead(data.id)}
+            >
               标记为已读
             </Button>
           )}
           {data.btnConfig &&
             data.btnConfig.length > 0 &&
-            (data.btnConfig as IBtnConfigItem[]).map((btnConfigItem) => {
+            (data.btnConfig as IBtnConfigItem[]).map(btnConfigItem => {
               return getBtn(data.id, btnConfigItem)
             })}
-          {data.result && <View className={classNames(styles.result, styles.btn)}>{data.result}</View>}
+          {data.result && (
+            <View className={classNames(styles.result, styles.btn)}>
+              {data.result}
+            </View>
+          )}
         </View>
       </View>
     </View>

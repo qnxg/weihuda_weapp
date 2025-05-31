@@ -11,7 +11,7 @@ import { TabPanel, Tabs } from '@/components/Tabs'
 import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
-  const userInfo = useAppSelector((state) => state.userInfo)
+  const userInfo = useAppSelector(state => state.userInfo)
   const [total, setTotal] = React.useState(0)
   const jifenRecordRef = React.useRef<any>(null)
 
@@ -34,8 +34,8 @@ const Index: React.FC = () => {
   }, [])
 
   function signedCallback() {
-    void getData();
-    updateJifenRecord();
+    void getData()
+    updateJifenRecord()
   }
 
   return (
@@ -61,7 +61,11 @@ const Index: React.FC = () => {
             <JifenRecord jifenRecordRef={jifenRecordRef} />
           </TabPanel>
           <TabPanel value={1} title='兑换奖品'>
-            <Goods total={total} updateTotal={getData} updateJifenRecord={updateJifenRecord} />
+            <Goods
+              total={total}
+              updateTotal={getData}
+              updateJifenRecord={updateJifenRecord}
+            />
           </TabPanel>
           <TabPanel value={2} title='积分规则'>
             <JifenRule />

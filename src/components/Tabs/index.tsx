@@ -3,8 +3,8 @@ import classNames from 'classnames'
 import React, { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { getBoundingClientRect, getScrollOffset } from '@/utils/tool'
-import type { ViewProps } from '@tarojs/components';
-import type { ReactNode} from 'react';
+import type { ViewProps } from '@tarojs/components'
+import type { ReactNode } from 'react'
 
 interface ITabsProps extends ViewProps {
   /**
@@ -60,40 +60,52 @@ interface IPanelData {
  *   </TabPanel>
  * </Tabs>
  */
-export const Tabs: React.FC<ITabsProps> = (props) => {
+export const Tabs: React.FC<ITabsProps> = props => {
   // 获取所有的 TabPanel 组件
-  const panels: IPanelData[] = (props.children! as ReactNode[]).map((child: any) => {
-    return {
-      value: child.props.value,
-      title: child.props.title,
-      component: child
+  const panels: IPanelData[] = (props.children! as ReactNode[]).map(
+    (child: any) => {
+      return {
+        value: child.props.value,
+        title: child.props.title,
+        component: child,
+      }
     }
-  })
+  )
 
-  const initialTabIndex = props.initialValue !== undefined ? props.initialValue : panels[0].value
+  const initialTabIndex =
+    props.initialValue !== undefined ? props.initialValue : panels[0].value
   // 当前选中的 Tab
   const [currentTab, setCurrentTab] = useState(initialTabIndex)
   // activeLine 的位置
   const [activeLineLeft, setActiveLineLeft] = useState(0)
   // 获取当前选中的 TabPanel 组件
   const getCurrentPanel = () => {
-    return panels.find((panel) => panel.value === currentTab)!.component
+    return panels.find(panel => panel.value === currentTab)!.component
   }
 
   // 更新 activeLine 的位置
-  const updateActiveLine = useCallback(async (newValue) => {
-    const { scrollLeft } = await getScrollOffset('.tabsScrollView')
-    const scrollViewRects = await getBoundingClientRect('.tabsScrollView')
-    const rects = await getBoundingClientRect('.tab-item')
-    const activeLineRects = await getBoundingClientRect(`.${styles.activeLine}`)
-    const activeIndex = panels.findIndex((panel) => panel.value === newValue)
-    const activeRect = rects[activeIndex]
-    setActiveLineLeft(
-      activeRect.left + scrollLeft - scrollViewRects[0].left + activeRect.width / 2 - activeLineRects[0].width / 2
-    )
-  }, [panels])
+  const updateActiveLine = useCallback(
+    async newValue => {
+      const { scrollLeft } = await getScrollOffset('.tabsScrollView')
+      const scrollViewRects = await getBoundingClientRect('.tabsScrollView')
+      const rects = await getBoundingClientRect('.tab-item')
+      const activeLineRects = await getBoundingClientRect(
+        `.${styles.activeLine}`
+      )
+      const activeIndex = panels.findIndex(panel => panel.value === newValue)
+      const activeRect = rects[activeIndex]
+      setActiveLineLeft(
+        activeRect.left +
+          scrollLeft -
+          scrollViewRects[0].left +
+          activeRect.width / 2 -
+          activeLineRects[0].width / 2
+      )
+    },
+    [panels]
+  )
 
-  const handleTabClick = async (value) => {
+  const handleTabClick = async value => {
     await updateActiveLine(value)
     setCurrentTab(value)
     if (props.onChange) {
@@ -107,15 +119,20 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
 
   return (
     <View>
-      <ScrollView enhanced showScrollbar={false} scrollX className={classNames(styles.tabsScrollView, 'tabsScrollView')}>
+      <ScrollView
+        enhanced
+        showScrollbar={false}
+        scrollX
+        className={classNames(styles.tabsScrollView, 'tabsScrollView')}
+      >
         <View className={classNames(styles.tabs, props.tabsClassName)}>
-          {panels.map((panel) => (
+          {panels.map(panel => (
             <View
               key={panel.value}
               className={classNames(
                 styles.tabItem,
                 {
-                  [styles.active]: currentTab === panel.value
+                  [styles.active]: currentTab === panel.value,
                 },
                 'tab-item'
               )}
@@ -127,25 +144,29 @@ export const Tabs: React.FC<ITabsProps> = (props) => {
           <View
             className={styles.activeLine}
             style={{
-              transform: `translateX(${activeLineLeft}px)`
+              transform: `translateX(${activeLineLeft}px)`,
               // left: activeLineLeft + 'px'
             }}
           ></View>
         </View>
       </ScrollView>
       {props.keepAlive ? (
-        panels.map((panel) => {
+        panels.map(panel => {
           return (
             <View
               key={panel.value}
-              className={classNames(props.contentClassName, { [styles.hidden]: currentTab !== panel.value })}
+              className={classNames(props.contentClassName, {
+                [styles.hidden]: currentTab !== panel.value,
+              })}
             >
               {panel.component}
             </View>
           )
         })
       ) : (
-        <View className={classNames(props.contentClassName)}>{getCurrentPanel()}</View>
+        <View className={classNames(props.contentClassName)}>
+          {getCurrentPanel()}
+        </View>
       )}
     </View>
   )
@@ -162,6 +183,6 @@ interface ITabPanelProps extends ViewProps {
   title: string
 }
 
-export const TabPanel: React.FC<ITabPanelProps> = (props) => {
+export const TabPanel: React.FC<ITabPanelProps> = props => {
   return <View {...props}>{props.children}</View>
 }

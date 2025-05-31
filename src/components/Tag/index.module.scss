@@ -1,33 +1,33 @@
 .tag {
-    display: inline-block;
-    padding: 0 8px;
-    margin-right: 8px;
-    border-radius: 4px;
+  display: inline-block;
+  padding: 0 8px;
+  margin-right: 8px;
+  border-radius: 4px;
+  color: var(--text-color-primary);
+  background-color: var(--bg-color-component);
+
+  &.default {
     color: var(--text-color-primary);
     background-color: var(--bg-color-component);
+  }
 
-    &.default {
-        color: var(--text-color-primary);
-        background-color: var(--bg-color-component);
-    }
+  &.primary {
+    color: var(--brand-color);
+    background-color: var(--brand-color-light);
+  }
 
-    &.primary {
-        color: var(--brand-color);
-        background-color: var(--brand-color-light);
-    }
+  &.warning {
+    color: var(--warning-color);
+    background-color: var(--warning-color-light);
+  }
 
-    &.warning {
-        color: var(--warning-color);
-        background-color: var(--warning-color-light);
-    }
+  &.danger {
+    color: var(--error-color);
+    background-color: var(--error-color-light);
+  }
 
-    &.danger {
-        color: var(--error-color);
-        background-color: var(--error-color-light);
-    }
-
-    &.success {
-        color: var(--success-color);
-        background-color: var(--success-color-light);
-    }
+  &.success {
+    color: var(--success-color);
+    background-color: var(--success-color-light);
+  }
 }

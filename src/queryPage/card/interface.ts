@@ -1,28 +1,28 @@
 export interface history {
-  TranCount: number;
-  total: number;
-  items: Item[];
+  TranCount: number
+  total: number
+  items: Item[]
 }
 
 export interface Item {
-  tranAmt: string;
-  effectDate: string;
-  nowAmt: string;
-  tranLocation: string;
-  tranname: string;
-  jourDate: string;
-  jourName: string;
-  jourNum: number;
+  tranAmt: string
+  effectDate: string
+  nowAmt: string
+  tranLocation: string
+  tranname: string
+  jourDate: string
+  jourName: string
+  jourNum: number
 }
 
 export interface card {
-  history: history;
+  history: history
 }
 
 export interface Pt {
-  card: card;
+  card: card
 }
 
 export interface RootObject {
-  pt: Pt;
+  pt: Pt
 }

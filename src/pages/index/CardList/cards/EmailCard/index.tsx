@@ -7,12 +7,11 @@ import icon from '@/static/index/icon/email.svg'
 import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
 
-
 interface DisplayProps {
   unReadCount?: number
 }
 
-const EmailCardDisplay: React.FC<DisplayProps> = (props) => {
+const EmailCardDisplay: React.FC<DisplayProps> = props => {
   const { unReadCount } = props
   return (
     <CardLayout icon={icon} title='校园邮箱'>
@@ -25,9 +24,15 @@ const EmailCardDisplay: React.FC<DisplayProps> = (props) => {
   )
 }
 
-const EmailCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
-  const [unReadCount, isUnReadCountLoading] =
-    usePromise(getUnReadCount, undefined, [reloadController])
+const EmailCard: React.FC<CardProps> = ({
+  onLoadingStatusChange,
+  reloadController,
+}) => {
+  const [unReadCount, isUnReadCountLoading] = usePromise(
+    getUnReadCount,
+    undefined,
+    [reloadController]
+  )
   useEffect(() => {
     onLoadingStatusChange(isUnReadCountLoading)
   }, [isUnReadCountLoading, onLoadingStatusChange])

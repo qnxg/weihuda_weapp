@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { getFeedbackPageApi } from '@/apis/feedback'
 import Button from '@/components/Button'
-import type { FeedbackData} from '@/apis/feedback';
+import type { FeedbackData } from '@/apis/feedback'
 
 const statusMap = {
   0: '待确认',
   1: '已确认，待处理',
   2: '正在处理',
-  3: '已处理并关闭'
+  3: '已处理并关闭',
 }
 
 const Index: React.FC = () => {
@@ -29,7 +29,7 @@ const Index: React.FC = () => {
         Taro.hideLoading()
         await Taro.showToast({
           title: '查询成功',
-          icon: 'success'
+          icon: 'success',
         })
       }
     } catch {
@@ -43,7 +43,7 @@ const Index: React.FC = () => {
     if (stuId.trim() === '') {
       await Taro.showToast({
         title: '学号不能为空',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
@@ -52,7 +52,7 @@ const Index: React.FC = () => {
     if (stuId.trim().length !== 12) {
       await Taro.showToast({
         title: '学号必须是12位',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
@@ -69,7 +69,7 @@ const Index: React.FC = () => {
 
     // 请求数据
     void getData(stuId)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -77,7 +77,7 @@ const Index: React.FC = () => {
       <View className={styles.form}>
         <Input
           value={stuId}
-          onInput={(e) => {
+          onInput={e => {
             setStuId((e.target as any).value)
           }}
           className={styles.input}
@@ -94,7 +94,9 @@ const Index: React.FC = () => {
             <View key={i} className={styles.historyCard}>
               <View className={styles.label}>反馈内容：</View>
               <View>{item.desc}</View>
-              <View className={styles.label}>处理状态：{statusMap[item.status]}</View>
+              <View className={styles.label}>
+                处理状态：{statusMap[item.status]}
+              </View>
               <View className={styles.label}>处理结果：</View>
               <View>{item.comment}</View>
             </View>

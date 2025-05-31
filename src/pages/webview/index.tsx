@@ -7,7 +7,7 @@ const Index: React.FC = () => {
   const { params } = useRouter()
   const { url, title, from } = params
   useEffect(() => {
-    let cleanUp = () => { };
+    let cleanUp = () => {}
     if (from === 'zhihu') {
       const w = setTimeout(() => {
         void getJifenWebviewReadApi({ url: url! })

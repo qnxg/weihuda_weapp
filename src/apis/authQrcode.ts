@@ -12,10 +12,13 @@ export const getAuthQrcodeStatusApi = async (code: string) => {
 /**
  * 更新二维码状态
  */
-export const putAuthQrcodeStatusApi = async (code: string, newStatus: 'using' | 'confirmed' | 'canceled') => {
+export const putAuthQrcodeStatusApi = async (
+  code: string,
+  newStatus: 'using' | 'confirmed' | 'canceled'
+) => {
   return request.put<AuthQrcodeStatus>(`/auth-qrcode/status/${code}`, {
     data: {
-      status: newStatus
-    }
+      status: newStatus,
+    },
   })
 }

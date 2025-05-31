@@ -1,5 +1,11 @@
 import { Block, View } from '@tarojs/components'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import ReactDOM from 'react-dom'
 import styles from './index.module.scss'
 
@@ -22,7 +28,9 @@ const Context = React.createContext<ModalContext>({} as ModalContext)
 /**
  * 包装在 ModalProvider 内部的组件，就可以在任意子组件上通过 useShowModal 显示Modal
  */
-export const ModalProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const ModalProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const modalRef = useRef<React.FC>()
   const [context, setContext] = useState<ModalContext>()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -31,11 +39,11 @@ export const ModalProvider: React.FC<React.PropsWithChildren> = ({ children }) =
   useEffect(() => {
     setContext({
       elm: modalRef.current,
-      showModal: (props) => {
+      showModal: props => {
         setModalProps(props)
         setModalVisible(true)
       },
-      closeModal: () => setModalVisible(false)
+      closeModal: () => setModalVisible(false),
     })
   }, [])
 
@@ -57,8 +65,16 @@ export const useShowModal = () => {
   return [useContext(Context).showModal]
 }
 
-const Modal: React.FC<ModalProps> = (props) => {
-  const { onConfirm, onCancel, confirmText, cancelText, content, children, ...rest } = props
+const Modal: React.FC<ModalProps> = props => {
+  const {
+    onConfirm,
+    onCancel,
+    confirmText,
+    cancelText,
+    content,
+    children,
+    ...rest
+  } = props
   const { closeModal, elm } = useContext(Context)
 
   const handleCancel = useCallback(() => {

@@ -1,4 +1,4 @@
-@import "~@/utils/scss/global.scss";
+@import '~@/utils/scss/global.scss';
 
 @mixin icons($url) {
   width: 30px;
@@ -19,7 +19,6 @@
   margin: 0 auto;
 
   .titleContainer {
-
     .title {
       font-size: 36px;
       font-weight: bold;
@@ -43,11 +42,9 @@
       width: 100%;
       background-color: inherit;
       line-height: 2em;
-
     }
   }
 }
 
 @media (prefers-color-scheme: dark) {
-
 }

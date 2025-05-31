@@ -2,16 +2,16 @@
  * @interface MultiObject 教学楼对应关系字典
  */
 export interface MultiObject {
-  build: string;
-  id: string;
+  build: string
+  id: string
 }
 
 /**
  * @interface CourseNum 课程时间与id对应关系字典
  */
 export interface CourseNum {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }
 
 export const multiArray: Array<Array<string>> = [
@@ -63,7 +63,7 @@ export const multiArray: Array<Array<string>> = [
     '培训小楼（文学院）',
     '化学实验中心',
     '天马学生公寓',
-    '北校区足球场'
+    '北校区足球场',
   ],
   [
     '第1周',
@@ -83,230 +83,238 @@ export const multiArray: Array<Array<string>> = [
     '第15周',
     '第16周',
     '第17周',
-    '第18周'
+    '第18周',
   ],
-  ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-];
+  ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+]
 
 export const multiObject: Array<MultiObject> = [
   {
     build: '综合教学楼',
-    id: '106'
+    id: '106',
   },
   {
     build: '研究生院楼',
-    id: '302'
+    id: '302',
   },
   {
     build: '复临舍',
-    id: '102'
+    id: '102',
   },
   {
     build: '中楼',
-    id: '123'
+    id: '123',
   },
   {
     build: '梯教(北)',
-    id: '201'
+    id: '201',
   },
   {
     build: '二教楼(北)',
-    id: '202'
+    id: '202',
   },
   {
     build: '电子楼(北)',
-    id: '203'
+    id: '203',
   },
   {
     build: '水上教学楼(北)',
-    id: '204'
+    id: '204',
   },
   {
     build: '前进楼',
-    id: '124'
+    id: '124',
   },
   {
     build: '建筑学院',
-    id: '131'
+    id: '131',
   },
   {
     build: '法学楼',
-    id: '125'
+    id: '125',
   },
   {
     build: '办公楼',
-    id: '101'
+    id: '101',
   },
   {
     build: '软件大楼',
-    id: '105'
+    id: '105',
   },
   {
     build: '工管院楼',
-    id: '115'
+    id: '115',
   },
   {
     build: '南楼',
-    id: '117'
+    id: '117',
   },
   {
     build: '北楼',
-    id: '121'
+    id: '121',
   },
   {
     build: '东楼',
-    id: '122'
+    id: '122',
   },
   {
     build: '南校区体育馆',
-    id: '126'
+    id: '126',
   },
   {
     build: '机械院院楼',
-    id: '129'
+    id: '129',
   },
   {
     build: '工程实验大楼',
-    id: '128'
+    id: '128',
   },
   {
     build: '继教综合楼',
-    id: '127'
+    id: '127',
   },
   {
     build: '电气院楼',
-    id: '130'
+    id: '130',
   },
   {
     build: '工训中心',
-    id: '132'
+    id: '132',
   },
   {
     build: '逸夫楼',
-    id: '133'
+    id: '133',
   },
   {
     build: '南校区图书馆',
-    id: '134'
+    id: '134',
   },
   {
     build: '桃子湖教学区',
-    id: '135'
+    id: '135',
   },
   {
     build: '环境馆',
-    id: '137'
+    id: '137',
   },
   {
     build: '岳麓书院',
-    id: '140'
+    id: '140',
   },
   {
     build: '四合院子',
-    id: '136'
+    id: '136',
   },
   {
     build: '艺术教育中心',
-    id: '116'
+    id: '116',
   },
   {
     build: '校外实验实践场所',
-    id: 'xw001'
+    id: 'xw001',
   },
   {
     build: '天马园区排练厅',
-    id: '118'
+    id: '118',
   },
   {
     build: '工训中心E栋',
-    id: '149'
+    id: '149',
   },
   {
     build: '工训中心F栋',
-    id: '150'
+    id: '150',
   },
   {
     build: '工训中心D栋',
-    id: '151'
+    id: '151',
   },
   {
     build: '生物院U型楼',
-    id: '139'
+    id: '139',
   },
   {
     build: '物理院楼',
-    id: '141'
+    id: '141',
   },
   {
     build: '数学院楼',
-    id: '142'
+    id: '142',
   },
   {
     build: '材料院楼',
-    id: '143'
+    id: '143',
   },
   {
     build: '外语院楼',
-    id: '144'
+    id: '144',
   },
   {
     build: '土木院楼',
-    id: '145'
+    id: '145',
   },
   {
     build: '工训中心B栋',
-    id: '146'
+    id: '146',
   },
   {
     build: '麓谷湖大科技园',
-    id: '147'
+    id: '147',
   },
   {
     build: '工训中心C栋',
-    id: '148'
+    id: '148',
   },
   {
     build: '培训小楼（文学院）',
-    id: '138'
+    id: '138',
   },
   {
     build: '化学实验中心',
-    id: '0501'
+    id: '0501',
   },
   {
     build: '天马学生公寓',
-    id: '301'
+    id: '301',
   },
   {
     build: '北校区足球场',
-    id: '205'
-  }
-];
+    id: '205',
+  },
+]
 
 export const courseNum: Array<CourseNum> = [
   {
     id: '01,02,',
-    name: '1-2节（8:00-9:40）'
+    name: '1-2节（8:00-9:40）',
   },
   {
     id: '03,04,',
-    name: '3-4节（10:00-11:40）'
+    name: '3-4节（10:00-11:40）',
   },
   {
     id: '05,06,',
-    name: '5-6节（14:30-16:00）'
+    name: '5-6节（14:30-16:00）',
   },
   {
     id: '07,08,',
-    name: '7-8节（16:10-17:40）'
+    name: '7-8节（16:10-17:40）',
   },
   {
     id: '09,10,11,12,',
-    name: '9-12节（19:00-22:20）'
-  }
-];
+    name: '9-12节（19:00-22:20）',
+  },
+]
 
-export const weekdayText: Array<string> = ['日', '一', '二', '三', '四', '五', '六'];
+export const weekdayText: Array<string> = [
+  '日',
+  '一',
+  '二',
+  '三',
+  '四',
+  '五',
+  '六',
+]
 
 export const weeks: Array<string> = [
   '第1周',
@@ -324,8 +332,8 @@ export const weeks: Array<string> = [
   '第13周',
   '第14周',
   '第15周',
-  '第16周'
-];
+  '第16周',
+]
 
 export const months: Array<string> = [
   '1',
@@ -339,8 +347,8 @@ export const months: Array<string> = [
   '9',
   '10',
   '11',
-  '12'
-];
+  '12',
+]
 
 export const onColors: Array<string> = [
   '#FFDA55',
@@ -352,13 +360,39 @@ export const onColors: Array<string> = [
   '#FF7584',
   '#8F85D9',
   '#48D197',
-  '#6281C4'
-];
+  '#6281C4',
+]
 
-export const offColor = '#bdbdbd';
+export const offColor = '#bdbdbd'
 
 export const addCoursePicker: Array<Array<string>> = [
   ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-  ['第1节', '第2节', '第3节', '第4节', '第5节', '第6节', '第7节', '第8节', '第9节', '第10节', '第11节', '第12节'],
-  ['第1节', '第2节', '第3节', '第4节', '第5节', '第6节', '第7节', '第8节', '第9节', '第10节', '第11节', '第12节']
-];
+  [
+    '第1节',
+    '第2节',
+    '第3节',
+    '第4节',
+    '第5节',
+    '第6节',
+    '第7节',
+    '第8节',
+    '第9节',
+    '第10节',
+    '第11节',
+    '第12节',
+  ],
+  [
+    '第1节',
+    '第2节',
+    '第3节',
+    '第4节',
+    '第5节',
+    '第6节',
+    '第7节',
+    '第8节',
+    '第9节',
+    '第10节',
+    '第11节',
+    '第12节',
+  ],
+]

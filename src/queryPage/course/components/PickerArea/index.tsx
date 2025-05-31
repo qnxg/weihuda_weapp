@@ -1,27 +1,27 @@
-import { View, Text, Picker, Image, Input } from '@tarojs/components';
-import React from 'react';
-import styles from './index.module.scss';
-import iconFinger from '@/static/emptyRoom/icon-finger.svg';
+import { View, Text, Picker, Image, Input } from '@tarojs/components'
+import React from 'react'
+import styles from './index.module.scss'
+import iconFinger from '@/static/emptyRoom/icon-finger.svg'
 
-import { useAppSelector } from '@/utils/hooks/redux';
-import type { CommonEventFunction } from '@tarojs/components/types/common';
+import { useAppSelector } from '@/utils/hooks/redux'
+import type { CommonEventFunction } from '@tarojs/components/types/common'
 
 interface Props {
-  currentSem: number;
-  setSemester: any;
-  setKeyword: any;
+  currentSem: number
+  setSemester: any
+  setKeyword: any
 }
 
-const PickerArea: React.FC<Props> = (props) => {
-  const { currentSem, setSemester, setKeyword } = props;
-  const { semesters } = useAppSelector((state) => state.classTable);
+const PickerArea: React.FC<Props> = props => {
+  const { currentSem, setSemester, setKeyword } = props
+  const { semesters } = useAppSelector(state => state.classTable)
   /**
    * picker的值发生改变
    * @param e
    */
   const pickerChange: CommonEventFunction = (e): void => {
-    setSemester(e.detail.value);
-  };
+    setSemester(e.detail.value)
+  }
 
   return (
     <View className={styles.container}>
@@ -50,12 +50,12 @@ const PickerArea: React.FC<Props> = (props) => {
           // placeholderStyle='color:#cccccc'
           placeholder='课程名称或编号，支持模糊搜索'
           onInput={(e): void => {
-            setKeyword(e.detail.value);
+            setKeyword(e.detail.value)
           }}
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default PickerArea;
+export default PickerArea

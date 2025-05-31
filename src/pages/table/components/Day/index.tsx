@@ -1,10 +1,10 @@
-import { View } from '@tarojs/components';
-import classNames from 'classnames';
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import { View } from '@tarojs/components'
+import classNames from 'classnames'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 
-import styles from './index.module.scss';
-import type { FormatTable } from '../../interface';
+import styles from './index.module.scss'
+import type { FormatTable } from '../../interface'
 
 /**
  * @interface Day Component Props
@@ -12,12 +12,12 @@ import type { FormatTable } from '../../interface';
  */
 interface Props {
   /** 当天的课程数组 */
-  dayCourse: Array<Array<FormatTable>>;
+  dayCourse: Array<Array<FormatTable>>
 }
 
-const Day: React.FC<Props> = (props) => {
-  const { dayCourse = [] } = props;
-  const dispatch = useDispatch();
+const Day: React.FC<Props> = props => {
+  const { dayCourse = [] } = props
+  const dispatch = useDispatch()
   /**
    * 显示课程的详细信息
    * @param e 当前点击的课程数组
@@ -27,19 +27,19 @@ const Day: React.FC<Props> = (props) => {
       type: 'classTable/save',
       payload: {
         showFloat: true,
-        floatData: e
-      }
-    });
-  };
+        floatData: e,
+      },
+    })
+  }
 
   return (
     <View className={styles.day}>
       {dayCourse.map((item, index) => {
         const cx = classNames({
           [styles.course]: true,
-          [styles.mults]: item.length > 1
-        });
-        const isOdd = item.length >= 1 && item[0].show;
+          [styles.mults]: item.length > 1,
+        })
+        const isOdd = item.length >= 1 && item[0].show
         return isOdd && item[0].JCFrom && item[0].len ? (
           <View
             onClick={(): void => onShowFloat(item)}
@@ -50,12 +50,14 @@ const Day: React.FC<Props> = (props) => {
             }rpx`}
           >
             <View className={styles['course-title']}>{item[0].classname}</View>
-            <View className={styles['course-location']}>@{item[0].location}</View>
+            <View className={styles['course-location']}>
+              @{item[0].location}
+            </View>
           </View>
-        ) : null;
+        ) : null
       })}
     </View>
-  );
-};
+  )
+}
 
-export default Day;
+export default Day

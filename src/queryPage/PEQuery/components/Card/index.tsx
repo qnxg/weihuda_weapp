@@ -10,14 +10,22 @@ interface CardProps {
   items?: FitnessItem[] | undefined
 }
 
-const bgColors = ['#ff7584', '#8f85d9', '#ffc63f', '#74e0d4', '#ff956b', '#48d197', '#74d9ff']
+const bgColors = [
+  '#ff7584',
+  '#8f85d9',
+  '#ffc63f',
+  '#74e0d4',
+  '#ff956b',
+  '#48d197',
+  '#74d9ff',
+]
 const percent = [20, 15, 10, 10, 20, 10, 15]
 
-const Card: React.FC<CardProps> = (props) => {
+const Card: React.FC<CardProps> = props => {
   const { total, sex, name, items } = props
   const [nowAt, setNowAt] = useState(7)
 
-  const onChangeNowAt = (e) => {
+  const onChangeNowAt = e => {
     setNowAt(e.target.dataset.id)
   }
 
@@ -39,7 +47,9 @@ const Card: React.FC<CardProps> = (props) => {
             <View className={styles.title} style={{ color: bgColors[nowAt] }}>
               {items && items[nowAt].name}
             </View>
-            <View className={styles.percent}>{`占比${percent[nowAt]}% 得分: ${items && items[nowAt].grade}`}</View>
+            <View
+              className={styles.percent}
+            >{`占比${percent[nowAt]}% 得分: ${items && items[nowAt].grade}`}</View>
           </View>
         )}
         <View className={styles.banner}>
@@ -56,7 +66,7 @@ const Card: React.FC<CardProps> = (props) => {
                 className={styles.onePart}
                 style={{
                   backgroundColor: color,
-                  width: `${width}%`
+                  width: `${width}%`,
                 }}
                 data-id={index}
               />

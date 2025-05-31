@@ -21,7 +21,7 @@ export default {
     'pages/feedbackHistory/index', // 历史反馈查询
     'pages/noDuty/index', // 免责声明
     'pages/404/index', // 404页
-    'pages/messageleft/index' //留言板
+    'pages/messageleft/index', //留言板
   ],
   subPackages: [
     {
@@ -48,8 +48,8 @@ export default {
         'card/detail', // 交易详情
         'netflowOrder/index', // 校园网流量账单
         'netflowDetail/index', // 校园网流量明细
-        'electricity/index' // 剩余电量查询
-      ]
+        'electricity/index', // 剩余电量查询
+      ],
     },
     {
       root: 'settingsPage', // 小程序设置页面
@@ -57,14 +57,14 @@ export default {
         'index', // 设置目录页
         'indexCardSettings/index', // 小程序首页卡片设置
         'indexCardSettings/normalCardSettings/index', // 常规卡片排序
-      ]
-    }
+      ],
+    },
   ],
   preloadRule: {
     'pages/index/index': {
       network: 'all',
-      packages: ['queryPage']
-    }
+      packages: ['queryPage'],
+    },
   },
   darkmode: true,
   themeLocation: 'theme.json',
@@ -75,7 +75,7 @@ export default {
     backgroundColor: '@bgColor',
     backgroundTextStyle: '@bgTextStyle',
     backgroundColorTop: '@bgColorTop',
-    backgroundColorBottom: '@bgColorBottom'
+    backgroundColorBottom: '@bgColorBottom',
   },
   tabBar: {
     color: '@tabFontColor',
@@ -87,32 +87,32 @@ export default {
         pagePath: 'pages/index/index',
         text: '查湖',
         iconPath: '@iconHomePath',
-        selectedIconPath: '@selectedIconHomePath'
+        selectedIconPath: '@selectedIconHomePath',
       },
       {
         pagePath: 'pages/information/index',
         text: '知湖',
         iconPath: '@iconInfoPath',
-        selectedIconPath: '@selectedIconInfoPath'
+        selectedIconPath: '@selectedIconInfoPath',
       },
       {
         pagePath: 'pages/toolBox/index',
         text: '工具箱',
         iconPath: '@iconToolPath',
-        selectedIconPath: '@selectedIconToolPath'
+        selectedIconPath: '@selectedIconToolPath',
       },
       {
         pagePath: 'pages/table/index',
         text: '课表',
         iconPath: '@iconTablePath',
-        selectedIconPath: '@selectedIconTablePath'
+        selectedIconPath: '@selectedIconTablePath',
       },
       {
         pagePath: 'pages/mine/index',
         text: '我的',
         iconPath: '@iconMinePath',
-        selectedIconPath: '@selectedIconMinePath'
-      }
-    ]
-  }
+        selectedIconPath: '@selectedIconMinePath',
+      },
+    ],
+  },
 }

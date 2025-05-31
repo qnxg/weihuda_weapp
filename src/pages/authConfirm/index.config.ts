@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '授权'
-};
+  navigationBarTitleText: '授权',
+}

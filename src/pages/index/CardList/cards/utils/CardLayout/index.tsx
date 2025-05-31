@@ -1,30 +1,30 @@
-import { Image, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import React, { useCallback } from 'react';
+import { Image, View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import React, { useCallback } from 'react'
 
-import styles from './index.module.scss';
+import styles from './index.module.scss'
 
 export interface CardLayoutProps {
   /** 卡片标题图标 */
-  icon: string;
+  icon: string
   /** 卡片标题 */
-  title: string;
+  title: string
   /** 点击卡片需要跳转的页面地址 如`/pages/index/index`*/
-  url?: string;
+  url?: string
   /** 点击右上角需要跳转的页面地址 如`/pages/index/index`*/
-  moreUrl?: string;
+  moreUrl?: string
   /** 查看更多按钮的文案 */
-  moreTitle?: string;
+  moreTitle?: string
   /** 需要有子组件内容 */
-  children?: JSX.Element;
+  children?: JSX.Element
 }
 
-const CardLayout: React.FC<CardLayoutProps> = (props) => {
+const CardLayout: React.FC<CardLayoutProps> = props => {
   const navigate = useCallback(() => {
     if (props.url) {
-      void Taro.navigateTo({ url: props.url });
+      void Taro.navigateTo({ url: props.url })
     }
-  }, [props.url]);
+  }, [props.url])
 
   return (
     <View className={styles.cardItem}>
@@ -38,7 +38,9 @@ const CardLayout: React.FC<CardLayoutProps> = (props) => {
             <View
               className={styles.moreTitle}
               onClick={() => {
-                void Taro.navigateTo({ url: props.moreUrl || '/pages/index/index' });
+                void Taro.navigateTo({
+                  url: props.moreUrl || '/pages/index/index',
+                })
               }}
             >
               {props.moreTitle || '查看更多'}
@@ -48,7 +50,7 @@ const CardLayout: React.FC<CardLayoutProps> = (props) => {
         {props.children}
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default CardLayout;
+export default CardLayout

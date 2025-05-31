@@ -1,61 +1,61 @@
 .goodsContainer {
-    padding-top: 20px 0;
+  padding-top: 20px 0;
 
-    .goodsItem {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: var(--bg-color-container);
-        padding-top: 20px;
-        color: var(--text-color-primary);
+  .goodsItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-color-container);
+    padding-top: 20px;
+    color: var(--text-color-primary);
 
-        .left {
-            display: flex;
-            flex: 1;
-        }
-
-        .goodsInfo {
-            display: flex;
-            padding-top: 10px;
-            padding-bottom: 20px;
-            flex-direction: column;
-            justify-content: space-between;
-
-            .extera {
-                display: flex;
-                align-items: center;
-                font-size: 24px;
-                color: var(--text-color-secondary);
-            }
-        }
-
-        .goodsPrice {
-            color: var(--text-color-primary);
-            margin-right: 20px;
-        }
-
-        .goodsImg {
-            width: 150px;
-            height: 150px;
-            margin-right: 20px;
-            border: 1px solid var(--component-border);
-        }
-
-        .goodsBtn {
-            font-size: 24px;
-            height: 50px;
-            line-height: 50px;
-            align-self: flex-end;
-            margin-bottom: 20px;
-        }
+    .left {
+      display: flex;
+      flex: 1;
     }
+
+    .goodsInfo {
+      display: flex;
+      padding-top: 10px;
+      padding-bottom: 20px;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .extera {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        color: var(--text-color-secondary);
+      }
+    }
+
+    .goodsPrice {
+      color: var(--text-color-primary);
+      margin-right: 20px;
+    }
+
+    .goodsImg {
+      width: 150px;
+      height: 150px;
+      margin-right: 20px;
+      border: 1px solid var(--component-border);
+    }
+
+    .goodsBtn {
+      font-size: 24px;
+      height: 50px;
+      line-height: 50px;
+      align-self: flex-end;
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .empty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    background: var(--bg-color-container);
-    color: var(--text-color-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background: var(--bg-color-container);
+  color: var(--text-color-secondary);
 }

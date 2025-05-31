@@ -32,7 +32,7 @@ const Index: React.FC = () => {
   // 选中的标签
   const [selectedTag, setSelectedTag] = useState('')
   // 用户信息
-  const userInfo = useAppSelector((state) => state.userInfo)
+  const userInfo = useAppSelector(state => state.userInfo)
 
   // 提交时
   const onSubmit = async () => {
@@ -40,21 +40,21 @@ const Index: React.FC = () => {
     if (!title || title.trim() === '') {
       await Taro.showToast({
         title: '请输入标题',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
     if (!content || content.trim() === '') {
       await Taro.showToast({
         title: '请输入内容',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
     if (!selectedTag) {
       await Taro.showToast({
         title: '请选择分类',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
@@ -76,10 +76,12 @@ const Index: React.FC = () => {
     let finalContent: string | string[] = content
       .trim()
       .split('\n')
-      .map((item) => `<p>${item}</p>`)
+      .map(item => `<p>${item}</p>`)
     // 如果有图片则插入图片
     if (uploadedImgUrl) {
-      finalContent.push(`<p><img style="width: 70%;" src="${uploadedImgUrl}" /></p>`)
+      finalContent.push(
+        `<p><img style="width: 70%;" src="${uploadedImgUrl}" /></p>`
+      )
     }
     finalContent = finalContent.join('')
     // 提交表单
@@ -91,7 +93,7 @@ const Index: React.FC = () => {
       cover: uploadedImgUrl ? uploadedImgUrl : null,
       type: 'article',
       tags: selectedTag,
-      status: 0
+      status: 0,
     })
     // 提交成功后清空表单
     setContent('')
@@ -101,7 +103,7 @@ const Index: React.FC = () => {
     // 提示用户
     void Taro.showToast({
       title: '发布成功',
-      icon: 'success'
+      icon: 'success',
     })
     // 返回上一页
     setTimeout(() => {
@@ -111,27 +113,37 @@ const Index: React.FC = () => {
 
   return (
     <Card>
-      <Input label='标题' placeholder='请输入标题' value={title} required onInput={(v) => setTitle(v.detail.value)} />
+      <Input
+        label='标题'
+        placeholder='请输入标题'
+        value={title}
+        required
+        onInput={v => setTitle(v.detail.value)}
+      />
       <Textarea
         label='内容'
         required
         value={content}
         maxlength={1000}
-        onInput={(v) => {
+        onInput={v => {
           setContent(v.detail.value)
         }}
         placeholder='请输入内容'
       />
-      <Upload label='图片' value={imgUrl} onChoose={(filePath) => setImgUrl(filePath)} />
+      <Upload
+        label='图片'
+        value={imgUrl}
+        onChoose={filePath => setImgUrl(filePath)}
+      />
       <Label required>分类</Label>
       <View className={styles.tagsWrapper}>
         {defaultTags
-          .filter((v) => !!v.value)
-          .map((item) => {
+          .filter(v => !!v.value)
+          .map(item => {
             return (
               <View
                 className={classNames(styles.tagsItem, {
-                  [styles.selected]: selectedTag === item.value
+                  [styles.selected]: selectedTag === item.value,
                 })}
                 onClick={() => setSelectedTag(item.value)}
                 key={item.value}

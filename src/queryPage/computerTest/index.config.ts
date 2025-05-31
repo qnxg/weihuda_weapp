@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '机考查询'
-};
+  navigationBarTitleText: '机考查询',
+}

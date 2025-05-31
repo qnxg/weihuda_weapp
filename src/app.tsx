@@ -9,16 +9,13 @@ import store from './models'
 import './theme.css'
 
 const App: React.FC = ({ children }: React.PropsWithChildren) => {
-
-  useLaunch((_options) => {
-
+  useLaunch(_options => {
     dayjs.extend(customParseFormat)
 
     Taro.onPageNotFound(() => {
       void Taro.redirectTo({ url: '/pages/404/index' })
     })
-
-  });
+  })
   return <Provider store={store}>{children}</Provider>
 }
 

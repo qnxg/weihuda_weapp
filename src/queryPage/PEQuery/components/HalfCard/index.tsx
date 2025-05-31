@@ -10,12 +10,12 @@ interface Props {
   score: string
 }
 
-const HalfCard: React.FC<Props> = (props) => {
+const HalfCard: React.FC<Props> = props => {
   const { name, rank, score, color: temp } = props
   const cx = classNames({
     [styles.subTitle]: true,
     [styles.backGreen]: temp === 'green',
-    [styles.backRed]: temp === 'red'
+    [styles.backRed]: temp === 'red',
   })
   return (
     <View className={styles.container}>

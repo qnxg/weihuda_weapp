@@ -1,4 +1,11 @@
-import { Image, Input, Navigator, Text, Textarea, View } from '@tarojs/components'
+import {
+  Image,
+  Input,
+  Navigator,
+  Text,
+  Textarea,
+  View,
+} from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
@@ -7,12 +14,12 @@ import { postFeedback } from '@/apis/feedback'
 import { uploadImgApi } from '@/apis/upload'
 import Button from '@/components/Button'
 import { useAppSelector } from '@/utils/hooks/redux'
-import type { FeedbackData} from '@/apis/feedback';
+import type { FeedbackData } from '@/apis/feedback'
 
 const Index: React.FC = () => {
   const { params } = useRouter()
   const noAuth = params.noAuth && params.noAuth == '1'
-  const { stuId } = useAppSelector((state) => state.userInfo)
+  const { stuId } = useAppSelector(state => state.userInfo)
 
   // const type_list = [
   //   { label: '产品建议', value: 'suggestion', checked: true },
@@ -24,14 +31,14 @@ const Index: React.FC = () => {
     stuId: stuId,
     contact: '',
     desc: '',
-    imgUrl: ''
+    imgUrl: '',
   })
 
   // 改变表单的内容
   const change = (key, newVal) => {
     setData({
       ...data,
-      [key]: newVal
+      [key]: newVal,
     })
   }
 
@@ -43,9 +50,9 @@ const Index: React.FC = () => {
         const imgUrl = res.tempFilePaths[0]
         setData({
           ...data,
-          imgUrl
+          imgUrl,
         })
-      }
+      },
     })
   }
 
@@ -57,11 +64,15 @@ const Index: React.FC = () => {
       contact: data.contact != '' ? data.contact : null,
       createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       stuId: data.stuId === stuId ? data.stuId : stuId + '/' + data.stuId,
-      imgUrl: data.imgUrl ? data.imgUrl : null
+      imgUrl: data.imgUrl ? data.imgUrl : null,
     }
     try {
       await postFeedback(reqData, !!noAuth)
-      await Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
+      await Taro.showToast({
+        title: '提交成功',
+        icon: 'success',
+        duration: 1000,
+      })
       setTimeout(() => {
         void Taro.navigateBack()
       }, 1000)
@@ -103,7 +114,7 @@ const Index: React.FC = () => {
     // 没有选择图片直接提交
     await Taro.showLoading({ title: '正在提交' })
     await submitData({
-      ...data
+      ...data,
     })
   }
 
@@ -127,7 +138,7 @@ const Index: React.FC = () => {
       </View>
       <Input
         value={data.stuId}
-        onInput={(e) => {
+        onInput={e => {
           change('stuId', (e.target as any).value)
         }}
         className={styles.input}
@@ -154,7 +165,7 @@ const Index: React.FC = () => {
       <View className={styles.input}>
         <Textarea
           value={data.desc}
-          onInput={(e) => {
+          onInput={e => {
             change('desc', (e.target as any).value)
           }}
           placeholder='请填写描述信息，必填。'
@@ -170,9 +181,10 @@ const Index: React.FC = () => {
             {!noAuth && data.imgUrl === '' && (
               <View className={styles.uploadButton} onClick={handleChoose}>
                 <View className={styles.uploadIcon}></View>
-                <View className={styles.placeholder}>上传图片能帮助程序猿更好地解决问题</View>
+                <View className={styles.placeholder}>
+                  上传图片能帮助程序猿更好地解决问题
+                </View>
               </View>
-              
             )}
           </View>
         </View>

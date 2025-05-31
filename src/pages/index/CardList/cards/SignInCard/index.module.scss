@@ -1,49 +1,49 @@
 @import '~@/utils/scss/global.scss';
 
 .icon {
-    height: 48px;
-    width: 48px;
+  height: 48px;
+  width: 48px;
 
-    background: {
-        image: url('~@/static/mine/icon-jifen.svg');
-        repeat: no-repeat;
-        position: center;
-        size: 48px;
-    }
+  background: {
+    image: url('~@/static/mine/icon-jifen.svg');
+    repeat: no-repeat;
+    position: center;
+    size: 48px;
+  }
 
-    flex: initial;
+  flex: initial;
 }
 
 @media (prefers-color-scheme: dark) {
-    .icon {
-        filter: invert(1) hue-rotate(180deg);
-    }
+  .icon {
+    filter: invert(1) hue-rotate(180deg);
+  }
 }
 
 .text {
-    flex: 1;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    line-height: 1;
-    justify-content: flex-start;
-    font-size: $fontBig;
+  flex: 1;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  line-height: 1;
+  justify-content: flex-start;
+  font-size: $fontBig;
 }
 
 .button {
-    height: 60px;
-    width: 180px;
-    flex: initial;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: $fontNormal;
+  height: 60px;
+  width: 180px;
+  flex: initial;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $fontNormal;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
 }

@@ -1,12 +1,12 @@
-import { View } from '@tarojs/components';
-import React from 'react';
+import { View } from '@tarojs/components'
+import React from 'react'
 
-import style from './score.module.scss';
+import style from './score.module.scss'
 
 interface Props {
-  name: string;
-  score: number;
-  rank: number;
+  name: string
+  score: number
+  rank: number
 }
 
 const Score: React.FC<Props> = ({ name, score, rank }) => {
@@ -19,7 +19,7 @@ const Score: React.FC<Props> = ({ name, score, rank }) => {
       <View className={style.score}>{score}</View>
       <View className={style.tips}>排名：{rank}</View>
     </View>
-  );
-};
+  )
+}
 
-export default Score;
+export default Score

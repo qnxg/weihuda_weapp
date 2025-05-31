@@ -9,7 +9,7 @@ import iconNoJK from '@/static/empty/no-exam.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
-  const { semesters, currentSem } = useAppSelector((state) => state.classTable)
+  const { semesters, currentSem } = useAppSelector(state => state.classTable)
   const [show, setShow] = useState(false)
   const [semester, setSemester] = useState(currentSem)
   const [searched, setSearched] = useState<boolean>(false)
@@ -23,7 +23,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const xn = semesters[semester].xn
@@ -39,7 +39,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -48,7 +48,11 @@ const Index: React.FC = () => {
 
   return (
     <View>
-      <PickerArea setSemester={setSemester} setKeyword={setKeyword} currentSem={semester} />
+      <PickerArea
+        setSemester={setSemester}
+        setKeyword={setKeyword}
+        currentSem={semester}
+      />
       <View
         className={styles.button}
         onClick={async () => {
@@ -61,13 +65,16 @@ const Index: React.FC = () => {
       {searched && show && (
         <View className={styles.tips}>
           <View>
-            搜索结果数：{Number(data?.data?.hdjw.course.length) > 99 ? '99+' : String(data?.data?.hdjw.course.length)}
+            搜索结果数：
+            {Number(data?.data?.hdjw.course.length) > 99
+              ? '99+'
+              : String(data?.data?.hdjw.course.length)}
           </View>
         </View>
       )}
       {searched && show && data?.data?.hdjw.course.length !== 0 && (
         <View className={styles.outer}>
-          {data?.data?.hdjw?.course.map((item) => {
+          {data?.data?.hdjw?.course.map(item => {
             return (
               <DisplayCard
                 title={item.name}

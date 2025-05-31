@@ -25,14 +25,14 @@ import trend from '@/static/toolBox/icon-trend.svg'
  * @interface GridTab 定义tab数据结构
  */
 export interface GridTab {
-  title: string;
-  imgUrl: string;
-  navigator: string;
+  title: string
+  imgUrl: string
+  navigator: string
 }
 
 export interface Category {
-  name: string;
-  member: GridTab[];
+  name: string
+  member: GridTab[]
 }
 
 export const data: Category[] = [
@@ -42,34 +42,34 @@ export const data: Category[] = [
       {
         title: '成绩查询',
         imgUrl: grade,
-        navigator: '/queryPage/grade/index'
+        navigator: '/queryPage/grade/index',
       },
       {
         title: '项目成绩',
         imgUrl: peaceTime,
-        navigator: '/queryPage/peaceTime/index'
+        navigator: '/queryPage/peaceTime/index',
       },
       {
         title: '成绩排名',
         imgUrl: ranking,
-        navigator: '/queryPage/ranking/index'
+        navigator: '/queryPage/ranking/index',
       },
       {
         title: '成绩趋势',
         imgUrl: trend,
-        navigator: '/queryPage/trend/index'
+        navigator: '/queryPage/trend/index',
       },
       {
         title: '实验成绩',
         imgUrl: experimentGrade,
-        navigator: '/queryPage/experimentGrade/index'
+        navigator: '/queryPage/experimentGrade/index',
       },
       {
         title: '体测成绩',
         imgUrl: PEGrade,
-        navigator: '/queryPage/PEQuery/index'
-      }
-    ]
+        navigator: '/queryPage/PEQuery/index',
+      },
+    ],
   },
   {
     name: '课程与考试',
@@ -77,34 +77,34 @@ export const data: Category[] = [
       {
         title: '课程信息',
         imgUrl: courseInfo,
-        navigator: '/queryPage/course/index'
+        navigator: '/queryPage/course/index',
       },
       {
         title: '实验安排',
         imgUrl: experiment,
-        navigator: '/queryPage/experimentArrange/index'
+        navigator: '/queryPage/experimentArrange/index',
       },
       {
         title: '考试安排',
         imgUrl: arrangement,
-        navigator: '/queryPage/examSchedule/index'
+        navigator: '/queryPage/examSchedule/index',
       },
       {
         title: '机考安排',
         imgUrl: computerTest,
-        navigator: '/queryPage/computerTest/index'
+        navigator: '/queryPage/computerTest/index',
       },
       {
         title: '体测预约',
         imgUrl: PEAppoint,
-        navigator: '/queryPage/PEAppoint/index'
+        navigator: '/queryPage/PEAppoint/index',
       },
       {
         title: '考号预存',
         imgUrl: examId,
-        navigator: '/queryPage/examId/index'
-      }
-    ]
+        navigator: '/queryPage/examId/index',
+      },
+    ],
   },
   {
     name: '校园与生活',
@@ -112,53 +112,53 @@ export const data: Category[] = [
       {
         title: '校历查看',
         imgUrl: schoolCalendar,
-        navigator: '/queryPage/schoolCalendar/index'
+        navigator: '/queryPage/schoolCalendar/index',
       },
       {
         title: '体测标准',
         imgUrl: PEStandard,
-        navigator: '/queryPage/PEStandard/index'
+        navigator: '/queryPage/PEStandard/index',
       },
       {
         title: '借阅查询',
         imgUrl: borrow,
-        navigator: '/queryPage/borrowInfo/index'
+        navigator: '/queryPage/borrowInfo/index',
       },
       {
         title: '空教室查询',
         imgUrl: empty,
-        navigator: '/queryPage/emptyRoom/index'
+        navigator: '/queryPage/emptyRoom/index',
       },
       {
         title: '校园卡账单',
         imgUrl: stuCard,
-        navigator: '/queryPage/card/index'
+        navigator: '/queryPage/card/index',
       },
       {
         title: '校园网账单',
         imgUrl: netflowBill,
-        navigator: '/queryPage/netflowOrder/index'
+        navigator: '/queryPage/netflowOrder/index',
       },
       {
         title: '流量详情',
         imgUrl: netflowDetail,
-        navigator: '/queryPage/netflowDetail/index'
+        navigator: '/queryPage/netflowDetail/index',
       },
       {
         title: '电费查询',
         imgUrl: electricity,
-        navigator: '/queryPage/electricity/index'
+        navigator: '/queryPage/electricity/index',
       },
       {
         title: '萌新手册',
         imgUrl: mxsc,
-        navigator: '/pages/webview/index?url=https://qnxg.cn/mxsc/book/'
-      }
+        navigator: '/pages/webview/index?url=https://qnxg.cn/mxsc/book/',
+      },
       // {
       //   title: '电费历史',
       //   imgUrl: electricityHistory,
       //   navigator: '/queryPage/electricityHistory/index'
       // }
-    ]
-  }
-];
+    ],
+  },
+]

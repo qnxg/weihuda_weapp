@@ -11,7 +11,7 @@ import { useAppSelector } from '@/utils/hooks/redux'
 import usePromise from '@/utils/hooks/usePromise'
 import { getBoundingClientRect } from '@/utils/tool'
 import type CardProps from '../../CardProps'
-import type { Message } from '@/apis/message';
+import type { Message } from '@/apis/message'
 
 interface IProps {
   message: Message[]
@@ -19,7 +19,7 @@ interface IProps {
 
 const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   // 消息通知
-  const notice = useAppSelector((state) => state.notice)
+  const notice = useAppSelector(state => state.notice)
   // 总数
   const [total, setTotal] = useState(message.length)
   // 当前显示的消息
@@ -27,29 +27,27 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   // 高度，用于swiper的高度
   const [height, setHeight] = useState(0)
 
-
   // 更新总数
   useEffect(() => {
     setTotal(message.length + notice.unread)
   }, [message, notice])
-
 
   // 计算后的高度
   const calcedHeights = useMemo(async () => {
     const rects = await getBoundingClientRect(`.${styles.messageItem}`)
     if (!rects || rects.length === 0) return [120]
     setHeight(rects[0].height)
-    return rects.map((item) => {
+    return rects.map(item => {
       if (item) return item.height
       return 120
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notice, message])
 
   // 滑块切换
-  const handleSwiperChange = (e) => {
+  const handleSwiperChange = e => {
     setCurrent(e.detail.current)
-    void calcedHeights.then((res) => {
+    void calcedHeights.then(res => {
       setHeight(res[e.detail.current])
     })
   }
@@ -63,7 +61,9 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
             footer={
               <View
                 onClick={() => {
-                  void Taro.navigateTo({ url: '/pages/messageBox/index' })
+                  void Taro.navigateTo({
+                    url: '/pages/messageBox/index',
+                  })
                 }}
               >
                 查看更多
@@ -84,12 +84,14 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
             className={styles.swiper}
           >
             {/* 公告 */}
-            {message.map((item) => {
+            {message.map(item => {
               return (
                 <SwiperItem
                   key={item.title}
                   onClick={() => {
-                    void Taro.navigateTo({ url: item.url ? item.url : '/pages/messageBox/index' })
+                    void Taro.navigateTo({
+                      url: item.url ? item.url : '/pages/messageBox/index',
+                    })
                   }}
                 >
                   <View className={styles.messageItem}>
@@ -115,9 +117,15 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   )
 }
 
-const MessageCard: React.FC<CardProps> = ({ onLoadingStatusChange, reloadController }) => {
-  const [messageData, isMessageDataLoading] =
-    usePromise(getMessage, undefined, [reloadController]);
+const MessageCard: React.FC<CardProps> = ({
+  onLoadingStatusChange,
+  reloadController,
+}) => {
+  const [messageData, isMessageDataLoading] = usePromise(
+    getMessage,
+    undefined,
+    [reloadController]
+  )
   useEffect(() => {
     onLoadingStatusChange(isMessageDataLoading)
   }, [isMessageDataLoading, onLoadingStatusChange])

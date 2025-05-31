@@ -6,8 +6,7 @@ import { getExamArrange } from '@/apis/hdjw/examArrange'
 import PullRefresh from '@/components/PullRefresh'
 import Tabs from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
-import type { ExamArrange} from '@/apis/hdjw/examArrange';
-
+import type { ExamArrange } from '@/apis/hdjw/examArrange'
 
 const pages = ['全部考试', '考试日历']
 
@@ -22,7 +21,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getExamArrange()
@@ -30,7 +29,7 @@ const Index: React.FC = () => {
     } catch (err) {
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -41,7 +40,7 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }

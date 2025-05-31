@@ -5,63 +5,72 @@ import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
 import Button from '@/components/Button'
 
 export const btnText = {
-    loading: '加载中',
-    signed: '已签',
-    unsigned: '签到',
-    error: '加载失败',
+  loading: '加载中',
+  signed: '已签',
+  unsigned: '签到',
+  error: '加载失败',
 }
 
-const SignButton: React.FC<{ className?: string, signActionCallback?: () => void }> = (props) => {
-    // 加载，已签到，未签到
-    const [status, setStatus] = useState<keyof typeof btnText>('loading')
+const SignButton: React.FC<{
+  className?: string
+  signActionCallback?: () => void
+}> = props => {
+  // 加载，已签到，未签到
+  const [status, setStatus] = useState<keyof typeof btnText>('loading')
 
-    const fetchStatus = useCallback(async () => {
-        try {
-            const res = await getJifenRecordPageApi({
-                key: 'qiandao',
-                param: dayjs().format('YYYY-MM-DD')
-            })
-            if (res.rows.length > 0) {
-                return 'signed'
-            } else {
-                return 'unsigned'
-            }
-        } catch {
-            return 'error'
-        }
-    }, [])
-
-    useEffect(() => {
-        void (async () => {
-            setStatus(await fetchStatus())
-        })();
-    }, [fetchStatus])
-
-    // 签到
-    const handleClick = async () => {
-        if (status !== 'unsigned') return
-        await Taro.showLoading({ title: '签到中' })
-        const res = await postJifenRecordApi({
-            key: 'qiandao',
-            param: dayjs().format('YYYY-MM-DD'),
-            createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-        })
-        if (res) {
-            setStatus('signed');
-            if (props.signActionCallback) {
-                props.signActionCallback()
-            }
-            await Taro.showToast({ title: '签到成功' })
-            return
-        }
-        Taro.hideLoading()
+  const fetchStatus = useCallback(async () => {
+    try {
+      const res = await getJifenRecordPageApi({
+        key: 'qiandao',
+        param: dayjs().format('YYYY-MM-DD'),
+      })
+      if (res.rows.length > 0) {
+        return 'signed'
+      } else {
+        return 'unsigned'
+      }
+    } catch {
+      return 'error'
     }
+  }, [])
 
-    return <Button className={props.className} theme={status !== 'unsigned' ? 'default' : 'primary'}
-        onClick={handleClick} disabled={status !== 'unsigned'} loading={status == 'loading'}
+  useEffect(() => {
+    void (async () => {
+      setStatus(await fetchStatus())
+    })()
+  }, [fetchStatus])
+
+  // 签到
+  const handleClick = async () => {
+    if (status !== 'unsigned') return
+    await Taro.showLoading({ title: '签到中' })
+    const res = await postJifenRecordApi({
+      key: 'qiandao',
+      param: dayjs().format('YYYY-MM-DD'),
+      createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+    })
+    if (res) {
+      setStatus('signed')
+      if (props.signActionCallback) {
+        props.signActionCallback()
+      }
+      await Taro.showToast({ title: '签到成功' })
+      return
+    }
+    Taro.hideLoading()
+  }
+
+  return (
+    <Button
+      className={props.className}
+      theme={status !== 'unsigned' ? 'default' : 'primary'}
+      onClick={handleClick}
+      disabled={status !== 'unsigned'}
+      loading={status == 'loading'}
     >
-        {btnText[status]}
+      {btnText[status]}
     </Button>
+  )
 }
 
-export default SignButton;
+export default SignButton

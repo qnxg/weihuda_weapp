@@ -1,10 +1,14 @@
 import { Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
-import { getDormitoryApi, getElectricityApi, updateDormitoryApi } from '@/apis/electricity'
+import {
+  getDormitoryApi,
+  getElectricityApi,
+  updateDormitoryApi,
+} from '@/apis/electricity'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
-import type { Dormitory} from '@/apis/electricity';
+import type { Dormitory } from '@/apis/electricity'
 
 const Index: React.FC = () => {
   const [electricity, setElectricity] = useState<string>()
@@ -15,7 +19,7 @@ const Index: React.FC = () => {
   const getData = async (update = false) => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       if (update) await updateDormitoryApi()
@@ -27,7 +31,7 @@ const Index: React.FC = () => {
     } catch (err) {
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -38,7 +42,7 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -47,7 +51,8 @@ const Index: React.FC = () => {
     await getData(true)
     await Taro.showModal({
       title: '提示',
-      content: '已重新更新宿舍信息。如宿舍信息仍无法获取或获取失败，请前往"我的-反馈建议"上报问题。'
+      content:
+        '已重新更新宿舍信息。如宿舍信息仍无法获取或获取失败，请前往"我的-反馈建议"上报问题。',
     })
   }
 
@@ -57,7 +62,9 @@ const Index: React.FC = () => {
         <View className={'text-primary'}>
           {dormitory && electricity ? (
             <>
-              <Text className={'font-bold text-3xl'}>{electricity.slice(0, -1)}</Text>
+              <Text className={'font-bold text-3xl'}>
+                {electricity.slice(0, -1)}
+              </Text>
               <Text className={'text-xs ml-1'}>{electricity.slice(-1)}</Text>
             </>
           ) : (

@@ -1,6 +1,12 @@
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import styles from './index.module.scss'
 import { getGrade } from '@/apis/hdjw/grade'
 import PullRefresh from '@/components/PullRefresh'
@@ -10,13 +16,13 @@ import empty from '@/static/empty/no-grade.svg'
 import notStart from '@/static/empty/term-not-start.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
 import type { GradeState } from './interface'
-import type { GradeItem} from '@/apis/hdjw/grade';
+import type { GradeItem } from '@/apis/hdjw/grade'
 
 const semester = ['秋季学期', '春季学期', '夏季学期']
 
 const Index: React.FC = () => {
-  const { termYear, termType } = useAppSelector((state) => state.smester)
-  const { enterYear } = useAppSelector((state) => state.userInfo)
+  const { termYear, termType } = useAppSelector(state => state.smester)
+  const { enterYear } = useAppSelector(state => state.userInfo)
 
   const years = useMemo(() => {
     const yearsArr: number[] = []
@@ -29,7 +35,7 @@ const Index: React.FC = () => {
   const [gradeState, setGradeState] = useState<GradeState>({
     currentSemester: termType ?? 0,
     currentYear: 0,
-    isNotStart: false
+    isNotStart: false,
   })
   const [data, setData] = useState<GradeItem[]>([])
 
@@ -40,7 +46,7 @@ const Index: React.FC = () => {
   const getData = useCallback(async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getGrade(yearsCurrentYear, gradeState.currentSemester)
@@ -55,7 +61,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     }
     Taro.hideLoading()
@@ -71,7 +77,9 @@ const Index: React.FC = () => {
     setGradeState({
       ...gradeState,
       currentYear: index,
-      isNotStart: termType === null || years[index] >= termYear && currentSemester > termType
+      isNotStart:
+        termType === null ||
+        (years[index] >= termYear && currentSemester > termType),
     })
   }
 
@@ -79,7 +87,9 @@ const Index: React.FC = () => {
     setGradeState({
       ...gradeState,
       currentSemester: index + 1,
-      isNotStart: termType === null || years[currentYear] >= termYear && index + 1 > termType
+      isNotStart:
+        termType === null ||
+        (years[currentYear] >= termYear && index + 1 > termType),
     })
   }
 
@@ -90,13 +100,26 @@ const Index: React.FC = () => {
 
   return (
     <Fragment>
-      <TabBar items={years} num={0} onClick={onChangeFirstTab} current={currentYear} />
-      <TabBar items={semester} num={1} onClick={onChangeSecondTab} current={currentSemester - 1} />
+      <TabBar
+        items={years}
+        num={0}
+        onClick={onChangeFirstTab}
+        current={currentYear}
+      />
+      <TabBar
+        items={semester}
+        num={1}
+        onClick={onChangeSecondTab}
+        current={currentSemester - 1}
+      />
       <PullRefresh topGap={136} runFunc={onRefresh}>
         {data && show && data.length > 0 ? (
           data.map((item, i) => {
             return (
-              <View key={item.name + i + item.grade} className={styles.gradeCardContainer}>
+              <View
+                key={item.name + i + item.grade}
+                className={styles.gradeCardContainer}
+              >
                 <View className={styles.gradeCard}>
                   <View className={styles.nameAndGrade}>
                     <View>{item.name}</View>
@@ -116,7 +139,9 @@ const Index: React.FC = () => {
         ) : (
           <View className={styles.empty}>
             <Image src={isNotStart ? notStart : empty} className={styles.img} />
-            <View className={styles.text}>{isNotStart ? '学期还没有开始哦🤔' : '还没有成绩信息哦😀'}</View>
+            <View className={styles.text}>
+              {isNotStart ? '学期还没有开始哦🤔' : '还没有成绩信息哦😀'}
+            </View>
           </View>
         )}
       </PullRefresh>

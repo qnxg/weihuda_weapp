@@ -11,7 +11,7 @@ import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import { TabPanel, Tabs } from '@/components/Tabs'
 import { getBoundingClientRect, parseJSON } from '@/utils/tool'
-import type { IZhihu} from '@/apis/zhihu';
+import type { IZhihu } from '@/apis/zhihu'
 
 const Index: React.FC = () => {
   // 标签
@@ -26,12 +26,16 @@ const Index: React.FC = () => {
   const [queryData, setQueryData] = useState({
     page: 1,
     pageSize: 10,
-    tags: ''
+    tags: '',
   })
 
   // 获取tags
   const getTags = async () => {
-    const res = await getMiniConfigPageApi({ page: 1, pageSize: 100, key: 'zhihuTags' })
+    const res = await getMiniConfigPageApi({
+      page: 1,
+      pageSize: 100,
+      key: 'zhihuTags',
+    })
     if (res.rows.length) {
       // 先解析，没有报错就存储
       const resTags = parseJSON(res.rows[0].value)
@@ -41,7 +45,10 @@ const Index: React.FC = () => {
   }
 
   // 获取知湖页面数据
-  const getData = async (newQueryData: typeof queryData, force: boolean = false) => {
+  const getData = async (
+    newQueryData: typeof queryData,
+    force: boolean = false
+  ) => {
     setLoading(true)
     const res = await getZhihuPageApi(newQueryData)
     if (force) {
@@ -66,11 +73,11 @@ const Index: React.FC = () => {
   const handleClick = (item: IZhihu) => {
     if (item.type === 'link') {
       void Taro.navigateTo({
-        url: `/pages/webview/index?url=${item.content}&title=${item.title}&from=zhihu`
+        url: `/pages/webview/index?url=${item.content}&title=${item.title}&from=zhihu`,
       })
     } else {
       void Taro.navigateTo({
-        url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`
+        url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`,
       })
     }
   }
@@ -85,11 +92,11 @@ const Index: React.FC = () => {
   useEffect(() => {
     void getData(queryData, true)
     void getTags()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 下拉刷新
-  const runRefresh = async (closer) => {
+  const runRefresh = async closer => {
     const newQueryData = { ...queryData, page: 1 }
     setQueryData(newQueryData)
     await getData(newQueryData, true)
@@ -111,8 +118,12 @@ const Index: React.FC = () => {
       {/* 顶部tab栏 */}
       <View className={styles.tabsWrapper}>
         <Tabs tabsClassName={styles.tabs} onChange={handleChange}>
-          {tags.map((item) => (
-            <TabPanel key={item.value} title={item.label} value={item.value}></TabPanel>
+          {tags.map(item => (
+            <TabPanel
+              key={item.value}
+              title={item.label}
+              value={item.value}
+            ></TabPanel>
           ))}
           {/* <TabPanel title='首页' value=''></TabPanel>
           <TabPanel title='活动' value='活动'></TabPanel>
@@ -122,7 +133,7 @@ const Index: React.FC = () => {
       </View>
       <PullRefresh
         scrollViewProps={{
-          onScrollToLower: scrollToLower
+          onScrollToLower: scrollToLower,
         }}
         topGap={0}
         runFunc={runRefresh}
@@ -131,10 +142,10 @@ const Index: React.FC = () => {
         <View
           className={styles.contentWrapper}
           style={{
-            paddingTop: `${paddingTop}px`
+            paddingTop: `${paddingTop}px`,
           }}
         >
-          {data.map((item) => {
+          {data.map(item => {
             return (
               <Card
                 key={item.id}
@@ -147,10 +158,14 @@ const Index: React.FC = () => {
                   <View className={styles.title}>{item.title}</View>
                   <View className={styles.exteraInfo}>
                     {item.publishTime && (
-                      <View className={styles.publishTime}>{dayjs(item.publishTime).format('YYYY-MM-DD')}</View>
+                      <View className={styles.publishTime}>
+                        {dayjs(item.publishTime).format('YYYY-MM-DD')}
+                      </View>
                     )}
                     {item.status !== 1 && (
-                      <View className={styles.status}>{item.status == 0 ? '审核中' : '审核未通过'}</View>
+                      <View className={styles.status}>
+                        {item.status == 0 ? '审核中' : '审核未通过'}
+                      </View>
                     )}
                   </View>
                 </View>
@@ -173,7 +188,7 @@ const Index: React.FC = () => {
           className={styles.publishBtn}
           onClick={() =>
             Taro.navigateTo({
-              url: '/pages/informationAdd/index'
+              url: '/pages/informationAdd/index',
             })
           }
         >

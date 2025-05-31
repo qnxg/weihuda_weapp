@@ -1,33 +1,36 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { SetStateAction } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react'
+import type { SetStateAction } from 'react'
 
 /**
  * 使setState带上回调。
  * 回调的用法见React class based component
- * 
+ *
  * @see https://stackoverflow.com/a/61842546
  */
 function useStateCallback<T>(
-    initialState: T | (() => T)
+  initialState: T | (() => T)
 ): [T, (state: SetStateAction<T>, cb?: (state: T) => void) => void] {
-    const [state, setState] = useState<T>(initialState);
-    const cbRef = useRef<((state: T) => void) | undefined>(undefined); // init mutable ref container for callbacks
+  const [state, setState] = useState<T>(initialState)
+  const cbRef = useRef<((state: T) => void) | undefined>(undefined) // init mutable ref container for callbacks
 
-    const setStateCallback = useCallback((state: SetStateAction<T>, cb?: (state: T) => void) => {
-        cbRef.current = cb; // store current, passed callback in ref
-        setState(state);
-    }, []); // keep object reference stable, exactly like `useState`
+  const setStateCallback = useCallback(
+    (state: SetStateAction<T>, cb?: (state: T) => void) => {
+      cbRef.current = cb // store current, passed callback in ref
+      setState(state)
+    },
+    []
+  ) // keep object reference stable, exactly like `useState`
 
-    useEffect(() => {
-        // cb.current is `undefined` on initial render,
-        // so we only invoke callback on state *updates*
-        if (cbRef.current) {
-            cbRef.current(state);
-            cbRef.current = undefined; // reset callback after execution
-        }
-    }, [state]);
+  useEffect(() => {
+    // cb.current is `undefined` on initial render,
+    // so we only invoke callback on state *updates*
+    if (cbRef.current) {
+      cbRef.current(state)
+      cbRef.current = undefined // reset callback after execution
+    }
+  }, [state])
 
-    return [state, setStateCallback];
+  return [state, setStateCallback]
 }
 
 export default useStateCallback

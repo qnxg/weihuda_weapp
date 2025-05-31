@@ -13,7 +13,7 @@ interface AddPageProps {
 
 const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
   const [newItem, setNewItem] = useState<ExamId>({
-    examDate: dayjs().format('YYYY-MM-DD')
+    examDate: dayjs().format('YYYY-MM-DD'),
   } as ExamId)
 
   const runExamIdAdd = async () => {
@@ -21,38 +21,38 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
       await postExamNumApi({
         name: newItem.examName,
         date: newItem.examDate.replace(/\//g, '-'),
-        num: newItem.examId || ' '
+        num: newItem.examId || ' ',
       })
       await Taro.showToast({
         title: '添加成功',
-        duration: 1000
+        duration: 1000,
       })
     } catch (error) {
       await Taro.showToast({
         icon: 'none',
-        title: error.toString()
+        title: error.toString(),
       })
     } finally {
       Taro.hideLoading()
     }
   }
 
-  const editExamName = useCallback((e) => {
-    setNewItem((prev) => {
+  const editExamName = useCallback(e => {
+    setNewItem(prev => {
       prev.examName = e.detail.value
       return { ...prev }
     })
   }, [])
 
-  const editExamId = useCallback((e) => {
-    setNewItem((prev) => {
+  const editExamId = useCallback(e => {
+    setNewItem(prev => {
       prev.examId = e.detail.value
       return { ...prev }
     })
   }, [])
 
-  const editExamTime = useCallback((e) => {
-    setNewItem((prev) => {
+  const editExamTime = useCallback(e => {
+    setNewItem(prev => {
       prev.examDate = e.detail.value
       return { ...prev }
     })
@@ -71,7 +71,7 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
     if (checkResult) {
       await Taro.showLoading({
         title: '添加中',
-        mask: true
+        mask: true,
       })
       await runExamIdAdd()
       await Taro.hideLoading()
@@ -79,7 +79,7 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
     } else {
       await Taro.showToast({
         title: '考试名称为必填项',
-        icon: 'none'
+        icon: 'none',
       })
     }
   }
@@ -107,7 +107,12 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
         </View>
         <View className={styles.content}>
           <View className={styles.title}>时间</View>
-          <Picker className={styles.inputArea} mode='date' value={newItem.examDate} onChange={editExamTime}>
+          <Picker
+            className={styles.inputArea}
+            mode='date'
+            value={newItem.examDate}
+            onChange={editExamTime}
+          >
             <View>{newItem.examDate}</View>
           </Picker>
         </View>

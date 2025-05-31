@@ -1,19 +1,19 @@
-import { View } from '@tarojs/components';
-import React from 'react';
+import { View } from '@tarojs/components'
+import React from 'react'
 
-import styles from './index.module.scss';
+import styles from './index.module.scss'
 
 interface Grade {
-  name: string;
-  score: number;
+  name: string
+  score: number
 }
 
 interface Props {
-  grade: Grade;
+  grade: Grade
 }
 
 const GradeBanner: React.FC<Props> = ({ grade }) => {
-  const { name = 'null', score = 0 } = grade;
+  const { name = 'null', score = 0 } = grade
   return (
     <View className={styles.outer}>
       <View className={styles.subject}>{name}</View>
@@ -22,7 +22,7 @@ const GradeBanner: React.FC<Props> = ({ grade }) => {
       </View>
       <View className={styles.score}>{score}</View>
     </View>
-  );
-};
+  )
+}
 
-export default GradeBanner;
+export default GradeBanner

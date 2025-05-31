@@ -10,11 +10,11 @@ export const uploadImgApi = async (filePath: any) => {
       filePath: filePath,
       name: 'img',
       header: {
-        Authorization: storage.getToken()
+        Authorization: storage.getToken(),
       },
       formData: {
         from: 'mp',
-        time: dayjs().format('YYYY-MM-DD HH:mm:ss')
+        time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       },
       success(res) {
         const resData = JSON.parse(res.data)
@@ -23,7 +23,7 @@ export const uploadImgApi = async (filePath: any) => {
           return
         }
         resolve(resData.data.url)
-      }
+      },
     })
   )
 }

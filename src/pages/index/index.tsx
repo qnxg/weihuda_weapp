@@ -5,21 +5,24 @@ import CardList from './CardList'
 import DateBar from './DateBar'
 import styles from './index.module.scss'
 import PullRefresh from '@/components/PullRefresh'
-import { initClassTableThunk, refreshClassTableThunk } from '@/models/classTable'
+import {
+  initClassTableThunk,
+  refreshClassTableThunk,
+} from '@/models/classTable'
 import { getSmesterInfoThunk } from '@/models/smester'
 import { getUserInfoThunk } from '@/models/userInfo'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
-import type { RefProps } from '@/components/PullRefresh';
+import type { RefProps } from '@/components/PullRefresh'
 
-const CardListMemo = memo(CardList);
+const CardListMemo = memo(CardList)
 
 const Index: React.FC = () => {
-  const [fetchDataControl, fetchDataTrigger] = useRefreshKey();
-  const { isBind } = useAppSelector((state) => state.userInfo)
-  
+  const [fetchDataControl, fetchDataTrigger] = useRefreshKey()
+  const { isBind } = useAppSelector(state => state.userInfo)
+
   const dispatch = useAppDispatch()
-  
+
   /** 拉取基本信息 */
   useEffect(() => {
     void dispatch(getUserInfoThunk())
@@ -27,8 +30,10 @@ const Index: React.FC = () => {
       void dispatch(initClassTableThunk())
     })
   }, [dispatch])
-  
-  const { currentWeek, semesters: terms } = useAppSelector((state) => state.classTable)
+
+  const { currentWeek, semesters: terms } = useAppSelector(
+    state => state.classTable
+  )
   useEffect(() => {
     if (isBind) {
       if (terms && terms.length > 0) {
@@ -38,11 +43,12 @@ const Index: React.FC = () => {
       }
     }
   }, [isBind, terms, dispatch])
-  
+
   useEffect(() => {
     if (currentWeek !== undefined && currentWeek !== null) {
       void Taro.setNavigationBarTitle({
-        title: currentWeek >= 0 ? `第${currentWeek}周` : `距开学${-currentWeek}周`
+        title:
+          currentWeek >= 0 ? `第${currentWeek}周` : `距开学${-currentWeek}周`,
       })
     }
   }, [currentWeek])

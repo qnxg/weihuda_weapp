@@ -1,39 +1,38 @@
-import { View, Image, Text } from '@tarojs/components';
-import classnames from 'classnames';
-import React, { useState } from 'react';
-import styles from './index.module.scss';
-import DisplayCard from '@/components/DisplayCard';
-import iconNo from '@/static/empty/no-room.svg';
-import iconFilter from '@/static/emptyRoom/icon-filter.svg';
-import type { EmptyRoom } from '../../interface';
-
+import { View, Image, Text } from '@tarojs/components'
+import classnames from 'classnames'
+import React, { useState } from 'react'
+import styles from './index.module.scss'
+import DisplayCard from '@/components/DisplayCard'
+import iconNo from '@/static/empty/no-room.svg'
+import iconFilter from '@/static/emptyRoom/icon-filter.svg'
+import type { EmptyRoom } from '../../interface'
 
 interface Props {
-  roomList: EmptyRoom[];
-  run: () => unknown;
-  highlight: EmptyRoom;
-  setHighlight: any;
+  roomList: EmptyRoom[]
+  run: () => unknown
+  highlight: EmptyRoom
+  setHighlight: any
 }
 
-const ResultArea: React.FC<Props> = (props) => {
-  const { roomList, run, highlight, setHighlight } = props;
+const ResultArea: React.FC<Props> = props => {
+  const { roomList, run, highlight, setHighlight } = props
   /**用户点击搜索按钮的记录 */
-  const [searched, setSearched] = useState<boolean>(false);
+  const [searched, setSearched] = useState<boolean>(false)
 
   /** 处理点击教室 */
   const onClickCell = (item: EmptyRoom): void => {
     if (item.name !== highlight.name) {
-      setHighlight(item);
+      setHighlight(item)
     }
-  };
+  }
 
   return (
     <View className={styles.container}>
       <View
         className={styles.search}
         onClick={(): void => {
-          run();
-          setSearched(true);
+          run()
+          setSearched(true)
         }}
       >
         搜索
@@ -50,11 +49,11 @@ const ResultArea: React.FC<Props> = (props) => {
               <View className={styles.titles}>查询结果</View>
             </View>
             <View className={styles.Box}>
-              {roomList.map((item) => (
+              {roomList.map(item => (
                 <View
                   className={classnames({
                     [styles.highlight]: item.name === highlight.name,
-                    [styles.item]: item.name !== highlight.name
+                    [styles.item]: item.name !== highlight.name,
                   })}
                   key={item.name}
                   onClick={(): void => onClickCell(item)}
@@ -88,7 +87,7 @@ const ResultArea: React.FC<Props> = (props) => {
         </View>
       )}
     </View>
-  );
-};
+  )
+}
 
-export default ResultArea;
+export default ResultArea
