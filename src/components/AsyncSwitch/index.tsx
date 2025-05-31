@@ -2,6 +2,7 @@ import { Switch } from "@tarojs/components";
 import classNames from "classnames";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import style from "./index.module.scss"
+import useStateCallback from "@/utils/hooks/useStateCallback";
 import type { BaseEventOrig, SwitchProps } from "@tarojs/components";
 
 export interface SwitchState {
@@ -25,22 +26,29 @@ export interface AsyncSwitchProps {
     className?: string
 }
 
+/**
+ * 支持异步操作的开关。
+ */
 const AsyncSwitch: React.FC<AsyncSwitchProps> = (props) => {
     const { init, onChange } = props;
-    const [state, setState] = useState<undefined | SwitchState>(undefined);
+    const [state, setState] = useStateCallback<undefined | SwitchState>(undefined);
     useEffect(() => {
         void (async () => {
             const initState = await init()
             setState(initState)
         })()
-    }, [init, props.reInitTrigger])
+    }, [init, props.reInitTrigger, setState])
     const [changing, setChanging] = useState(false);
     const handleChange = useCallback(async (e: ChangeEvent) => {
         setChanging(true);
         const newState = await onChange(e)
-        setState(newState)
+        // https://github.com/NervJS/taro/issues/5218
+        setState(s => ({
+            disabled: true,
+            checked: !(s!.checked)
+        }), () => setState(newState))
         setChanging(false)
-    }, [onChange]);
+    }, [onChange, setState]);
     const realDisabled = state?.disabled || changing;
     return (
         state == undefined ? <></> :
