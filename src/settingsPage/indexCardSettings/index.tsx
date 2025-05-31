@@ -1,12 +1,18 @@
 import { Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { useEffect, useState } from "react";
 import { LineDividedButtonList } from "@/components/LineDividedButtonList";
 import LineDividedSwitchList from "@/components/LineDividedSwitchList";
+import useShouldRelaunchIndex from "@/utils/hooks/useShouldRelaunchIndex";
+import { getUserSettings, modifyUserSettings } from "@/utils/storage/userSettings";
+import { DEFAULT_INDEX_SIGNIN_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexSignInCardSettings";
 
 const nav = (url: string) => () => Taro.navigateTo({ url: url })
 
 /** 小程序首页卡片设置页面 */
 const Index: React.FC = () => {
+
+    const [setShouldRelaunchIndex] = useShouldRelaunchIndex(false);
     return <>
         <LineDividedButtonList
             items={[
@@ -16,31 +22,39 @@ const Index: React.FC = () => {
                 }
             ]}
         />
-        {/* <LineDividedSwitchList
+        <LineDividedSwitchList
             items={[
                 {
                     title: "显示签到卡片",
                     init: async () => {
-                        console.log("INIT...")
-                        await new Promise(res => setTimeout(res, 3000))
-                        console.log("END INIT")
                         return {
-                            checked: true,
+                            checked: (await getUserSettings(
+                                s => s.indexSignInCardSettings
+                            )).show,
                             disabled: false,
                         }
                     },
                     async onChange(e) {
-                        console.log("CHANGE...")
-                        await new Promise(res => setTimeout(res, 3000))
-                        console.log("END CHANGE")
+                        setShouldRelaunchIndex(true);
+                        await modifyUserSettings(s => ({
+                            ...s,
+                            indexSignInCardSettings: {
+                                ...s.indexSignInCardSettings,
+                                settingsMajorVersion: DEFAULT_INDEX_SIGNIN_CARD_SETTINGS.settingsMajorVersion,
+                                show: e.detail.value,
+
+                            },
+                        }))
                         return {
-                            checked: e.detail.value,
+                            checked: (await getUserSettings(
+                                s => s.indexSignInCardSettings
+                            )).show,
                             disabled: false
                         }
                     },
                 }
             ]}
-        /> */}
+        />
     </>
 }
 

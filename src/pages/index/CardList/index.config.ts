@@ -8,7 +8,7 @@ import NetflowCard from "./cards/NetflowCard";
 import SignInCard from "./cards/SignInCard";
 import HomeSwiperCard from "./cards/SwiperCard";
 import TodayClassCard from "./cards/TodayClassCard";
-import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
+import { DEFAULT_INDEX_NORMAL_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexNormalCardSettings";
 import type CardProps from "./CardProps";
 import type React from "react";
 
@@ -41,8 +41,8 @@ export type CardEnum = keyof typeof customizableCards
 export const customizableCardsMap =
     new Map(Object.entries(customizableCards)) as Map<CardEnum, React.FC<CardProps>>
 
-const show = new Set(DEFAULT_INDEX_CARD_SETTINGS.show);
-const dontShow = new Set(DEFAULT_INDEX_CARD_SETTINGS.dontShow);
+const show = new Set(DEFAULT_INDEX_NORMAL_CARD_SETTINGS.show);
+const dontShow = new Set(DEFAULT_INDEX_NORMAL_CARD_SETTINGS.dontShow);
 if (
   show.intersection(dontShow).size != 0 ||
   show.union(dontShow).symmetricDifference(customizableCardsMap).size != 0

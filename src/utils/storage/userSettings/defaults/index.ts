@@ -1,4 +1,5 @@
-import { DEFAULT_INDEX_CARD_SETTINGS } from "./indexCardSettings";
+import { DEFAULT_INDEX_NORMAL_CARD_SETTINGS } from "./indexNormalCardSettings";
+import { DEFAULT_INDEX_SIGNIN_CARD_SETTINGS } from "./indexSignInCardSettings";
 
 /** 当前小程序的所有用户配置项目列于此处
  *
@@ -19,6 +20,8 @@ export interface Settings { [key: string]: SettingsItem | undefined; }
 
 /** 总的小程序默认设置 */
 export const DEFAULT_SETTINGS = {
-    /** 首页卡片设置 */
-    indexCardSettings: DEFAULT_INDEX_CARD_SETTINGS
-} satisfies Settings
+    /** 首页常规卡片设置 */
+    indexCardSettings: DEFAULT_INDEX_NORMAL_CARD_SETTINGS,
+    /** 首页置顶签到卡片显示设置 */
+    indexSignInCardSettings: DEFAULT_INDEX_SIGNIN_CARD_SETTINGS,
+} as const /* 禁止修改，因为获取设置的函数返回的对象可能来自默认设置对象的一部分 */ satisfies Settings 

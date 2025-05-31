@@ -1,14 +1,14 @@
 import { type CardEnum } from "@/pages/index/CardList/index.config"
 import type { SettingsItem } from ".";
 
-/** 首页卡片设置的结构 */
-export interface IndexCardSettings extends SettingsItem {
+/** 首页常规卡片设置的结构 */
+export interface IndexNormalCardSettings extends SettingsItem {
   show: CardEnum[];
   dontShow: CardEnum[];
 }
 
-/** 默认卡片设置，应该列举了所有能配置的卡片 */
-export const DEFAULT_INDEX_CARD_SETTINGS: IndexCardSettings = {
+/** 默认常规卡片设置，应该列举了所有能配置的卡片 */
+export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
   settingsMajorVersion: "0",
   show: [
     '今日知湖',

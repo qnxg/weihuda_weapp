@@ -5,8 +5,9 @@ import style from './index.module.scss'
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import CheckSortListDisplay from "@/components/CheckSortList"
+import useShouldRelaunchIndex from "@/utils/hooks/useShouldRelaunchIndex";
 import { saveCardSettings, useFinalCardDisplay } from "@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay";
-import { DEFAULT_INDEX_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexCardSettings";
+import { DEFAULT_INDEX_NORMAL_CARD_SETTINGS } from "@/utils/storage/userSettings/defaults/indexNormalCardSettings";
 import type { CardEnum } from "@/pages/index/CardList/index.config";
 
 /** 小程序常规卡片排序页面  */
@@ -30,16 +31,8 @@ const Index: React.FC = () => {
 
     const [canSave, setCanSave] = useState(false);
     const [saving, setSaving] = useState(false);
-    const [shouldRelaunchIndex, setShouldRelaunchIndex] = useState(false);
 
-    // 在设置后reLaunch到首页
-    // 作用：
-    // 1. 用户不用在首页手动刷新才能看到卡片变化
-    Taro.useUnload(() => {
-        if (shouldRelaunchIndex) {
-            void Taro.reLaunch({ url: '/pages/index/index' })
-        }
-    })
+    const [setShouldRelaunchIndex] = useShouldRelaunchIndex(false);
 
     const handleCheck = useCallback((k: CardEnum) => {
         setCanSave(true)
@@ -66,7 +59,7 @@ const Index: React.FC = () => {
                 setSaving(false)
             }
         })();
-    }, [cardSettings]);
+    }, [cardSettings, setShouldRelaunchIndex]);
 
     const handleCheckAll = useCallback(() => {
         setCanSave(true)
@@ -89,8 +82,8 @@ const Index: React.FC = () => {
     const handleReset = useCallback(() => {
         setCanSave(true)
         setCardSettings([
-            new Set(DEFAULT_INDEX_CARD_SETTINGS.show),
-            new Set(DEFAULT_INDEX_CARD_SETTINGS.dontShow)
+            new Set(DEFAULT_INDEX_NORMAL_CARD_SETTINGS.show),
+            new Set(DEFAULT_INDEX_NORMAL_CARD_SETTINGS.dontShow)
         ])
     }, []);
 

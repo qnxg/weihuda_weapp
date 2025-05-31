@@ -47,7 +47,7 @@ const USER_SETTINGS_KEY = 'User-Settings'
  * @example
  * const someSettings = getUserSettingSync(s => s.someSettings)
  */
-export async function getUserSettings<T extends SettingsItem>(
+export async function getUserSettings<const T extends SettingsItem>(
     selector: (userSettings: UserSettings) => T | undefined
 ): Promise<T>
 /** 获取所有设置
@@ -81,6 +81,11 @@ export async function getUserSettings<T extends SettingsItem>(
         }
         if (selectStorageResult == undefined ||
             selectStorageResult.settingsMajorVersion != selectDefaultResult.settingsMajorVersion) {
+            console.log(
+                `由于storage中设置不存在或者版本不匹配，使用默认设置。 ` +
+                `selector: ${selector.toString()} ` +
+                `DEFAULT_SETTINGS: ${JSON.stringify(DEFAULT_SETTINGS)} `
+            )
             return selectDefaultResult
         } else {
             return selectStorageResult
@@ -92,8 +97,10 @@ export async function getUserSettings<T extends SettingsItem>(
  * 使用一个对象覆盖设置整个用户小程序设置
  * 
  * 调用该函数前请确认是否将待设置的版本与默认配置版本同步 
+ * 
+ * 大部分情况下你可能想要使用`modifyUserSettings`
 */
-export const setAllUserSettings = async (
+const setAllUserSettings = async (
     newUserSettings: UserSettings
 ) => {
     await setStorageAsync(USER_SETTINGS_KEY, newUserSettings)
@@ -101,10 +108,14 @@ export const setAllUserSettings = async (
 }
 
 /** 
- * 更改小程序设置。使用回调形式，可以在修改对象后返回而不必重建整个对象。
+ * 更改小程序设置。使用回调形式。
  * 
- * 调用该函数时请确认是否将待设置的版本与默认配置版本同步
+ * 重要：调用该函数时请确认是否将待设置的版本与默认配置版本同步
  */
 export const modifyUserSettings =
-    async (modifier: (oldUserSettings: UserSettings) => UserSettings) =>
+    async <T extends UserSettings>(
+        modifier:
+            (oldUserSettings: UserSettings) =>
+                T & Record<Exclude<keyof T, keyof UserSettings>, never>
+    ) =>
         setAllUserSettings(modifier(await getUserSettings()))
