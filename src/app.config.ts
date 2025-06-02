@@ -57,6 +57,7 @@ export default {
         'index', // 设置目录页
         'indexCardSettings/index', // 小程序首页卡片设置
         'indexCardSettings/normalCardSettings/index', // 常规卡片排序
+        'indexCardSettings/signInCardSettings/index', // 签到卡片设置
       ],
     },
   ],
