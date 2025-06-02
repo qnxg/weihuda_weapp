@@ -31,13 +31,13 @@ type PromiseErrorInfo = null | { thrown: unknown }
  * @example
  * ```tsx
  * const fetchData = useCallback(async () => {
- *   // do something
+ *   // do something and return data
  * }, [])
  *
  * const [data, isLoading, error] = usePromise(
  *   fetchData,
  *   undefined,
- *   [] // `fetchData1`不会被重新触发
+ *   [] // `fetchData`只会在组件生命周期内触发一次
  * );
  *
  * if (isLoading) return <p>Loading...</p>;
