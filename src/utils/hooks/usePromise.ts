@@ -10,7 +10,7 @@ type PromiseErrorInfo = null | { thrown: unknown }
  *
  * @param fn - 一个返回`Promise<T>`的函数。
  *   它在渲染间通常应该保持一致。如果传入的`fn`不再一致，新的`fn`会被立即触发。
- *   因此你可能需要使用`useCallback`包围传入的闭包
+ *   因此**你可能需要使用`useCallback`包围传入的闭包**
  * @param initialValue - `fn`第一次被调用且其Promise仍未resolve时缺省的结果值。
  *   用法和`useState`的第一个参数相同
  * @param deps - 触发重调用`fn`的依赖。

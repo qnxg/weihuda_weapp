@@ -7,7 +7,9 @@ import type { BaseEventOrig, SwitchProps } from '@tarojs/components'
 import type { SetStateAction } from 'react';
 
 export interface SwitchState {
-  checked: boolean
+  /** 是否处于开状态，如果为undefined则开关不会显示 */
+  checked: boolean | undefined
+  /** 是否一定要禁用开关 */
   disabled: boolean
 }
 
@@ -44,7 +46,7 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
     setState(
       s => ({
         disabled: true,
-        checked: s == undefined ? false : !s.checked,
+        checked: s?.checked,
       }),
       () => setState(newState)
     )
@@ -64,6 +66,7 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
   }, [forcedSetState, init, props.reInitTrigger])
 
   const [changing, setChanging] = useState(false)
+  const undefinedState = state == undefined
   const handleChange = useCallback(
     async (e: SwitchChangeEvent) => {
       setChanging(true)
@@ -71,17 +74,17 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
       if (newState == undefined) {
         setState({
           disabled: state?.disabled ?? true,
-          checked: !(state?.checked ?? true)
+          checked: undefinedState ? false : !(state.checked ?? true)
         })
       } else {
         forcedSetState(newState)
       }
       setChanging(false)
     },
-    [forcedSetState, onChange, setState, state?.checked, state?.disabled]
+    [forcedSetState, onChange, setState, undefinedState, state?.checked, state?.disabled]
   )
   const realDisabled = state?.disabled || changing
-  return state == undefined ? (
+  return state?.checked == undefined ? (
     <></>
   ) : (
     <Switch
