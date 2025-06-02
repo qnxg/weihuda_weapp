@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import style from './index.module.scss'
 import useStateCallback from '@/utils/hooks/useStateCallback'
 import type { BaseEventOrig, SwitchProps } from '@tarojs/components'
-import type { SetStateAction } from 'react';
+import type { SetStateAction } from 'react'
 
 export interface SwitchState {
   /** 是否处于开状态，如果为undefined则开关不会显示 */
@@ -41,16 +41,19 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
   const [state, setState] = useStateCallback<undefined | SwitchState>(undefined)
 
   /** 设置开关状态的工具函数 */
-  const forcedSetState = useCallback((newState: SetStateAction<SwitchState>) => {
-    // https://github.com/NervJS/taro/issues/5218
-    setState(
-      s => ({
-        disabled: true,
-        checked: s?.checked,
-      }),
-      () => setState(newState)
-    )
-  }, [setState])
+  const forcedSetState = useCallback(
+    (newState: SetStateAction<SwitchState>) => {
+      // https://github.com/NervJS/taro/issues/5218
+      setState(
+        s => ({
+          disabled: true,
+          checked: s?.checked,
+        }),
+        () => setState(newState)
+      )
+    },
+    [setState]
+  )
 
   // 初始化
   useEffect(() => {
@@ -74,14 +77,21 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
       if (newState == undefined) {
         setState({
           disabled: state?.disabled ?? true,
-          checked: undefinedState ? false : !(state.checked ?? true)
+          checked: undefinedState ? false : !(state.checked ?? true),
         })
       } else {
         forcedSetState(newState)
       }
       setChanging(false)
     },
-    [forcedSetState, onChange, setState, undefinedState, state?.checked, state?.disabled]
+    [
+      forcedSetState,
+      onChange,
+      setState,
+      undefinedState,
+      state?.checked,
+      state?.disabled,
+    ]
   )
   const realDisabled = state?.disabled || changing
   return state?.checked == undefined ? (

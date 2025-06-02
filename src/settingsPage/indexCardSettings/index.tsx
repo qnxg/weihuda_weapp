@@ -14,7 +14,7 @@ const NavList: React.FC = () => (
       {
         title: <Text>签到卡片设置</Text>,
         onClick: nav('./signInCardSettings/index'),
-      }
+      },
     ]}
   />
 )
