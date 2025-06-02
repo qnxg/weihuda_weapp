@@ -4,22 +4,27 @@ import { useCallback, useEffect, useState } from 'react'
 import style from './index.module.scss'
 import useStateCallback from '@/utils/hooks/useStateCallback'
 import type { BaseEventOrig, SwitchProps } from '@tarojs/components'
+import type { SetStateAction } from 'react';
 
 export interface SwitchState {
   checked: boolean
   disabled: boolean
 }
 
-type ChangeEvent = BaseEventOrig<SwitchProps.onChangeEventDetail>
+export type SwitchChangeEvent = BaseEventOrig<SwitchProps.onChangeEventDetail>
 
 export interface AsyncSwitchProps {
   /**
-   * 初始化函数，应当注意在该函数变化时一定会重新初始化。
-   * 你可能需要`useCallback`
+   * 初始化状态或者初始化异步函数，应当注意在这个参数变化时一定会重新初始化。
+   * 你可能需要`useMemo`或者`useCallback`
    */
-  init: () => Promise<SwitchState>
-  /** 切换事件，应当返回切换后的状态 */
-  onChange: (e: ChangeEvent) => Promise<SwitchState>
+  init: SwitchState | (() => Promise<SwitchState>)
+  /**
+   * 切换事件
+   * 若该函数返回了切换后的状态，则之后开关的状态由此决定。
+   * 否则，开关的状态保持为切换后应有的状态。
+   */
+  onChange: (e: SwitchChangeEvent) => Promise<SwitchState | undefined>
   /** 重新初始化的trigger，使其改变会重新调用初始化 */
   reInitTrigger?: unknown
   /** CSS类名 */
@@ -32,28 +37,48 @@ export interface AsyncSwitchProps {
 const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
   const { init, onChange } = props
   const [state, setState] = useStateCallback<undefined | SwitchState>(undefined)
+
+  /** 设置开关状态的工具函数 */
+  const forcedSetState = useCallback((newState: SetStateAction<SwitchState>) => {
+    // https://github.com/NervJS/taro/issues/5218
+    setState(
+      s => ({
+        disabled: true,
+        checked: s == undefined ? false : !s.checked,
+      }),
+      () => setState(newState)
+    )
+  }, [setState])
+
+  // 初始化
   useEffect(() => {
     void (async () => {
-      const initState = await init()
-      setState(initState)
+      let initState: SwitchState
+      if (typeof init === 'function') {
+        initState = await init()
+      } else {
+        initState = init
+      }
+      forcedSetState(initState)
     })()
-  }, [init, props.reInitTrigger, setState])
+  }, [forcedSetState, init, props.reInitTrigger])
+
   const [changing, setChanging] = useState(false)
   const handleChange = useCallback(
-    async (e: ChangeEvent) => {
+    async (e: SwitchChangeEvent) => {
       setChanging(true)
       const newState = await onChange(e)
-      // https://github.com/NervJS/taro/issues/5218
-      setState(
-        s => ({
-          disabled: true,
-          checked: !s!.checked,
-        }),
-        () => setState(newState)
-      )
+      if (newState == undefined) {
+        setState({
+          disabled: state?.disabled ?? true,
+          checked: !(state?.checked ?? true)
+        })
+      } else {
+        forcedSetState(newState)
+      }
       setChanging(false)
     },
-    [onChange, setState]
+    [forcedSetState, onChange, setState, state?.checked, state?.disabled]
   )
   const realDisabled = state?.disabled || changing
   return state == undefined ? (
