@@ -74,7 +74,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
           <Swiper
             circular
             duration={500}
-            interval={6000}
+            interval={5000}
             current={current}
             autoplay
             easingFunction='easeInOutCubic'
@@ -83,6 +83,15 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
             style={{ height: height + 'px' }}
             className={styles.swiper}
           >
+            {/* 消息通知 */}
+            {notice.data.flatMap((item, i) => {
+              if (item.status === 1 || item.isShow === 0) return []
+              return [(
+                <SwiperItem key={`notice-${i}`}>
+                  <MessageItem className={styles.messageItem} data={item} />
+                </SwiperItem>
+              )]
+            })}
             {/* 公告 */}
             {message.map(item => {
               return (
@@ -98,15 +107,6 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
                     <View className={styles.title}>{item.title}</View>
                     <View className={styles.content}>{item.content}</View>
                   </View>
-                </SwiperItem>
-              )
-            })}
-            {/* 消息通知 */}
-            {notice.data.map((item, i) => {
-              if (item.status === 1 || item.isShow === 0) return null
-              return (
-                <SwiperItem key={`notice-${i}`}>
-                  <MessageItem className={styles.messageItem} data={item} />
                 </SwiperItem>
               )
             })}
