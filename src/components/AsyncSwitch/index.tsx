@@ -38,7 +38,10 @@ export interface AsyncSwitchProps {
  */
 const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
   const { init, onChange } = props
-  const [state, setState] = useStateCallback<undefined | SwitchState>(undefined)
+  const [state, setState] = useStateCallback<SwitchState>({
+    checked: undefined,
+    disabled: true
+  })
 
   /** 设置开关状态的工具函数 */
   const forcedSetState = useCallback(
@@ -47,7 +50,7 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
       setState(
         s => ({
           disabled: true,
-          checked: s?.checked,
+          checked: s.checked,
         }),
         () => setState(newState)
       )
@@ -69,15 +72,14 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
   }, [forcedSetState, init, props.reInitTrigger])
 
   const [changing, setChanging] = useState(false)
-  const undefinedState = state == undefined
   const handleChange = useCallback(
     async (e: SwitchChangeEvent) => {
       setChanging(true)
       const newState = await onChange(e)
       if (newState == undefined) {
         setState({
-          disabled: state?.disabled ?? true,
-          checked: undefinedState ? false : !(state.checked ?? true),
+          disabled: state.disabled,
+          checked: !(state.checked ?? true),
         })
       } else {
         forcedSetState(newState)
@@ -88,13 +90,12 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
       forcedSetState,
       onChange,
       setState,
-      undefinedState,
-      state?.checked,
-      state?.disabled,
+      state.checked,
+      state.disabled,
     ]
   )
-  const realDisabled = state?.disabled || changing
-  return state?.checked == undefined ? (
+  const realDisabled = state.disabled || changing
+  return state.checked == undefined ? (
     <></>
   ) : (
     <Switch
