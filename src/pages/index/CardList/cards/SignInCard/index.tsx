@@ -1,11 +1,11 @@
 import { View } from '@tarojs/components'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import style from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
 import Card from '@/components/Card'
 import SignButton from '@/pages/jifen/components/Qiandao/SignButton'
 import usePromise from '@/utils/hooks/usePromise'
-import { getUserSettings } from '@/utils/storage/userSettings'
+import { fetchUserSettings } from '@/utils/storage/userSettings'
 import type CardProps from '../../CardProps'
 
 const getJifenNum = async () => (await getJifenTotalApi()).jifen
@@ -13,8 +13,9 @@ const getJifenNum = async () => (await getJifenTotalApi()).jifen
 const SignInCard: React.FC<CardProps> = props => {
   // 首页的下拉刷新就不追踪签到按钮的加载状态了，因为签到按钮自己管理了加载状态。
   const { onLoadingStatusChange } = props
+  const getSettings = useCallback(async () => (await fetchUserSettings()).indexSignInCardSettings, []);
   const [settings] = usePromise(
-    () => getUserSettings(s => s.indexSignInCardSettings),
+    getSettings,
     undefined,
     [props.reloadController]
   )

@@ -2,12 +2,15 @@ import { useCallback } from 'react'
 import LineDividedSwitchList from '@/components/LineDividedSwitchList'
 import usePromise from '@/utils/hooks/usePromise'
 import useShouldRelaunchIndex from '@/utils/hooks/useShouldRelaunchIndex'
-import { getUserSettings } from '@/utils/storage/userSettings'
-import { setNeedShowSignInCard } from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
+import { fetchUserSettings } from '@/utils/storage/userSettings'
+import {
+  setNeedShowHintAfterSignIn,
+  setNeedShowSignInCard,
+} from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
 import type { SwitchChangeEvent } from '@/components/AsyncSwitch'
 
 const getSignInCardSettings = async () =>
-  await getUserSettings(s => s.indexSignInCardSettings)
+  (await fetchUserSettings()).indexSignInCardSettings
 
 const SwitchList: React.FC<{
   setShouldRelaunchIndex: (s: boolean) => unknown
@@ -23,7 +26,19 @@ const SwitchList: React.FC<{
       setShouldRelaunchIndex(true)
       await setNeedShowSignInCard(e.detail.value)
       return {
-        checked: (await getUserSettings(s => s.indexSignInCardSettings)).show,
+        checked: (await getSignInCardSettings()).show,
+        disabled: false,
+      }
+    },
+    [setShouldRelaunchIndex]
+  )
+
+  const onNeedShowHintAfterSignInChange = useCallback(
+    async (e: SwitchChangeEvent) => {
+      setShouldRelaunchIndex(true)
+      await setNeedShowHintAfterSignIn(e.detail.value)
+      return {
+        checked: (await getSignInCardSettings()).showHintAfterSignIn,
         disabled: false,
       }
     },
@@ -41,6 +56,14 @@ const SwitchList: React.FC<{
           },
           onChange: onNeedShowSignInCardChange,
         },
+        // {
+        //   title: '签到后显示推荐',
+        //   init: {
+        //     checked: signInCardSettings?.showHintAfterSignIn,
+        //     disabled: loadingSignInCardSettings,
+        //   },
+        //   onChange: onNeedShowHintAfterSignInChange,
+        // },
       ]}
     />
   )

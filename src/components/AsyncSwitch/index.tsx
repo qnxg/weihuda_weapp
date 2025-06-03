@@ -40,7 +40,7 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
   const { init, onChange } = props
   const [state, setState] = useStateCallback<SwitchState>({
     checked: undefined,
-    disabled: true
+    disabled: true,
   })
 
   /** 设置开关状态的工具函数 */
@@ -86,13 +86,7 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
       }
       setChanging(false)
     },
-    [
-      forcedSetState,
-      onChange,
-      setState,
-      state.checked,
-      state.disabled,
-    ]
+    [forcedSetState, onChange, setState, state.checked, state.disabled]
   )
   const realDisabled = state.disabled || changing
   return state.checked == undefined ? (

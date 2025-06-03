@@ -86,11 +86,11 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
             {/* 消息通知 */}
             {notice.data.flatMap((item, i) => {
               if (item.status === 1 || item.isShow === 0) return []
-              return [(
+              return [
                 <SwiperItem key={`notice-${i}`}>
                   <MessageItem className={styles.messageItem} data={item} />
-                </SwiperItem>
-              )]
+                </SwiperItem>,
+              ]
             })}
             {/* 公告 */}
             {message.map(item => {

@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { getUserSettings, modifyUserSettings } from '..'
+import { useCallback, useMemo } from 'react'
+import { fetchUserSettings, modifyUserSettingsPart } from '..'
 import { DEFAULT_INDEX_NORMAL_CARD_SETTINGS } from '../defaults/indexNormalCardSettings'
 import { type CardEnum } from '@/pages/index/CardList/index.config'
 import usePromise from '@/utils/hooks/usePromise'
@@ -8,7 +8,7 @@ import type { DependencyList } from 'react'
 async function computeFinalCardDisplay(): Promise<
   [Set<CardEnum>, Set<CardEnum>]
 > {
-  const userCardSettings = await getUserSettings(s => s.indexCardSettings)
+  const userCardSettings = (await fetchUserSettings()).indexCardSettings
   const defaultShow = new Set(DEFAULT_INDEX_NORMAL_CARD_SETTINGS.show)
   const defaultDontShow = new Set(DEFAULT_INDEX_NORMAL_CARD_SETTINGS.dontShow)
   const existingCards = defaultShow.union(defaultDontShow)
@@ -31,25 +31,19 @@ export async function saveCardSettings(
   show: Set<CardEnum>,
   dontShow: Set<CardEnum>
 ) {
-  await modifyUserSettings(s => {
-    return {
-      ...s,
-      indexCardSettings: {
-        settingsMajorVersion:
-          DEFAULT_INDEX_NORMAL_CARD_SETTINGS.settingsMajorVersion,
-        show: Array.from(show),
-        dontShow: Array.from(dontShow),
-      },
-    }
-  })
+  await modifyUserSettingsPart('indexCardSettings', async _ => ({
+    show: Array.from(show),
+    dontShow: Array.from(dontShow),
+  }))
 }
 
 export function useFinalCardDisplay(deps: DependencyList) {
   const computeFinalCardDisplayMemo = useMemo(computeFinalCardDisplay, [
     ...deps,
   ])
+  const cb = useCallback(() => computeFinalCardDisplayMemo, [computeFinalCardDisplayMemo])
   const [cardsToDisplay] = usePromise<[Set<CardEnum>, Set<CardEnum>]>(
-    () => computeFinalCardDisplayMemo,
+    cb,
     () => [new Set(), new Set()],
     [...deps]
   )
