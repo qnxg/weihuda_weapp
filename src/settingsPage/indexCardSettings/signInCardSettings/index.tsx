@@ -56,14 +56,14 @@ const SwitchList: React.FC<{
           },
           onChange: onNeedShowSignInCardChange,
         },
-        // {
-        //   title: '签到后显示推荐',
-        //   init: {
-        //     checked: signInCardSettings?.showHintAfterSignIn,
-        //     disabled: loadingSignInCardSettings,
-        //   },
-        //   onChange: onNeedShowHintAfterSignInChange,
-        // },
+        {
+          title: '签到后显示推荐',
+          init: {
+            checked: signInCardSettings?.showHintAfterSignIn,
+            disabled: loadingSignInCardSettings,
+          },
+          onChange: onNeedShowHintAfterSignInChange,
+        },
       ]}
     />
   )

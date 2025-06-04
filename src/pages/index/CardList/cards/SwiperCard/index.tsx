@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect } from 'react'
 import styles from './index.module.scss'
-import { getZhihuPageApi } from '@/apis/zhihu'
+import { getZhihuItemLink, getZhihuPageApi } from '@/apis/zhihu'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import cardIcon from '@/static/index/icon/information.svg'
@@ -33,15 +33,9 @@ const HomeSwiperCard: React.FC<CardProps> = ({
 
   // 点击轮播图跳转到详情页
   const handleClick = (item: IZhihu) => {
-    if (item.type === 'link') {
-      void Taro.navigateTo({
-        url: `/pages/webview/index?url=${item.content}&title=${item.title}&from=zhihu`,
-      })
-    } else {
-      void Taro.navigateTo({
-        url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`,
-      })
-    }
+    void Taro.navigateTo({
+      url: getZhihuItemLink(item),
+    })
   }
 
   // 没有拿到数据不显示这个卡片

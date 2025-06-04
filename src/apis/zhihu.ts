@@ -22,12 +22,20 @@ export interface IZhihu {
   stuId: string
 }
 
+export function getZhihuItemLink(zhihuItem: IZhihu): string {
+  if (zhihuItem.type === 'link') {
+    return `/pages/webview/index?url=${zhihuItem.content}&title=${zhihuItem.title}&from=zhihu`
+  } else {
+    return `/pages/detail/index?id=${zhihuItem.id}&title=${zhihuItem.title}&publishTime=${zhihuItem.publishTime}`
+  }
+}
+
 export interface IZhihuPageResponseData {
   count: number
   rows: IZhihu[]
 }
 
-export interface IZhihuPageQueryData extends IPageQueryData, Partial<IZhihu> {}
+export interface IZhihuPageQueryData extends IPageQueryData, Partial<IZhihu> { }
 
 /**
  * 获取知湖文章列表分页
