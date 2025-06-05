@@ -2,12 +2,12 @@ export default {
   meta: {
     type: "problem", // This rule flags a potential bug
     docs: {
-      description: "disallow inline or non-memoized functions in useMyHook dependency arrays",
+      description: "检查usePromise依赖",
     },
     schema: [],
     messages: {
       inlineFn: "在依赖数组中使用内联函数毫无意义，因为这会使得usePromise在每次渲染触发。如果这是你的目的，请将依赖数组设置为undefined。",
-      nonMemoFn: "函数 '{{name}}' 是不稳定的，这有可能导致usePromise在每次渲染时触发。请考虑将该函数移动到顶层或者使用useCallback。"
+      nonMemoFn: "函数 '{{name}}' 是不稳定的，这有可能导致usePromise在每次渲染时触发。请考虑将该函数的定义移动到顶层或者使用useCallback。"
     }
   },
 
