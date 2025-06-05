@@ -2,16 +2,16 @@ import Taro from '@tarojs/taro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getFitness } from '@/apis/pt/fitness'
 import { useAppSelector } from '@/utils/hooks/redux'
-import type { Fitness} from '@/apis/pt/fitness';
+import type { Fitness } from '@/apis/pt/fitness'
 
 const init = {
   student: {
     name: '加载中',
-    number: ''
+    number: '',
   },
   total: {
     grade: '不及格',
-    score: 0
+    score: 0,
   },
   eye: {
     eye_ametropia_left: '加载中',
@@ -19,9 +19,9 @@ const init = {
     eye_mirror_left: '加载中',
     eye_mirror_right: '加载中',
     eyesight_left: '加载中',
-    eyesight_right: '加载中'
+    eyesight_right: '加载中',
   },
-  items: []
+  items: [],
 }
 
 const initState = (length: number): Fitness[] => {
@@ -33,8 +33,8 @@ const initState = (length: number): Fitness[] => {
 }
 
 const usePE = () => {
-  const { enterYear, sex } = useAppSelector((state) => state.userInfo)
-  const { termYear } = useAppSelector((state) => state.smester)
+  const { enterYear, sex } = useAppSelector(state => state.userInfo)
+  const { termYear } = useAppSelector(state => state.smester)
   const years = useMemo(() => {
     const temp: Array<number> = []
     for (let i = 0; enterYear + i <= termYear; ++i) {
@@ -49,7 +49,7 @@ const usePE = () => {
   const run = useCallback(async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       // 发起请求
@@ -57,7 +57,9 @@ const usePE = () => {
       // 更新数据
       const newData = JSON.parse(JSON.stringify(state))
       // 处理引体向上/仰卧起坐
-      const index = res.items.findIndex((item) => item.name == '引体向上/仰卧起坐')
+      const index = res.items.findIndex(
+        item => item.name == '引体向上/仰卧起坐'
+      )
       res.items[index].name = sex == '男' ? '引体向上' : '仰卧起坐'
       // 设置数据
       newData[current] = res
@@ -65,7 +67,7 @@ const usePE = () => {
     } catch (error) {
       await Taro.showToast({
         icon: 'none',
-        title: error.toString()
+        title: error.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -78,7 +80,7 @@ const usePE = () => {
     }
   }, [current, run, state])
 
-  const refresh = async (close) => {
+  const refresh = async close => {
     try {
       await run()
     } catch (e) {
@@ -93,7 +95,7 @@ const usePE = () => {
     state,
     years,
     sex,
-    refresh
+    refresh,
   }
 }
 

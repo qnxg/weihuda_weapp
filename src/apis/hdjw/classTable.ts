@@ -56,8 +56,8 @@ export const getClassTable = async (xn: string, xq: number) => {
   return request.get<ClassTableItem[]>('/hdjw/class-table', {
     data: {
       xn,
-      xq
-    }
+      xq,
+    },
   })
 }
 
@@ -69,8 +69,8 @@ export const getClassStartDate = async (xn: string, xq: number) => {
   return request.get<string>('/hdjw/class-start-date', {
     data: {
       xn,
-      xq
-    }
+      xq,
+    },
   })
 }
 
@@ -118,7 +118,7 @@ export interface PostData {
  */
 export const postCourseApi = async (data: PostData) => {
   return request.post<string>('/course', {
-    data
+    data,
   })
 }
 
@@ -129,6 +129,6 @@ export const postCourseApi = async (data: PostData) => {
 export const deleteCourseApi = async (id: number) => {
   return request<string>({
     url: `/course?id=${id}`,
-    method: 'DELETE'
+    method: 'DELETE',
   })
 }

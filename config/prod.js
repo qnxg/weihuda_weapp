@@ -1,26 +1,23 @@
-// eslint-disable-next-line import/no-commonjs
-module.exports = {
-  env: {
-    NODE_ENV: '"production"'
-  },
-  defineConstants: {},
-  mini: {
-    postcss: {
-      cssModules: {
-        config: {
-          generateScopedName: '[sha512:hash:base64:9]'
-        }
+export const env = {
+  NODE_ENV: '"production"'
+};
+export const defineConstants = {};
+export const mini = {
+  postcss: {
+    cssModules: {
+      config: {
+        generateScopedName: '[sha512:hash:base64:9]'
       }
     }
-  },
-  h5: {
-    /**
-     * 如果h5端编译后体积过大，可以使用webpack-bundle-analyzer插件对打包体积进行分析。
-     * 参考代码如下：
-     * webpackChain (chain) {
-     *   chain.plugin('analyzer')
-     *     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
-     * }
-     */
   }
+};
+export const h5 = {
+  /**
+   * 如果h5端编译后体积过大，可以使用webpack-bundle-analyzer插件对打包体积进行分析。
+   * 参考代码如下：
+   * webpackChain (chain) {
+   *   chain.plugin('analyzer')
+   *     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
+   * }
+   */
 };

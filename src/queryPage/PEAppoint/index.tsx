@@ -6,7 +6,7 @@ import { getFitnessAppoint } from '@/apis/pt/fitness'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import iconNoJK from '@/static/empty/no-exam.svg'
-import type { FitnessAppointItem} from '@/apis/pt/fitness';
+import type { FitnessAppointItem } from '@/apis/pt/fitness'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -19,7 +19,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getFitnessAppoint()
@@ -33,7 +33,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -85,7 +85,7 @@ const Index: React.FC = () => {
   //   }
   // }, [loading, error, data]);
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -94,9 +94,13 @@ const Index: React.FC = () => {
     <PullRefresh runFunc={onRefresh}>
       {show && data && data.length !== 0 ? (
         <View className={styles.outer}>
-          {data.map((item) => {
+          {data.map(item => {
             return (
-              <DisplayCard title={item.show_time} subTitle={item.status} key={Math.random()}>
+              <DisplayCard
+                title={item.show_time}
+                subTitle={item.status}
+                key={Math.random()}
+              >
                 <View>测试地点：{item.class_name}</View>
                 <View>测试时间：{item.test_time}</View>
                 <View>测试项目：{item.test_type}</View>

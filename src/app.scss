@@ -13,10 +13,10 @@ navigator {
 page {
   background: #f9f9f9;
   height: 100vh;
-  font-family: "Source Han Sans", sans-serif;
+  font-family: 'Source Han Sans', sans-serif;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-  &>view {
+  & > view {
     margin: 0;
     padding: 0;
   }
@@ -37,7 +37,8 @@ view {
 }
 
 // 理论上应该避免使用默认字体
-// 这里作为兜底，让忘记设置字体时默认字体至少具有适应屏幕的特性
+// 这里作为兜底，让忘记设置字体时默认字体至少具有适应的特性
 page {
   font-size: $fontBig;
+  color: var(--text-color-primary);
 }

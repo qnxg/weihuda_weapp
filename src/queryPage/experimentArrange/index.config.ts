@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '物理实验安排查询'
-};
+  navigationBarTitleText: '物理实验安排查询',
+}

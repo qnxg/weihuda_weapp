@@ -11,7 +11,7 @@ import { TabPanel, Tabs } from '@/components/Tabs'
 import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
-  const userInfo = useAppSelector((state) => state.userInfo)
+  const userInfo = useAppSelector(state => state.userInfo)
   const [total, setTotal] = React.useState(0)
   const jifenRecordRef = React.useRef<any>(null)
 
@@ -33,6 +33,11 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
+  function signedCallback() {
+    void getData()
+    updateJifenRecord()
+  }
+
   return (
     <View className={styles.wrapper}>
       {/* 积分数展示卡片 */}
@@ -47,7 +52,7 @@ const Index: React.FC = () => {
       </Card>
       {/* 签到 */}
       <Card className={styles.qiandao}>
-        <Qiandao updateTotal={getData} updateJifenRecord={updateJifenRecord} />
+        <Qiandao signedCallback={signedCallback} />
       </Card>
       {/* 兑换奖品，积分记录，积分规则 */}
       <Card wrapperClassName={styles.jifenActionsCard}>
@@ -56,7 +61,11 @@ const Index: React.FC = () => {
             <JifenRecord jifenRecordRef={jifenRecordRef} />
           </TabPanel>
           <TabPanel value={1} title='兑换奖品'>
-            <Goods total={total} updateTotal={getData} updateJifenRecord={updateJifenRecord} />
+            <Goods
+              total={total}
+              updateTotal={getData}
+              updateJifenRecord={updateJifenRecord}
+            />
           </TabPanel>
           <TabPanel value={2} title='积分规则'>
             <JifenRule />

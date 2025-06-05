@@ -5,15 +5,15 @@ import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { getLibraryApi } from '@/apis/library'
 import DisplayCard from '@/components/DisplayCard'
-import Card from '@/components/LineDividedLeftRightCard'
-import Left from '@/components/LineDividedLeftRightCard/components/LeftPart'
-import Right from '@/components/LineDividedLeftRightCard/components/RightPart'
+import Card from '@/components/LeftRightCard'
+import Left from '@/components/LeftRightCard/components/LeftPart'
+import Right from '@/components/LeftRightCard/components/RightPart'
 import PullRefresh from '@/components/PullRefresh'
 import Tab from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import book from '@/static/empty/book.svg'
 import { onColors } from '@/utils/config'
-import type { LibraryRes } from '@/apis/library';
+import type { LibraryRes } from '@/apis/library'
 
 const items = ['在借图书', '借阅清单', '借阅账单']
 
@@ -29,7 +29,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getLibraryApi()
@@ -43,7 +43,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -58,7 +58,7 @@ const Index: React.FC = () => {
     setCurrent(index)
   }
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -70,16 +70,22 @@ const Index: React.FC = () => {
           <PullRefresh topGap={68} runFunc={onRefresh}>
             {data && show && data.borrowing.length !== 0 ? (
               <View style={{ padding: 0 }}>
-                <View className={styles.totalAmount}>{`共${data.borrowing.length}本书`}</View>
+                <View
+                  className={styles.totalAmount}
+                >{`共${data.borrowing.length}本书`}</View>
                 {data.borrowing.map((item, index) => {
                   const temp = item.return_date.split('-')
                   const date = item.return_date.replace(/-/g, '/')
-                  const rest = dayjs(new Date(+temp[0], +temp[1] - 1, +temp[2])).diff(dayjs(), 'day')
+                  const rest = dayjs(
+                    new Date(+temp[0], +temp[1] - 1, +temp[2])
+                  ).diff(dayjs(), 'day')
                   return (
                     <Card
                       key={`${date}-${item.title}`}
                       lineColor={onColors[index % onColors.length]}
-                      renderLeft={<Left title={`${rest}天`} content='过期时间' />}
+                      renderLeft={
+                        <Left title={`${rest}天`} content='过期时间' />
+                      }
                       renderRight={
                         <Right
                           title={item.title}
@@ -109,7 +115,8 @@ const Index: React.FC = () => {
             {data && show && data.borrowed.length !== 0 ? (
               <View style={{ padding: 0 }}>
                 <View className={styles.totalAmount}>{`共借书${
-                  (data.borrowed.length - data.borrowing.length) / 2 + data.borrowing.length
+                  (data.borrowed.length - data.borrowing.length) / 2 +
+                  data.borrowing.length
                 }次，
                   还书${(data.borrowed.length - data.borrowing.length) / 2}次`}</View>
                 {data.borrowed.map((item, index) => {
@@ -146,9 +153,14 @@ const Index: React.FC = () => {
           <PullRefresh topGap={68} runFunc={onRefresh}>
             {data && show && data.finance.length !== 0 ? (
               <View>
-                {data.finance.map((item) => {
+                {data.finance.map(item => {
                   return (
-                    <DisplayCard title={item.fee_type} subTitle={item.cost} key={Math.random()} footer={item.time}>
+                    <DisplayCard
+                      title={item.fee_type}
+                      subTitle={item.cost}
+                      key={Math.random()}
+                      footer={item.time}
+                    >
                       <View>图书编号：{item.barcode}</View>
                       <View>产生地点：{item.place}</View>
                       <View>支付类型/状态：{item.pay_sign}</View>

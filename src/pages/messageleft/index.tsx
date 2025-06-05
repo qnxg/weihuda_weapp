@@ -1,4 +1,11 @@
-import { Picker, Radio, RadioGroup, Text, Textarea, View } from '@tarojs/components'
+import {
+  Picker,
+  Radio,
+  RadioGroup,
+  Text,
+  Textarea,
+  View,
+} from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { useState } from 'react'
@@ -6,10 +13,10 @@ import styles from './index.module.scss'
 import { postMessageLeftApi } from '@/apis/messageleft'
 import Button from '@/components/Button'
 import { useAppSelector } from '@/utils/hooks/redux'
-import type { IMessageLeft} from '@/apis/messageleft';
+import type { IMessageLeft } from '@/apis/messageleft'
 
 const Index: React.FC = () => {
-  const { stuId } = useAppSelector((state) => state.userInfo)
+  const { stuId } = useAppSelector(state => state.userInfo)
 
   // const type_list = [
   //   { label: '产品建议', value: 'suggestion', checked: true },
@@ -21,7 +28,7 @@ const Index: React.FC = () => {
     isAgree: true,
     isSend: false,
     sendTime: dayjs().add(100, 'day').format('YYYY-MM-DD'),
-    desc: ''
+    desc: '',
     // imgUrl: ''
   })
 
@@ -29,7 +36,7 @@ const Index: React.FC = () => {
   const change = (key, newVal) => {
     setData({
       ...data,
-      [key]: newVal
+      [key]: newVal,
     })
   }
 
@@ -47,7 +54,6 @@ const Index: React.FC = () => {
   //   })
   // }
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const submitData = async (data: any) => {
     // 初始化
     // 获取当前的时分秒
@@ -60,15 +66,19 @@ const Index: React.FC = () => {
       desc: data.desc,
       isSend: data.isSend ? 1 : 0,
       sendTime: fullDateTime, // 格式化用户选择的时间
-      stuId: data.stuId
+      stuId: data.stuId,
     }
     try {
       await postMessageLeftApi(reqData)
-      await Taro.showToast({ title: '提交成功', icon: 'success', duration: 1000 })
+      await Taro.showToast({
+        title: '提交成功',
+        icon: 'success',
+        duration: 1000,
+      })
       setTimeout(() => {
         void Taro.navigateBack()
       }, 1000)
-    } catch (error) {
+    } catch {
       await Taro.showToast({ title: '提交失败', icon: 'none' })
     }
   }
@@ -84,7 +94,7 @@ const Index: React.FC = () => {
     await Taro.showLoading({ title: '正在提交' })
     console.log('提交数据', data)
     await submitData({
-      ...data
+      ...data,
     })
   }
 
@@ -97,7 +107,7 @@ const Index: React.FC = () => {
       <Picker
         mode='date' // 选择日期
         value={data.sendTime}
-        onChange={(e) => {
+        onChange={e => {
           console.log('选择的新时间', e.detail.value)
           change('sendTime', e.detail.value)
         }}
@@ -113,7 +123,7 @@ const Index: React.FC = () => {
         <Textarea
           value={data.desc}
           maxlength={255}
-          onInput={(e) => {
+          onInput={e => {
             change('desc', (e.target as any).value)
           }}
           placeholder='请填写你想留给自己的话，必填。'
@@ -124,9 +134,11 @@ const Index: React.FC = () => {
       <View className={styles.title} style={{ marginTop: '30px' }}>
         是否愿意在公众号展示自己的留言：
       </View>
-      <View className={styles.ps}>ps:公开可获得额外奖励并让心声被更多人听见</View>
+      <View className={styles.ps}>
+        ps:公开可获得额外奖励并让心声被更多人听见
+      </View>
       <RadioGroup
-        onChange={(e) => {
+        onChange={e => {
           const isAgree = e.detail.value === 'true'
           change('isAgree', isAgree)
         }}

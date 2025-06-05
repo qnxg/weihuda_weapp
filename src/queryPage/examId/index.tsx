@@ -46,9 +46,13 @@ const Index: React.FC = () => {
       const tempUnExamIds: ExamId[] = []
       const tempPastExamIds: ExamId[] = []
       const nowDate = dayjs()
-      if (localData && typeof localData === 'object' && typeof localData !== 'function') {
+      if (
+        localData &&
+        typeof localData === 'object' &&
+        typeof localData !== 'function'
+      ) {
         const tempTopExamIds: ExamId[] = []
-        examIdList.forEach((value) => {
+        examIdList.forEach(value => {
           if (nowDate.isAfter(dayjs(value.examDate), 'day')) {
             tempPastExamIds.push(value)
           } else {
@@ -62,7 +66,7 @@ const Index: React.FC = () => {
         tempTopExamIds.sort(compareUpFn)
         setTopExamIds(tempTopExamIds)
       } else {
-        examIdList.forEach((value) => {
+        examIdList.forEach(value => {
           if (nowDate.isAfter(dayjs(value.examDate))) {
             tempPastExamIds.push(value)
           } else {
@@ -102,9 +106,22 @@ const Index: React.FC = () => {
     setUnExamIds([...unExamIds])
   }
 
-  const deleteExamItem = async (index: number, type: 'topping' | 'unfinished' | 'finished') => {
-    const itemList = type === 'topping' ? topExamIds : type === 'unfinished' ? unExamIds : pastExamIds
-    const setItemList = type === 'topping' ? setTopExamIds : type === 'unfinished' ? setUnExamIds : setPastExamIds
+  const deleteExamItem = async (
+    index: number,
+    type: 'topping' | 'unfinished' | 'finished'
+  ) => {
+    const itemList =
+      type === 'topping'
+        ? topExamIds
+        : type === 'unfinished'
+          ? unExamIds
+          : pastExamIds
+    const setItemList =
+      type === 'topping'
+        ? setTopExamIds
+        : type === 'unfinished'
+          ? setUnExamIds
+          : setPastExamIds
     await runDeleteId(itemList[index].keyId, () => {
       itemList.splice(index, 1)
       setItemList([...itemList])
@@ -113,7 +130,7 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     if (init) {
-      const temp = topExamIds.map((item) => item.keyId)
+      const temp = topExamIds.map(item => item.keyId)
       Taro.setStorageSync(LOCAL_STORAGE_KEY, temp)
     }
   }, [topExamIds, init])
@@ -132,13 +149,24 @@ const Index: React.FC = () => {
         />
       ) : (
         <Block>
-          <TabBar items={['未过期', '已过期']} num={0} current={tabIndex} onClick={onChangeTab} />
-          {tabIndex === 0 && unExamIds?.length === 0 && topExamIds?.length === 0 && (
-            <View className={styles.empty}>
-              <Image className={styles.iconNoCard} src={iconNoCard} />
-              <View className={styles.tip}>{tabIndex === 0 ? '点击下面按钮保存我的考号' : '暂无已经完成的考试'}</View>
-            </View>
-          )}
+          <TabBar
+            items={['未过期', '已过期']}
+            num={0}
+            current={tabIndex}
+            onClick={onChangeTab}
+          />
+          {tabIndex === 0 &&
+            unExamIds?.length === 0 &&
+            topExamIds?.length === 0 && (
+              <View className={styles.empty}>
+                <Image className={styles.iconNoCard} src={iconNoCard} />
+                <View className={styles.tip}>
+                  {tabIndex === 0
+                    ? '点击下面按钮保存我的考号'
+                    : '暂无已经完成的考试'}
+                </View>
+              </View>
+            )}
           {tabIndex === 0 && (
             <Unfinished
               unExamIds={unExamIds}
@@ -148,7 +176,9 @@ const Index: React.FC = () => {
               deleteItem={deleteExamItem}
             />
           )}
-          {tabIndex === 0 && <Image src={addImg} className={styles.add} onClick={gotoAddPage} />}
+          {tabIndex === 0 && (
+            <Image src={addImg} className={styles.add} onClick={gotoAddPage} />
+          )}
           {tabIndex === 1 && pastExamIds?.length === 0 && (
             <View className={styles.empty}>
               <Image className={styles.iconNoCard} src={iconNoCard} />

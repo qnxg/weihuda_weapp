@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
 import Label from './Label'
-import type { InputProps} from '@tarojs/components';
+import type { InputProps } from '@tarojs/components'
 
 interface Props extends InputProps {
   /**
@@ -23,7 +23,7 @@ interface Props extends InputProps {
 /**
  * 输入框组件
  */
-const Input: React.FC<Props> = (props) => {
+const Input: React.FC<Props> = props => {
   const { labelPosition = 'left', label, required } = props
   // 输入框项类名
   const inputItemClassName = classNames(styles.inputItem, styles[labelPosition])
@@ -31,7 +31,7 @@ const Input: React.FC<Props> = (props) => {
   const [isFocus, setIsFocus] = useState(false)
   // 输入框类名
   const inputClassName = classNames(styles.input, props.className, {
-    [styles.focus]: isFocus
+    [styles.focus]: isFocus,
   })
 
   return (

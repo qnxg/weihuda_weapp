@@ -30,7 +30,7 @@ interface IUploadProps {
  * <Upload label='图片' onChoose={(filePath) => setImgUrl(filePath)} />
  * ```
  */
-export const Upload: React.FC<IUploadProps> = (props) => {
+export const Upload: React.FC<IUploadProps> = props => {
   const { label, required, value, onChoose } = props
   const [, setImgUrl] = useState(props.value || '')
 
@@ -44,7 +44,7 @@ export const Upload: React.FC<IUploadProps> = (props) => {
         if (onChoose) {
           onChoose(filePath)
         }
-      }
+      },
     })
   }
 

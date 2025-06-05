@@ -8,12 +8,16 @@ import Card from '@/components/Card'
 
 const regCloseSelf = /\/ *>$/
 
-const fixImgStyle = ' style="" width="" mode="widthFix" show-menu-by-longpress >'
-const fixImgStyleClose = ' style="" width="" mode="widthFix" show-menu-by-longpress />'
+const fixImgStyle =
+  ' style="" width="" mode="widthFix" show-menu-by-longpress >'
+const fixImgStyleClose =
+  ' style="" width="" mode="widthFix" show-menu-by-longpress />'
 const regImage = /<img[^>]*>/gi
 export const fixImageStyle = (html: string): string => {
-  return html.replace(regImage, (match) =>
-    regCloseSelf.test(match) ? match.replace(regCloseSelf, fixImgStyleClose) : match.replace(/>$/gi, fixImgStyle)
+  return html.replace(regImage, match =>
+    regCloseSelf.test(match)
+      ? match.replace(regCloseSelf, fixImgStyleClose)
+      : match.replace(/>$/gi, fixImgStyle)
   )
 }
 
@@ -26,10 +30,12 @@ const Index: React.FC = () => {
     void (async () => {
       const { id, title: _title, publishTime } = router.params
       await Taro.setNavigationBarTitle({
-        title: _title as string
+        title: _title as string,
       })
       setTitle(_title as string)
-      setDate(publishTime !== 'null' ? dayjs(publishTime).format('YYYY-MM-DD') : null)
+      setDate(
+        publishTime !== 'null' ? dayjs(publishTime).format('YYYY-MM-DD') : null
+      )
       let res: any = await getZhihuByIdApi(Number(id))
       res = res.content!
       // res = res.replace(/<img/gi, '<img style="position: relative; left: 50%; width: 80%; height: auto"');

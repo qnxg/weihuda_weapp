@@ -11,11 +11,11 @@ const Index: React.FC = () => {
 
   const circleStyle = classNames({
     [styles.stepCircle]: true,
-    [styles.stepUnreach]: step === 1
+    [styles.stepUnreach]: step === 1,
   })
 
   const textStyle = classNames({
-    [styles.unreach]: step === 1
+    [styles.unreach]: step === 1,
   })
 
   return (

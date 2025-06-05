@@ -1,0 +1,87 @@
+import Taro from '@tarojs/taro'
+import dayjs from 'dayjs'
+import React, { useCallback, useEffect, useState } from 'react'
+import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
+import Button from '@/components/Button'
+import useRefreshKey from '@/utils/hooks/useRefreshKey'
+
+export const btnText = {
+  loading: '加载中',
+  signed: '已签',
+  unsigned: '签到',
+  error: '加载失败',
+}
+
+const SignButton: React.FC<{
+  className?: string
+  signActionCallback?: () => void
+}> = props => {
+  // 加载，已签到，未签到
+  const [status, setStatus] = useState<keyof typeof btnText>('loading')
+
+  const fetchStatus = useCallback(async () => {
+    try {
+      const res = await getJifenRecordPageApi({
+        key: 'qiandao',
+        param: dayjs().format('YYYY-MM-DD'),
+      })
+      if (res.rows.length > 0) {
+        return 'signed'
+      } else {
+        return 'unsigned'
+      }
+    } catch {
+      return 'error'
+    }
+  }, [])
+
+  const [refetchController, refetchTrigger] = useRefreshKey()
+
+  // 每30min刷新一次签到状态
+  useEffect(() => {
+    const timer = setInterval(() => {
+      refetchTrigger()
+    }, 30 * 60 * 1000)
+    return () => clearInterval(timer)
+  }, [refetchTrigger])
+
+  useEffect(() => {
+    void (async () => {
+      setStatus(await fetchStatus())
+    })()
+  }, [fetchStatus, refetchController])
+
+  // 签到
+  const handleClick = async () => {
+    if (status !== 'unsigned') return
+    await Taro.showLoading({ title: '签到中' })
+    const res = await postJifenRecordApi({
+      key: 'qiandao',
+      param: dayjs().format('YYYY-MM-DD'),
+      createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+    })
+    if (res) {
+      setStatus('signed')
+      if (props.signActionCallback) {
+        props.signActionCallback()
+      }
+      await Taro.showToast({ title: '签到成功' })
+      return
+    }
+    Taro.hideLoading()
+  }
+
+  return (
+    <Button
+      className={props.className}
+      theme={status !== 'unsigned' ? 'default' : 'primary'}
+      onClick={handleClick}
+      disabled={status !== 'unsigned'}
+      loading={status == 'loading'}
+    >
+      {btnText[status]}
+    </Button>
+  )
+}
+
+export default SignButton

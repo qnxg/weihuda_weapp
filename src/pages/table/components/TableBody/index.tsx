@@ -24,7 +24,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
    * 记录触摸开始位置
    * @param e 事件对象
    */
-  const onTouchStart = (e) => {
+  const onTouchStart = e => {
     if (e.touches.length === 1) {
       setStartPos(e.changedTouches[0].pageX)
     }
@@ -34,14 +34,15 @@ const TableBody: React.FC<Props> = (props: Props) => {
    * 触摸结束函数，判断是否切换
    * @param e 事件对象
    */
-  const onTouchEnd = (e) => {
+  const onTouchEnd = e => {
     const { currentWeeks } = props
     if (e.changedTouches.length === 1) {
       const end = e.changedTouches[0].pageX
       const offset = end - startPos
       const diffWeek = Math.abs(offset) > 80 ? (offset > 0 ? -1 : 1) : 0
       if (diffWeek !== 0) {
-        const finalWeek = currentWeeks < 0 ? 1 : (diffWeek + currentWeeks + 18) % 18
+        const finalWeek =
+          currentWeeks < 0 ? 1 : (diffWeek + currentWeeks + 18) % 18
         dispatch(saveClassTable({ currentWeeks: finalWeek }))
       }
     }
@@ -56,7 +57,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
       onTouchEnd={onTouchEnd}
       onLongPress={() => {
         void Taro.navigateTo({
-          url: '/pages/addCourse/index'
+          url: '/pages/addCourse/index',
         })
       }}
     >

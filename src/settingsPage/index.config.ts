@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '小程序设置'
-};
+  navigationBarTitleText: '小程序设置',
+}

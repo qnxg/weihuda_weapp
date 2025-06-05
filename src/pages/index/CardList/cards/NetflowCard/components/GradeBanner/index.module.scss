@@ -1,0 +1,61 @@
+@import '~@/utils/scss/global.scss';
+
+.outer {
+  @include flex(flex-start, center);
+  width: 100%;
+  height: 48px;
+  font-size: $fontNormal;
+  font-weight: normal;
+  font-stretch: normal;
+  line-height: 40px;
+
+  .subject {
+    flex: none;
+    width: 143px;
+    height: 40px;
+    white-space: nowrap;
+    color: #3e3e3e;
+  }
+
+  .banner {
+    flex: none;
+    width: 320px;
+    height: 22px;
+    margin: 6px 22px 0 6px;
+    border-radius: 22px;
+    background-color: #eaeaea;
+
+    .percent {
+      width: 0;
+      transition: all 250ms ease-out;
+      height: 22px;
+      border-radius: 22px;
+      background-color: $primaryBlue;
+    }
+  }
+
+  .score {
+    flex: none;
+    width: fit-content;
+    height: 40px;
+    margin-right: 12px;
+    letter-spacing: 0.2px;
+    color: #808080;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .outer {
+    .subject {
+      color: darken($darkTextColor, 10%);
+    }
+
+    .banner {
+      background-color: darken(#eaeaea, 10%);
+
+      .percent {
+        background-color: darken($primaryBlue, 10%);
+      }
+    }
+  }
+}

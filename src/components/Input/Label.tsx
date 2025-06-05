@@ -2,7 +2,7 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
-import type { ViewProps } from '@tarojs/components';
+import type { ViewProps } from '@tarojs/components'
 
 interface Props extends ViewProps {
   /**
@@ -14,11 +14,11 @@ interface Props extends ViewProps {
 /**
  * Label组件
  */
-const Label: React.FC<Props> = (props) => {
+const Label: React.FC<Props> = props => {
   const { required } = props
   // Label项类名
   const labelItemClassName = classNames(styles.label, props.className, {
-    [styles.required]: required
+    [styles.required]: required,
   })
 
   return (

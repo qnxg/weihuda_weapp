@@ -1,16 +1,16 @@
 export interface Item {
-  appo_desc: string;
-  show_time: string;
-  test_time: string;
-  test_type: string;
-  class_name: string;
-  status: string;
+  appo_desc: string
+  show_time: string
+  test_time: string
+  test_type: string
+  class_name: string
+  status: string
 }
 
 export interface Pt {
-  fitnessAppoint: Item[];
+  fitnessAppoint: Item[]
 }
 
 export interface RootObject {
-  pt: Pt;
+  pt: Pt
 }

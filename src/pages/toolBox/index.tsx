@@ -1,18 +1,18 @@
-import { Image, Navigator, Text, View } from '@tarojs/components';
-import React from 'react';
-import { data } from './config';
+import { Image, Navigator, Text, View } from '@tarojs/components'
+import React from 'react'
+import { data } from './config'
 
-import styles from './index.module.scss';
+import styles from './index.module.scss'
 
 const Index: React.FC = () => {
   return (
     <View enable-flex className={styles.container}>
-      {data.map((cate) => {
+      {data.map(cate => {
         return (
           <View key={cate.name} className={styles.category}>
             <View className={styles.title}>{cate.name}</View>
             <View className={styles.content}>
-              {cate.member.map((item) => {
+              {cate.member.map(item => {
                 return (
                   <Navigator
                     url={item.navigator}
@@ -26,14 +26,14 @@ const Index: React.FC = () => {
                       <Text>{item.title}</Text>
                     </View>
                   </Navigator>
-                );
+                )
               })}
             </View>
           </View>
-        );
+        )
       })}
     </View>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

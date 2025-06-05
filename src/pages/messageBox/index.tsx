@@ -9,15 +9,19 @@ import Empty from '@/components/Empty'
 import { fetchNoticeThunk } from '@/models/notice'
 import icon from '@/static/mine/icon-date.svg'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import type { Message} from '@/apis/message';
+import type { Message } from '@/apis/message'
 
 const Index: React.FC = () => {
   // 公告数据
   const [messageData, setMessageData] = useState<Message[]>([])
   // 总消息数
-  const [countInfo, setCountInfo] = useState({ total: 0, unread: 0, message: 0 })
+  const [countInfo, setCountInfo] = useState({
+    total: 0,
+    unread: 0,
+    message: 0,
+  })
   // 消息通知
-  const notice = useAppSelector((state) => state.notice)
+  const notice = useAppSelector(state => state.notice)
   // dispatch
   const dispatch = useAppDispatch()
 
@@ -37,7 +41,7 @@ const Index: React.FC = () => {
     setCountInfo({
       total: messageData.length + notice.total,
       message: messageData.length,
-      unread: notice.unread
+      unread: notice.unread,
     })
   }, [countInfo, messageData, notice])
 
@@ -60,7 +64,8 @@ const Index: React.FC = () => {
   return (
     <View style={{ paddingBottom: '20px' }}>
       <Card className={styles.countInfo}>
-        共有{countInfo.total}条消息，含有 {countInfo.message} 条公告，{countInfo.unread} 条未读消息。
+        共有{countInfo.total}条消息，含有 {countInfo.message} 条公告，
+        {countInfo.unread} 条未读消息。
       </Card>
       {messageData &&
         messageData.length !== 0 &&
@@ -92,7 +97,7 @@ const Index: React.FC = () => {
             </Card>
           )
         })}
-      {(countInfo.total == 0) && (
+      {countInfo.total == 0 && (
         <Card>
           <Empty>暂无消息</Empty>
         </Card>

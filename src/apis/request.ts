@@ -15,12 +15,14 @@ export async function getTokenApi() {
     return getTokenPromise
   }
   getTokenPromise = new Promise(async (resolve, reject) => {
-    const code = await getLoginCode();
-    const token = await request.get<string>('/token', {
-      data: {
-        code
-      }
-    }).catch(() => null)
+    const code = await getLoginCode()
+    const token = await request
+      .get<string>('/token', {
+        data: {
+          code,
+        },
+      })
+      .catch(() => null)
     getTokenPromise = null
     if (!token) {
       reject(null)
@@ -55,21 +57,27 @@ export interface Response {
 
 export type Data = Datum[] | { [key: string]: any } | null | string | number
 
-export type Datum = any[] | boolean | number | { [key: string]: any } | null | string
+export type Datum =
+  | any[]
+  | boolean
+  | number
+  | { [key: string]: any }
+  | null
+  | string
 // 跳转到bind界面
 const toBind = () => {
   const duration = 700
   void Taro.showToast({
     title: '登录过期，请重新登录',
     icon: 'none',
-    duration
+    duration,
   })
   setTimeout(() => {
     void Taro.reLaunch({
       url: '/pages/bind/index',
       fail: function (err) {
         console.log(err)
-      }
+      },
     })
   }, duration)
 }
@@ -80,7 +88,9 @@ const whiteList = ['/bind', '/token', '/feedback/no-auth']
  * @param options 请求配置项
  */
 
-async function request<T extends Data>(options: Taro.request.Option<Response>): Promise<T> {
+async function request<T extends Data>(
+  options: Taro.request.Option<Response>
+): Promise<T> {
   // 获取url
   const url = options.url
 
@@ -99,7 +109,7 @@ async function request<T extends Data>(options: Taro.request.Option<Response>): 
   if (!whiteList.includes(url)) {
     // 设置header
     options.header = {
-      Authorization: token
+      Authorization: token,
     }
   }
 
@@ -121,7 +131,7 @@ async function request<T extends Data>(options: Taro.request.Option<Response>): 
     if (!response.data.msg.includes('NO_TOAST')) {
       await Taro.showToast({
         title: response.data.msg,
-        icon: 'none'
+        icon: 'none',
       })
     }
     throw new Error(response.data.msg)
@@ -136,15 +146,18 @@ request.get = <T extends Data>(url: string, options: WithoutUrlOption = {}) => {
   return request<T>({
     ...options,
     url,
-    method: 'GET'
+    method: 'GET',
   })
 }
 // 重写post方法
-request.post = <T extends Data>(url: string, options: WithoutUrlOption = {}) => {
+request.post = <T extends Data>(
+  url: string,
+  options: WithoutUrlOption = {}
+) => {
   return request<T>({
     ...options,
     url,
-    method: 'POST'
+    method: 'POST',
   })
 }
 // 重写put方法
@@ -152,8 +165,7 @@ request.put = <T extends Data>(url: string, options: WithoutUrlOption = {}) => {
   return request<T>({
     ...options,
     url,
-    method: 'PUT'
+    method: 'PUT',
   })
 }
 export default request
-

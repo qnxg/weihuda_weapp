@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import styles from './index.module.scss'
-import type { ScrollViewProps} from '@tarojs/components';
+import type { ScrollViewProps } from '@tarojs/components'
 
 export interface Props {
   runFunc: (closer: () => void) => any
@@ -17,7 +17,10 @@ export interface RefProps {
   stop: () => any
 }
 
-type IndexType = React.ForwardRefRenderFunction<RefProps, React.PropsWithChildren<Props>>
+type IndexType = React.ForwardRefRenderFunction<
+  RefProps,
+  React.PropsWithChildren<Props>
+>
 
 const Index: IndexType = (props, ref) => {
   const { runFunc, topGap = 0 } = props
@@ -26,7 +29,7 @@ const Index: IndexType = (props, ref) => {
 
   const darkMode = Taro.getSystemInfoSync().theme === 'dark'
 
-  const pullingRefresh = (e) => {
+  const pullingRefresh = e => {
     const d = e.detail.dy || 0
     if (d > 64) {
       setIsToRefresh(true)
@@ -45,7 +48,7 @@ const Index: IndexType = (props, ref) => {
 
   useImperativeHandle(ref, () => ({
     start: runRefresh,
-    stop: stopRefresh
+    stop: stopRefresh,
   }))
 
   return (
@@ -65,7 +68,7 @@ const Index: IndexType = (props, ref) => {
       onRefresherRestore={stopRefresh}
       onRefresherAbort={stopRefresh}
       style={{
-        height: topGap > 0 ? `calc(100vh - ${topGap}rpx)` : '100vh'
+        height: topGap > 0 ? `calc(100vh - ${topGap}rpx)` : '100vh',
       }}
     >
       <Slot name='refresher'>
@@ -74,11 +77,13 @@ const Index: IndexType = (props, ref) => {
             <View
               className={classNames({
                 [styles.loading]: true,
-                [styles.moveAnimate]: refreshing
+                [styles.moveAnimate]: refreshing,
               })}
             />
           ) : (
-            <View className={styles.tipText}>{isToRefresh ? '↑释放刷新' : '↓下拉刷新'}</View>
+            <View className={styles.tipText}>
+              {isToRefresh ? '↑释放刷新' : '↓下拉刷新'}
+            </View>
           )}
         </View>
       </Slot>

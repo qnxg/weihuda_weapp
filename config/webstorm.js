@@ -1,11 +1,7 @@
-// eslint-disable-next-line import/no-commonjs
-const path = require('path');
+import { resolve as _resolve } from 'path';
 
-// eslint-disable-next-line import/no-commonjs
-module.exports = {
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, '..', 'src')
-    }
+export const resolve = {
+  alias: {
+    '@': _resolve(__dirname, '..', 'src')
   }
 };

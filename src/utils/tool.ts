@@ -1,8 +1,12 @@
 import Taro from '@tarojs/taro'
-import type { NodesRef } from '@tarojs/taro';
+import type { NodesRef } from '@tarojs/taro'
 
-export const isPlainObject = (value) => {
-  if (value == null || typeof value !== 'object' || Object.prototype.toString.call(value) != '[object Object]') {
+export const isPlainObject = value => {
+  if (
+    value == null ||
+    typeof value !== 'object' ||
+    Object.prototype.toString.call(value) != '[object Object]'
+  ) {
     return false
   }
   if (Object.getPrototypeOf(value) === null) {
@@ -49,7 +53,7 @@ export const dateFormat = (time: number | string): FormattedDate => {
     month,
     date,
     ymd,
-    md
+    md,
   }
 }
 
@@ -59,10 +63,12 @@ export const dateFormat = (time: number | string): FormattedDate => {
  * @returns 位置信息数组
  */
 export const getBoundingClientRect = (selector: string) => {
-  return new Promise<NodesRef.BoundingClientRectCallbackResult[]>((resolve) => {
+  return new Promise<NodesRef.BoundingClientRectCallbackResult[]>(resolve => {
     Taro.createSelectorQuery()
       .selectAll(selector)
-      .boundingClientRect(function (rects: Taro.NodesRef.BoundingClientRectCallbackResult[]) {
+      .boundingClientRect(function (
+        rects: Taro.NodesRef.BoundingClientRectCallbackResult[]
+      ) {
         resolve(rects)
       })
       .exec()
@@ -75,10 +81,10 @@ export const getBoundingClientRect = (selector: string) => {
  * @returns 滚动位置
  */
 export const getScrollOffset = (selector: string) => {
-  return new Promise<Taro.NodesRef.ScrollOffsetCallbackResult>((resolve) => {
+  return new Promise<Taro.NodesRef.ScrollOffsetCallbackResult>(resolve => {
     Taro.createSelectorQuery()
       .select(selector)
-      .scrollOffset((res) => {
+      .scrollOffset(res => {
         resolve(res)
       })
       .exec()
@@ -88,7 +94,7 @@ export const getScrollOffset = (selector: string) => {
 /**
  * 解析JSON字符串
  * @param str json字符串
- * @returns 
+ * @returns
  */
 export const parseJSON = (str: string) => {
   // 如果是null或者undefined，直接返回

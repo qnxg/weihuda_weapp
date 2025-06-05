@@ -31,9 +31,14 @@ const Index: React.FC = () => {
         return (
           <Panel current={current} index={index} key={String(years[index])}>
             <PullRefresh runFunc={refresh} topGap={68}>
-              <Card items={item.items} total={item.total} name={item.student.name} sex={sex} />
+              <Card
+                items={item.items}
+                total={item.total}
+                name={item.student.name}
+                sex={sex}
+              />
               {item.items &&
-                item.items.map((project) => {
+                item.items.map(project => {
                   return (
                     <HalfCard
                       key={project.name}
@@ -44,7 +49,9 @@ const Index: React.FC = () => {
                     />
                   )
                 })}
-              <Navigator url={`/queryPage/PEQuery/eye?${obj2query(state[0]?.eye)}`}>
+              <Navigator
+                url={`/queryPage/PEQuery/eye?${obj2query(state[0]?.eye)}`}
+              >
                 <HalfCard name='视力' color='white' rank='' score='点击查看' />
               </Navigator>
             </PullRefresh>

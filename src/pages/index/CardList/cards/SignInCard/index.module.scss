@@ -1,0 +1,94 @@
+@import '~@/utils/scss/global.scss';
+
+.icon {
+  height: 48px;
+  width: 48px;
+
+  background: {
+    image: url('~@/static/mine/icon-jifen.svg');
+    repeat: no-repeat;
+    position: center;
+    size: 48px;
+  }
+
+  flex: initial;
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+.text {
+  flex: 1;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  line-height: 1;
+  justify-content: flex-start;
+  font-size: $fontBig;
+}
+
+.signInButton {
+  height: 60px;
+  min-width: 180px;
+  width: fit-content;
+  flex: initial;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $fontNormal;
+}
+
+.baseLineContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.more {
+  padding: 30px 25px 0px;
+  color: var(--text-color-secondary);
+}
+
+.otherHints {
+  padding: 15px 0px 0px;
+  color: var(--text-color-secondary);
+}
+
+.zhihuItem {
+  display: list-item;
+  list-style-type: disc;
+  list-style-position: inside;
+
+  color: var(--brand-color-5);
+  width: 100%;
+  padding: 15px 0px 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zhihuItem.clicked {
+  color: var(--text-color-secondary)
+}
+
+.actionButtonLine {
+  padding: 20px 0px 0px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+.actionButton {
+  height: fit-content;
+  width: fit-content;
+  line-height: 1;
+  padding: 3px;
+  font-size: $fontBig;
+  margin-left: 0;
+  margin-right: 0;
+}

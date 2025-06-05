@@ -1,5 +1,5 @@
-@import "./color.scss";
-@import "./size.scss";
+@import './color.scss';
+@import './size.scss';
 
 @mixin shadow($bgColor: $bgColor, $shadowColor: #eeeeee) {
   border-radius: $borderRadius;

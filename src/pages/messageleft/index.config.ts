@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText:  '留言板'
-};
+  navigationBarTitleText: '留言板',
+}

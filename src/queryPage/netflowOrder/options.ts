@@ -1,30 +1,30 @@
-import type { Chart } from './interface';
+import type { Chart } from './interface'
 
 export default function (data: Chart): object {
   return {
     title: {
-      show: false
+      show: false,
     },
     visualMap: {
       show: false,
       type: 'continuous',
       seriesIndex: 0,
       min: 0,
-      max: 200
+      max: 200,
     },
     color: ['#808080', '#328ccb'],
     grid: {
-      bottom: '60%'
+      bottom: '60%',
     },
     legend: {
       show: true,
       textStyle: {
-        color: '#8c8c8c'
-      }
+        color: '#8c8c8c',
+      },
     },
     tooltip: {
       // show: true,
-      trigger: 'axis'
+      trigger: 'axis',
       // backgroundColor: '#FAFAFA',
       // confine: true,
       // textStyle: {
@@ -33,7 +33,7 @@ export default function (data: Chart): object {
     },
     xAxis: {
       data: data.Month,
-      axisLabel: { rotate: 45 }
+      axisLabel: { rotate: 45 },
       // show: false
     },
     yAxis: [
@@ -44,26 +44,26 @@ export default function (data: Chart): object {
         nameLocation: 'end',
         nameTextStyle: {
           align: 'middle',
-          color: '#8c8c8c'
+          color: '#8c8c8c',
         },
         axisLine: {
-          show: false
+          show: false,
         },
         axisTick: {
-          show: false
+          show: false,
         },
         axisLabel: {
           color: '#8c8c8c',
           margin: 0,
-          align: 'middle'
+          align: 'middle',
         },
         splitLine: {
           lineStyle: {
             color: ['#E2E2E2'],
-            width: 1
-          }
-        }
-      }
+            width: 1,
+          },
+        },
+      },
     ],
     series: [
       {
@@ -71,15 +71,15 @@ export default function (data: Chart): object {
         type: 'line',
         smooth: true,
         showSymbol: false,
-        data: data.Upload
+        data: data.Upload,
       },
       {
         name: '下载流量',
         type: 'line',
         smooth: true,
         showSymbol: false,
-        data: data.Download
-      }
-    ]
-  };
+        data: data.Download,
+      },
+    ],
+  }
 }

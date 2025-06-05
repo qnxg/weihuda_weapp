@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '成绩排名'
-};
+  navigationBarTitleText: '成绩排名',
+}

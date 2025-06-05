@@ -7,18 +7,18 @@ import Tabs from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import { useAppSelector } from '@/utils/hooks/redux'
 import { staticBaseUrl as baseUrl } from '@/utils/url'
-import type { SmesterInfo} from '@/apis/info';
+import type { SmesterInfo } from '@/apis/info'
 
 const pages = ['秋季', '寒假', '春季', '夏季']
 const urls = [
   `${baseUrl}xiaoli/pic0.svg`,
   `${baseUrl}xiaoli/pic1.svg`,
   `${baseUrl}xiaoli/pic2.svg`,
-  `${baseUrl}xiaoli/pic3.svg`
+  `${baseUrl}xiaoli/pic3.svg`,
 ]
 
 const Index: React.FC = () => {
-  const { termType } = useAppSelector((state) => state.smester)
+  const { termType } = useAppSelector(state => state.smester)
 
   const [data, setData] = useState<SmesterInfo | null>(null)
   const [index, setIndex] = useState(termType && termType > 1 ? termType : 0)
@@ -41,7 +41,8 @@ const Index: React.FC = () => {
       const vacationDay = dayjs(data.vacation)
       const nextDay = dayjs(data.next)
       if (
-        (today.isSame(vacationDay, 'day') || today.isAfter(vacationDay, 'day')) &&
+        (today.isSame(vacationDay, 'day') ||
+          today.isAfter(vacationDay, 'day')) &&
         (today.isSame(nextDay, 'day') || today.isBefore(nextDay, 'day'))
       ) {
         setIndex(1)

@@ -1,29 +1,29 @@
 export interface SelectorItem {
-  name: string;
-  value: number;
+  name: string
+  value: number
 }
 
 export interface LineData {
-  c1: string;
-  c2: string;
-  data: string;
+  c1: string
+  c2: string
+  data: string
 }
 
 export interface FloatDetailList {
-  App: string;
-  Download: number;
+  App: string
+  Download: number
 }
 
 export interface FlowDetail {
-  AllDownload: number;
-  FloatDetailList: FloatDetailList[];
+  AllDownload: number
+  FloatDetailList: FloatDetailList[]
 }
 
 export interface Netflow {
-  monthDetail: FlowDetail;
-  dayDetail: FlowDetail;
+  monthDetail: FlowDetail
+  dayDetail: FlowDetail
 }
 
 export interface MonthDetailObject {
-  netflow: Netflow;
+  netflow: Netflow
 }

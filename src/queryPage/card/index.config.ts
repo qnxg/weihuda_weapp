@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '校园卡账单'
-};
+  navigationBarTitleText: '校园卡账单',
+}

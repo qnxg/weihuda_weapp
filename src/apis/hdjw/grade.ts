@@ -43,7 +43,7 @@ export const getGrade = async (xn: string | number, xq: string | number) => {
   return request.get<GradeItem[]>('/hdjw/grade', {
     data: {
       xn,
-      xq
-    }
+      xq,
+    },
   })
 }

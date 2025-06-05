@@ -7,7 +7,7 @@ import request from './request'
  */
 export const postBind = async (data: any) => {
   return request.post<string>('/bind', {
-    data
+    data,
   })
 }
 

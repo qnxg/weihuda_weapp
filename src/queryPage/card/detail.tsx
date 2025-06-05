@@ -6,7 +6,15 @@ import DisplayCard from '@/components/DisplayCard'
 
 const Detail: React.FC = () => {
   const router = useRouter()
-  const { tranAmt, effectDate, jourDate, tranname, tranLocation, jourName, jourNum } = router.params
+  const {
+    tranAmt,
+    effectDate,
+    jourDate,
+    tranname,
+    tranLocation,
+    jourName,
+    jourNum,
+  } = router.params
 
   return (
     <View>

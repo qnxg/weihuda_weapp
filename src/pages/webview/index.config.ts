@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '新页面'
-};
+  navigationBarTitleText: '新页面',
+}

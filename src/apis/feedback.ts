@@ -36,7 +36,7 @@ export interface FeedbackData {
 }
 
 interface GetResponse {
-  count: number,
+  count: number
   rows: FeedbackData[]
 }
 
@@ -46,17 +46,20 @@ interface GetResponse {
 export const getFeedbackPageApi = async (stuId: string) => {
   return request.get<GetResponse>('/feedback/no-auth', {
     data: {
-      stuId
-    }
+      stuId,
+    },
   })
 }
 
 /**
  * 添加反馈
  */
-export const postFeedback = async (data: Partial<FeedbackData>, noAuth = false) => {
+export const postFeedback = async (
+  data: Partial<FeedbackData>,
+  noAuth = false
+) => {
   const url = noAuth ? '/feedback/no-auth' : '/feedback'
   return request.post<string>(url, {
-    data
+    data,
   })
 }

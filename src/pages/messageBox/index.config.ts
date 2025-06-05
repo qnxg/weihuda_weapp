@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '消息盒子'
-};
+  navigationBarTitleText: '消息盒子',
+}

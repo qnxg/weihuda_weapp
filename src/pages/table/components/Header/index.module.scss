@@ -1,4 +1,4 @@
-@import "~@/utils/scss/global.scss";
+@import '~@/utils/scss/global.scss';
 
 .base-info {
   @include flex(center, center);
@@ -14,7 +14,7 @@
     background-size: 40px 32px;
     background-position: 0 6px;
     background-repeat: no-repeat;
-    background-image: url("~@/static/table/down.svg");
+    background-image: url('~@/static/table/down.svg');
   }
 }
 

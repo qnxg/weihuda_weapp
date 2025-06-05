@@ -2,7 +2,7 @@ import { Image, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './cardHeader.module.scss'
-import type { ViewProps } from '@tarojs/components';
+import type { ViewProps } from '@tarojs/components'
 
 interface ICardTitleProps extends ViewProps {
   /**
@@ -19,7 +19,7 @@ interface ICardTitleProps extends ViewProps {
   icon?: string
 }
 
-const CardHeader: React.FC<ICardTitleProps> = (props) => {
+const CardHeader: React.FC<ICardTitleProps> = props => {
   const { title, icon, footer } = props
   const className = classNames(styles.cardHeader, props.className)
   return (

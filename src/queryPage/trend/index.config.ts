@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '成绩趋势'
-};
+  navigationBarTitleText: '成绩趋势',
+}

@@ -8,7 +8,7 @@ import { getGradeRank, getMustGrade } from '@/apis/hdjw/gradeRank'
 import PullRefresh from '@/components/PullRefresh'
 import empty from '@/static/empty/no-ranking.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
-import type { GradeRank } from '@/apis/hdjw/gradeRank';
+import type { GradeRank } from '@/apis/hdjw/gradeRank'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -16,7 +16,7 @@ const Index: React.FC = () => {
 
   const [newShow, setNewShow] = useState(false)
   const [newData, setNewData] = useState<string[] | null>(null)
-  const termRes = useAppSelector((state) => state.smester)
+  const termRes = useAppSelector(state => state.smester)
   const termType = termRes.termType
   const termYear = termType == 1 ? termRes.termYear - 1 : termRes.termYear
 
@@ -26,7 +26,7 @@ const Index: React.FC = () => {
   const getData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getGradeRank()
@@ -40,7 +40,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     }
     // 不处理报错，因为不是特别重要
@@ -58,7 +58,7 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -67,7 +67,12 @@ const Index: React.FC = () => {
     <PullRefresh runFunc={onRefresh}>
       {data && show ? (
         <View className={style.layout}>
-          <Report report={data.total} must={newData} year={termYear} show={newShow} />
+          <Report
+            report={data.total}
+            must={newData}
+            year={termYear}
+            show={newShow}
+          />
           <Semester semseter={data.semesters} />
         </View>
       ) : (

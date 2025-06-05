@@ -2,8 +2,9 @@
   width: 100%;
   margin-bottom: 30px;
   // label position is left
-  &.left {}
-  
+  &.left {
+  }
+
   // label position is top
   &.top {
     display: flex;
@@ -21,7 +22,6 @@
   color: var(--error-color);
   margin-right: 4px;
 }
-
 
 .label {
   margin-right: 12px;

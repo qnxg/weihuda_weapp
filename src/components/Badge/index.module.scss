@@ -1,19 +1,19 @@
 @import '~@/utils/scss/global.scss';
 
 .badgeText {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: whitesmoke;
-    background-color: $primaryBlue;
-    text-align: center;
-    line-height: 1;
-    border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: whitesmoke;
+  background-color: $primaryBlue;
+  text-align: center;
+  line-height: 1;
+  border-radius: 50%;
 }
 
 @media (prefers-color-scheme: dark) {
-    .badgeText {
-        color: lightgrey;
-        background-color: $darkBlue;
-    }
+  .badgeText {
+    color: lightgrey;
+    background-color: $darkBlue;
+  }
 }

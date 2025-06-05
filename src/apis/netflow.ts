@@ -92,34 +92,34 @@ export interface NetflowDetail {
   /**
    * 总下载
    */
-  AllDownload: number;
+  AllDownload: number
   /**
    * 总流量
    */
-  AllTotal: number;
+  AllTotal: number
   /**
    * 总上传
    */
-  AllUpload: number;
+  AllUpload: number
   /**
    * 流量列表
    */
-  FloatDetailList: FloatDetailList[];
-  UserCode: string;
+  FloatDetailList: FloatDetailList[]
+  UserCode: string
 }
 
 export interface FloatDetailList {
   /**
    * 应用
    */
-  App: string;
+  App: string
   /**
    * 下载
    */
-  Download: number;
-  Per: number;
-  Total: number;
-  Upload: number;
+  Download: number
+  Per: number
+  Total: number
+  Upload: number
 }
 
 /**
@@ -141,19 +141,23 @@ export const getNetflowMonth = async (year: number, month: number) => {
   return request.get<NetflowDetail>('/netflow/month-detail', {
     data: {
       year,
-      month
-    }
+      month,
+    },
   })
 }
 /**
  * 日流量明细
  */
-export const getNetflowDay = async (year: number, month: number, day: number) => {
+export const getNetflowDay = async (
+  year: number,
+  month: number,
+  day: number
+) => {
   return request.get<NetflowDetail>('/netflow/day-detail', {
     data: {
       year,
       month,
-      day
-    }
+      day,
+    },
   })
 }

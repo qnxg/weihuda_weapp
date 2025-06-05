@@ -35,7 +35,7 @@ export function nowWeek(startDate: string): number {
  * @param current 当前周为多少
  */
 export function judgeOn(weeks: string, current: number): boolean {
-  const weekArray: Array<number> = weeks.split(',').map((item) => {
+  const weekArray: Array<number> = weeks.split(',').map(item => {
     return parseInt(item)
   })
 
@@ -43,13 +43,13 @@ export function judgeOn(weeks: string, current: number): boolean {
 }
 
 export function markBook(borrow: Array<any>): Array<any> {
-  return borrow.map((item) => {
+  return borrow.map(item => {
     const diff = calDiffDate(item['returndate='])
     return {
       loanCount: item.loancount,
       returnDate: item['returndate='],
       title: item.title,
-      diff: diff
+      diff: diff,
     }
   })
 }

@@ -2,14 +2,14 @@ import request from './request'
 import type { IPageQueryData } from './interface'
 
 export interface IBtnConfigItem {
-    /** 文本 */
-    text: string
-    /** 样式 */
-    theme?: 'primary' | 'default' | 'plain'
-    /** 功能 */
-    type?: 'button' | 'link'
-    /** 值 */
-    value?: string
+  /** 文本 */
+  text: string
+  /** 样式 */
+  theme?: 'primary' | 'default' | 'plain'
+  /** 功能 */
+  type?: 'button' | 'link'
+  /** 值 */
+  value?: string
 }
 
 export interface INotice {
@@ -36,22 +36,27 @@ export interface INoticePageResponseData {
   rows: INotice[]
 }
 
-export interface INoticePageQueryData extends IPageQueryData, Partial<INotice> {}
+export interface INoticePageQueryData
+  extends IPageQueryData,
+    Partial<INotice> {}
 
 /**
  * 获取消息通知列表分页
  */
 export const getNoticePageApi = async (queryData: INoticePageQueryData) => {
   return request.get<INoticePageResponseData>('/notice', {
-    data: queryData
+    data: queryData,
   })
 }
 
 /**
  * 编辑消息通知
  */
-export const putNoticeByIdApi = async (id: number, putData: Partial<INotice>) => {
+export const putNoticeByIdApi = async (
+  id: number,
+  putData: Partial<INotice>
+) => {
   return request.put<INoticePageResponseData>(`/notice/${id}`, {
-    data: putData
+    data: putData,
   })
 }

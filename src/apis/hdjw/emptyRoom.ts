@@ -57,6 +57,6 @@ export interface EmptyRoomItem {
  */
 export const getEmptyRoom = async (params: EmptyRoomParams) => {
   return request.get<EmptyRoomItem[]>('/hdjw/empty-room', {
-    data: params
+    data: params,
   })
 }

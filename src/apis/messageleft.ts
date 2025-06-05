@@ -21,13 +21,15 @@ export interface IMessageLeftPageResponseData {
   rows: IMessageLeft[]
 }
 
-export interface IMessageLeftPageQueryData extends IPageQueryData, Partial<IMessageLeft> {}
+export interface IMessageLeftPageQueryData
+  extends IPageQueryData,
+    Partial<IMessageLeft> {}
 
 /**
  * 新增留言板
  */
 export const postMessageLeftApi = async (postData: Partial<IMessageLeft>) => {
   return request.post<IMessageLeftPageResponseData>('/message-left', {
-    data: postData
+    data: postData,
   })
 }

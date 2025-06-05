@@ -14,11 +14,14 @@ export interface ExamArrange {
  * @param xn 学年
  * @param xq 学期
  */
-export const getComputerExam = async (xn: string | number = '', xq: string | number = '') => {
+export const getComputerExam = async (
+  xn: string | number = '',
+  xq: string | number = ''
+) => {
   return request.get<any>('/hdjw/exam-arrange', {
     data: {
       xn,
-      xq
-    }
+      xq,
+    },
   })
 }

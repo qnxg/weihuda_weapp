@@ -4,14 +4,14 @@ import dayjs from 'dayjs'
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
 import { getJifenRecordPageApi } from '@/apis/jifen'
-import type { IJifenRecord} from '@/apis/jifen';
+import type { IJifenRecord } from '@/apis/jifen'
 
 interface IJifenRecordProps {
   updateTotal?: () => void
   jifenRecordRef?: React.MutableRefObject<any>
 }
 
-const JifenRecord: React.FC<IJifenRecordProps> = (props) => {
+const JifenRecord: React.FC<IJifenRecordProps> = props => {
   const [loading, setLoading] = React.useState(true)
   const [data, setData] = React.useState<IJifenRecord[]>([])
 
@@ -19,7 +19,7 @@ const JifenRecord: React.FC<IJifenRecordProps> = (props) => {
   const getData = async () => {
     const res = await getJifenRecordPageApi({
       page: 1,
-      pageSize: 20
+      pageSize: 20,
     })
     setLoading(false)
     if (res) {
@@ -42,13 +42,15 @@ const JifenRecord: React.FC<IJifenRecordProps> = (props) => {
   return (
     <View className={styles.recordContainer}>
       <View>
-        {data.map((item) => (
+        {data.map(item => (
           <View key={item.id} className={styles.recordItem}>
-            <View className={styles.recordCreateTime}>{dayjs(item.createTime).format('YYYY-MM-DD')}</View>
+            <View className={styles.recordCreateTime}>
+              {dayjs(item.createTime).format('YYYY-MM-DD')}
+            </View>
             <View className={styles.recordDesc}>{item.desc}</View>
             <View
               className={classNames(styles.recordJifen, {
-                [styles.reduce]: item.jifen < 0
+                [styles.reduce]: item.jifen < 0,
               })}
             >
               {item.jifen > 0 ? '+' : ''}

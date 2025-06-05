@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '微课表'
-};
+  navigationBarTitleText: '微课表',
+}

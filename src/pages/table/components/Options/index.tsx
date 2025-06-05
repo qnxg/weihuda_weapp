@@ -11,7 +11,8 @@ export interface OptionProps {
 }
 
 const Options: React.FC<OptionProps> = ({ showOption = false }) => {
-  const { semesters, currentSem, weeks, currentWeeks, mode, showOptions } = useAppSelector((state) => state.classTable)
+  const { semesters, currentSem, weeks, currentWeeks, mode, showOptions } =
+    useAppSelector(state => state.classTable)
 
   const dispatch = useAppDispatch()
 
@@ -21,7 +22,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
   const onHideOptions = () => {
     dispatch(
       saveClassTable({
-        showOptions: false
+        showOptions: false,
       })
     )
   }
@@ -34,7 +35,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
     dispatch(
       saveClassTable({
         currentSem: e.detail.value,
-        currentWeeks: 1
+        currentWeeks: 1,
       })
     )
     void dispatch(refreshClassTableThunk())
@@ -47,7 +48,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
   const onSelectWeek = (e): void => {
     dispatch(
       saveClassTable({
-        currentWeeks: parseInt(e.detail.value) + 1
+        currentWeeks: parseInt(e.detail.value) + 1,
       })
     )
   }
@@ -60,14 +61,14 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
     storage.setTableMode(e.detail.value)
     dispatch(
       saveClassTable({
-        mode: e.detail.value
+        mode: e.detail.value,
       })
     )
   }
 
   const cxHeaderMask = classNames({
     [styles.headerMask]: true,
-    [styles.slideDown]: showOptions
+    [styles.slideDown]: showOptions,
   })
 
   return (
@@ -117,7 +118,12 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
           </Picker>
           <View className={styles['switch-item']}>
             <View>仅显示本周课程</View>
-            <Switch color='#328ccb' className={styles.switch} checked={mode} onChange={onModeChange} />
+            <Switch
+              color='#328ccb'
+              className={styles.switch}
+              checked={mode}
+              onChange={onModeChange}
+            />
           </View>
         </View>
       </View>

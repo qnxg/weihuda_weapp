@@ -1,58 +1,67 @@
-import { View, Text, Picker, Radio, Image } from '@tarojs/components';
-import React from 'react';
-import styles from './index.module.scss';
-import iconFinger from '@/static/emptyRoom/icon-finger.svg';
+import { View, Text, Picker, Radio, Image } from '@tarojs/components'
+import React from 'react'
+import styles from './index.module.scss'
+import iconFinger from '@/static/emptyRoom/icon-finger.svg'
 
-import { multiArray } from '@/utils/config';
-import type { Radio as IRadio } from '../../interface';
-import type { CommonEventFunction } from '@tarojs/components/types/common';
+import { multiArray } from '@/utils/config'
+import type { Radio as IRadio } from '../../interface'
+import type { CommonEventFunction } from '@tarojs/components/types/common'
 
 interface Props {
-  pickerValue: number[];
-  radioValue: IRadio[];
-  setState: any;
+  pickerValue: number[]
+  radioValue: IRadio[]
+  setState: any
 }
 
-const PickerArea: React.FC<Props> = (props) => {
-  const { pickerValue = [], radioValue = [], setState } = props;
+const PickerArea: React.FC<Props> = props => {
+  const { pickerValue = [], radioValue = [], setState } = props
   /**
    * picker的值发生改变
    * @param e
    */
   const pickerChange: CommonEventFunction = (e): void => {
-    setState((s) => ({
+    setState(s => ({
       ...s,
-      pickerValue: e.detail.value
-    }));
-  };
+      pickerValue: e.detail.value,
+    }))
+  }
 
   /**
    * radio选择事件处理
    * @param e
    */
   const radioChange = (e: number): void => {
-    const temp: Array<IRadio> = Object.assign([], radioValue);
-    temp[e].checked = !temp[e].checked;
-    setState((s) => ({
+    const temp: Array<IRadio> = Object.assign([], radioValue)
+    temp[e].checked = !temp[e].checked
+    setState(s => ({
       ...s,
-      radioValue: temp
-    }));
-  };
+      radioValue: temp,
+    }))
+  }
 
   /**
    * 渲染radio
    */
   const radioArea = radioValue.map((item, index) => {
     return (
-      <View className={styles.radioItem} key={item.id} onClick={(): void => radioChange(index)}>
+      <View
+        className={styles.radioItem}
+        key={item.id}
+        onClick={(): void => radioChange(index)}
+      >
         <View className={styles.radioLeft}>
-          <Radio color='#328ccb' value={item.id} checked={item.checked} className={styles.radios} />
+          <Radio
+            color='#328ccb'
+            value={item.id}
+            checked={item.checked}
+            className={styles.radios}
+          />
           <Text>{item.text[0]}</Text>
         </View>
         <View>{item.text[1]}</View>
       </View>
-    );
-  });
+    )
+  })
 
   return (
     <View className={styles.container}>
@@ -79,7 +88,7 @@ const PickerArea: React.FC<Props> = (props) => {
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default PickerArea;
+export default PickerArea

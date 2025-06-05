@@ -7,7 +7,7 @@ import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
 import empty from '@/static/empty/no-grade.svg'
-import type { LabGradeData} from '@/apis/pt/labGrade';
+import type { LabGradeData } from '@/apis/pt/labGrade'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
@@ -22,7 +22,7 @@ const Index: React.FC = () => {
   const getData = useCallback(async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
       const res = await getLabGrade(index + 1)
@@ -36,7 +36,7 @@ const Index: React.FC = () => {
       setShow(false)
       await Taro.showToast({
         icon: 'none',
-        title: err.toString()
+        title: err.toString(),
       })
     } finally {
       Taro.hideLoading()
@@ -47,7 +47,7 @@ const Index: React.FC = () => {
     void getData()
   }, [getData, index])
 
-  const onRefresh = async (close) => {
+  const onRefresh = async close => {
     await getData()
     close()
   }
@@ -65,9 +65,13 @@ const Index: React.FC = () => {
             <View className={styles.totalAmount}>
               {`已完成学时：${data.total.xs}，课程总评成绩：${data.total.cj}`}
             </View>
-            {data.items.map((item) => {
+            {data.items.map(item => {
               return (
-                <DisplayCard title={item.labname} key={Math.random()} subTitle={`${item.xs} 学时`}>
+                <DisplayCard
+                  title={item.labname}
+                  key={Math.random()}
+                  subTitle={`${item.xs} 学时`}
+                >
                   <View>实验总分：{item.grade}</View>
                   <View>
                     预习/考勤：{item.grade_yx} / {item.grade_kq}

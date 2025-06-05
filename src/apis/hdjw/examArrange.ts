@@ -37,11 +37,14 @@ export default interface DateType {
  * @param xn 学年
  * @param xq 学期
  */
-export const getExamArrange = async (xn: string | number = '', xq: string | number = '') => {
+export const getExamArrange = async (
+  xn: string | number = '',
+  xq: string | number = ''
+) => {
   return request.get<any>('/hdjw/exam-arrange', {
     data: {
       xn,
-      xq
-    }
+      xq,
+    },
   })
 }

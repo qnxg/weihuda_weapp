@@ -1,12 +1,12 @@
-import request from "./request"
-import type { UserSettings } from "@/utils/storage/userSettings/defaults"
+import request from './request'
+import type { UserSettings } from '@/utils/storage/userSettings/defaults'
 
 export const getAllUserSettingsApi = () => {
-    return request.get<UserSettings>('/user-settings/all')
+  return request.get<UserSettings>('/user-settings/all')
 }
 
 export const setAllUserSettingsApi = (all_settings: UserSettings) => {
-    return request.post('/user-settings/all', {
-        data: all_settings
-    })
+  return request.post('/user-settings/all', {
+    data: all_settings,
+  })
 }

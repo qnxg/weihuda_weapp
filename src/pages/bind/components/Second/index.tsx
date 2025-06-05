@@ -13,51 +13,50 @@ const Second: React.FC = () => {
   const postData = async () => {
     await Taro.showLoading({
       mask: true,
-      title: '加载中...'
+      title: '加载中...',
     })
     try {
-      const code = await getLoginCode();
+      const code = await getLoginCode()
       const res = await postBind({
         code,
         stuId: stuIdRef.current,
         stuPassword: stuPassRef.current,
-        hdjwPassword: stuPassRef.current
+        hdjwPassword: stuPassRef.current,
       })
 
       console.log('res', res)
       await getTokenApi()
       Taro.hideLoading()
       await Taro.reLaunch({
-        url: '/pages/index/index'
+        url: '/pages/index/index',
       })
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
-    
   }
 
   /**
    * 提交表单
    */
   const submit = async () => {
-    if (stuIdRef.current === '' || stuPassRef.current === '' 
-    ) {
+    if (stuIdRef.current === '' || stuPassRef.current === '') {
       await Taro.showToast({
         title: '请检查必填项',
         icon: 'none',
         duration: 2000,
-        mask: true
+        mask: true,
       })
       return
     }
     if (stuPassRef.current.length < 7) {
       const result = await Taro.showModal({
         title: '密码提示',
-        content: '检测到你的个人门户密码是初始密码或密码强度较弱，建议修改后再绑定，是否继续绑定？',
+        content:
+          '检测到你的个人门户密码是初始密码或密码强度较弱，建议修改后再绑定，是否继续绑定？',
         confirmText: '继续绑定',
         confirmColor: '#ff0000',
         cancelText: '之后绑定',
-        cancelColor: '#19aa19'
+        cancelColor: '#19aa19',
       })
       if (!result.confirm) {
         return

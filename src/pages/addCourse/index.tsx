@@ -12,10 +12,10 @@ const Index: React.FC = () => {
    * 全选全不选
    */
   const selectAll = (): void => {
-    setState((s) => ({
+    setState(s => ({
       ...s,
       week: Array(16).fill(s.mode),
-      mode: !s.mode
+      mode: !s.mode,
     }))
   }
   /**
@@ -26,9 +26,9 @@ const Index: React.FC = () => {
     tempSelectWeek = tempSelectWeek.map((_, index) => {
       return index % 2 === 0
     })
-    setState((s) => ({
+    setState(s => ({
       ...s,
-      week: tempSelectWeek
+      week: tempSelectWeek,
     }))
   }
   /**
@@ -39,9 +39,9 @@ const Index: React.FC = () => {
     tempSelectWeek = tempSelectWeek.map((_, index) => {
       return index % 2 !== 0
     })
-    setState((s) => ({
+    setState(s => ({
       ...s,
-      week: tempSelectWeek
+      week: tempSelectWeek,
     }))
   }
   /**
@@ -52,30 +52,30 @@ const Index: React.FC = () => {
     if (e.detail.column === 1) {
       const [...temp] = state.picker
       temp[1] = temp[2] = e.detail.value
-      setState((s) => ({
+      setState(s => ({
         ...s,
-        picker: temp
+        picker: temp,
       }))
     } else if (e.detail.column === 2) {
       const [...temp] = state.picker
       if (e.detail.value >= temp[1]) {
         temp[2] = e.detail.value
-        setState((s) => ({
+        setState(s => ({
           ...s,
-          picker: temp
+          picker: temp,
         }))
       } else {
-        setState((s) => ({
+        setState(s => ({
           ...s,
-          picker: temp
+          picker: temp,
         }))
       }
     } else {
       const [...temp] = state.picker
       temp[0] = e.detail.value
-      setState((s) => ({
+      setState(s => ({
         ...s,
-        picker: temp
+        picker: temp,
       }))
     }
   }
@@ -86,9 +86,9 @@ const Index: React.FC = () => {
   const pickerChange = (e): void => {
     const [...temp] = state.picker
     temp[0] = e.detail.value[0]
-    setState((s) => ({
+    setState(s => ({
       ...s,
-      picker: temp
+      picker: temp,
     }))
   }
   /**
@@ -101,7 +101,7 @@ const Index: React.FC = () => {
     if (classname === '' || section === '' || week === '') {
       void Taro.showToast({
         title: '请检查必填项',
-        icon: 'none'
+        icon: 'none',
       })
     } else {
       void run()
@@ -117,7 +117,7 @@ const Index: React.FC = () => {
           placeholder='请在此输入课程名[必填]'
           value={state.classname}
           onInput={(e): void => {
-            setState((s) => ({ ...s, classname: e.detail.value }))
+            setState(s => ({ ...s, classname: e.detail.value }))
           }}
         />
       </View>
@@ -129,7 +129,10 @@ const Index: React.FC = () => {
               placeholder='请在此输入教师名'
               value={state.teachers}
               onInput={(e): void => {
-                setState((s) => ({ ...s, teachers: e.detail.value }))
+                setState(s => ({
+                  ...s,
+                  teachers: e.detail.value,
+                }))
               }}
             />
           </View>
@@ -141,7 +144,10 @@ const Index: React.FC = () => {
               placeholder='请在此输入教室'
               value={state.location}
               onInput={(e): void => {
-                setState((s) => ({ ...s, location: e.detail.value }))
+                setState(s => ({
+                  ...s,
+                  location: e.detail.value,
+                }))
               }}
             />
           </View>
@@ -153,7 +159,7 @@ const Index: React.FC = () => {
               {state.week.map((item, index) => {
                 const cx = classNames({
                   [styles.weekItem]: true,
-                  [styles.select]: item
+                  [styles.select]: item,
                 })
                 return (
                   <View
@@ -162,9 +168,9 @@ const Index: React.FC = () => {
                     onClick={(): void => {
                       const [...temp] = state.week
                       temp[index] = !temp[index]
-                      setState((s) => ({
+                      setState(s => ({
                         ...s,
-                        week: temp
+                        week: temp,
                       }))
                     }}
                   >
@@ -197,8 +203,9 @@ const Index: React.FC = () => {
               onChange={pickerChange}
             >
               <View>
-                {`${addCoursePicker[0][state.picker[0]]} ${addCoursePicker[1][state.picker[1]]}-${addCoursePicker[2][state.picker[2]]
-                  }`}
+                {`${addCoursePicker[0][state.picker[0]]} ${addCoursePicker[1][state.picker[1]]}-${
+                  addCoursePicker[2][state.picker[2]]
+                }`}
               </View>
             </Picker>
           </View>

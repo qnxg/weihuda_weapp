@@ -12,7 +12,7 @@ export interface FloatProps {
 
 const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
   /** 定义悬浮课程详情的数据 */
-  const { floatData } = useAppSelector((state) => state.classTable)
+  const { floatData } = useAppSelector(state => state.classTable)
   const dispatch = useAppDispatch()
   /**
    * 隐藏float
@@ -20,36 +20,44 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
   const onHideFloat = (): void => {
     dispatch(
       saveClassTable({
-        showFloat: false
+        showFloat: false,
       })
     )
   }
-  const deleteCourse = async (id) => {
+  const deleteCourse = async id => {
     const deleteRes = await Taro.showModal({
       title: '确认删除',
       content: '将会删除本课程并重新拉取课表',
       confirmColor: '#ff5555',
-      cancelColor: '#328ccb'
+      cancelColor: '#328ccb',
     })
     if (deleteRes.confirm) {
       onHideFloat()
       try {
         await Taro.showLoading({
           title: '加载中',
-          mask: true
+          mask: true,
         })
         await deleteCourseApi(parseInt(id))
         await dispatch(refreshClassTableThunk())
         Taro.hideLoading()
-      } catch (err) {
+      } catch {
         Taro.hideLoading()
       }
     }
   }
 
   return (
-    <View className={styles.firstMask} onClick={onHideFloat} style={`display: ${showFloat ? 'block' : 'none'}`}>
-      <Swiper className={styles.swiper} previousMargin='150rpx' nextMargin='152rpx'>
+    <View
+      className={styles.firstMask}
+      onClick={onHideFloat}
+      style={`display: ${showFloat ? 'block' : 'none'}`}
+    >
+      <Swiper
+        className={styles.swiper}
+        previousMargin='150rpx'
+        nextMargin='152rpx'
+      >
         {floatData.map((item, index) => {
           return (
             <SwiperItem key={String(index)} className={styles.swiperItem}>
@@ -61,7 +69,9 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
                 }}
               >
                 <ScrollView>
-                  <View className={styles.classId}>[{!item.classId ? '自定义课程' : item.classId}]</View>
+                  <View className={styles.classId}>
+                    [{!item.classId ? '自定义课程' : item.classId}]
+                  </View>
                   <View className={styles.className}>{item.classname}</View>
                   <View className={styles.classOther}>
                     <View>{item.location ? item.location : ''}</View>

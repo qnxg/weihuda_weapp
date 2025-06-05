@@ -3,17 +3,20 @@ import Taro, { useRouter } from '@tarojs/taro'
 import classNames from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getAuthQrcodeStatusApi, putAuthQrcodeStatusApi } from '@/apis/authQrcode'
+import {
+  getAuthQrcodeStatusApi,
+  putAuthQrcodeStatusApi,
+} from '@/apis/authQrcode'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
-import type { AuthQrcodeStatus} from '@/apis/authQrcode';
+import type { AuthQrcodeStatus } from '@/apis/authQrcode'
 
 const Index: React.FC = () => {
   // 获取query参数
   const { params } = useRouter()
-  const code = decodeURIComponent(params?.q!).replace('https://qnxg.cn/mp-qrcode/', '').replace(
-    'test0/', ''
-  )
+  const code = decodeURIComponent(params?.q!)
+    .replace('https://qnxg.cn/mp-qrcode/', '')
+    .replace('test0/', '')
   const [status, setStatus] = useState<AuthQrcodeStatus | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -26,7 +29,7 @@ const Index: React.FC = () => {
         setStatus(res)
         await putAuthQrcodeStatusApi(code, 'using')
       }
-    } catch (e) {
+    } catch {
       setError('二维码已失效')
     }
   }, [code])
@@ -39,7 +42,7 @@ const Index: React.FC = () => {
   // 回到首页
   const goHome = () => {
     void Taro.switchTab({
-      url: '/pages/index/index'
+      url: '/pages/index/index',
     })
   }
 
@@ -49,7 +52,7 @@ const Index: React.FC = () => {
     await putAuthQrcodeStatusApi(code, 'confirmed')
     setStatus('used')
     await Taro.showToast({
-      title: '授权成功'
+      title: '授权成功',
     })
     setTimeout(() => {
       goHome()
@@ -62,7 +65,7 @@ const Index: React.FC = () => {
     await putAuthQrcodeStatusApi(code, 'canceled')
     setStatus('used')
     await Taro.showToast({
-      title: '取消成功'
+      title: '取消成功',
     })
     setTimeout(() => {
       goHome()
@@ -77,10 +80,17 @@ const Index: React.FC = () => {
       <Text className={styles.text}>易千工作台</Text>
       {code && status && (
         <View>
-          <Button className={classNames(styles.btn, styles.btn1)} onClick={onConfirm}>
+          <Button
+            className={classNames(styles.btn, styles.btn1)}
+            onClick={onConfirm}
+          >
             确认授权
           </Button>
-          <Button className={classNames(styles.btn, styles.btn2)} theme='default' onClick={onCancel}>
+          <Button
+            className={classNames(styles.btn, styles.btn2)}
+            theme='default'
+            onClick={onCancel}
+          >
             取消
           </Button>
         </View>
@@ -88,7 +98,10 @@ const Index: React.FC = () => {
       {error && (
         <View className={styles.error}>
           <Text>二维码已失效</Text>
-          <Button className={classNames(styles.btn, styles.btn2)} theme='default'>
+          <Button
+            className={classNames(styles.btn, styles.btn2)}
+            theme='default'
+          >
             返回到首页
           </Button>
         </View>

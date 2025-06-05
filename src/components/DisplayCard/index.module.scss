@@ -53,9 +53,7 @@
 
 @media (prefers-color-scheme: dark) {
   .container {
-
     .wrapper {
-
       background-color: $darkBgColor;
       // box-shadow: 0 3px 6px 0 $darkBoxShadowColor;
       color: darken($darkTextColor, 5%);
