@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getJifenRecordPageApi, postJifenRecordApi } from '@/apis/jifen'
 import Button from '@/components/Button'
+import useRefreshKey from '@/utils/hooks/useRefreshKey'
 
 export const btnText = {
   loading: '加载中',
@@ -34,11 +35,21 @@ const SignButton: React.FC<{
     }
   }, [])
 
+  const [refetchController, refetchTrigger] = useRefreshKey()
+
+  // 每30min刷新一次签到状态
+  useEffect(() => {
+    const timer = setInterval(() => {
+      refetchTrigger()
+    }, 30 * 60 * 1000)
+    return () => clearInterval(timer)
+  }, [refetchTrigger])
+
   useEffect(() => {
     void (async () => {
       setStatus(await fetchStatus())
     })()
-  }, [fetchStatus])
+  }, [fetchStatus, refetchController])
 
   // 签到
   const handleClick = async () => {

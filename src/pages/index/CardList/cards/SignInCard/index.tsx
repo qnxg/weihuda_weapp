@@ -9,6 +9,7 @@ import Button from '@/components/Button'
 import Card from '@/components/Card'
 import SignButton from '@/pages/jifen/components/Qiandao/SignButton'
 import usePromise from '@/utils/hooks/usePromise'
+import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import { fetchUserSettings } from '@/utils/storage/userSettings'
 import { setNeedShowHintAfterSignIn } from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
 import type CardProps from '../../CardProps'
@@ -73,17 +74,28 @@ const SignInCardMorePart: React.FC<{
     </View>
 }
 
+/** 签到卡片 */
 const SignInCard: React.FC<CardProps> = props => {
   // 首页的下拉刷新就不追踪签到按钮的加载状态了，因为签到按钮自己管理了加载状态。
   const { onLoadingStatusChange } = props
   const getSettings = useCallback(async () => (await fetchUserSettings()).indexSignInCardSettings, []);
+  const [reloadJifenController, reloadJifenTrigger] = useRefreshKey()
+
+  // 每分钟刷新一次积分
+  useEffect(() => {
+    const timer = setInterval(() => {
+      reloadJifenTrigger()
+    }, 60 * 1000)
+    return () => clearInterval(timer)
+  }, [reloadJifenTrigger])
+
   const [settings] = usePromise(
     getSettings,
     undefined,
     [props.reloadController]
   )
   const [jifen, loadingJifen, error] = usePromise(getJifenNum, NaN, [
-    props.reloadController,
+    props.reloadController, reloadJifenController
   ])
   useEffect(() => {
     onLoadingStatusChange(loadingJifen)
@@ -100,12 +112,13 @@ const SignInCard: React.FC<CardProps> = props => {
       <View className={style.baseLineContainer}>
         <View className={style.icon} />
         <View className={style.text}>
-          当前积分：{loadingJifen || error ? '未知' : +jifen}
+          当前积分：{(loadingJifen && Number.isNaN(jifen)) || error ? '未知' : +jifen}
         </View>
         <SignButton
           className={style.signInButton}
           key={props.reloadController}
           signActionCallback={() => {
+            reloadJifenTrigger()
             if (settings.showHintAfterSignIn) { setShowMore(true) }
           }}
         />
