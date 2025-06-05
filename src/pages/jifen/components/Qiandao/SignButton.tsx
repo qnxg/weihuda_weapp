@@ -39,9 +39,12 @@ const SignButton: React.FC<{
 
   // 每30min刷新一次签到状态
   useEffect(() => {
-    const timer = setInterval(() => {
-      refetchTrigger()
-    }, 30 * 60 * 1000)
+    const timer = setInterval(
+      () => {
+        refetchTrigger()
+      },
+      30 * 60 * 1000
+    )
     return () => clearInterval(timer)
   }, [refetchTrigger])
 

@@ -41,7 +41,10 @@ export function useFinalCardDisplay(deps: DependencyList) {
   const computeFinalCardDisplayMemo = useMemo(computeFinalCardDisplay, [
     ...deps,
   ])
-  const cb = useCallback(() => computeFinalCardDisplayMemo, [computeFinalCardDisplayMemo])
+  const cb = useCallback(
+    () => computeFinalCardDisplayMemo,
+    [computeFinalCardDisplayMemo]
+  )
   const [cardsToDisplay] = usePromise<[Set<CardEnum>, Set<CardEnum>]>(
     cb,
     () => [new Set(), new Set()],

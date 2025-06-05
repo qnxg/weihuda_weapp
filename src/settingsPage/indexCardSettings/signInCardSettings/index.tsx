@@ -15,8 +15,6 @@ const getSignInCardSettings = async () =>
 const SwitchList: React.FC<{
   setShouldRelaunchIndex: (s: boolean) => unknown
 }> = ({ setShouldRelaunchIndex }) => {
-
-
   const [signInCardSettings, loadingSignInCardSettings] = usePromise(
     getSignInCardSettings,
     undefined,

@@ -69,12 +69,9 @@ export async function fetchUserSettings(): Promise<UserSettings> {
     }
     if (
       !('settingsMajorVersion' in res[defaultK]) ||
-      res[defaultK].settingsMajorVersion !==
-      defaultV.settingsMajorVersion
+      res[defaultK].settingsMajorVersion !== defaultV.settingsMajorVersion
     ) {
-      console.log(
-        `用户设置 ${defaultK} 版本异常或不匹配。将使用默认设置。`
-      )
+      console.log(`用户设置 ${defaultK} 版本异常或不匹配。将使用默认设置。`)
       res[defaultK] = defaultV
       continue
     }
@@ -89,7 +86,6 @@ export async function fetchUserSettings(): Promise<UserSettings> {
   }
   return res as UserSettings
 }
-
 
 /**
  * 使用一个对象覆盖设置整个用户小程序设置
@@ -130,8 +126,8 @@ export const modifyUserSettingsPart = async <K extends keyof UserSettings>(
   await modifyUserSettings(async old => {
     const newPart: Omit<UserSettings[K], 'settingsMajorVersion'> &
       Partial<Pick<UserSettings[K], 'settingsMajorVersion'>> = await modifier(
-        old[key]
-      )
+      old[key]
+    )
     newPart.settingsMajorVersion = DEFAULT_SETTINGS[key].settingsMajorVersion
     return {
       ...old,

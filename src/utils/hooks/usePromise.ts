@@ -27,7 +27,7 @@ type PromiseErrorInfo = null | { thrown: unknown }
  * @remarks
  * - The hook ensures that the state updates only if the component is still mounted.
  * - **这个函数有自定义eslint规则**，如果改变了这个函数，请对应调整其eslint规则
- * 
+ *
  * @example
  * ```tsx
  * const fetchData = useCallback(async () => {
