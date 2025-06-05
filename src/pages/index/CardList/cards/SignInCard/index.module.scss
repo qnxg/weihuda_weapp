@@ -57,6 +57,11 @@
   color: var(--text-color-secondary);
 }
 
+.otherHints {
+  padding: 15px 0px 0px;
+  color: var(--text-color-secondary);
+}
+
 .zhihuItem {
   display: list-item;
   list-style-type: disc;
@@ -64,8 +69,12 @@
 
   color: var(--brand-color-5);
   width: 100%;
-  padding: 20px 0px 0px;
+  padding: 15px 0px 0px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.zhihuItem.clicked {
+  color: var(--text-color-secondary)
 }

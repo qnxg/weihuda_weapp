@@ -1,5 +1,6 @@
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import classNames from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
 import style from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
@@ -9,30 +10,48 @@ import SignButton from '@/pages/jifen/components/Qiandao/SignButton'
 import usePromise from '@/utils/hooks/usePromise'
 import { fetchUserSettings } from '@/utils/storage/userSettings'
 import type CardProps from '../../CardProps'
+import type { IZhihu } from '@/apis/zhihu';
 
 const getJifenNum = async () => (await getJifenTotalApi()).jifen
 
 const getRecentZhihu = async () =>
   (await getZhihuPageApi({ page: 1, pageSize: 3, tags: '' })).rows
 
+const ZhihuItem: React.FC<{ izhihu: IZhihu }> = (props) => {
+  const { izhihu } = props
+  const [clicked, setClicked] = useState(false)
+  return < View
+    className={classNames(style.zhihuItem, { [style.clicked]: clicked })}
+    onClick={() => {
+      void Taro.navigateTo({ url: getZhihuItemLink(izhihu) })
+      setClicked(true)
+    }}
+  >
+    {izhihu.title}
+  </View >
+}
 
 const SignInCardMorePart: React.FC = () => {
   const [moreThings, loadingMoreThings, error] =
     usePromise(getRecentZhihu, [], [])
 
   return (loadingMoreThings || error || moreThings.length == 0) ? <></> :
-    <View className={style.more}>
-      查看最新推文，获取更多积分吧：
-      {moreThings.map(v => (
-        <View
-          className={style.zhihuItem}
-          key={v.id}
-          onClick={() => void Taro.navigateTo({ url: getZhihuItemLink(v) })}
-        >
-          {v.title}
+    <>
+      <View className={style.more}>
+        <View>
+          查看最新推文，获取更多积分吧：
+          {moreThings.map(v => (
+            <ZhihuItem
+              izhihu={v}
+              key={v.id}
+            />
+          ))}
         </View>
-      ))}
-    </View>
+        <View className={style.otherHints}>
+          问题反馈/知湖投稿也有机会获得积分哟~
+        </View>
+      </View>
+    </>
 }
 
 const SignInCard: React.FC<CardProps> = props => {
