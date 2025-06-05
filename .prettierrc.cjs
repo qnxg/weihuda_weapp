@@ -5,5 +5,6 @@ module.exports = {
   jsxSingleQuote: true,
   trailingComma: 'es5',
   arrowParens: 'avoid',
-  proseWrap: 'preserve'
+  proseWrap: 'preserve',
+  endOfLine: 'auto',
 };

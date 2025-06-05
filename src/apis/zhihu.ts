@@ -35,7 +35,7 @@ export interface IZhihuPageResponseData {
   rows: IZhihu[]
 }
 
-export interface IZhihuPageQueryData extends IPageQueryData, Partial<IZhihu> { }
+export interface IZhihuPageQueryData extends IPageQueryData, Partial<IZhihu> {}
 
 /**
  * 获取知湖文章列表分页
