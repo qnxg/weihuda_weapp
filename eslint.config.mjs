@@ -55,7 +55,7 @@ export default defineConfig([{
 
     rules: {
         "local/no-sus-usepromise": ["warn"],
-        "local/no-sus-usepromise-deps": ["error"],
+        "local/no-unstable-usepromise": ["error"],
 
         "prefer-const": ["warn"],
         "no-var": ["error"],

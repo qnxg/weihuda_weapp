@@ -2,7 +2,7 @@ export default {
   meta: {
     type: "problem", // This rule flags a potential bug
     docs: {
-      description: "检查usePromise依赖",
+      description: "检查usePromise中是否使用不稳定函数引用",
     },
     schema: [],
     messages: {

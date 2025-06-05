@@ -2,7 +2,7 @@ export default {
   meta: {
     type: "suggestion",
     docs: {
-      description: "usePromise调用检查",
+      description: "usePromise调用风格检查",
     },
     schema: [] // 无额外配置
   },
@@ -24,6 +24,7 @@ export default {
           context.report({
             node: firstArg,
             message: `不应该使用内联函数作为usePromise的第一个参数。`
+              + `这是因为内联函数的引用在每次渲染时都会变化，可能导致潜在的bug。`
               + `请将函数定义使用useCallback包裹或者提取至全局。`
           });
         } else if (thirdArg) {
@@ -45,7 +46,8 @@ export default {
                 context.report({
                   node: thirdArg,
                   message: `依赖数组中没有包含usePromise第一个参数。`
-                    + `请确保第一个参数的引用是稳定的，然后将其包含到依赖数组中。`
+                    + `第一个参数的引用是否是稳定的？`
+                    + `请检查，然后将其包含到依赖数组中。`
                 });
               }
             }
