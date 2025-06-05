@@ -39,7 +39,7 @@ const SignInCardMorePart: React.FC<{
   onNeverShowAgainButtonClick: () => unknown
 }> = (props) => {
   const [moreThings, loadingMoreThings, error] =
-    usePromise(getRecentZhihu, [], [])
+    usePromise(getRecentZhihu, [], [getRecentZhihu])
 
   return (loadingMoreThings || error || moreThings.length == 0) ? <></> :
     <View className={style.more}>
@@ -92,10 +92,10 @@ const SignInCard: React.FC<CardProps> = props => {
   const [settings] = usePromise(
     getSettings,
     undefined,
-    [props.reloadController]
+    [getSettings, props.reloadController]
   )
   const [jifen, loadingJifen, error] = usePromise(getJifenNum, NaN, [
-    props.reloadController, reloadJifenController
+    getJifenNum, props.reloadController, reloadJifenController
   ])
   useEffect(() => {
     onLoadingStatusChange(loadingJifen)

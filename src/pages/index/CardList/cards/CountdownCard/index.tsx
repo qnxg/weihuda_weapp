@@ -75,7 +75,7 @@ const CountdownCard: React.FC<CardProps> = ({
   const [semesterDate, isSemesterDateLoading] = usePromise(
     getSmesterInfo,
     undefined,
-    [reloadController]
+    [getSmesterInfo, reloadController]
   )
   useEffect(() => {
     onLoadingStatusChange(isSemesterDateLoading)

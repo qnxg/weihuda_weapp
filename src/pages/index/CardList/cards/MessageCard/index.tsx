@@ -124,7 +124,7 @@ const MessageCard: React.FC<CardProps> = ({
   const [messageData, isMessageDataLoading] = usePromise(
     getMessage,
     undefined,
-    [reloadController]
+    [getMessage, reloadController]
   )
   useEffect(() => {
     onLoadingStatusChange(isMessageDataLoading)

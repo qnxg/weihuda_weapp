@@ -50,7 +50,7 @@ const ElectricityCard: React.FC<CardProps> = ({
       electricity: '查询失败',
       dormitory: '未知',
     },
-    [reloadController]
+    [getElectricityCardInfo, reloadController]
   )
   useEffect(() => {
     onLoadingStatusChange(isCardInfoLoading)

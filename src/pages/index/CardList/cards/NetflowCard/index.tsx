@@ -70,7 +70,7 @@ const NetflowCard: React.FC<CardProps> = ({
   const [netflowData, isNetflowDataLoading] = usePromise(
     getNetflow,
     undefined,
-    [reloadController]
+    [getNetflow, reloadController]
   )
   useEffect(() => {
     onLoadingStatusChange(isNetflowDataLoading)

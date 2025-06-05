@@ -38,6 +38,7 @@ const CampusCard: React.FC<CardProps> = ({
   reloadController,
 }) => {
   const [cardData, isCardDataLoading] = usePromise(getCardInfo, undefined, [
+    getCardInfo,
     reloadController,
   ])
   useEffect(() => {

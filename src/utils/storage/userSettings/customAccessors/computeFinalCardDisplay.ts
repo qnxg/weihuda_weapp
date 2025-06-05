@@ -45,6 +45,7 @@ export function useFinalCardDisplay(deps: DependencyList) {
   const [cardsToDisplay] = usePromise<[Set<CardEnum>, Set<CardEnum>]>(
     cb,
     () => [new Set(), new Set()],
+    // eslint-disable-next-line local/no-sus-usepromise
     [...deps]
   )
   return cardsToDisplay

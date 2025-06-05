@@ -31,7 +31,7 @@ const EmailCard: React.FC<CardProps> = ({
   const [unReadCount, isUnReadCountLoading] = usePromise(
     getUnReadCount,
     undefined,
-    [reloadController]
+    [getUnReadCount, reloadController]
   )
   useEffect(() => {
     onLoadingStatusChange(isUnReadCountLoading)

@@ -21,7 +21,7 @@ const HomeSwiperCard: React.FC<CardProps> = ({
     []
   )
   const [latestArticles, isLatestArticlesLoading, latestArticlesError] =
-    usePromise(fetchLatestArticles, [], [reloadController])
+    usePromise(fetchLatestArticles, [], [fetchLatestArticles, reloadController])
   useEffect(() => {
     onLoadingStatusChange(isLatestArticlesLoading)
   }, [isLatestArticlesLoading, onLoadingStatusChange])
