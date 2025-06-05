@@ -1,9 +1,5 @@
 @import '~@/utils/scss/global.scss';
 
-.card {
-  transition: height 0.6s;
-}
-
 .icon {
   height: 48px;
   width: 48px;
@@ -35,9 +31,10 @@
   font-size: $fontBig;
 }
 
-.button {
+.signInButton {
   height: 60px;
-  width: 180px;
+  min-width: 180px;
+  width: fit-content;
   flex: initial;
   display: flex;
   align-items: center;
@@ -77,4 +74,21 @@
 
 .zhihuItem.clicked {
   color: var(--text-color-secondary)
+}
+
+.actionButtonLine {
+  padding: 20px 0px 0px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+.actionButton {
+  height: fit-content;
+  width: fit-content;
+  line-height: 1;
+  padding: 3px;
+  font-size: $fontBig;
+  margin-left: 0;
+  margin-right: 0;
 }

@@ -5,10 +5,12 @@ import { useCallback, useEffect, useState } from 'react'
 import style from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
 import { getZhihuItemLink, getZhihuPageApi } from '@/apis/zhihu'
+import Button from '@/components/Button'
 import Card from '@/components/Card'
 import SignButton from '@/pages/jifen/components/Qiandao/SignButton'
 import usePromise from '@/utils/hooks/usePromise'
 import { fetchUserSettings } from '@/utils/storage/userSettings'
+import { setNeedShowHintAfterSignIn } from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
 import type CardProps from '../../CardProps'
 import type { IZhihu } from '@/apis/zhihu';
 
@@ -31,27 +33,44 @@ const ZhihuItem: React.FC<{ izhihu: IZhihu }> = (props) => {
   </View >
 }
 
-const SignInCardMorePart: React.FC = () => {
+const SignInCardMorePart: React.FC<{
+  onCollapseButtonClick: () => unknown,
+  onNeverShowAgainButtonClick: () => unknown
+}> = (props) => {
   const [moreThings, loadingMoreThings, error] =
     usePromise(getRecentZhihu, [], [])
 
   return (loadingMoreThings || error || moreThings.length == 0) ? <></> :
-    <>
-      <View className={style.more}>
-        <View>
-          查看最新推文，获取更多积分吧：
-          {moreThings.map(v => (
-            <ZhihuItem
-              izhihu={v}
-              key={v.id}
-            />
-          ))}
-        </View>
-        <View className={style.otherHints}>
-          问题反馈/知湖投稿也有机会获得积分哟~
-        </View>
+    <View className={style.more}>
+      <View>
+        查看最新推文，获取更多积分吧：
+        {moreThings.map(v => (
+          <ZhihuItem
+            izhihu={v}
+            key={v.id}
+          />
+        ))}
       </View>
-    </>
+      <View className={style.otherHints}>
+        问题反馈/知湖投稿也有机会获得积分哟~
+      </View>
+      <View className={style.actionButtonLine}>
+        <Button
+          theme='plain'
+          className={style.actionButton}
+          onClick={props.onCollapseButtonClick}
+        >
+          折叠
+        </Button>
+        <Button
+          theme='plain'
+          className={style.actionButton}
+          onClick={props.onNeverShowAgainButtonClick}
+        >
+          不再显示
+        </Button>
+      </View>
+    </View>
 }
 
 const SignInCard: React.FC<CardProps> = props => {
@@ -77,21 +96,32 @@ const SignInCard: React.FC<CardProps> = props => {
   }
 
   return (
-    <Card className={style.card}>
+    <Card>
       <View className={style.baseLineContainer}>
         <View className={style.icon} />
         <View className={style.text}>
           当前积分：{loadingJifen || error ? '未知' : +jifen}
         </View>
         <SignButton
-          className={style.button}
+          className={style.signInButton}
           key={props.reloadController}
           signActionCallback={() => {
             if (settings.showHintAfterSignIn) { setShowMore(true) }
           }}
         />
       </View>
-      {showMore ? <SignInCardMorePart /> : <></>}
+      <View>
+        {showMore ?
+          <SignInCardMorePart
+            onCollapseButtonClick={() => setShowMore(false)}
+            onNeverShowAgainButtonClick={() => {
+              setShowMore(false)
+              void setNeedShowHintAfterSignIn(false)
+            }}
+          />
+          : <></>
+        }
+      </View>
     </Card>
   )
 }
