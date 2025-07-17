@@ -132,6 +132,7 @@ async function request<T extends Data>(
       await Taro.showToast({
         title: response.data.msg,
         icon: 'none',
+        duration: 2000,
       })
     }
     throw new Error(response.data.msg)

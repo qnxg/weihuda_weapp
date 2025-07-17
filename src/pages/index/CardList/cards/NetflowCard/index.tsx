@@ -52,9 +52,9 @@ const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
         <View className={styles.row}>
           <GradeBanner
             grade={{
-              name: '免费流量：',
-              score: (netFlow?.thisMonth?.basePackageUsedPer ?? 0) * 100,
-              content: `${netFlow?.thisMonth?.basePackageUsed ?? '--'}G`,
+              name: '剩余流量：',
+              score: 100 - (netFlow?.thisMonth?.basePackageUsedPer ?? 0) * 100,
+              content: `${netFlow?.thisMonth === undefined ? '--' : (netFlow.thisMonth.allBasePackageAmount - netFlow.thisMonth.basePackageUsed)}G`,
             }}
           />
         </View>
