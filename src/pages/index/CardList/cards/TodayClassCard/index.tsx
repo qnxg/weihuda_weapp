@@ -8,11 +8,10 @@ import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import empty from '@/static/empty/no-today-class.svg'
 import cardIcon from '@/static/index/icon/today-class.svg'
-import { judgeOn } from '@/utils/day'
 
 import { useAppSelector } from '@/utils/hooks/redux'
 import type CardProps from '../../CardProps'
-import type { Subject } from '@/models/classTable'
+import { CourseInfo } from '@/apis/hdjw/classTable'
 
 interface TodayClassProps {
   currentWeek: number
@@ -20,8 +19,6 @@ interface TodayClassProps {
 }
 
 interface FormatData {
-  // id
-  id: string
   // 开始上课时间
   startTime: string
   // 结束上课时间
@@ -74,12 +71,12 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
   const { currentWeek = 0, dayOfTheWeek = 0 } = props
 
   const { classTable } = useAppSelector(state => state.classTable)
-  const todayClass = useMemo<Subject[]>(() => {
+  const todayClass = useMemo<CourseInfo[]>(() => {
     if (classTable) {
       // 取出今日课程
       const temp = classTable.filter(item => {
         if (
-          judgeOn(item.week, currentWeek) &&
+          item.weeks.includes(currentWeek) &&
           dayOfTheWeek === (item.day === 7 ? 0 : item.day)
         ) {
           return item
@@ -87,9 +84,7 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
       })
       // 进行排序 注意返回的数据格式不太统一，转化为Int型进行比较
       temp.sort((x, y) => {
-        if (
-          parseInt(x.section.split(',')[0]) > parseInt(y.section.split(',')[0])
-        ) {
+        if (x.time > y.time) {
           return 1
         } else {
           return -1
@@ -143,26 +138,42 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
     }
 
     if (todayClass.length !== 0) {
-      const tempArray: Array<FormatData> = []
-      todayClass.map(item => {
-        // 去重
-        if (tempArray.some(i => i.id === item.id)) {
-          return
+      interface MergedCourseInfo extends CourseInfo {
+        _endTime: number // 结束时间
+        _show: number // 是否没被筛掉
+      }
+      let mergedClass = todayClass.map(item => {
+        return { ...item, _endTime: item.time, _show: true }
+      })
+      // 从后向前枚举，合并
+      for (let i = mergedClass.length - 1; i >= 0; i--) {
+        const item = todayClass[i]
+        const p = todayClass.findIndex(
+          x =>
+            x.courseName === item.courseName &&
+            x.place === item.place &&
+            x.time === item.time - 1
+        )
+        if (p !== -1) {
+          if (mergedClass[p]._endTime < item.time) {
+            mergedClass[p]._endTime = item.time
+          }
+          mergedClass[i]._show = false
         }
-        const tempSection: Array<string> = item.section.split(',')
-        const startTime = startTimesArr[parseInt(tempSection[0]) - 1]
-        const endTime =
-          endTimesArr[parseInt(tempSection[tempSection.length - 1]) - 1]
-
+      }
+      mergedClass = mergedClass.filter(item => item._show)
+      const tempArray: Array<FormatData> = []
+      mergedClass.map(item => {
+        const startTime = startTimesArr[item.time - 1]
+        const endTime = endTimesArr[item._endTime - 1]
         const temp: FormatData = {
-          id: item.id,
           startTime,
           endTime,
-          section: `第${parseInt(tempSection[0])}-${parseInt(tempSection[tempSection.length - 1])}节`,
-          name: item.classname,
-          location: item.location,
+          section: `第${item.time}-${item._endTime}节`,
+          name: item.courseName,
+          location: item.place ?? '无',
           color: item.bgColor!,
-          teachers: item.teachers,
+          teachers: item.teacher ?? '无',
           type: getType(startTime, endTime),
         }
         tempArray.push(temp)

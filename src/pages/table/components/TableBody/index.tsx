@@ -6,13 +6,13 @@ import Day from '../Day'
 import styles from './index.module.scss'
 import { saveClassTable } from '@/models/classTable'
 import { useAppDispatch } from '@/utils/hooks/redux'
-import type { FormatTable } from '../../interface'
+import { ClassTableItem } from '../../interface'
 
 /**
  * @interface TableBody Component Props
  */
 interface Props {
-  formatTable: Array<Array<Array<FormatTable>>>
+  formatTable: Array<Array<ClassTableItem>>
   currentWeeks: number
   onRefresh: (close: () => any) => any
 }

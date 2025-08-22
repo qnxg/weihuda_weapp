@@ -69,24 +69,33 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
                 }}
               >
                 <ScrollView>
-                  <View className={styles.classId}>
-                    [{!item.classId ? '自定义课程' : item.classId}]
-                  </View>
-                  <View className={styles.className}>{item.classname}</View>
+                  <View className="text-xs">{item.type}</View>
+                  {item.courseId && (
+                    <View className="text-xs">{item.courseId}</View>
+                  )}
+                  <View className={styles.className}>{item.courseName}</View>
                   <View className={styles.classOther}>
-                    <View>{item.location ? item.location : ''}</View>
-                    <View>{item.teachers}</View>
-                    <View className={styles.rangeEvenOdd}>[{item.week}周]</View>
-                    <View>第{item.section}节</View>
-                    <View>{item.skqk}</View>
+                    {(item.place || item.area) && (
+                      <View>
+                        {item.place
+                          ? item.place + (item.area ? `(${item.area})` : '')
+                          : item.area}
+                      </View>
+                    )}
+                    {item.teacher && <View className='my-1'>{item.teacher}</View>}
+                    <View className='my-1'>
+                      第 {item.weeks.join(', ')} 周
+                    </View>
+                    {item.credit && <View className='my-1'>{item.credit} 学分</View>}
+                    {item.extra && <View className='my-1'>{item.extra}</View>}
                   </View>
                 </ScrollView>
-                {String(item.type) === '2' ? (
+                {item.customizeId !== -1 ? (
                   <View className={styles.optionContainer}>
                     <View
                       className={styles.options}
                       onClick={() => {
-                        void deleteCourse(item.id)
+                        void deleteCourse(item.customizeId)
                       }}
                     >
                       <View className={styles.removeIcon} />

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import { getClassStartDate, getClassTable } from '@/apis/hdjw/classTable'
+import { CourseInfo, getClassStartDate, getClassTable } from '@/apis/hdjw/classTable'
 import { multiArray, onColors } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
@@ -23,31 +23,6 @@ export interface Semester {
   xq: number
 }
 
-export interface Subject {
-  /** 课程id */
-  id: string
-  /** 课程上课班级 */
-  classId: string
-  /** 课程名称 */
-  classname: string
-  /** 上课教室地点 */
-  location: string
-  /** 任课教师 */
-  teachers: string
-  /** 课程在哪些周会上 */
-  week: string
-  /** 课程在周几上 */
-  day: number | string
-  /** 课程在哪几节上 */
-  section: string
-  /** 课程类型（自定义或来自教务系统）'1' | '2' */
-  type: number
-  /** 课程备注信息 例如课程QQ群号 */
-  skqk: string
-  /** 背景颜色 */
-  bgColor?: string
-}
-
 export interface StateType {
   semesters: Array<Semester>
   currentSem: number
@@ -56,10 +31,10 @@ export interface StateType {
   currentWeek: number
   mode: boolean
   currentStart: string
-  classTable: Array<Subject>
+  classTable: Array<CourseInfo> // 总课表数据
   showOptions: boolean
-  showFloat: boolean
-  floatData: Array<Subject>
+  showFloat: boolean  // 是否显示悬浮课程详情
+  floatData: Array<CourseInfo>  // 悬浮课程详情数据
 }
 
 const initialState: StateType = {
@@ -143,26 +118,25 @@ export const refreshClassTableThunk = createAsyncThunk(
       mask: true,
     })
     try {
-      const response = await getClassTable(xn, xq)
+      const course = await getClassTable(xn, xq)
       // 基础染色索引
       let baseColorIndex = 0
       const colorMap = {}
       // 进行染色
-      const course: Subject[] = response
       if (course) {
         course.map(item => {
           // 类型规范化
           item.day = parseInt(item.day.toString())
           // 进行染色
           let colorIndex: number
-          if (colorMap.hasOwnProperty(item.classname)) {
-            colorIndex = colorMap[item.classname]
+          if (colorMap.hasOwnProperty(item.courseName)) {
+            colorIndex = colorMap[item.courseName]
           } else if (baseColorIndex > 9) {
             colorIndex = Math.round(Math.random() * 9)
-            colorMap[item.classname] = colorIndex
+            colorMap[item.courseName] = colorIndex
           } else {
             colorIndex = baseColorIndex
-            colorMap[item.classname] = colorIndex
+            colorMap[item.courseName] = colorIndex
             baseColorIndex++
           }
           item.bgColor = onColors[colorIndex]

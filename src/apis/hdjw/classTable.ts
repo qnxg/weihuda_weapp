@@ -3,49 +3,21 @@ import request from '../request'
 /**
  * ClassTable
  */
-export interface ClassTableItem {
-  /**
-   * 班级id
-   */
-  classId: string
-  /**
-   * 课程名称
-   */
-  classname: string
-  /**
-   * 星期几
-   */
-  day: number | string
-  /**
-   * 结束时间
-   */
-  endTime: string
-  /**
-   * 课程id
-   */
-  id: string
-  /**
-   * 授课地点
-   */
-  location: string
-  /**
-   * 第几节
-   */
-  section: string
-  skqk: string
-  /**
-   * 开始时间
-   */
-  startTime: string
-  /**
-   * 教师姓名
-   */
-  teachers: string
-  type: number
-  /**
-   * 上课周数
-   */
-  week: string
+export interface CourseInfo {
+  className: string, // 上课班级
+  courseId?: string, // 课程代码
+  courseName: string, // 课程名称
+  credit?: number, // 学分
+  day: number, // 周几上
+  extra?: string, // 额外备注信息
+  place?: string, // 上课地点
+  area?: string, // 上课校区
+  time: number, // 上课节次。注意，ClassTableItem 里的 time 都是 -1
+  teacher?: string, // 教师
+  weeks: number[], // 在哪周上课
+  type?: string, // 课程类型
+  customizeId: number, // 自定义课程 id
+  bgColor?: string, // 背景颜色（前端生成）
 }
 
 /**
@@ -53,7 +25,7 @@ export interface ClassTableItem {
  * @returns 课表
  */
 export const getClassTable = async (xn: string, xq: number) => {
-  return request.get<ClassTableItem[]>('/hdjw/class-table', {
+  return request.get<CourseInfo[]>('/hdjw/class-table', {
     data: {
       xn,
       xq,

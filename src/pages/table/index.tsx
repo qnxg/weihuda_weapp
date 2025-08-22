@@ -18,9 +18,8 @@ import {
   refreshClassTableThunk,
 } from '@/models/classTable'
 import { offColor } from '@/utils/config'
-import { judgeOn } from '@/utils/day'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import type { CurDatesOfWeek, FormatTable } from './interface'
+import type { CurDatesOfWeek, ClassTableItem } from './interface'
 
 const Index: React.FC = () => {
   const {
@@ -122,80 +121,67 @@ const Index: React.FC = () => {
     }
   }, [currentWeeks, currentStart])
 
-  // 格式化课表
-  const formatTable = useMemo((): Array<Array<Array<FormatTable>>> => {
+  // 格式化课表，我们会处理得到一个 Array<Array<ClassTableItem>> 类型的格式化之后的课表
+  // 数组下标的含义为 formatTable[周几][第几节课]
+  // 当前周数改变时需要重新计算一个新表
+  const formatTable = useMemo((): Array<Array<ClassTableItem>> => {
     if (classTable) {
-      const schedule: Array<Array<Array<FormatTable>>> = []
+      const schedule: Array<Array<ClassTableItem>> = []
       // 初始化数组
       for (let i = 0; i < 7; i++) {
-        const temp: Array<Array<FormatTable>> = []
+        const temp: Array<ClassTableItem> = []
         for (let j = 0; j < 12; j++) {
-          temp.push([] as Array<FormatTable>)
+          temp.push({ courses: [], len: 1 })
         }
         schedule.push(temp)
       }
-      // 格式化Table
+      // 格式化 Table
       for (let i = 0; i < classTable.length; i++) {
-        const course: FormatTable = Object.assign({}, classTable[i])
+        const course = Object.assign({}, classTable[i]) // classTable 是只读的，需要先复制一下
+        const time = course.time - 1 // 因为 time 是从 1 开始的，而我们数组是从 0 开始的
+        course.time = -1 // 为了便于后续合并格子，这里全都改成 -1
         course.day = course.day === 7 ? 0 : course.day
-        // 计算起止时间
-        const section: Array<string> = course.section.split(',')
-        const JCFrom: number = parseInt(section[0])
-        const JCTo: number = parseInt(section[section.length - 1])
-        course.JCFrom = JCFrom
-        course.JCTo = JCTo
-        course.len = course.JCTo - course.JCFrom + 1
         // 计算是否为本周课程
-        if (judgeOn(course.week, currentWeeks)) {
-          course.thisWeek = true
-          for (let j = JCFrom - 1; j < JCTo; j++) {
-            schedule[course.day][j].unshift(Object.assign({}, course))
-          }
+        if (course.weeks.includes(currentWeeks)) {
+          // 是本周的课则放在前面，否则放在后面。这样可以保证本周课程在前面显示
+          schedule[course.day][time].courses.unshift(course)
         } else if (!mode) {
-          course.thisWeek = false
+          // 没有开启仅显示本周课程
           course.bgColor = offColor
-          for (let j = JCFrom - 1; j < JCTo; ++j) {
-            schedule[course.day][j].unshift(Object.assign({}, course))
-          }
+          schedule[course.day][time].courses.push(course)
         }
       }
-      // 计算显示当前周课程
+      // 把可以合并的格子都给合并，向上合并
       for (let i = 0; i < 7; ++i) {
-        for (let j = 0; j < 12; ++j) {
-          if (schedule[i][j].length > 1) {
-            for (let k = 0; k < schedule[i][j].length; ++k) {
-              const temp = Object.assign({}, schedule[i][j][k])
-              if (temp.thisWeek) {
-                schedule[i][j].splice(k, 1)
-                schedule[i][j].unshift(temp)
+        let lastPos = 0
+        for (let j = 1; j < 12; ++j) {
+          // 判断两个格子是否是本质相同的
+          const now = schedule[i][j]
+          const last = schedule[i][lastPos]
+          let flag = true
+          if (
+            now.courses.length > 0 &&
+            now.courses.length === last.courses.length
+          ) {
+            // 进行这么复杂比较的原因是可能 courses 的顺序不同
+            const tmp: { [index: string]: number } = {}
+            for (const item of now.courses) {
+              tmp[JSON.stringify(item)] = 1
+            }
+            for (const item of last.courses) {
+              if (tmp[JSON.stringify(item)] === undefined) {
+                flag = false
                 break
               }
             }
+          } else {
+            flag = false
           }
-        }
-        // 解决重叠问题
-        for (let j = 0; j < 12; ++j) {
-          const cellItems: Array<FormatTable> = schedule[i][j]
-          if (cellItems.length) {
-            cellItems[0].show = cellItems[0].JCFrom === j + 1
-            if (cellItems[0].show && cellItems[0].len && cellItems[0].len > 1) {
-              let JCSum = 0
-              if (cellItems[0].JCFrom && cellItems[0].JCTo) {
-                for (
-                  let k = cellItems[0].JCFrom - 1;
-                  k < cellItems[0].JCTo;
-                  ++k
-                ) {
-                  JCSum += schedule[i][k].filter(item => {
-                    return item.classname !== cellItems[0].classname
-                  }).length
-                  if (JCSum > 1) {
-                    cellItems[0].showMoreTag = true
-                    break
-                  }
-                }
-              }
-            }
+          if (flag) {
+            schedule[i][j].courses = [] // 清空当前格子，就不会再显示了
+            schedule[i][lastPos].len = last.len + 1
+          } else {
+            lastPos = j
           }
         }
       }

@@ -4,7 +4,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 
 import styles from './index.module.scss'
-import type { FormatTable } from '../../interface'
+import { ClassTableItem } from '../../interface'
 
 /**
  * @interface Day Component Props
@@ -12,7 +12,7 @@ import type { FormatTable } from '../../interface'
  */
 interface Props {
   /** 当天的课程数组 */
-  dayCourse: Array<Array<FormatTable>>
+  dayCourse: Array<ClassTableItem>
 }
 
 const Day: React.FC<Props> = props => {
@@ -20,39 +20,42 @@ const Day: React.FC<Props> = props => {
   const dispatch = useDispatch()
   /**
    * 显示课程的详细信息
-   * @param e 当前点击的课程数组
+   * @param e 当前点击的格子
    */
-  const onShowFloat = (e: Array<FormatTable>): void => {
+  const onShowFloat = (e: ClassTableItem): void => {
     dispatch({
       type: 'classTable/save',
       payload: {
         showFloat: true,
-        floatData: e,
+        floatData: e.courses,
       },
     })
   }
 
   return (
     <View className={styles.day}>
-      {dayCourse.map((item, index) => {
+      {dayCourse.map((cell, index) => {
         const cx = classNames({
           [styles.course]: true,
-          [styles.mults]: item.length > 1,
+          [styles.mults]: cell.courses.length > 1,
         })
-        const isOdd = item.length >= 1 && item[0].show
-        return isOdd && item[0].JCFrom && item[0].len ? (
+        return cell.courses.length > 0 ? (
           <View
-            onClick={(): void => onShowFloat(item)}
+            onClick={(): void => onShowFloat(cell)}
             key={String(index)}
             className={cx}
-            style={`margin-top: ${(item[0].JCFrom - 1) * 95 + 5}rpx; background: ${item[0].bgColor}; height: ${
-              item[0].len * 95 - 10
+            style={`margin-top: ${index * 95 + 5}rpx; background: ${cell.courses[0].bgColor}; height: ${
+              cell.len * 95 - 10
             }rpx`}
           >
-            <View className={styles['course-title']}>{item[0].classname}</View>
-            <View className={styles['course-location']}>
-              @{item[0].location}
+            <View className={styles['course-title']}>
+              {cell.courses[0].courseName}
             </View>
+            {cell.courses[0].place && (
+              <View className={styles['course-location']}>
+                @{cell.courses[0].place}
+              </View>
+            )}
           </View>
         ) : null
       })}
