@@ -5,13 +5,14 @@ $indicator-height: 68px;
 
 .body-container {
   @include flex;
-  background-color: #fafafa;
+  background-color: white;
   width: 100%;
 
   .jc-indicator {
     @include flex(normal, normal, column);
     background: $bgColor;
     min-height: calc(100vh - 124px);
+    border-right: 1px solid #f9f9f9;
 
     .content {
       display: block;
@@ -19,12 +20,7 @@ $indicator-height: 68px;
       height: 2 * $cell-height;
       width: 78px;
       font-size: 24px;
-      text-align: center;
-      color: #4a4a4a;
-
-      &:last-child {
-        height: 4 * $cell-height;
-      }
+      border-bottom: 1px solid #f9f9f9;
     }
   }
 }
@@ -41,4 +37,9 @@ $indicator-height: 68px;
       }
     }
   }
+}
+
+.table-row {
+  border-right: 1px solid #f9f9f9;
+  box-sizing: border-box;
 }

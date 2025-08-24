@@ -5,6 +5,7 @@ import styles from './index.module.scss'
 import { deleteCourseApi } from '@/apis/hdjw/classTable'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import classNames from 'classnames'
 
 export interface FloatProps {
   showFloat: boolean
@@ -62,16 +63,16 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
           return (
             <SwiperItem key={String(index)} className={styles.swiperItem}>
               <View
-                className={styles.card}
-                style={`background: ${item.bgColor}`}
+                className={classNames(styles.card, 'shadow-lg')}
+                style={`background: ${item.fontColor}`}
                 onClick={(e): void => {
                   e.stopPropagation()
                 }}
               >
                 <ScrollView>
-                  <View className="text-xs">{item.type}</View>
+                  <View className='text-xs'>{item.type}</View>
                   {item.courseId && (
-                    <View className="text-xs">{item.courseId}</View>
+                    <View className='text-xs'>{item.courseId}</View>
                   )}
                   <View className={styles.className}>{item.courseName}</View>
                   <View className={styles.classOther}>
@@ -82,11 +83,13 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
                           : item.area}
                       </View>
                     )}
-                    {item.teacher && <View className='my-1'>{item.teacher}</View>}
-                    <View className='my-1'>
-                      第 {item.weeks.join(', ')} 周
-                    </View>
-                    {item.credit && <View className='my-1'>{item.credit} 学分</View>}
+                    {item.teacher && (
+                      <View className='my-1'>{item.teacher}</View>
+                    )}
+                    <View className='my-1'>第 {item.weeks.join(', ')} 周</View>
+                    {item.credit && (
+                      <View className='my-1'>{item.credit} 学分</View>
+                    )}
                     {item.extra && <View className='my-1'>{item.extra}</View>}
                   </View>
                 </ScrollView>

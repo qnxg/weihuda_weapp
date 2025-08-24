@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import styles from './index.module.scss'
 import { ClassTableItem } from '../../interface'
+import { cellHeight } from '../../index.config'
 
 /**
  * @interface Day Component Props
@@ -35,29 +36,49 @@ const Day: React.FC<Props> = props => {
   return (
     <View className={styles.day}>
       {dayCourse.map((cell, index) => {
+        if (cell.merged) return null
+        if (cell.courses.length === 0) {
+          // 目前的后端设计是把每个节次都单独考虑
+          // 但是湖大现在一节课是偶数节次，还不存在第一节次上课但是第二节次又不上课的情况
+          // 所以我们对于空白格子，可以合并起来，直接渲染一个长度为 2 倍的大格子
+          // 并且根据实践，这样做也能有效抵抗微信小程序的 rpx 精度问题
+          if (index % 2 !== 0) return null
+          return (
+            <View
+              className={styles.cell}
+              key={String(index)}
+              style={`margin-top: ${index * cellHeight}rpx; height: ${2 * cellHeight}rpx;`}
+            />
+          )
+        }
         const cx = classNames({
           [styles.course]: true,
           [styles.mults]: cell.courses.length > 1,
         })
-        return cell.courses.length > 0 ? (
+        return (
           <View
-            onClick={(): void => onShowFloat(cell)}
+            className={styles.cell}
+            style={`margin-top: ${index * cellHeight}rpx; height: ${
+              cell.len * cellHeight
+            }rpx;`}
             key={String(index)}
-            className={cx}
-            style={`margin-top: ${index * 95 + 5}rpx; background: ${cell.courses[0].bgColor}; height: ${
-              cell.len * 95 - 10
-            }rpx`}
           >
-            <View className={styles['course-title']}>
-              {cell.courses[0].courseName}
-            </View>
-            {cell.courses[0].place && (
-              <View className={styles['course-location']}>
-                @{cell.courses[0].place}
+            <View
+              onClick={(): void => onShowFloat(cell)}
+              className={classNames(cx, 'font-bold')}
+              style={`background: ${cell.courses[0].bgColor}; color: ${cell.courses[0].fontColor}`}
+            >
+              <View className={styles['course-title']}>
+                {cell.courses[0].courseName}
               </View>
-            )}
+              {cell.courses[0].place && (
+                <View className={styles['course-location']}>
+                  @{cell.courses[0].place}
+                </View>
+              )}
+            </View>
           </View>
-        ) : null
+        )
       })}
     </View>
   )

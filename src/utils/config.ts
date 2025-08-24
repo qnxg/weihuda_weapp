@@ -351,19 +351,43 @@ export const months: Array<string> = [
 ]
 
 export const onColors: Array<string> = [
-  '#FFDA55',
-  '#95E894',
-  '#56BFFF',
-  '#BA6BD9',
-  '#FF956B',
-  '#74E0D4',
-  '#FF7584',
-  '#8F85D9',
-  '#48D197',
-  '#6281C4',
+  '#E6F4FF',
+  '#FDEBDD',
+  '#DEFBF7',
+  '#EEEDFF',
+  '#FCEBCD',
+  '#FFEFF0',
+  '#EAF2FF',
+  '#FFEEF8',
+  '#FAEDFF',
+  '#FFF9C9',
 ]
 
-export const offColor = '#bdbdbd'
+export const onFontColors: Array<string> = [
+  '#08A0E2',
+  '#E97055',
+  '#3CB3C9',
+  '#7D7CDD',
+  '#FF9900',
+  '#DD5D75',
+  '#5D8FF8',
+  '#EC6DB8',
+  '#B769DF',
+  '#CBA715',
+  // '#FFDA55',
+  // '#95E894',
+  // '#56BFFF',
+  // '#BA6BD9',
+  // '#FF956B',
+  // '#74E0D4',
+  // '#FF7584',
+  // '#8F85D9',
+  // '#48D197',
+  // '#6281C4',
+]
+
+export const offColor = '#efefef'
+export const offFontColor = '#aeaeae'
 
 export const addCoursePicker: Array<Array<string>> = [
   ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],

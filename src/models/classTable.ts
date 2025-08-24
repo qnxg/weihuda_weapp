@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import { CourseInfo, getClassStartDate, getClassTable } from '@/apis/hdjw/classTable'
-import { multiArray, onColors } from '@/utils/config'
+import {
+  CourseInfo,
+  getClassStartDate,
+  getClassTable,
+} from '@/apis/hdjw/classTable'
+import { multiArray, onColors, onFontColors } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -33,8 +37,8 @@ export interface StateType {
   currentStart: string
   classTable: Array<CourseInfo> // 总课表数据
   showOptions: boolean
-  showFloat: boolean  // 是否显示悬浮课程详情
-  floatData: Array<CourseInfo>  // 悬浮课程详情数据
+  showFloat: boolean // 是否显示悬浮课程详情
+  floatData: Array<CourseInfo> // 悬浮课程详情数据
 }
 
 const initialState: StateType = {
@@ -140,6 +144,7 @@ export const refreshClassTableThunk = createAsyncThunk(
             baseColorIndex++
           }
           item.bgColor = onColors[colorIndex]
+          item.fontColor = onFontColors[colorIndex]
         })
       }
       // 进行数据缓存

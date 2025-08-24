@@ -17,7 +17,7 @@ import {
   initClassTableThunk,
   refreshClassTableThunk,
 } from '@/models/classTable'
-import { offColor } from '@/utils/config'
+import { offColor, offFontColor } from '@/utils/config'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import type { CurDatesOfWeek, ClassTableItem } from './interface'
 
@@ -131,7 +131,7 @@ const Index: React.FC = () => {
       for (let i = 0; i < 7; i++) {
         const temp: Array<ClassTableItem> = []
         for (let j = 0; j < 12; j++) {
-          temp.push({ courses: [], len: 1 })
+          temp.push({ courses: [], len: 1, merged: false })
         }
         schedule.push(temp)
       }
@@ -148,6 +148,7 @@ const Index: React.FC = () => {
         } else if (!mode) {
           // 没有开启仅显示本周课程
           course.bgColor = offColor
+          course.fontColor = offFontColor
           schedule[course.day][time].courses.push(course)
         }
       }
@@ -179,6 +180,7 @@ const Index: React.FC = () => {
           }
           if (flag) {
             schedule[i][j].courses = [] // 清空当前格子，就不会再显示了
+            schedule[i][j].merged = true // 标记为被合并
             schedule[i][lastPos].len = last.len + 1
           } else {
             lastPos = j

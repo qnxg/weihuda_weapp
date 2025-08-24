@@ -1,18 +1,24 @@
 .day {
-  margin-left: 5px;
-  margin-right: 5px;
   position: relative;
+  width: 100%;
+
+  .cell {
+    box-sizing: border-box;
+    border-bottom: 1rpx solid #f9f9f9;
+    position: absolute;
+    width: 100%;
+    padding: 3px;
+  }
 
   .course {
-    position: absolute;
     box-sizing: border-box;
-    margin-bottom: 5px;
-    border-radius: 12px;
+    border-radius: 8px;
     width: 100%;
-    font-size: 24px;
-    padding: 5px;
+    font-size: 22px;
+    padding: 8px;
     color: #fefefe;
     overflow: hidden;
+    height: 100%;
 
     .course-title {
       display: -webkit-box;
@@ -29,13 +35,13 @@
   .mults::after {
     content: '';
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 3px;
+    bottom: 3px;
     display: block;
     height: 0;
     width: 0;
     border: 12px solid;
-    border-radius: 10px 0 0 0;
+    border-radius: 10px 0 10px 0;
     border-color: #d8d8d8 #eeeeee #eeeeee #d8d8d8;
   }
 }
