@@ -6,13 +6,12 @@ $indicator-height: 68px;
 .body-container {
   @include flex;
   background-color: white;
+  height: calc(100vh - 124px);
+  overflow: scroll;
   width: 100%;
 
   .jc-indicator {
-    @include flex(normal, normal, column);
     background: $bgColor;
-    min-height: calc(100vh - 124px);
-    // border-right: 1px solid #f9f9f9;
 
     .content {
       display: block;

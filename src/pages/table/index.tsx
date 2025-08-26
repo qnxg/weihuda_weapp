@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import BubbleNotification from './components/FlexTimeBubble'
+import BubbleNotification from './components/AddCourseButton'
 import Float from './components/Float'
 import Header from './components/Header'
 import Options from './components/Options'
@@ -20,6 +20,7 @@ import {
 import { offColor, offFontColor } from '@/utils/config'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import type { CurDatesOfWeek, ClassTableItem } from './interface'
+import AddCourseButton from './components/AddCourseButton'
 
 const Index: React.FC = () => {
   const {
@@ -196,12 +197,6 @@ const Index: React.FC = () => {
   return (
     <Fragment>
       <Header curMonthOfDay={curMonthOfDay} curDatesOfWeek={curDatesOfWeek} />
-      {showBubble && (
-        <BubbleNotification
-          content={bubbleText}
-          onClose={() => setShowBubble(false)}
-        />
-      )}
       <PullRefresh runFunc={onRefresh} topGap={124}>
         <TableBody
           formatTable={formatTable}
@@ -211,6 +206,7 @@ const Index: React.FC = () => {
       </PullRefresh>
       <Options showOption={showOptions} />
       <Float showFloat={showFloat} />
+      <AddCourseButton />
     </Fragment>
   )
 }

@@ -42,8 +42,9 @@ const TableBody: React.FC<Props> = (props: Props) => {
       const offset = end - startPos
       const diffWeek = Math.abs(offset) > 80 ? (offset > 0 ? -1 : 1) : 0
       if (diffWeek !== 0) {
-        const finalWeek =
-          currentWeeks < 0 ? 1 : (diffWeek + currentWeeks + 18) % 18
+        let finalWeek = currentWeeks + diffWeek
+        if (finalWeek < 1) finalWeek = 18
+        else if (finalWeek > 18) finalWeek = 1
         dispatch(saveClassTable({ currentWeeks: finalWeek }))
       }
     }
@@ -56,11 +57,6 @@ const TableBody: React.FC<Props> = (props: Props) => {
       className={styles['body-container']}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      onLongPress={() => {
-        void Taro.navigateTo({
-          url: '/pages/addCourse/index',
-        })
-      }}
     >
       <View className={styles['jc-indicator']}>
         {courseTime.map((item, index) => {
