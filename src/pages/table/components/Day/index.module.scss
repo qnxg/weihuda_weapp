@@ -4,7 +4,7 @@
 
   .cell {
     box-sizing: border-box;
-    border-bottom: 1rpx solid #f9f9f9;
+    // border-bottom: 1rpx solid #f9f9f9;
     position: absolute;
     width: 100%;
     padding: 3px;
@@ -55,8 +55,8 @@
       text-shadow: 1px 1px 12px rgba(0, 0, 0, 0.18);
     }
 
-    .cell {
-      border-bottom: 1rpx solid #1A1A1A;
-    }
+    // .cell {
+    //   border-bottom: 1rpx solid #1a1a1a;
+    // }
   }
 }

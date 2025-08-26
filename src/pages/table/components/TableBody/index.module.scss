@@ -1,6 +1,6 @@
 @import '~@/utils/scss/global.scss';
 
-$cell-height: 95px;
+$cell-height: 120px;
 $indicator-height: 68px;
 
 .body-container {
@@ -12,24 +12,28 @@ $indicator-height: 68px;
     @include flex(normal, normal, column);
     background: $bgColor;
     min-height: calc(100vh - 124px);
-    border-right: 1px solid #f9f9f9;
+    // border-right: 1px solid #f9f9f9;
 
     .content {
       display: block;
       box-sizing: border-box;
-      height: 2 * $cell-height;
+      height: $cell-height;
       width: 78px;
-      font-size: 24px;
-      border-bottom: 1px solid #f9f9f9;
+      // border-bottom: 1px solid #f9f9f9;
+      .number {
+        font-size: 26px;
+      }
+      .time {
+        font-size: 19px;
+      }
     }
   }
 }
 
-.table-row {
-  border-right: 1px solid #f9f9f9;
-  box-sizing: border-box;
-}
-
+// .table-row {
+//   border-right: 1px solid #f9f9f9;
+//   box-sizing: border-box;
+// }
 
 @media (prefers-color-scheme: dark) {
   .body-container {
@@ -37,15 +41,15 @@ $indicator-height: 68px;
 
     .jc-indicator {
       background-color: $darkBgColor;
-      border-right: 1px solid #1A1A1A;
+      // border-right: 1px solid #1a1a1a;
 
       .content {
         color: $darkTextColor;
-        border-bottom: 1px solid #1A1A1A;
+        // border-bottom: 1px solid #1a1a1a;
       }
     }
   }
-  .table-row {
-    border-right: 1px solid #1A1A1A;
-  }
+  // .table-row {
+  //   border-right: 1px solid #1a1a1a;
+  // }
 }

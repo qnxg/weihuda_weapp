@@ -10,8 +10,9 @@ export interface MultiObject {
  * @interface CourseNum 课程时间与id对应关系字典
  */
 export interface CourseNum {
-  id: string
-  name: string
+  id: number // 节次
+  startTime: string // 开始时间
+  endTime: string // 结束时间
 }
 
 export const multiArray: Array<Array<string>> = [
@@ -283,26 +284,72 @@ export const multiObject: Array<MultiObject> = [
   },
 ]
 
-export const courseNum: Array<CourseNum> = [
+// 课程节次对应的时间
+export const courseTime: Array<CourseNum> = [
   {
-    id: '01,02,',
-    name: '1-2节（8:00-9:40）',
+    id: 0,
+    startTime: '',
+    endTime: '',
   },
   {
-    id: '03,04,',
-    name: '3-4节（10:00-11:40）',
+    id: 1,
+    startTime: '08:00',
+    endTime: '08:45',
   },
   {
-    id: '05,06,',
-    name: '5-6节（14:30-16:00）',
+    id: 2,
+    startTime: '08:55',
+    endTime: '09:40',
   },
   {
-    id: '07,08,',
-    name: '7-8节（16:10-17:40）',
+    id: 3,
+    startTime: '10:00',
+    endTime: '10:45',
   },
   {
-    id: '09,10,11,12,',
-    name: '9-12节（19:00-22:20）',
+    id: 4,
+    startTime: '10:55',
+    endTime: '11:40',
+  },
+  {
+    id: 5,
+    startTime: '14:30',
+    endTime: '15:15',
+  },
+  {
+    id: 6,
+    startTime: '15:15',
+    endTime: '16:00',
+  },
+  {
+    id: 7,
+    startTime: '16:10',
+    endTime: '16:55',
+  },
+  {
+    id: 8,
+    startTime: '16:55',
+    endTime: '17:40',
+  },
+  {
+    id: 9,
+    startTime: '19:00',
+    endTime: '19:45',
+  },
+  {
+    id: 10,
+    startTime: '19:55',
+    endTime: '20:40',
+  },
+  {
+    id: 11,
+    startTime: '20:50',
+    endTime: '21:35',
+  },
+  {
+    id: 12,
+    startTime: '21:35',
+    endTime: '22:20',
   },
 ]
 
@@ -374,16 +421,6 @@ export const onFontColors: Array<string> = [
   '#EC6DB8',
   '#B769DF',
   '#CBA715',
-  // '#FFDA55',
-  // '#95E894',
-  // '#56BFFF',
-  // '#BA6BD9',
-  // '#FF956B',
-  // '#74E0D4',
-  // '#FF7584',
-  // '#8F85D9',
-  // '#48D197',
-  // '#6281C4',
 ]
 
 export const offColor = '#efefef'

@@ -12,6 +12,7 @@ import cardIcon from '@/static/index/icon/today-class.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
 import type CardProps from '../../CardProps'
 import { CourseInfo } from '@/apis/hdjw/classTable'
+import { courseTime } from '@/utils/config'
 
 interface TodayClassProps {
   currentWeek: number
@@ -36,36 +37,6 @@ interface FormatData {
   // 显示类型，正常，即将开始，正在进行，已结束
   type?: 'normal' | 'will' | 'doing' | 'end'
 }
-
-const startTimesArr = [
-  '08:00',
-  '08:55',
-  '10:00',
-  '10:55',
-  '14:30',
-  '15:15',
-  '16:10',
-  '16:55',
-  '19:00',
-  '19:55',
-  '20:50',
-  '21:35',
-]
-
-const endTimesArr = [
-  '08:45',
-  '09:40',
-  '10:45',
-  '11:40',
-  '15:15',
-  '16:00',
-  '16:55',
-  '17:40',
-  '19:45',
-  '20:40',
-  '21:35',
-  '22:20',
-]
 
 const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
   const { currentWeek = 0, dayOfTheWeek = 0 } = props
@@ -164,8 +135,8 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
       mergedClass = mergedClass.filter(item => item._show)
       const tempArray: Array<FormatData> = []
       mergedClass.map(item => {
-        const startTime = startTimesArr[item.time - 1]
-        const endTime = endTimesArr[item._endTime - 1]
+        const startTime = courseTime[item.time].startTime
+        const endTime = courseTime[item._endTime].endTime
         const temp: FormatData = {
           startTime,
           endTime,

@@ -7,6 +7,7 @@ import styles from './index.module.scss'
 import { saveClassTable } from '@/models/classTable'
 import { useAppDispatch } from '@/utils/hooks/redux'
 import { ClassTableItem } from '../../interface'
+import { courseTime } from '@/utils/config'
 
 /**
  * @interface TableBody Component Props
@@ -62,77 +63,20 @@ const TableBody: React.FC<Props> = (props: Props) => {
       }}
     >
       <View className={styles['jc-indicator']}>
-        <View className={styles.content}>
-          <View className='flex h-full items-center'>
-            <View className='text-center w-full'>
-              <View className='mb-1' style={'font-size: 26rpx'}>
-                1
+        {courseTime.map((item, index) => {
+          if (index === 0) return null
+          return (
+            <View className={styles.content}>
+              <View className='flex h-full items-center'>
+                <View className='text-center w-full'>
+                  <View className={styles.number}>{item.id}</View>
+                  <View className={styles.time}>{item.startTime}</View>
+                  <View className={styles.time}>{item.endTime}</View>
+                </View>
               </View>
-              <View style={'font-size: 19rpx'}>08:00</View>
-              <View style={'font-size: 19rpx'}>09:40</View>
             </View>
-          </View>
-        </View>
-
-        <View className={styles.content}>
-          <View className='flex h-full items-center'>
-            <View className='text-center w-full'>
-              <View className='mb-1' style={'font-size: 26rpx'}>
-                2
-              </View>
-              <View style={'font-size: 19rpx'}>10:00</View>
-              <View style={'font-size: 19rpx'}>11:40</View>
-            </View>
-          </View>
-        </View>
-
-        <View className={styles.content}>
-          <View className='flex h-full items-center'>
-            <View className='text-center w-full'>
-              <View className='mb-1' style={'font-size: 26rpx'}>
-                3
-              </View>
-              <View style={'font-size: 19rpx'}>14:30</View>
-              <View style={'font-size: 19rpx'}>16:00</View>
-            </View>
-          </View>
-        </View>
-
-        <View className={styles.content}>
-          <View className='flex h-full items-center'>
-            <View className='text-center w-full'>
-              <View className='mb-1' style={'font-size: 26rpx'}>
-                4
-              </View>
-              <View style={'font-size: 19rpx'}>16:10</View>
-              <View style={'font-size: 19rpx'}>17:40</View>
-            </View>
-          </View>
-        </View>
-
-        <View className={styles.content}>
-          <View className='flex h-full items-center'>
-            <View className='text-center w-full'>
-              <View className='mb-1' style={'font-size: 26rpx'}>
-                5
-              </View>
-              <View style={'font-size: 19rpx'}>19:00</View>
-              <View style={'font-size: 19rpx'}>20:40</View>
-            </View>
-          </View>
-        </View>
-
-        <View className={styles.content}>
-          <View className='flex h-full items-center'>
-            <View className='text-center w-full'>
-              <View className='mb-1' style={'font-size: 26rpx'}>
-                6
-              </View>
-              <View style={'font-size: 19rpx'}>20:50</View>
-              <View style={'font-size: 19rpx'}>22:20</View>
-            </View>
-          </View>
-        </View>
+          )
+        })}
       </View>
       {formatTable.map((item, index) => {
         return (
