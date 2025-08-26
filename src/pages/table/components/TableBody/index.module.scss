@@ -25,21 +25,27 @@ $indicator-height: 68px;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .body-container {
-    background-color: #000000;
-
-    .jc-indicator {
-      background-color: $darkBgColor;
-
-      .content {
-        color: $darkTextColor;
-      }
-    }
-  }
-}
-
 .table-row {
   border-right: 1px solid #f9f9f9;
   box-sizing: border-box;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .body-container {
+    background-color: #202020;
+
+    .jc-indicator {
+      background-color: $darkBgColor;
+      border-right: 1px solid #1A1A1A;
+
+      .content {
+        color: $darkTextColor;
+        border-bottom: 1px solid #1A1A1A;
+      }
+    }
+  }
+  .table-row {
+    border-right: 1px solid #1A1A1A;
+  }
 }
