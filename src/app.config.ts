@@ -28,9 +28,9 @@ export default {
       root: 'queryPage',
       pages: [
         'grade/index', // 成绩查询
-        'peaceTime/index', // 项目成绩查询
+        // 'peaceTime/index', // 项目成绩查询
         'ranking/index', // 成绩排名
-        'trend/index', // 成绩趋势
+        // 'trend/index', // 成绩趋势
         'experimentGrade/index', // 物理实验成绩查询
         'PEQuery/index', // 体测成绩查询
         'PEQuery/eye', // 视力查询

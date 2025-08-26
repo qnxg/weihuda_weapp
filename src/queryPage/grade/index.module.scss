@@ -24,9 +24,22 @@
   }
 
   .nameAndGrade {
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     font-size: $fontBig;
     color: var(--text-color-primary);
+
+    .courseID {
+      color: var(--text-color-secondary);
+      font-size: 22px;
+    }
+
+    .score {
+      font-size: 36px;
+    }
+
+    .gpa {
+      font-size: 26px;
+    }
 
     > view {
       max-width: 80%;

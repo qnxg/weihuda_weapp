@@ -4,34 +4,13 @@ import request from '../request'
  * GradeItem，成绩
  */
 export interface GradeItem {
-  /**
-   * 开课学院
-   */
-  college: string
-  /**
-   * 学分
-   */
-  credit: number
-  /**
-   * 考试类型
-   */
-  examType: string
-  /**
-   * 成绩
-   */
-  grade: number
-  /**
-   * 课程名称
-   */
-  name: string
-  /**
-   * 课程编号
-   */
-  number: string
-  /**
-   * 课程类型
-   */
-  serial: string
+  courseId: string // 课程代码
+  courseName: string // 课程名称
+  credit: number // 学分
+  gpa: number // 绩点
+  score: number // 成绩
+  courseType1: string // 课程类别1
+  courseType2: string // 课程类别2
 }
 
 /**
