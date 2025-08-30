@@ -1,111 +1,43 @@
 import request from '../request'
 
-/**
- * GradeRank，成绩排名
- */
-export interface GradeRank {
-  /**
-   * 每个学年的排名信息
-   */
-  semesters: Semester[]
-  /**
-   * 总排名
-   */
-  total: Total
+// 请求 hdjw 的 grade-rank 接口时的 query 参数
+export interface HdjwGradeRankForm {
+  year?: number // 学年，如果没有则为全部学年
+  term?: number // 学期，如果没有则为全部学期
+  course: number // 课程类型，1为全部课程，2为必修，3为核心
+  rank: number // 排名类型，1为算数平均分，2为加权平均分，3为绩点
 }
 
-interface Semester {
-  /**
-   * 每个学期的排名信息
-   */
-  items: Item[]
-  year: string
+export interface HdjwGradeRank {
+  score: string // 分数
+  rank: string // 排名
 }
 
-interface Item {
-  /**
-   * 核心课程加权平均分
-   */
-  coreWeightAvg: string
-  /**
-   * 核心课程加权平均分排名
-   */
-  coreWeightAvgRank: string
-  /**
-   * 平均学分绩点
-   */
-  GPA: number | number
-  /**
-   * 平均学分绩点排名
-   */
-  GPARank: number
-  /**
-   * 名称
-   */
-  name: string
-  /**
-   * 全部课程加权平均分
-   */
-  weightAvg: number | number
-  /**
-   * 全部课程加权平均分排名
-   */
-  weightAvgRank: number
+export interface CaGradeRank {
+  all_gpa: string
+  all_gpa_rank: string
+  all_weighted: string
+  all_weighted_rank: string
+  all_arithmetic: string
+  all_arithmetic_rank: string
+  must_gpa: string
+  must_weighted: string
+  must_arithmetic: string
+  core_gpa_rank: string
+  core_weighted_rank: string
+  core_arithmetic_rank: string
 }
 
 /**
- * 总排名
+ * 从教务系统获取成绩排名
  */
-interface Total {
-  /**
-   * 全部课程算数平均分
-   */
-  arithmeticAvg: number
-  /**
-   * 全部课程算数平均分排名
-   */
-  arithmeticAvgRank: number
-  /**
-   * 核心课程算数平均分
-   */
-  coreArithmeticAvg: number
-  /**
-   * 核心课程算数平均分排名
-   */
-  coreArithmeticAvgRank: number
-  /**
-   * 核心课程加权平均分
-   */
-  coreWeightAvg: number
-  /**
-   * 核心课程加权平均分排名
-   */
-  coreWeightAvgRank: number
-  /**
-   * 平均学分绩点
-   */
-  GPA: number
-  /**
-   * 平均学分绩点排名
-   */
-  GPARank: number
-  /**
-   * 全部课程加权平均分
-   */
-  weightAvg: number
-  /**
-   * 全部课程加权平均分排名
-   */
-  weightAvgRank: number
+export const getGradeRankFromHdjw = async (data: HdjwGradeRankForm) => {
+  return request.get<HdjwGradeRank>('/hdjw/grade-rank', { data })
 }
 
 /**
- * 获取成绩排名
+ * 从可信电子凭证获取成绩排名
  */
-export const getGradeRank = async () => {
-  return request.get<GradeRank>('/hdjw/grade-rank')
-}
-
-export const getMustGrade = async () => {
-  return request.get<string[]>('/hdjw/must-grade')
+export const getGradeRankFromCa = async () => {
+  return request.get<CaGradeRank>('/hdjw/grade-rank-from-ca')
 }

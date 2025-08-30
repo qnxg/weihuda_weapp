@@ -17,6 +17,7 @@ interface Props {
   current: number
   num: number
   onClick: (i: number) => void
+  className?: string
 }
 
 const TabBar: React.FC<Props> = props => {
@@ -36,7 +37,7 @@ const TabBar: React.FC<Props> = props => {
     [onClick]
   )
   return (
-    <View className={styles.tabWarp}>
+    <View className={classNames(styles.tabWarp, props.className)}>
       <View className={styles.container} style={`top: ${num * 64}rpx`}>
         {items.map((item, index) => {
           const cx = classNames({
