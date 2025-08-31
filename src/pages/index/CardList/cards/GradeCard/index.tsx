@@ -28,10 +28,10 @@ const GradeCardDisPlay: React.FC<GradeCardProps> = props => {
             if (index < 4) {
               return (
                 <GradeBanner
-                  key={item.name}
+                  key={item.courseName}
                   grade={{
-                    name: item.name,
-                    score: item.grade,
+                    name: item.courseName,
+                    score: item.score,
                   }}
                 />
               )

@@ -7,6 +7,9 @@ export const BASE_URL = 'https://qnxg.cn/api/middleware-2023'
 export const urlUploadImg = 'https://new.qnxg.cn/api/upload-2023/upload-img'
 // export const urlUploadImg = 'https://qnxg.cn/node/grade/upload-img'
 
+// 新的静态资源地址，不带斜杠
+export const newStaticBaseUrl = 'https://static.qnxg.cn'
+
 // TODO: 以下是旧的地址，后续会逐渐废弃
 // 静态资源地址
 export const staticBaseUrl = 'https://new.qnxg.cn/mp-static/static/'

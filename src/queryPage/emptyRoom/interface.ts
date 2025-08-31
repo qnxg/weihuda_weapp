@@ -1,5 +1,4 @@
 export interface Radio {
-  checked: boolean
   id: string
   text: Array<string>
 }
@@ -9,7 +8,7 @@ export interface Radio {
  */
 export interface EmptyRoomState {
   pickerValue: Array<number>
-  radioValue: Array<Radio>
+  radioValue: number // 现在 radio 改成单选
 }
 
 export interface EmptyRoom {

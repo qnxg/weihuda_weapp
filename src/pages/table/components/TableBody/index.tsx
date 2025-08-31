@@ -1,13 +1,12 @@
-import { Text, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import { View } from '@tarojs/components'
 import React, { useState } from 'react'
 
 import Day from '../Day'
 import styles from './index.module.scss'
 import { saveClassTable } from '@/models/classTable'
-import { useAppDispatch } from '@/utils/hooks/redux'
-import { ClassTableItem } from '../../interface'
 import { courseTime } from '@/utils/config'
+import { useAppDispatch } from '@/utils/hooks/redux'
+import type { ClassTableItem } from '../../interface'
 
 /**
  * @interface TableBody Component Props
@@ -62,7 +61,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
         {courseTime.map((item, index) => {
           if (index === 0) return null
           return (
-            <View className={styles.content}>
+            <View className={styles.content} key={item.id}>
               <View className='flex h-full items-center'>
                 <View className='text-center w-full'>
                   <View className={styles.number}>{item.id}</View>

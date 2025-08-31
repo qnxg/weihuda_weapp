@@ -3,9 +3,9 @@ import classNames from 'classnames'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import styles from './index.module.scss'
-import { ClassTableItem } from '../../interface'
 import { cellHeight } from '../../index.config'
+import styles from './index.module.scss'
+import type { ClassTableItem } from '../../interface'
 
 /**
  * @interface Day Component Props

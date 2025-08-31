@@ -54,7 +54,7 @@ const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
             grade={{
               name: '剩余流量：',
               score: 100 - (netFlow?.thisMonth?.basePackageUsedPer ?? 0) * 100,
-              content: `${netFlow?.thisMonth === undefined ? '--' : (netFlow.thisMonth.allBasePackageAmount - netFlow.thisMonth.basePackageUsed)}G`,
+              content: `${netFlow?.thisMonth === undefined ? '--' : netFlow.thisMonth.allBasePackageAmount - netFlow.thisMonth.basePackageUsed}G`,
             }}
           />
         </View>

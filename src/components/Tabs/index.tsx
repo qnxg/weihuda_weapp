@@ -115,6 +115,7 @@ export const Tabs: React.FC<ITabsProps> = props => {
 
   useEffect(() => {
     void updateActiveLine(initialTabIndex)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialTabIndex])
 
   return (

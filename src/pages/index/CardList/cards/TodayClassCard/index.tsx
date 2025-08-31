@@ -8,11 +8,10 @@ import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import empty from '@/static/empty/no-today-class.svg'
 import cardIcon from '@/static/index/icon/today-class.svg'
-
+import { courseTime } from '@/utils/config'
 import { useAppSelector } from '@/utils/hooks/redux'
 import type CardProps from '../../CardProps'
-import { CourseInfo } from '@/apis/hdjw/classTable'
-import { courseTime } from '@/utils/config'
+import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 interface TodayClassProps {
   currentWeek: number
@@ -109,10 +108,6 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
     }
 
     if (todayClass.length !== 0) {
-      interface MergedCourseInfo extends CourseInfo {
-        _endTime: number // 结束时间
-        _show: number // 是否没被筛掉
-      }
       let mergedClass = todayClass.map(item => {
         return { ...item, _endTime: item.time, _show: true }
       })

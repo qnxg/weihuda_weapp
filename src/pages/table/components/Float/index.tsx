@@ -1,11 +1,11 @@
 import { ScrollView, Swiper, SwiperItem, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
 import { deleteCourseApi } from '@/apis/hdjw/classTable'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import classNames from 'classnames'
 
 export interface FloatProps {
   showFloat: boolean

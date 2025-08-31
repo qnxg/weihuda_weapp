@@ -1,6 +1,6 @@
 import { View, Image, Text } from '@tarojs/components'
 import classnames from 'classnames'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import DisplayCard from '@/components/DisplayCard'
 import iconNo from '@/static/empty/no-room.svg'
@@ -25,6 +25,14 @@ const ResultArea: React.FC<Props> = props => {
       setHighlight(item)
     }
   }
+
+  // 默认高亮第一个
+  useEffect(() => {
+    if (roomList.length > 0) {
+      setHighlight(roomList[0])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomList])
 
   return (
     <View className={styles.container}>

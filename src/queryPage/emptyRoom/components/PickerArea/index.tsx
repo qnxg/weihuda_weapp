@@ -1,20 +1,26 @@
 import { View, Text, Picker, Radio, Image } from '@tarojs/components'
 import React from 'react'
+import { radio } from '../../config'
 import styles from './index.module.scss'
 import iconFinger from '@/static/emptyRoom/icon-finger.svg'
 
-import { multiArray } from '@/utils/config'
-import type { Radio as IRadio } from '../../interface'
+import { buildingInfo, semesterWeekNum, weekdayText } from '@/utils/config'
 import type { CommonEventFunction } from '@tarojs/components/types/common'
 
 interface Props {
   pickerValue: number[]
-  radioValue: IRadio[]
+  radioValue: number
   setState: any
 }
 
+const multiArray = [
+  buildingInfo.map(item => item.building),
+  Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`),
+  weekdayText.map(item => `星期${item}`),
+]
+
 const PickerArea: React.FC<Props> = props => {
-  const { pickerValue = [], radioValue = [], setState } = props
+  const { pickerValue = [], radioValue = 0, setState } = props
   /**
    * picker的值发生改变
    * @param e
@@ -31,18 +37,16 @@ const PickerArea: React.FC<Props> = props => {
    * @param e
    */
   const radioChange = (e: number): void => {
-    const temp: Array<IRadio> = Object.assign([], radioValue)
-    temp[e].checked = !temp[e].checked
     setState(s => ({
       ...s,
-      radioValue: temp,
+      radioValue: e,
     }))
   }
 
   /**
    * 渲染radio
    */
-  const radioArea = radioValue.map((item, index) => {
+  const radioArea = radio.map((item, index) => {
     return (
       <View
         className={styles.radioItem}
@@ -53,7 +57,7 @@ const PickerArea: React.FC<Props> = props => {
           <Radio
             color='#328ccb'
             value={item.id}
-            checked={item.checked}
+            checked={radioValue === index}
             className={styles.radios}
           />
           <Text>{item.text[0]}</Text>

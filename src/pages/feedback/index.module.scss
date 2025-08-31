@@ -87,6 +87,17 @@
     background-color: transparent;
     -webkit-tap-highlight-color: transparent;
   }
+
+  .tips {
+    font-size: $fontNormal;
+    margin-bottom: -45px;
+    .feedbackLink {
+      display: inline;
+      margin-top: 0px;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
