@@ -31,6 +31,7 @@ const ResultArea: React.FC<Props> = props => {
     if (roomList.length > 0) {
       setHighlight(roomList[0])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomList])
 
   return (

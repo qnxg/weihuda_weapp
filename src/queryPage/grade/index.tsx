@@ -1,5 +1,6 @@
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import classNames from 'classnames'
 import React, {
   Fragment,
   useCallback,
@@ -17,7 +18,6 @@ import notStart from '@/static/empty/term-not-start.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
 import type { GradeState } from './interface'
 import type { GradeItem } from '@/apis/hdjw/grade'
-import classNames from 'classnames'
 
 const semester = ['秋季学期', '春季学期', '夏季学期']
 const importantType1 = ['必修']

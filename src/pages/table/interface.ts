@@ -1,4 +1,4 @@
-import { CourseInfo } from '@/apis/hdjw/classTable'
+import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 /**
  * @interface CurDatesOfWeek 定义Header组件显示的日期格式

@@ -1,12 +1,11 @@
 import arrangement from '@/static/toolBox/icon-arrangement.svg'
 import borrow from '@/static/toolBox/icon-borrow.svg'
-import computerTest from '@/static/toolBox/icon-computer-test.svg'
-import courseInfo from '@/static/toolBox/icon-course-info.svg'
 import electricity from '@/static/toolBox/icon-electricity.svg'
 import empty from '@/static/toolBox/icon-empty.svg'
 import examId from '@/static/toolBox/icon-exam-id.svg'
 import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg'
 import experiment from '@/static/toolBox/icon-experiment.svg'
+// import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg'
 import grade from '@/static/toolBox/icon-grade.svg'
 import mxsc from '@/static/toolBox/icon-mxsc.svg'
 import netflowBill from '@/static/toolBox/icon-network-bill.svg'
@@ -19,7 +18,7 @@ import ranking from '@/static/toolBox/icon-ranking.svg'
 import schoolCalendar from '@/static/toolBox/icon-school-calendar.svg'
 // import selectResult from '@/static/toolBox/icon-select-result.svg';
 import stuCard from '@/static/toolBox/icon-stu-card.svg'
-import trend from '@/static/toolBox/icon-trend.svg'
+// import trend from '@/static/toolBox/icon-trend.svg'
 
 /**
  * @interface GridTab 定义tab数据结构
@@ -74,11 +73,11 @@ export const data: Category[] = [
   {
     name: '课程与考试',
     member: [
-      {
-        title: '课程信息',
-        imgUrl: courseInfo,
-        navigator: '/queryPage/course/index',
-      },
+      // {
+      //   title: '课程信息',
+      //   imgUrl: courseInfo,
+      //   navigator: '/queryPage/course/index',
+      // },
       {
         title: '实验安排',
         imgUrl: experiment,
@@ -89,11 +88,11 @@ export const data: Category[] = [
         imgUrl: arrangement,
         navigator: '/queryPage/examSchedule/index',
       },
-      {
-        title: '机考安排',
-        imgUrl: computerTest,
-        navigator: '/queryPage/computerTest/index',
-      },
+      // {
+      //   title: '机考安排',
+      //   imgUrl: computerTest,
+      //   navigator: '/queryPage/computerTest/index',
+      // },
       {
         title: '体测预约',
         imgUrl: PEAppoint,

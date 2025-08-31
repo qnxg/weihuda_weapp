@@ -25,7 +25,7 @@ const Header: React.FC<Props> = props => {
   const { dayOfWeek, weekNum, termYear, termType } = useAppSelector(
     state => state.smester
   )
-  const { curMonthOfDay = 0, curDatesOfWeek = [] } = props
+  const { curDatesOfWeek = [] } = props
 
   const dispatch = useAppDispatch()
 
