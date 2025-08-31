@@ -118,11 +118,11 @@ export const data: Category[] = [
         imgUrl: PEStandard,
         navigator: '/queryPage/PEStandard/index',
       },
-      {
-        title: '借阅查询',
-        imgUrl: borrow,
-        navigator: '/queryPage/borrowInfo/index',
-      },
+      // {
+      //   title: '借阅查询',
+      //   imgUrl: borrow,
+      //   navigator: '/queryPage/borrowInfo/index',
+      // },
       {
         title: '空教室查询',
         imgUrl: empty,
