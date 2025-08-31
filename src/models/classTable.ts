@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import {
-  CourseInfo,
+  type CourseInfo,
   getClassStartDate,
   getClassTable,
 } from '@/apis/hdjw/classTable'
-import { multiArray, onColors, onFontColors } from '@/utils/config'
+import { onColors, onFontColors, semesterWeekNum } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -44,7 +44,7 @@ export interface StateType {
 const initialState: StateType = {
   semesters: [],
   currentSem: 0,
-  weeks: multiArray[1],
+  weeks: Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`),
   currentWeeks: 0,
   currentWeek: 0,
   mode: false,

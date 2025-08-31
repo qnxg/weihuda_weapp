@@ -1,12 +1,4 @@
 /**
- * @interface MultiObject 教学楼对应关系字典
- */
-export interface MultiObject {
-  build: string
-  id: string
-}
-
-/**
  * @interface CourseNum 课程时间与id对应关系字典
  */
 export interface CourseNum {
@@ -15,273 +7,69 @@ export interface CourseNum {
   endTime: string // 结束时间
 }
 
-export const multiArray: Array<Array<string>> = [
-  [
-    '综合教学楼',
-    '研究生院楼',
-    '复临舍',
-    '中楼',
-    '梯教(北)',
-    '二教楼(北)',
-    '电子楼(北)',
-    '水上教学楼(北)',
-    '前进楼',
-    '建筑学院',
-    '法学楼',
-    '办公楼',
-    '软件大楼',
-    '工管院楼',
-    '南楼',
-    '北楼',
-    '东楼',
-    '南校区体育馆',
-    '机械院院楼',
-    '工程实验大楼',
-    '继教综合楼',
-    '电气院楼',
-    '工训中心',
-    '逸夫楼',
-    '南校区图书馆',
-    '桃子湖教学区',
-    '环境馆',
-    '岳麓书院',
-    '四合院子',
-    '艺术教育中心',
-    '校外实验实践场所',
-    '天马园区排练厅',
-    '工训中心E栋',
-    '工训中心F栋',
-    '工训中心D栋',
-    '生物院U型楼',
-    '物理院楼',
-    '数学院楼',
-    '材料院楼',
-    '外语院楼',
-    '土木院楼',
-    '工训中心B栋',
-    '麓谷湖大科技园',
-    '工训中心C栋',
-    '培训小楼（文学院）',
-    '化学实验中心',
-    '天马学生公寓',
-    '北校区足球场',
-  ],
-  [
-    '第1周',
-    '第2周',
-    '第3周',
-    '第4周',
-    '第5周',
-    '第6周',
-    '第7周',
-    '第8周',
-    '第9周',
-    '第10周',
-    '第11周',
-    '第12周',
-    '第13周',
-    '第14周',
-    '第15周',
-    '第16周',
-    '第17周',
-    '第18周',
-  ],
-  ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-]
+/**
+ * @interface BuildingObject 楼栋信息
+ */
+export interface BuildingObject {
+  building: string // 楼名
+  id: string // 楼栋id
+}
 
-export const multiObject: Array<MultiObject> = [
-  {
-    build: '综合教学楼',
-    id: '106',
-  },
-  {
-    build: '研究生院楼',
-    id: '302',
-  },
-  {
-    build: '复临舍',
-    id: '102',
-  },
-  {
-    build: '中楼',
-    id: '123',
-  },
-  {
-    build: '梯教(北)',
-    id: '201',
-  },
-  {
-    build: '二教楼(北)',
-    id: '202',
-  },
-  {
-    build: '电子楼(北)',
-    id: '203',
-  },
-  {
-    build: '水上教学楼(北)',
-    id: '204',
-  },
-  {
-    build: '前进楼',
-    id: '124',
-  },
-  {
-    build: '建筑学院',
-    id: '131',
-  },
-  {
-    build: '法学楼',
-    id: '125',
-  },
-  {
-    build: '办公楼',
-    id: '101',
-  },
-  {
-    build: '软件大楼',
-    id: '105',
-  },
-  {
-    build: '工管院楼',
-    id: '115',
-  },
-  {
-    build: '南楼',
-    id: '117',
-  },
-  {
-    build: '北楼',
-    id: '121',
-  },
-  {
-    build: '东楼',
-    id: '122',
-  },
-  {
-    build: '南校区体育馆',
-    id: '126',
-  },
-  {
-    build: '机械院院楼',
-    id: '129',
-  },
-  {
-    build: '工程实验大楼',
-    id: '128',
-  },
-  {
-    build: '继教综合楼',
-    id: '127',
-  },
-  {
-    build: '电气院楼',
-    id: '130',
-  },
-  {
-    build: '工训中心',
-    id: '132',
-  },
-  {
-    build: '逸夫楼',
-    id: '133',
-  },
-  {
-    build: '南校区图书馆',
-    id: '134',
-  },
-  {
-    build: '桃子湖教学区',
-    id: '135',
-  },
-  {
-    build: '环境馆',
-    id: '137',
-  },
-  {
-    build: '岳麓书院',
-    id: '140',
-  },
-  {
-    build: '四合院子',
-    id: '136',
-  },
-  {
-    build: '艺术教育中心',
-    id: '116',
-  },
-  {
-    build: '校外实验实践场所',
-    id: 'xw001',
-  },
-  {
-    build: '天马园区排练厅',
-    id: '118',
-  },
-  {
-    build: '工训中心E栋',
-    id: '149',
-  },
-  {
-    build: '工训中心F栋',
-    id: '150',
-  },
-  {
-    build: '工训中心D栋',
-    id: '151',
-  },
-  {
-    build: '生物院U型楼',
-    id: '139',
-  },
-  {
-    build: '物理院楼',
-    id: '141',
-  },
-  {
-    build: '数学院楼',
-    id: '142',
-  },
-  {
-    build: '材料院楼',
-    id: '143',
-  },
-  {
-    build: '外语院楼',
-    id: '144',
-  },
-  {
-    build: '土木院楼',
-    id: '145',
-  },
-  {
-    build: '工训中心B栋',
-    id: '146',
-  },
-  {
-    build: '麓谷湖大科技园',
-    id: '147',
-  },
-  {
-    build: '工训中心C栋',
-    id: '148',
-  },
-  {
-    build: '培训小楼（文学院）',
-    id: '138',
-  },
-  {
-    build: '化学实验中心',
-    id: '0501',
-  },
-  {
-    build: '天马学生公寓',
-    id: '301',
-  },
-  {
-    build: '北校区足球场',
-    id: '205',
-  },
+// 校内楼栋信息
+export const buildingInfo = [
+  { building: '综合楼', id: '106' },
+  { building: '研究生楼', id: '302' },
+  { building: '复临舍', id: '102' },
+  { building: '中楼', id: '123' },
+  { building: '东楼', id: '122' },
+  { building: '梯教(北校区)', id: '201' },
+  { building: '二教楼(北校区)', id: '202' },
+  { building: '电子楼(北校区)', id: '203' },
+  { building: '水上教学楼(北校区)', id: '204' },
+  { building: '综合楼机房', id: 'W134b2a60000WH' },
+  { building: '南楼', id: '117' },
+  { building: '北楼', id: '121' },
+  { building: '二院', id: 'W13463510000WH' },
+  { building: '天马园区排练厅', id: 'W1343d740000WH' },
+  { building: '物理院楼', id: 'W134153a0000WJ' },
+  { building: '数学院楼', id: 'W134153a0000WK' },
+  { building: '生物院楼', id: 'W13463550000WH' },
+  { building: '工训中心', id: '132' },
+  { building: '工训中心B栋', id: 'W1343be60000WH' },
+  { building: '工训中心C栋', id: 'W1343cb40000WH' },
+  { building: '工训中心D栋', id: 'W1343dd90000WJ' },
+  { building: '工训中心E栋', id: 'W1343dd90000WH' },
+  { building: '工训中心F栋', id: 'W1343dd90000WI' },
+  { building: '工管院院楼', id: '115' },
+  { building: '信科院院楼(软件大楼)', id: '105' },
+  { building: '法学楼', id: '125' },
+  { building: '机械院院楼', id: '129' },
+  { building: '电气院院楼', id: '130' },
+  { building: '建筑学院', id: '131' },
+  { building: '生物院U型楼', id: 'W134153a0000WH' },
+  { building: '岳麓书院', id: 'W134153a0000WI' },
+  { building: '材料院楼', id: 'W134153a0000WL' },
+  { building: '外语院楼', id: 'W134153a0000WM' },
+  { building: '土木院楼', id: 'W134153a0000WN' },
+  { building: '公共管理学院楼', id: 'W1348a680000WH' },
+  { building: '马院院楼', id: 'W1348ab90000WH' },
+  { building: '环境馆', id: 'W13415380000WH' },
+  { building: '培训小楼(文学院)', id: 'W13415380000WI' },
+  { building: '继教综合楼', id: '127' },
+  { building: '工程实验大楼', id: '128' },
+  { building: '逸夫楼', id: '133' },
+  { building: '化学实验中心', id: 'W13416c50000WH' },
+  { building: '办公楼', id: '101' },
+  { building: '南校区图书馆', id: '134' },
+  { building: '桃子湖教学区', id: '135' },
+  { building: '四合院子', id: 'W13414dd0000WH' },
+  { building: '麓谷湖大科技园', id: 'W1343be60000WI' },
+  { building: '校外实验实践场所', id: 'W1343cab0000WH' },
+  { building: '经贸大楼（北校区）', id: 'W1348a6d0000WH' },
+  { building: '财院校区排练厅（北校区）', id: 'W134634f0000WH' },
+  { building: '中四栋', id: 'W13463550000WI' },
+  { building: '艺术教育中心', id: 'W13417fe0000WH' },
+  { building: '南校区体育馆', id: '126' },
 ]
 
 // 课程节次对应的时间
@@ -363,24 +151,8 @@ export const weekdayText: Array<string> = [
   '六',
 ]
 
-export const weeks: Array<string> = [
-  '第1周',
-  '第2周',
-  '第3周',
-  '第4周',
-  '第5周',
-  '第6周',
-  '第7周',
-  '第8周',
-  '第9周',
-  '第10周',
-  '第11周',
-  '第12周',
-  '第13周',
-  '第14周',
-  '第15周',
-  '第16周',
-]
+// TODO 后续打算将学期周数改为从后端动态获取
+export const semesterWeekNum = 18 // 学期周数
 
 export const months: Array<string> = [
   '1',

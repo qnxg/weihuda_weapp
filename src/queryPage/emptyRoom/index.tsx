@@ -3,11 +3,11 @@ import Taro from '@tarojs/taro'
 import React, { useState } from 'react'
 import PickerArea from './components/PickerArea'
 import ResultArea from './components/ResultArea'
-import { initFunction } from './config'
+import { initFunction, radio } from './config'
 import { getEmptyRoom } from '@/apis/hdjw/emptyRoom'
-import { multiObject } from '@/utils/config'
+import { buildingInfo } from '@/utils/config'
 import { useAppSelector } from '@/utils/hooks/redux'
-import type { EmptyRoom, Radio as IRadio } from './interface'
+import type { EmptyRoom } from './interface'
 import type { EmptyRoomItem } from '@/apis/hdjw/emptyRoom'
 
 const Index: React.FC = () => {
@@ -26,20 +26,6 @@ const Index: React.FC = () => {
     seat: 0,
   })
 
-  /**
-   * 获取课时的选择
-   * @param radios 多选框的记录值数组
-   */
-  const getJc = (radios: Array<IRadio>): string => {
-    let ans = ''
-    for (const radio of radios) {
-      if (radio.checked) {
-        ans += radio.id + ','
-      }
-    }
-    return ans
-  }
-
   const [data, setData] = useState<EmptyRoomItem[] | null>(null)
 
   /**
@@ -57,8 +43,8 @@ const Index: React.FC = () => {
         xq: termType,
         week: state.pickerValue[1] + 1,
         day: state.pickerValue[2],
-        jc: getJc(state.radioValue),
-        buildId: multiObject[state.pickerValue[0]].id,
+        jc: radio[state.radioValue].id,
+        buildId: buildingInfo[state.pickerValue[0]].id,
       })
       if (!res) {
         setShow(false)

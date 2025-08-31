@@ -2,28 +2,23 @@ import type { EmptyRoomState, Radio } from './interface'
 
 export const radio: Radio[] = [
   {
-    checked: true,
-    id: '01,02',
+    id: '0102',
     text: ['1-2节', '8 : 00-9 : 40'],
   },
   {
-    checked: false,
-    id: '03,04',
+    id: '0304',
     text: ['3-4节', '10 : 00-11 : 40'],
   },
   {
-    checked: false,
-    id: '05,06',
+    id: '0506',
     text: ['5-6节', '14 : 30-16 : 00'],
   },
   {
-    checked: false,
-    id: '07,08',
+    id: '0708',
     text: ['7-8节', '16 : 10-17 : 40'],
   },
   {
-    checked: false,
-    id: '09,10,11',
+    id: '091011',
     text: ['9-11节', '19 : 00-21 : 35'],
   },
 ]
@@ -42,6 +37,6 @@ export function initFunction(
 
   return {
     pickerValue: temp,
-    radioValue: radio,
+    radioValue: 0,
   }
 }
