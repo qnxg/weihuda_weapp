@@ -1,44 +1,54 @@
 @import '~@/utils/scss/global.scss';
 
-$cell-height: 95px;
+$cell-height: 120px;
 $indicator-height: 68px;
 
 .body-container {
   @include flex;
-  background-color: #fafafa;
+  background-color: white;
+  height: calc(100vh - 124px);
+  overflow: scroll;
   width: 100%;
 
   .jc-indicator {
-    @include flex(normal, normal, column);
     background: $bgColor;
-    min-height: calc(100vh - 124px);
 
     .content {
       display: block;
       box-sizing: border-box;
-      height: 2 * $cell-height;
+      height: $cell-height;
       width: 78px;
-      font-size: 24px;
-      text-align: center;
-      color: #4a4a4a;
-
-      &:last-child {
-        height: 4 * $cell-height;
+      // border-bottom: 1px solid #f9f9f9;
+      .number {
+        font-size: 26px;
+      }
+      .time {
+        font-size: 19px;
       }
     }
   }
 }
 
+// .table-row {
+//   border-right: 1px solid #f9f9f9;
+//   box-sizing: border-box;
+// }
+
 @media (prefers-color-scheme: dark) {
   .body-container {
-    background-color: #000000;
+    background-color: #202020;
 
     .jc-indicator {
       background-color: $darkBgColor;
+      // border-right: 1px solid #1a1a1a;
 
       .content {
         color: $darkTextColor;
+        // border-bottom: 1px solid #1a1a1a;
       }
     }
   }
+  // .table-row {
+  //   border-right: 1px solid #1a1a1a;
+  // }
 }

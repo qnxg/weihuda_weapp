@@ -23,13 +23,20 @@
   height: 75px;
   background-color: $bgColor;
   color: $primaryTextColor;
-  font-size: $fontMedium;
+  font-size: 24px;
   @include flex(space-around, center);
   box-shadow: 0 8px 16px 0 rgba(196, 196, 196, 0.1);
+  padding-left: 78px;
+  line-height: 26px;
+  border-bottom: 1px solid #f9f9f9;
 
   .title-item {
     padding: 8px;
     text-align: center;
+  }
+
+  .date-info {
+    font-size: 19px;
   }
 
   .selected {
@@ -51,5 +58,6 @@
     background: $darkBgColor;
     color: $darkTextColor;
     box-shadow: 0 8px 16px 0 $darkBoxShadowColor;
+    border-bottom: 1px solid #1a1a1a;
   }
 }

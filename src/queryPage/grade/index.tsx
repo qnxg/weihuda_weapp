@@ -17,8 +17,17 @@ import notStart from '@/static/empty/term-not-start.svg'
 import { useAppSelector } from '@/utils/hooks/redux'
 import type { GradeState } from './interface'
 import type { GradeItem } from '@/apis/hdjw/grade'
+import classNames from 'classnames'
 
 const semester = ['秋季学期', '春季学期', '夏季学期']
+const importantType1 = ['必修']
+const importantType2 = [
+  '专业课',
+  '专业基础课',
+  '学类核心',
+  '学门核心',
+  '专业核心',
+]
 
 const Index: React.FC = () => {
   const { termYear, termType } = useAppSelector(state => state.smester)
@@ -117,18 +126,45 @@ const Index: React.FC = () => {
           data.map((item, i) => {
             return (
               <View
-                key={item.name + i + item.grade}
+                key={item.courseName + i}
                 className={styles.gradeCardContainer}
               >
                 <View className={styles.gradeCard}>
                   <View className={styles.nameAndGrade}>
-                    <View>{item.name}</View>
-                    <View>{item.grade}</View>
+                    <View>
+                      <View>{item.courseName}</View>
+                      <View className={styles.courseID}>{item.courseId}</View>
+                    </View>
+                    <View>
+                      <View className={classNames('inline', styles.score)}>
+                        {item.score}
+                      </View>
+                      <View className={classNames('inline', styles.gpa)}>
+                        {' '}
+                        / {item.gpa.toFixed(1)}
+                      </View>
+                    </View>
                   </View>
                   <View className={styles.exteraInfo}>
                     <View>
-                      <Tag>{item.serial}</Tag>
-                      <Tag>{item.examType}</Tag>
+                      <Tag
+                        theme={
+                          importantType1.includes(item.courseType1)
+                            ? 'primary'
+                            : 'default'
+                        }
+                      >
+                        {item.courseType1}
+                      </Tag>
+                      <Tag
+                        theme={
+                          importantType2.includes(item.courseType2)
+                            ? 'primary'
+                            : 'default'
+                        }
+                      >
+                        {item.courseType2}
+                      </Tag>
                     </View>
                     <View>学分：{item.credit}</View>
                   </View>

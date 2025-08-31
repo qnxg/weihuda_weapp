@@ -115,7 +115,7 @@ export const Tabs: React.FC<ITabsProps> = props => {
 
   useEffect(() => {
     void updateActiveLine(initialTabIndex)
-  }, [initialTabIndex, updateActiveLine])
+  }, [initialTabIndex])
 
   return (
     <View>

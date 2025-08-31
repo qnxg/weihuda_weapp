@@ -4,7 +4,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 
 import styles from './index.module.scss'
-import type { FormatTable } from '../../interface'
+import { ClassTableItem } from '../../interface'
+import { cellHeight } from '../../index.config'
 
 /**
  * @interface Day Component Props
@@ -12,7 +13,7 @@ import type { FormatTable } from '../../interface'
  */
 interface Props {
   /** 当天的课程数组 */
-  dayCourse: Array<Array<FormatTable>>
+  dayCourse: Array<ClassTableItem>
 }
 
 const Day: React.FC<Props> = props => {
@@ -20,41 +21,65 @@ const Day: React.FC<Props> = props => {
   const dispatch = useDispatch()
   /**
    * 显示课程的详细信息
-   * @param e 当前点击的课程数组
+   * @param e 当前点击的格子
    */
-  const onShowFloat = (e: Array<FormatTable>): void => {
+  const onShowFloat = (e: ClassTableItem): void => {
     dispatch({
       type: 'classTable/save',
       payload: {
         showFloat: true,
-        floatData: e,
+        floatData: e.courses,
       },
     })
   }
 
   return (
     <View className={styles.day}>
-      {dayCourse.map((item, index) => {
+      {dayCourse.map((cell, index) => {
+        if (cell.merged) return null
+        if (cell.courses.length === 0) {
+          // 目前的后端设计是把每个节次都单独考虑
+          // 但是湖大现在一节课是偶数节次，还不存在第一节次上课但是第二节次又不上课的情况
+          // 所以我们对于空白格子，可以合并起来，直接渲染一个长度为 2 倍的大格子
+          // 并且根据实践，这样做也能有效抵抗微信小程序的 rpx 精度问题
+          // 然后原本是考虑课表画上网格线，所以才有的这些代码。后续网格线又删了，但此处代码还是保留
+          if (index % 2 !== 0) return null
+          return (
+            <View
+              className={styles.cell}
+              key={String(index)}
+              style={`margin-top: ${index * cellHeight}rpx; height: ${2 * cellHeight}rpx;`}
+            />
+          )
+        }
         const cx = classNames({
           [styles.course]: true,
-          [styles.mults]: item.length > 1,
+          [styles.mults]: cell.courses.length > 1,
         })
-        const isOdd = item.length >= 1 && item[0].show
-        return isOdd && item[0].JCFrom && item[0].len ? (
+        return (
           <View
-            onClick={(): void => onShowFloat(item)}
+            className={styles.cell}
+            style={`margin-top: ${index * cellHeight}rpx; height: ${
+              cell.len * cellHeight
+            }rpx;`}
             key={String(index)}
-            className={cx}
-            style={`margin-top: ${(item[0].JCFrom - 1) * 95 + 5}rpx; background: ${item[0].bgColor}; height: ${
-              item[0].len * 95 - 10
-            }rpx`}
           >
-            <View className={styles['course-title']}>{item[0].classname}</View>
-            <View className={styles['course-location']}>
-              @{item[0].location}
+            <View
+              onClick={(): void => onShowFloat(cell)}
+              className={classNames(cx, 'font-bold')}
+              style={`background: ${cell.courses[0].bgColor}; color: ${cell.courses[0].fontColor}`}
+            >
+              <View className={styles['course-title']}>
+                {cell.courses[0].courseName}
+              </View>
+              {cell.courses[0].place && (
+                <View className={styles['course-location']}>
+                  @{cell.courses[0].place}
+                </View>
+              )}
             </View>
           </View>
-        ) : null
+        )
       })}
     </View>
   )

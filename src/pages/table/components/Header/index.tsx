@@ -59,9 +59,6 @@ const Header: React.FC<Props> = props => {
         <View className={styles.down} />
       </View>
       <View className={styles.title}>
-        <View className={styles['title-item']}>
-          <Text>{curMonthOfDay}月</Text>
-        </View>
         {curDatesOfWeek.map((item, index) => {
           const cx = classNames({
             [styles['title-item']]: true,
@@ -75,11 +72,9 @@ const Header: React.FC<Props> = props => {
           return (
             <View className={cx} key={String(index)}>
               <View>{text[index]}</View>
-              {item.day === 1 ? (
-                <Text>{item.month}月</Text>
-              ) : (
-                <Text>{item.day}日</Text>
-              )}
+              <Text className={styles['date-info']}>
+                {item.month}/{item.day}
+              </Text>
             </View>
           )
         })}

@@ -14,7 +14,7 @@ import netflowDetail from '@/static/toolBox/icon-network-detail.svg'
 import PEAppoint from '@/static/toolBox/icon-pe-appointment.svg'
 import PEGrade from '@/static/toolBox/icon-pe-grade.svg'
 import PEStandard from '@/static/toolBox/icon-pe-standard.svg'
-import peaceTime from '@/static/toolBox/icon-peacetime.svg'
+// import peaceTime from '@/static/toolBox/icon-peacetime.svg'
 import ranking from '@/static/toolBox/icon-ranking.svg'
 import schoolCalendar from '@/static/toolBox/icon-school-calendar.svg'
 // import selectResult from '@/static/toolBox/icon-select-result.svg';
@@ -44,21 +44,21 @@ export const data: Category[] = [
         imgUrl: grade,
         navigator: '/queryPage/grade/index',
       },
-      {
-        title: '项目成绩',
-        imgUrl: peaceTime,
-        navigator: '/queryPage/peaceTime/index',
-      },
+      // {
+      //   title: '项目成绩',
+      //   imgUrl: peaceTime,
+      //   navigator: '/queryPage/peaceTime/index',
+      // },
       {
         title: '成绩排名',
         imgUrl: ranking,
         navigator: '/queryPage/ranking/index',
       },
-      {
-        title: '成绩趋势',
-        imgUrl: trend,
-        navigator: '/queryPage/trend/index',
-      },
+      // {
+      //   title: '成绩趋势',
+      //   imgUrl: trend,
+      //   navigator: '/queryPage/trend/index',
+      // },
       {
         title: '实验成绩',
         imgUrl: experimentGrade,

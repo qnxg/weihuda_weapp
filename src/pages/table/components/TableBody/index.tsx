@@ -6,13 +6,14 @@ import Day from '../Day'
 import styles from './index.module.scss'
 import { saveClassTable } from '@/models/classTable'
 import { useAppDispatch } from '@/utils/hooks/redux'
-import type { FormatTable } from '../../interface'
+import { ClassTableItem } from '../../interface'
+import { courseTime } from '@/utils/config'
 
 /**
  * @interface TableBody Component Props
  */
 interface Props {
-  formatTable: Array<Array<Array<FormatTable>>>
+  formatTable: Array<Array<ClassTableItem>>
   currentWeeks: number
   onRefresh: (close: () => any) => any
 }
@@ -41,8 +42,9 @@ const TableBody: React.FC<Props> = (props: Props) => {
       const offset = end - startPos
       const diffWeek = Math.abs(offset) > 80 ? (offset > 0 ? -1 : 1) : 0
       if (diffWeek !== 0) {
-        const finalWeek =
-          currentWeeks < 0 ? 1 : (diffWeek + currentWeeks + 18) % 18
+        let finalWeek = currentWeeks + diffWeek
+        if (finalWeek < 1) finalWeek = 18
+        else if (finalWeek > 18) finalWeek = 1
         dispatch(saveClassTable({ currentWeeks: finalWeek }))
       }
     }
@@ -55,22 +57,30 @@ const TableBody: React.FC<Props> = (props: Props) => {
       className={styles['body-container']}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      onLongPress={() => {
-        void Taro.navigateTo({
-          url: '/pages/addCourse/index',
-        })
-      }}
     >
       <View className={styles['jc-indicator']}>
-        <Text className={styles.content}>08:00</Text>
-        <Text className={styles.content}>10:00</Text>
-        <Text className={styles.content}>14:30</Text>
-        <Text className={styles.content}>16:10</Text>
-        <Text className={styles.content}>19:00</Text>
+        {courseTime.map((item, index) => {
+          if (index === 0) return null
+          return (
+            <View className={styles.content}>
+              <View className='flex h-full items-center'>
+                <View className='text-center w-full'>
+                  <View className={styles.number}>{item.id}</View>
+                  <View className={styles.time}>{item.startTime}</View>
+                  <View className={styles.time}>{item.endTime}</View>
+                </View>
+              </View>
+            </View>
+          )
+        })}
       </View>
       {formatTable.map((item, index) => {
         return (
-          <View style='flex: 1' key={String(index)}>
+          <View
+            style='flex: 1;'
+            className={styles['table-row']}
+            key={String(index)}
+          >
             <Day dayCourse={item} />
           </View>
         )
