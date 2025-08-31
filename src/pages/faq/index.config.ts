@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '帮助中心',
+  navigationBarTitleText: '常见问题',
 }

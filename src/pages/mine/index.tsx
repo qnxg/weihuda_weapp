@@ -89,12 +89,17 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
         onClick: nav('/pages/messageleft/index'),
       },
       {
+        title: <Text>更新日志</Text>,
+        icon: <View className={styles.changelogImg} />,
+        onClick: nav('/pages/changeLog/index'),
+      },
+      {
         title: <Text>我要反馈</Text>,
         icon: <View className={styles.feedback} />,
         onClick: nav('/pages/feedback/index'),
       },
       {
-        title: <Text>帮助中心</Text>,
+        title: <Text>常见问题</Text>,
         icon: <View className={styles.faImg} />,
         onClick: nav('/pages/faq/index'),
       },

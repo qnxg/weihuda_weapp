@@ -120,6 +120,15 @@ const Index: React.FC = () => {
 
   return (
     <View className={styles.container}>
+      <View className={styles.tips}>
+        反馈问题前请先查看
+        <View className={styles.feedbackLink}>
+          <Navigator url={`/pages/faq/index`} className={'inline'}>
+            <Text>常见问题</Text>
+          </Navigator>
+        </View>
+        ，避免重复反馈哦～
+      </View>
       {/* <View className={styles.title}>反馈类型：</View>
       <RadioGroups
         current={data.type}
