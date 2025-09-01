@@ -50,7 +50,7 @@ const CaIndex = () => {
     void getData()
   }, [])
   return (
-    <PullRefresh runFunc={onRefresh}>
+    <PullRefresh runFunc={onRefresh} topGap={72}>
       <DisplayCard title='全部课程成绩'>
         <View className='flex'>
           <View className='flex-1'>
