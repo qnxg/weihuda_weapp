@@ -20,6 +20,8 @@ const CampusCardDisplay: React.FC<DisplayProps> = ({ info }) => {
       title='校园卡余额'
       moreUrl='/queryPage/card/index'
       moreTitle='查看账单'
+      moreTitle2='充值'
+      moreUrl2='/pages/webview/index?url=http://wxpay.hnu.edu.cn/ykt/cards'
     >
       <View className={styles.outer}>
         <View className={`${styles.item} ${styles.left}`}>

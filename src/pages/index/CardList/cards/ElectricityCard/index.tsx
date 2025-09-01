@@ -20,6 +20,8 @@ const ElectricityCardDisplay: React.FC<DisplayProps> = props => {
       title='宿舍电量'
       moreUrl='/queryPage/electricity/index'
       moreTitle='查看电量'
+      moreTitle2='充值'
+      moreUrl2='/pages/webview/index?url=http://wxpay.hnu.edu.cn/electricCharge/home/'
     >
       <View className={styles.outer}>
         <View className={`${styles.item} ${styles.left}`}>

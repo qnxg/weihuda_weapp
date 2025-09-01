@@ -15,6 +15,9 @@ export interface CardLayoutProps {
   moreUrl?: string
   /** 查看更多按钮的文案 */
   moreTitle?: string
+  /** 第二个按钮 */
+  moreUrl2?: string
+  moreTitle2?: string
   /** 需要有子组件内容 */
   children?: JSX.Element
 }
@@ -35,15 +38,28 @@ const CardLayout: React.FC<CardLayoutProps> = props => {
             <View className={styles.title}>{props.title}</View>
           </View>
           {props.moreUrl && (
-            <View
-              className={styles.moreTitle}
-              onClick={() => {
-                void Taro.navigateTo({
-                  url: props.moreUrl || '/pages/index/index',
-                })
-              }}
-            >
-              {props.moreTitle || '查看更多'}
+            <View className={styles.moreTitle}>
+              <View
+                onClick={() => {
+                  void Taro.navigateTo({
+                    url: props.moreUrl || '/pages/index/index',
+                  })
+                }}
+              >
+                {props.moreTitle || '查看更多'}
+              </View>
+              {props.moreUrl2 && (
+                <View
+                  className='ml-3'
+                  onClick={() => {
+                    void Taro.navigateTo({
+                      url: props.moreUrl2 || '/pages/index/index',
+                    })
+                  }}
+                >
+                  {props.moreTitle2 || '查看更多'}
+                </View>
+              )}
             </View>
           )}
         </View>

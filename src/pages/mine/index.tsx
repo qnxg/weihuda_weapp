@@ -65,7 +65,7 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
     items={[
       {
         title: <Text>小程序设置</Text>,
-        icon: <View className={styles.message} />, // TODO: 换一个图标
+        icon: <View className={styles.setting} />,
         onClick: nav('/settingsPage/index'),
       },
       {

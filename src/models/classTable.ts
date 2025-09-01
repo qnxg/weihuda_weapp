@@ -69,6 +69,14 @@ export const initClassTableThunk = createAsyncThunk(
     const oldState = state.classTable
     // 计算学期
     const semesters: Array<Semester> = []
+    // TODO 这里先进行特判，到了第三学期就先人为添加一个新学期，确保能够查看新课表。后续打算大力修改前端
+    if (termType === 3) {
+      semesters.push({
+        show: `${termYear + 1}-${termYear + 2}学年秋季学期`,
+        xn: termYear + 1,
+        xq: 1,
+      })
+    }
     for (let i = termYear; i >= enterYear; --i) {
       for (let j = 3; j >= 1; --j) {
         semesters.push({
