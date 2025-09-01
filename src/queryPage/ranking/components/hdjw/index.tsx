@@ -112,7 +112,7 @@ const HdjwIndex: React.FC = () => {
     void getData(hdjwFormRef.current)
   }, [])
   return (
-    <PullRefresh runFunc={onRefresh}>
+    <PullRefresh runFunc={onRefresh} topGap={72}>
       <DisplayCard
         title={`${CourseTypeList[hdjwForm.course]}课程成绩`}
         footer={buildFooterInfo(hdjwForm.year, hdjwForm.term)}
