@@ -16,6 +16,7 @@
 
   .titleContainer {
     @include flex(space-between);
+    margin-bottom: 22px;
   }
 
   .title {
@@ -37,7 +38,6 @@
   }
 
   .content {
-    margin-top: 22px;
     color: $blackText;
     font-size: $fontMedium;
     line-height: 40px;

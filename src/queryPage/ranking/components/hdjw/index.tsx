@@ -2,12 +2,14 @@ import { View, Picker } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
+import styles from './index.module.scss'
 import {
   getGradeRankFromHdjw,
   type HdjwGradeRank,
   type HdjwGradeRankForm,
 } from '@/apis/hdjw/gradeRank'
 import Button from '@/components/Button'
+import Copyright from '@/components/Copyright'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import { useAppSelector } from '@/utils/hooks/redux'
@@ -113,88 +115,103 @@ const HdjwIndex: React.FC = () => {
   }, [])
   return (
     <PullRefresh runFunc={onRefresh} topGap={72}>
-      <DisplayCard
-        title={`${CourseTypeList[hdjwForm.course]}课程成绩`}
-        footer={buildFooterInfo(hdjwForm.year, hdjwForm.term)}
-      >
-        <View className='flex'>
-          <View className='flex-1'>
-            {hdjwForm.rank === 3
-              ? '绩点：'
-              : `${RankTypeList[hdjwForm.rank]}分：`}
-            <View className='inline text-primary font-bold text-lg'>
-              {hdjwData.score}
-            </View>
-          </View>
-          <View className='flex-1'>
-            排名：
-            <View className='inline text-primary font-bold text-lg'>
-              {hdjwData.rank}
-            </View>
-            {/* <View className='inline text-primary font-bold text-xs'>/999</View> */}
-          </View>
-        </View>
-      </DisplayCard>
-      <DisplayCard title='筛选'>
-        <View className='flex items-center'>
-          <View className='text-xs'>课程范围：</View>
-          {CourseTypeList.map((item, index) => {
-            if (index === 0) return null
-            return (
-              <View
-                key={item}
-                className={classNames('border rounded px-2 py-0.5 ml-1', {
-                  'text-primary border-primary': hdjwFormCourse === index,
-                })}
-                onClick={() => {
-                  setHdjwFormCourse(index)
-                  hdjwFormCourseRef.current = index
-                }}
-              >
-                {item}
-              </View>
-            )
-          })}
-        </View>
-        <View className='flex items-center mt-2'>
-          <View className='text-xs'>计算方式：</View>
-          {RankTypeList.map((item, index) => {
-            if (index === 0) return null
-            return (
-              <View
-                key={item}
-                className={classNames('border rounded px-2 py-0.5 ml-1', {
-                  'text-primary border-primary': hdjwFormRank === index,
-                })}
-                onClick={() => {
-                  setHdjwFormRank(index)
-                  hdjwFormRankRef.current = index
-                }}
-              >
-                {item}
-              </View>
-            )
-          })}
-        </View>
-        <View className='flex items-center mt-2'>
-          <View className='text-xs'>时间范围：</View>
-          <Picker
-            range={[termYearPicker, termTypePicker]}
-            value={termPickerValue}
-            mode='multiSelector'
-            onColumnChange={columnChange}
-            onChange={pickerChange}
-            className='flex-1 mr-1'
+      <View className='flex flex-col h-full'>
+        <View>
+          <DisplayCard
+            title={`${CourseTypeList[hdjwForm.course]}课程成绩`}
+            footer={buildFooterInfo(hdjwForm.year, hdjwForm.term)}
           >
-            <View className='border-b py-0.5 ml-1 w-full'>
-              {`${termYearPicker[termPickerValue[0]]} ${termTypePicker[termPickerValue[1]]}`}
+            <View className='flex'>
+              <View className='flex-1'>
+                {hdjwForm.rank === 3
+                  ? '绩点：'
+                  : `${RankTypeList[hdjwForm.rank]}分：`}
+                <View className='inline text-primary font-bold text-lg'>
+                  {hdjwData.score}
+                </View>
+              </View>
+              <View className='flex-1'>
+                排名：
+                <View className='inline text-primary font-bold text-lg'>
+                  {hdjwData.rank}
+                </View>
+                {/* <View className='inline text-primary font-bold text-xs'>/999</View> */}
+              </View>
             </View>
-          </Picker>
+          </DisplayCard>
+          <DisplayCard title='筛选'>
+            <View className='flex items-center'>
+              <View className='text-xs'>课程范围：</View>
+              {CourseTypeList.map((item, index) => {
+                if (index === 0) return null
+                return (
+                  <View
+                    key={item}
+                    className={classNames('border rounded px-2 py-0.5 ml-1', {
+                      'text-primary border-primary': hdjwFormCourse === index,
+                    })}
+                    onClick={() => {
+                      setHdjwFormCourse(index)
+                      hdjwFormCourseRef.current = index
+                    }}
+                  >
+                    {item}
+                  </View>
+                )
+              })}
+            </View>
+            <View className='flex items-center mt-2'>
+              <View className='text-xs'>计算方式：</View>
+              {RankTypeList.map((item, index) => {
+                if (index === 0) return null
+                return (
+                  <View
+                    key={item}
+                    className={classNames('border rounded px-2 py-0.5 ml-1', {
+                      'text-primary border-primary': hdjwFormRank === index,
+                    })}
+                    onClick={() => {
+                      setHdjwFormRank(index)
+                      hdjwFormRankRef.current = index
+                    }}
+                  >
+                    {item}
+                  </View>
+                )
+              })}
+            </View>
+            <View className='flex items-center mt-2'>
+              <View className='text-xs'>时间范围：</View>
+              <Picker
+                range={[termYearPicker, termTypePicker]}
+                value={termPickerValue}
+                mode='multiSelector'
+                onColumnChange={columnChange}
+                onChange={pickerChange}
+                className='flex-1 mr-1'
+              >
+                <View className='border-b py-0.5 ml-1 w-full'>
+                  {`${termYearPicker[termPickerValue[0]]} ${termTypePicker[termPickerValue[1]]}`}
+                </View>
+              </Picker>
+            </View>
+            <Button className='text-sm mt-4 py-2' onClick={handleSearch}>
+              查询
+            </Button>
+            <View className={styles.warningInfo}>
+              成绩仅供参考，请以教务系统成绩为准！
+            </View>
+          </DisplayCard>
         </View>
-        <Button className='text-sm mt-4 py-2' onClick={handleSearch}>
-          查询
-        </Button>
-      </DisplayCard>
+        <View className='mt-auto pt-4'>
+          <View className={styles.bottomInfo}>数据来源：教务系统</View>
+          <View className={styles.bottomInfo}>
+            若对成绩有疑问，请联系 湖南大学信息化办
+          </View>
+          <View className={styles.bottomInfo}>联系方式：88821520</View>
+          <Copyright />
+        </View>
+      </View>
     </PullRefresh>
   )
 }

@@ -1,7 +1,9 @@
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { useEffect, useState } from 'react'
+import styles from './index.module.scss'
 import { type CaGradeRank, getGradeRankFromCa } from '@/apis/hdjw/gradeRank'
+import Copyright from '@/components/Copyright'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 
@@ -51,165 +53,177 @@ const CaIndex = () => {
   }, [])
   return (
     <PullRefresh runFunc={onRefresh} topGap={72}>
-      <DisplayCard title='全部课程成绩'>
-        <View className='flex'>
-          <View className='flex-1'>
-            算数平均分：
-            <View className='inline text-primary font-bold text-lg'>
-              {data?.all_arithmetic ?? '无数据'}
-            </View>
-          </View>
-          <View className='flex-1'>
-            排名：
-            <View className='inline text-primary font-bold text-lg'>
-              {getRank(data?.all_arithmetic_rank)}
-            </View>
-            {getRankTotal(data?.all_arithmetic_rank) && (
-              <View className='inline text-primary font-bold text-xs'>
-                /{getRankTotal(data?.all_arithmetic_rank)}
+      <View className='flex flex-col h-full'>
+        <View>
+          <DisplayCard>可信电子凭证的数据获取较慢，请耐心等待...</DisplayCard>
+          <DisplayCard title='全部课程成绩'>
+            <View className='flex'>
+              <View className='flex-1'>
+                算数平均分：
+                <View className='inline text-primary font-bold text-lg'>
+                  {data?.all_arithmetic ?? '无数据'}
+                </View>
               </View>
-            )}
-          </View>
-        </View>
-        <View className='flex'>
-          <View className='flex-1'>
-            加权平均分：
-            <View className='inline text-primary font-bold text-lg'>
-              {data?.all_weighted ?? '无数据'}
-            </View>
-          </View>
-          <View className='flex-1'>
-            排名：
-            <View className='inline text-primary font-bold text-lg'>
-              {getRank(data?.all_weighted_rank)}
-            </View>
-            {getRankTotal(data?.all_weighted_rank) && (
-              <View className='inline text-primary font-bold text-xs'>
-                /{getRankTotal(data?.all_weighted_rank)}
+              <View className='flex-1'>
+                排名：
+                <View className='inline text-primary font-bold text-lg'>
+                  {getRank(data?.all_arithmetic_rank)}
+                </View>
+                {getRankTotal(data?.all_arithmetic_rank) && (
+                  <View className='inline text-primary font-bold text-xs'>
+                    /{getRankTotal(data?.all_arithmetic_rank)}
+                  </View>
+                )}
               </View>
-            )}
-          </View>
-        </View>
-        <View className='flex'>
-          <View className='flex-1'>
-            算数平均分：
-            <View className='inline text-primary font-bold text-lg'>
-              {data?.all_gpa ?? '无数据'}
             </View>
-          </View>
-          <View className='flex-1'>
-            排名：
-            <View className='inline text-primary font-bold text-lg'>
-              {getRank(data?.all_gpa_rank)}
-            </View>
-            {getRankTotal(data?.all_gpa_rank) && (
-              <View className='inline text-primary font-bold text-xs'>
-                /{getRankTotal(data?.all_gpa_rank)}
+            <View className='flex'>
+              <View className='flex-1'>
+                加权平均分：
+                <View className='inline text-primary font-bold text-lg'>
+                  {data?.all_weighted ?? '无数据'}
+                </View>
               </View>
-            )}
-          </View>
-        </View>
-      </DisplayCard>
-      <DisplayCard title='必修课程成绩'>
-        <View className='flex'>
-          <View className='flex-1'>
-            算数平均分：
-            <View className='inline text-primary font-bold text-lg'>
-              {data?.must_arithmetic ?? '无数据'}
-            </View>
-          </View>
-        </View>
-        <View className='flex'>
-          <View className='flex-1'>
-            加权平均分：
-            <View className='inline text-primary font-bold text-lg'>
-              {data?.must_weighted ?? '无数据'}
-            </View>
-          </View>
-        </View>
-        <View className='flex'>
-          <View className='flex-1'>
-            绩点：
-            <View className='inline text-primary font-bold text-lg'>
-              {data?.must_gpa ?? '无数据'}
-            </View>
-          </View>
-        </View>
-      </DisplayCard>
-      <DisplayCard title='核心课程成绩'>
-        <View className='flex'>
-          <View className='flex-1'>
-            算数平均排名：
-            <View className='inline text-primary font-bold text-lg'>
-              {getRank(data?.core_arithmetic_rank)}
-            </View>
-            {getRankTotal(data?.core_arithmetic_rank) && (
-              <>
-                <View className='inline text-primary font-bold text-xs'>
-                  /{getRankTotal(data?.core_arithmetic_rank)}
+              <View className='flex-1'>
+                排名：
+                <View className='inline text-primary font-bold text-lg'>
+                  {getRank(data?.all_weighted_rank)}
                 </View>
-                <View className='inline ml-0.5'>
-                  (前
-                  {formatDecimal(
-                    (Number(getRank(data?.core_arithmetic_rank)) /
-                      Number(getRankTotal(data?.core_arithmetic_rank))) *
-                      100
-                  )}
-                  %)
-                </View>
-              </>
-            )}
-          </View>
-        </View>
-        <View className='flex'>
-          <View className='flex-1'>
-            加权平均排名：
-            <View className='inline text-primary font-bold text-lg'>
-              {getRank(data?.core_weighted_rank)}
+                {getRankTotal(data?.all_weighted_rank) && (
+                  <View className='inline text-primary font-bold text-xs'>
+                    /{getRankTotal(data?.all_weighted_rank)}
+                  </View>
+                )}
+              </View>
             </View>
-            {getRankTotal(data?.core_weighted_rank) && (
-              <>
-                <View className='inline text-primary font-bold text-xs'>
-                  /{getRankTotal(data?.core_weighted_rank)}
+            <View className='flex'>
+              <View className='flex-1'>
+                算数平均分：
+                <View className='inline text-primary font-bold text-lg'>
+                  {data?.all_gpa ?? '无数据'}
                 </View>
-                <View className='inline ml-0.5'>
-                  (前
-                  {formatDecimal(
-                    (Number(getRank(data?.core_weighted_rank)) /
-                      Number(getRankTotal(data?.core_weighted_rank))) *
-                      100
-                  )}
-                  %)
+              </View>
+              <View className='flex-1'>
+                排名：
+                <View className='inline text-primary font-bold text-lg'>
+                  {getRank(data?.all_gpa_rank)}
                 </View>
-              </>
-            )}
-          </View>
-        </View>
-        <View className='flex'>
-          <View className='flex-1'>
-            绩点排名：
-            <View className='inline text-primary font-bold text-lg'>
-              {getRank(data?.core_gpa_rank)}
+                {getRankTotal(data?.all_gpa_rank) && (
+                  <View className='inline text-primary font-bold text-xs'>
+                    /{getRankTotal(data?.all_gpa_rank)}
+                  </View>
+                )}
+              </View>
             </View>
-            {getRankTotal(data?.core_gpa_rank) && (
-              <>
-                <View className='inline text-primary font-bold text-xs'>
-                  /{getRankTotal(data?.core_gpa_rank)}
+          </DisplayCard>
+          <DisplayCard title='必修课程成绩'>
+            <View className='flex'>
+              <View className='flex-1'>
+                算数平均分：
+                <View className='inline text-primary font-bold text-lg'>
+                  {data?.must_arithmetic ?? '无数据'}
                 </View>
-                <View className='inline ml-0.5'>
-                  (前
-                  {formatDecimal(
-                    (Number(getRank(data?.core_gpa_rank)) /
-                      Number(getRankTotal(data?.core_gpa_rank))) *
-                      100
-                  )}
-                  %)
+              </View>
+            </View>
+            <View className='flex'>
+              <View className='flex-1'>
+                加权平均分：
+                <View className='inline text-primary font-bold text-lg'>
+                  {data?.must_weighted ?? '无数据'}
                 </View>
-              </>
-            )}
-          </View>
+              </View>
+            </View>
+            <View className='flex'>
+              <View className='flex-1'>
+                绩点：
+                <View className='inline text-primary font-bold text-lg'>
+                  {data?.must_gpa ?? '无数据'}
+                </View>
+              </View>
+            </View>
+          </DisplayCard>
+          <DisplayCard title='核心课程成绩'>
+            <View className='flex'>
+              <View className='flex-1'>
+                算数平均排名：
+                <View className='inline text-primary font-bold text-lg'>
+                  {getRank(data?.core_arithmetic_rank)}
+                </View>
+                {getRankTotal(data?.core_arithmetic_rank) && (
+                  <>
+                    <View className='inline text-primary font-bold text-xs'>
+                      /{getRankTotal(data?.core_arithmetic_rank)}
+                    </View>
+                    <View className='inline ml-0.5'>
+                      (前
+                      {formatDecimal(
+                        (Number(getRank(data?.core_arithmetic_rank)) /
+                          Number(getRankTotal(data?.core_arithmetic_rank))) *
+                          100
+                      )}
+                      %)
+                    </View>
+                  </>
+                )}
+              </View>
+            </View>
+            <View className='flex'>
+              <View className='flex-1'>
+                加权平均排名：
+                <View className='inline text-primary font-bold text-lg'>
+                  {getRank(data?.core_weighted_rank)}
+                </View>
+                {getRankTotal(data?.core_weighted_rank) && (
+                  <>
+                    <View className='inline text-primary font-bold text-xs'>
+                      /{getRankTotal(data?.core_weighted_rank)}
+                    </View>
+                    <View className='inline ml-0.5'>
+                      (前
+                      {formatDecimal(
+                        (Number(getRank(data?.core_weighted_rank)) /
+                          Number(getRankTotal(data?.core_weighted_rank))) *
+                          100
+                      )}
+                      %)
+                    </View>
+                  </>
+                )}
+              </View>
+            </View>
+            <View className='flex'>
+              <View className='flex-1'>
+                绩点排名：
+                <View className='inline text-primary font-bold text-lg'>
+                  {getRank(data?.core_gpa_rank)}
+                </View>
+                {getRankTotal(data?.core_gpa_rank) && (
+                  <>
+                    <View className='inline text-primary font-bold text-xs'>
+                      /{getRankTotal(data?.core_gpa_rank)}
+                    </View>
+                    <View className='inline ml-0.5'>
+                      (前
+                      {formatDecimal(
+                        (Number(getRank(data?.core_gpa_rank)) /
+                          Number(getRankTotal(data?.core_gpa_rank))) *
+                          100
+                      )}
+                      %)
+                    </View>
+                  </>
+                )}
+              </View>
+            </View>
+          </DisplayCard>
         </View>
-      </DisplayCard>
+        <View className='mt-auto pt-4'>
+          <View className={styles.bottomInfo}>数据来源：可信电子凭证服务</View>
+          <View className={styles.bottomInfo}>
+            该项成绩主要用于：申请学生电子凭证相关业务
+          </View>
+          <Copyright />
+        </View>
+      </View>
     </PullRefresh>
   )
 }

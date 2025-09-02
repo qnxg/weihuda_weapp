@@ -52,7 +52,7 @@ const HomeSwiperCard: React.FC<CardProps> = ({
           interval={5000}
           circular
           indicatorDots
-          indicatorActiveColor='#007aff'
+          indicatorActiveColor='#328CCB'
           style={{ height: '120px' }}
         >
           {latestArticles.map(item => (

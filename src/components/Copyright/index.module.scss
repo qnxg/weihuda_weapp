@@ -1,0 +1,33 @@
+@import '~@/utils/scss/global.scss';
+
+.copyright {
+  @include flex(center, center);
+  font-size: $fontMedium;
+  font-weight: bold;
+  line-height: 48px;
+  color: #d9dee2;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.5px;
+  padding-bottom: 24px;
+
+  .logo1000 {
+    width: 70px;
+    height: 48px;
+    background-image: url('~@/static/mine/1000-light.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70px auto;
+    margin-left: 10px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .copyright {
+    color: #404040;
+
+    .logo1000 {
+      background-image: url('~@/static/mine/1000-dark.svg');
+    }
+  }
+}

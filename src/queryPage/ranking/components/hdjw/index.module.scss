@@ -1,0 +1,15 @@
+@import '~@/utils/scss/global.scss';
+
+.bottomInfo {
+  text-align: center;
+  font-size: 24px;
+  line-height: 36px;
+  color: #b5b5b5;
+}
+
+.warningInfo {
+  text-align: center;
+  font-size: 24px;
+  color: $primaryBlue;
+  margin-top: 18px;
+}

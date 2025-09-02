@@ -5,6 +5,7 @@ import styles from './index.module.scss'
 import { postUnbind } from '@/apis/bind'
 import { LineDividedButtonList } from '@/components/LineDividedButtonList'
 import { useAppSelector } from '@/utils/hooks/redux'
+import Copyright from '@/components/Copyright'
 
 /**
  * 解绑操作
@@ -149,10 +150,7 @@ const Index: React.FC = () => {
       <View className={styles.version}>
         <View>Version 3.8.8</View>
       </View>
-      <View className={styles.copyright}>
-        <View>Copyright © 2017-2024</View>
-        <View className={styles.logo1000} />
-      </View>
+      <Copyright />
     </Block>
   )
 }
