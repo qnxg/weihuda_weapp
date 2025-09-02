@@ -1,5 +1,5 @@
 import arrangement from '@/static/toolBox/icon-arrangement.svg'
-import borrow from '@/static/toolBox/icon-borrow.svg'
+// import borrow from '@/static/toolBox/icon-borrow.svg'
 import electricity from '@/static/toolBox/icon-electricity.svg'
 import empty from '@/static/toolBox/icon-empty.svg'
 import examId from '@/static/toolBox/icon-exam-id.svg'

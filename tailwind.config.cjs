@@ -7,13 +7,24 @@ module.exports = {
   // 其他配置项 ...
   corePlugins: {
     // 小程序不需要 preflight，因为这主要是给 h5 的，如果你要同时开发多端，你应该使用 process.env.TARO_ENV 环境变量来控制它
-    preflight: false
+    preflight: false,
   },
   theme: {
     extend: {
       colors: {
-        primary: '#328CCB'
-      }
-    }
-  }
+        primary: '#328CCB',
+        // score0: '#ff4545',
+        // score1: '#ff694f',
+        // score2: '#f8603a',
+        // score3: '#fc8354',
+        // score4: '#fa9231',
+        // score5: '#f7bb3b',
+        // score6: '#ecdb44',
+        // score7: '#e2ec52',
+        // score8: '#b0d628',
+        // score9: '#a9b42a',
+        // score10: '#37da58',
+      },
+    },
+  },
 }

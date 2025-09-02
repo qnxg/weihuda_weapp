@@ -88,7 +88,7 @@ npx yarn dev
 
 - 使用本地请求或者使用测试号时，需要在微信开发者工具-详情（右上角）-本地设置中勾选不校验合法域名。
 
-## 3. 代码检查
+## 3. 代码检查与格式化
 
 Typescript是基于JavaScript的开源编程语言，它通过添加静态类型检查让开发者在编译阶段就能捕捉到很多潜在的错误，从而大大提升代码的安全性和可维护性。
 
@@ -97,10 +97,20 @@ ESLint是一个JavaScript和TypeScript的静态检查工具。它能够帮助开
 本项目配置了Typescript和ESlint规则。编辑时可以在编辑器上安装相关插件。如果你使用的是VSCode（自带Typescript支持），考虑附加安装ESlint插件，减少引入bug的可能。
 
 如果想要在命令行触发代码检查，本项目提供了`lint`命令：
+
 ```shell
 npx yarn lint
 ```
+
 该命令在运行后会先进行Typescript检查，如果通过会继续进行ESlint检查。
+
+同时，为了确保代码风格保持一致，请在编写代码完毕之后在命令行中执行：
+
+```shell
+npx yarn prettier
+```
+
+将使用Prettier对代码进行格式化。
 
 ## 4. 测试
 

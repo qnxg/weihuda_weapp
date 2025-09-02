@@ -12,7 +12,8 @@
     "build": "yarn lint && taro build --type weapp",
     "dev": "taro build --type weapp --watch",
     "lint": "tsc --noEmit && eslint ./src",
-    "postinstall": "weapp-tw patch"
+    "postinstall": "weapp-tw patch",
+    "prettier": "npx prettier --write ."
   },
   "browserslist": [
     "last 3 versions",

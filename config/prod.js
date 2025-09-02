@@ -1,16 +1,16 @@
 export const env = {
-  NODE_ENV: '"production"'
-};
-export const defineConstants = {};
+  NODE_ENV: '"production"',
+}
+export const defineConstants = {}
 export const mini = {
   postcss: {
     cssModules: {
       config: {
-        generateScopedName: '[sha512:hash:base64:9]'
-      }
-    }
-  }
-};
+        generateScopedName: '[sha512:hash:base64:9]',
+      },
+    },
+  },
+}
 export const h5 = {
   /**
    * 如果h5端编译后体积过大，可以使用webpack-bundle-analyzer插件对打包体积进行分析。
@@ -20,4 +20,4 @@ export const h5 = {
    *     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
    * }
    */
-};
+}

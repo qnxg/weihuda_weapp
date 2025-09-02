@@ -7,4 +7,4 @@ module.exports = {
   arrowParens: 'avoid',
   proseWrap: 'preserve',
   endOfLine: 'auto',
-};
+}

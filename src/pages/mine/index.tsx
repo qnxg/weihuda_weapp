@@ -3,9 +3,9 @@ import Taro from '@tarojs/taro'
 import React from 'react'
 import styles from './index.module.scss'
 import { postUnbind } from '@/apis/bind'
+import Copyright from '@/components/Copyright'
 import { LineDividedButtonList } from '@/components/LineDividedButtonList'
 import { useAppSelector } from '@/utils/hooks/redux'
-import Copyright from '@/components/Copyright'
 
 /**
  * 解绑操作
