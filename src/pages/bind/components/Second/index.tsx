@@ -1,5 +1,6 @@
 import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import classNames from 'classnames'
 import React, { useRef } from 'react'
 import styles from './index.module.scss'
 import { postBind } from '@/apis/bind'
@@ -94,6 +95,13 @@ const Second: React.FC = () => {
             password
           />
         </View>
+      </View>
+      <View className={styles.tips}>
+        如忘记密码，请前往 https://pt.hnu.edu.cn 进行密码重置。
+      </View>
+      <View className={classNames(styles.tips, 'my-2')}>
+        如密码输入正确但仍提示密码错误，说明先前账号密码输入错误次数过多，被锁定，请
+        10 分钟之后再试。
       </View>
       <Button className={styles.confirmBtn} onClick={submit}>
         进行验证

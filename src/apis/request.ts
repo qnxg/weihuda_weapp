@@ -1,9 +1,11 @@
+// TODO 需要重构甚至重写：getTokenApi和request.get的相互依赖令人迷惑
+
 import Taro from '@tarojs/taro'
+// eslint-disable-next-line import/no-cycle
+import { postUnbind } from './bind'
 import getLoginCode from '@/utils/getLoginCode'
 import storage from '@/utils/storage/cache'
 import { BASE_URL } from '@/utils/url'
-
-// 需要重构甚至重写：getTokenApi和request.get的相互依赖令人迷惑
 
 // 避免多次请求
 let getTokenPromise: Promise<any> | null = null
@@ -118,6 +120,31 @@ async function request<T extends Data>(
 
   // 发起请求
   const response = await Taro.request(options)
+
+  if (response.statusCode === 401) {
+    await Taro.showModal({
+      title: '错误',
+      content: '此前绑定的账号密码错误，请重新绑定',
+      showCancel: false,
+      confirmText: '重新绑定',
+    })
+    try {
+      await Taro.showLoading({
+        title: '加载中',
+      })
+      try {
+        await postUnbind() // 这个错误无所谓，不处理
+      } catch {}
+      Taro.clearStorageSync()
+      Taro.hideLoading()
+      await Taro.reLaunch({
+        url: '/pages/bind/index',
+      })
+    } catch (err) {
+      Taro.hideLoading()
+      console.log(err)
+    }
+  }
 
   if (response.data.code === 401) {
     // 重新获取token，并重新发起请求
