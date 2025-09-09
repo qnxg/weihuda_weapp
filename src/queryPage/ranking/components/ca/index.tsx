@@ -97,7 +97,7 @@ const CaIndex = () => {
             </View>
             <View className='flex'>
               <View className='flex-1'>
-                算数平均分：
+                绩点：
                 <View className='inline text-primary font-bold text-lg'>
                   {data?.all_gpa ?? '无数据'}
                 </View>
