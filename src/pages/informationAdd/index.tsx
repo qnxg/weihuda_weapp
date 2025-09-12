@@ -2,9 +2,9 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
-import React, { useState } from 'react'
-import defaultTags from '../information/defaultTags'
+import React, { useCallback, useState } from 'react'
 import styles from './index.module.scss'
+import { getZhihuTags } from '@/apis/miniConfig'
 import { uploadImgApi } from '@/apis/upload'
 import { postZhihuApi } from '@/apis/zhihu'
 import Button from '@/components/Button'
@@ -14,6 +14,7 @@ import Label from '@/components/Input/Label'
 import Textarea from '@/components/Input/Textarea'
 import { Upload } from '@/components/Upload'
 import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 
 const getTitle = (content: string, length = 20) => {
   if (content.length <= length) {
@@ -33,9 +34,11 @@ const Index: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState('')
   // 用户信息
   const userInfo = useAppSelector(state => state.userInfo)
+  // 知湖文章标签
+  const [tags] = usePromise(getZhihuTags, [], [getZhihuTags])
 
   // 提交时
-  const onSubmit = async () => {
+  const onSubmit = useCallback(async () => {
     // 非空校验
     if (!title || title.trim() === '') {
       await Taro.showToast({
@@ -109,7 +112,7 @@ const Index: React.FC = () => {
     setTimeout(() => {
       void Taro.navigateBack()
     }, 1000)
-  }
+  }, [content, imgUrl, selectedTag, title, userInfo.stuId])
 
   return (
     <Card>
@@ -137,7 +140,7 @@ const Index: React.FC = () => {
       />
       <Label required>分类</Label>
       <View className={styles.tagsWrapper}>
-        {defaultTags
+        {tags
           .filter(v => !!v.value)
           .map(item => {
             return (

@@ -1,5 +1,5 @@
 import { View } from '@tarojs/components'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Goods from './components/Goods'
 import JifenRecord from './components/JifenRecord'
 import JifenRule from './components/JifenRule'
@@ -7,7 +7,7 @@ import Qiandao from './components/Qiandao'
 import styles from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
 import Card from '@/components/Card'
-import { TabPanel, Tabs } from '@/components/Tabs'
+import { Tabs } from '@/components/Tabs'
 import { useAppSelector } from '@/utils/hooks/redux'
 
 const Index: React.FC = () => {
@@ -56,21 +56,33 @@ const Index: React.FC = () => {
       </Card>
       {/* 兑换奖品，积分记录，积分规则 */}
       <Card wrapperClassName={styles.jifenActionsCard}>
-        <Tabs keepAlive initialValue={0}>
-          <TabPanel value={0} title='积分记录'>
-            <JifenRecord jifenRecordRef={jifenRecordRef} />
-          </TabPanel>
-          <TabPanel value={1} title='兑换奖品'>
-            <Goods
-              total={total}
-              updateTotal={getData}
-              updateJifenRecord={updateJifenRecord}
-            />
-          </TabPanel>
-          <TabPanel value={2} title='积分规则'>
-            <JifenRule />
-          </TabPanel>
-        </Tabs>
+        <Tabs
+          loadAll
+          defaultPanelIndex={0}
+          panels={useMemo(
+            () => [
+              {
+                title: '积分记录',
+                component: <JifenRecord jifenRecordRef={jifenRecordRef} />,
+              },
+              {
+                title: '兑换奖品',
+                component: (
+                  <Goods
+                    total={total}
+                    updateTotal={getData}
+                    updateJifenRecord={updateJifenRecord}
+                  />
+                ),
+              },
+              {
+                title: '积分规则',
+                component: <JifenRule />,
+              },
+            ],
+            [total]
+          )}
+        />
       </Card>
     </View>
   )

@@ -90,21 +90,3 @@ export const getScrollOffset = (selector: string) => {
       .exec()
   })
 }
-
-/**
- * 解析JSON字符串
- * @param str json字符串
- * @returns
- */
-export const parseJSON = (str: string) => {
-  // 如果是null或者undefined，直接返回
-  if (str == null) {
-    return str
-  }
-
-  let res = JSON.parse(str)
-  if (typeof res === 'string') {
-    res = JSON.parse(res)
-  }
-  return res
-}

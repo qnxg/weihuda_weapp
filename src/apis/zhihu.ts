@@ -1,5 +1,4 @@
 import request from './request'
-import type { IPageQueryData } from './interface'
 
 export interface IZhihu {
   /** id */
@@ -35,7 +34,21 @@ export interface IZhihuPageResponseData {
   rows: IZhihu[]
 }
 
-export interface IZhihuPageQueryData extends IPageQueryData, Partial<IZhihu> {}
+export interface IZhihuPageQueryData {
+  /**
+   * 要请求的条目的起始序号（以0开始）
+   *
+   * 序号越小，条目越新
+   */
+  offset: number
+  /**
+   * 请求的条目数量
+   */
+  req_count: number
+  title?: string
+  type?: string
+  tags?: string
+}
 
 /**
  * 获取知湖文章列表分页
