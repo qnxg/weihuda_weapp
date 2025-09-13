@@ -52,7 +52,7 @@ export class CanvasObject {
     ]
 
     eventNames.forEach(name => {
-      this.event[name.wxName] = e => {
+      this.event[name.wxName] = (e: any) => {
         const touch = e.touches[0]
         this.chart.getZr().handler.dispatch(name.ecName, {
           zrX: name.wxName === 'tap' ? touch.clientX : touch.x,

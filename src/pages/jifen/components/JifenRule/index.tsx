@@ -16,7 +16,7 @@ const JifenRule: React.FC = () => {
       key: 'exteraJifenRules',
     }).then(res => {
       if (res.rows.length === 0) return
-      setExteraRule(res.rows[0].value)
+      setExteraRule(res.rows[0]!.value)
     })
     const res = await getJifenRulePageApi({
       page: 1,

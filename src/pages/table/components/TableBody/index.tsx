@@ -24,7 +24,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
    * 记录触摸开始位置
    * @param e 事件对象
    */
-  const onTouchStart = e => {
+  const onTouchStart = (e: any) => {
     if (e.touches.length === 1) {
       setStartPos(e.changedTouches[0].pageX)
     }
@@ -34,7 +34,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
    * 触摸结束函数，判断是否切换
    * @param e 事件对象
    */
-  const onTouchEnd = e => {
+  const onTouchEnd = (e: any) => {
     const { currentWeeks } = props
     if (e.changedTouches.length === 1) {
       const end = e.changedTouches[0].pageX

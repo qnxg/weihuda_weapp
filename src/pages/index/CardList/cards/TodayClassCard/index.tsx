@@ -113,7 +113,7 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
       })
       // 从后向前枚举，合并
       for (let i = mergedClass.length - 1; i >= 0; i--) {
-        const item = todayClass[i]
+        const item = todayClass[i]!
         const p = todayClass.findIndex(
           x =>
             x.courseName === item.courseName &&
@@ -121,17 +121,17 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
             x.time === item.time - 1
         )
         if (p !== -1) {
-          if (mergedClass[p]._endTime < item.time) {
-            mergedClass[p]._endTime = item.time
+          if (mergedClass[p]!._endTime < item.time) {
+            mergedClass[p]!._endTime = item.time
           }
-          mergedClass[i]._show = false
+          mergedClass[i]!._show = false
         }
       }
       mergedClass = mergedClass.filter(item => item._show)
       const tempArray: Array<FormatData> = []
       mergedClass.map(item => {
-        const startTime = courseTime[item.time].startTime
-        const endTime = courseTime[item._endTime].endTime
+        const startTime = courseTime[item.time]!.startTime
+        const endTime = courseTime[item._endTime]!.endTime
         const temp: FormatData = {
           startTime,
           endTime,

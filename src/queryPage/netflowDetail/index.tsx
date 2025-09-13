@@ -41,7 +41,7 @@ const Index: React.FC = () => {
   const todayDate = getTodayDate()
   const [isDay, setIsDay] = useState<number>(0)
   const [byMonth, setByMonth] = useState([todayDate.year, todayDate.month])
-  const [byDay, setByDay] = useState([
+  const [byDay, setByDay] = useState<[number, number, number]>([
     todayDate.year,
     todayDate.month,
     todayDate.day,
@@ -66,12 +66,12 @@ const Index: React.FC = () => {
   }, [todayDate.year])
 
   const monthSltData = useMemo<SelectorItem[]>(
-    () => (yearSltData[sltByMonth.year].value < 2021 ? month2020 : monthAll),
+    () => (yearSltData[sltByMonth.year]!.value < 2021 ? month2020 : monthAll),
     [sltByMonth.year, yearSltData]
   )
 
   const monthByDaySltData = useMemo<SelectorItem[]>(
-    () => (yearSltData[sltByDay.year].value < 2021 ? month2020 : monthAll),
+    () => (yearSltData[sltByDay.year]!.value < 2021 ? month2020 : monthAll),
     [sltByDay.year, yearSltData]
   )
 
@@ -98,15 +98,15 @@ const Index: React.FC = () => {
       title: '加载中...',
     })
     try {
-      let year = byMonth[0]
-      let month = byMonth[1]
+      let year = byMonth[0]!
+      let month = byMonth[1]!
       let res: NetflowDetail | null = null
       if (!isDay) {
         res = await getNetflowMonth(year, month)
       } else {
-        year = byDay[0]
-        month = byDay[1]
-        const day = byDay[2]
+        year = byDay[0]!
+        month = byDay[1]!
+        const day = byDay[2]!
         res = await getNetflowDay(year, month, day)
       }
 
@@ -225,12 +225,12 @@ const Index: React.FC = () => {
               }
             }}
             onChange={value => {
-              const [yi, mi, di] = value.detail.value
+              const [yi, mi, di] = (value.detail.value) as [number, number, number]
               setSltByDay({ year: yi, month: mi, day: di })
               setByDay([
-                yearSltData[yi].value,
-                monthByDaySltData[mi].value,
-                daySltData[di].value,
+                yearSltData[yi]!.value,
+                monthByDaySltData[mi]!.value,
+                daySltData[di]!.value,
               ])
             }}
           >
@@ -253,11 +253,11 @@ const Index: React.FC = () => {
             }}
             onChange={value => {
               const [yi, mi] = value.detail.value
-              setSltByMonth({ year: yi, month: mi })
-              setByMonth([yearSltData[yi].value, monthSltData[mi].value])
+              setSltByMonth({ year: yi!, month: mi! })
+              setByMonth([yearSltData[yi!]!.value, monthSltData[mi!]!.value])
             }}
           >
-            {`${byMonth[0]}年-${fmt2width(byMonth[1])}月`}
+            {`${byMonth[0]}年-${fmt2width(byMonth[1]!)}月`}
           </Picker>
         )}
       </DisplayCard>

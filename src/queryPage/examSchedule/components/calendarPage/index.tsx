@@ -73,7 +73,7 @@ const Index: React.FC<Props> = props => {
           highlight.exams.map((item, index) => {
             const start = item.startTime.split(' ')
             const end = item.endTime.split(' ')
-            const day = start[0].replace(/-/g, '/')
+            const day = start[0]!.replace(/-/g, '/')
             return (
               <LineDividedLeftRightCard
                 key={item.name}
@@ -81,7 +81,7 @@ const Index: React.FC<Props> = props => {
                   boxShadow: '0 0 20px 0 rgba(226, 226, 226, 0.34)',
                   borderRadius: '12px',
                 }}
-                lineColor={onColors[index % onColors.length]}
+                lineColor={onColors[index % onColors.length]!}
                 renderLeft={
                   <LeftPart title={day} content={`${start[1]}-${end[1]}`} />
                 }

@@ -33,7 +33,7 @@ const Index: React.FC = () => {
   })
 
   // 改变表单的内容
-  const change = (key, newVal) => {
+  const change = (key: string, newVal: any) => {
     setData({
       ...data,
       [key]: newVal,

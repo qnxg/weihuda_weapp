@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { CanvasObject } from '@/components/Chart/canvas'
 import type { CSSProperties } from 'react'
 
-const wrapTouch = event => {
+const wrapTouch = (event: any) => {
   for (let i = 0; i < event.touches.length; ++i) {
     const touch = event.touches[i]
     touch.offsetX = touch.x
@@ -36,7 +36,7 @@ const Index: React.FC<Props> = ({
   const chartInstanceRef = useRef<any>(null)
   const canvasIdRef = useRef<string>(canvasId || getCanvasId())
 
-  const touchStart = useCallback(e => {
+  const touchStart = useCallback((e: any) => {
     if (chartInstanceRef.current && e.touches.length > 0) {
       const touch = e.touches[0]
       const handler = chartInstanceRef.current.getZr().handler
@@ -52,7 +52,7 @@ const Index: React.FC<Props> = ({
     }
   }, [])
 
-  const touchMove = useCallback(e => {
+  const touchMove = useCallback((e: any) => {
     if (chartInstanceRef.current && e.touches.length > 0) {
       const touch = e.touches[0]
       const handler = chartInstanceRef.current.getZr().handler
@@ -64,7 +64,7 @@ const Index: React.FC<Props> = ({
     }
   }, [])
 
-  const touchEnd = useCallback(e => {
+  const touchEnd = useCallback((e: any) => {
     if (chartInstanceRef.current) {
       const touch = e.changedTouches ? e.changedTouches[0] : {}
       const handler = chartInstanceRef.current.getZr().handler
@@ -80,12 +80,12 @@ const Index: React.FC<Props> = ({
     }
   }, [])
 
-  const updateOption = useCallback(op => {
+  const updateOption = useCallback((op: any) => {
     op && chartInstanceRef.current?.setOption(op)
   }, [])
 
   const init = useCallback(
-    (ec, op) => {
+    (ec: any, op: any) => {
       Taro.createSelectorQuery()
         .select(`#${canvasIdRef.current}`)
         .fields({ node: true, size: true })

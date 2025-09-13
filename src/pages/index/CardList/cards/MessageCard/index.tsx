@@ -12,6 +12,7 @@ import usePromise from '@/utils/hooks/usePromise'
 import { getBoundingClientRect } from '@/utils/tool'
 import type CardProps from '../../CardProps'
 import type { Message } from '@/apis/message'
+import type { BaseEventOrig, SwiperProps} from '@tarojs/components';
 
 interface IProps {
   message: Message[]
@@ -36,7 +37,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   const calcedHeights = useMemo(async () => {
     const rects = await getBoundingClientRect(`.${styles.messageItem}`)
     if (!rects || rects.length === 0) return [120]
-    setHeight(rects[0].height)
+    setHeight(rects[0]!.height)
     return rects.map(item => {
       if (item) return item.height
       return 120
@@ -45,10 +46,10 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   }, [notice, message])
 
   // 滑块切换
-  const handleSwiperChange = e => {
+  const handleSwiperChange = (e: BaseEventOrig<SwiperProps.onChangeEventDetail>) => {
     setCurrent(e.detail.current)
     void calcedHeights.then(res => {
-      setHeight(res[e.detail.current])
+      setHeight(res[e.detail.current]!)
     })
   }
 

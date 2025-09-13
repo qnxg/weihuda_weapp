@@ -55,7 +55,7 @@ export const getZhihuTagsJSON = async () => {
     key: 'zhihuTags',
   })
   if (res.rows.length) {
-    return res.rows[0].value
+    return res.rows[0]!.value
   } else {
     throw Error('获取知湖标签失败')
   }

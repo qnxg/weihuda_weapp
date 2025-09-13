@@ -5,6 +5,7 @@ import React, { useCallback, useState } from 'react'
 import styles from './index.module.scss'
 import { postExamNumApi } from '@/apis/examNum'
 import type { ExamId } from '../../interface'
+import type { BaseEventOrig} from '@tarojs/components';
 
 interface AddPageProps {
   cancelHandle?: () => void
@@ -37,21 +38,21 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
     }
   }
 
-  const editExamName = useCallback(e => {
+  const editExamName = useCallback((e: BaseEventOrig) => {
     setNewItem(prev => {
       prev.examName = e.detail.value
       return { ...prev }
     })
   }, [])
 
-  const editExamId = useCallback(e => {
+  const editExamId = useCallback((e: BaseEventOrig) => {
     setNewItem(prev => {
       prev.examId = e.detail.value
       return { ...prev }
     })
   }, [])
 
-  const editExamTime = useCallback(e => {
+  const editExamTime = useCallback((e: BaseEventOrig) => {
     setNewItem(prev => {
       prev.examDate = e.detail.value
       return { ...prev }

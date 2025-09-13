@@ -21,11 +21,15 @@ export const dayTitles: Array<string> = [
 export const ExamDate = (e: ExamArrange): DateType => {
   /** 正则表达式提取数字 */
   const numArr = e.startTime.match(/[1-9][0-9]*/g) as RegExpMatchArray
+  const [y, m, d] = numArr
+  if (y === undefined || m == undefined || d == undefined) {
+    throw Error("考试日期提取错误")
+  }
   return {
-    year: +numArr[0],
-    month: +numArr[1] - 1, // 月份要转换为 0-11 的范围形式
-    date: +numArr[2],
-    day: +dayjs(new Date(+numArr[0], +numArr[1] - 1, +numArr[2])).day(),
+    year: +y,
+    month: +m - 1, // 月份要转换为 0-11 的范围形式
+    date: +d,
+    day: +dayjs(new Date(+y, +m - 1, +d)).day(),
   }
 }
 
@@ -135,15 +139,15 @@ export const prevBlank = (
     })
 
     /** 存储考试信息 */
-    prev[0].exams = []
+    prev[0]!.exams = []
     for (const e of es) {
       const et = ExamDate(e)
       if (
-        et.year === prev[0].year &&
-        et.month === prev[0].month &&
-        et.date === prev[0].date
+        et.year === prev[0]!.year &&
+        et.month === prev[0]!.month &&
+        et.date === prev[0]!.date
       ) {
-        prev[0].exams.push(e)
+        prev[0]!.exams.push(e)
       }
     }
   }

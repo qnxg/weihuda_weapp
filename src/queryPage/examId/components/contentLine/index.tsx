@@ -58,7 +58,7 @@ const Index: React.FC<Props> = props => {
   const [transitionTime, setTransitionTime] = useState<number>(0)
 
   // 用于显示确认弹窗
-  const [showModal] = useShowModal()
+  const showModal = useShowModal()
 
   // 长按复制考号
   const handleLongPress = () => {
@@ -68,13 +68,13 @@ const Index: React.FC<Props> = props => {
   }
 
   const handleTouchStart = (e: ITouchEvent): void => {
-    setStartX(e.touches[0].pageX)
+    setStartX(e.touches[0]!.pageX)
     setOriginOffset(leftOffset)
     setTransitionTime(0)
   }
 
   const handleTouchMove = (e: ITouchEvent): void => {
-    const curX = e.touches[0].pageX
+    const curX = e.touches[0]!.pageX
     const off = originOffset + curX - startX
     if (off >= INIT_OFFSET) {
       setLeftOffset(INIT_OFFSET)
@@ -122,7 +122,7 @@ const Index: React.FC<Props> = props => {
       content: '确认删除这一项吗',
       cancelText: '取消删除',
       confirmText: '确认删除',
-      onCancel: () => {},
+      onCancel: () => { },
       onConfirm: () => {
         deleteItem(index, type)
         setLeftOffset(INIT_OFFSET)

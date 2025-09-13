@@ -85,8 +85,8 @@ export const initClassTableThunk = createAsyncThunk(
     tempWeekNum = tempWeekNum > 18 ? 18 : tempWeekNum
     // 处理毕业生逻辑
     let tempStart: string = termStart
-    if (termYear !== semesters[0].xn) {
-      tempStart = storage.getTermStart(semesters[0].xn, semesters[0].xq)
+    if (termYear !== semesters[0]!.xn) {
+      tempStart = storage.getTermStart(semesters[0]!.xn, semesters[0]!.xq)
       tempWeekNum = 1
     }
     // TODO 这里先进行特判，到了第三学期就先人为添加一个新学期，确保能够查看新课表。后续打算大力修改前端
@@ -124,8 +124,8 @@ export const refreshClassTableThunk = createAsyncThunk(
     // 获取常量
     const state = thunkAPI.getState() as RootState
     const { semesters, currentSem } = state.classTable
-    const xn = semesters[currentSem].xn.toString()
-    const xq = semesters[currentSem].xq
+    const xn = semesters[currentSem]!.xn.toString()
+    const xq = semesters[currentSem]!.xq
     await Taro.showLoading({
       title: '加载中...',
       mask: true,
@@ -134,7 +134,7 @@ export const refreshClassTableThunk = createAsyncThunk(
       const course = await getClassTable(xn, xq)
       // 基础染色索引
       let baseColorIndex = 0
-      const colorMap = {}
+      const colorMap: Map<string, number> = new Map()
       // 进行染色
       if (course) {
         course.map(item => {
@@ -142,14 +142,14 @@ export const refreshClassTableThunk = createAsyncThunk(
           item.day = parseInt(item.day.toString())
           // 进行染色
           let colorIndex: number
-          if (colorMap.hasOwnProperty(item.courseName)) {
-            colorIndex = colorMap[item.courseName]
+          if (colorMap.has(item.courseName)) {
+            colorIndex = colorMap.get(item.courseName)!
           } else if (baseColorIndex > 9) {
             colorIndex = Math.round(Math.random() * 9)
-            colorMap[item.courseName] = colorIndex
+            colorMap.set(item.courseName, colorIndex)
           } else {
             colorIndex = baseColorIndex
-            colorMap[item.courseName] = colorIndex
+            colorMap.set(item.courseName, colorIndex)
             baseColorIndex++
           }
           item.bgColor = onColors[colorIndex]

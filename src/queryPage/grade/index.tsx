@@ -50,7 +50,7 @@ const Index: React.FC = () => {
 
   const [show, setShow] = useState(false)
 
-  const yearsCurrentYear = years[gradeState.currentYear]
+  const yearsCurrentYear = years[gradeState.currentYear]!
 
   const getData = useCallback(async () => {
     await Taro.showLoading({
@@ -88,7 +88,7 @@ const Index: React.FC = () => {
       currentYear: index,
       isNotStart:
         termType === null ||
-        (years[index] >= termYear && currentSemester > termType),
+        (years[index]! >= termYear && currentSemester > termType),
     })
   }
 
@@ -98,7 +98,7 @@ const Index: React.FC = () => {
       currentSemester: index + 1,
       isNotStart:
         termType === null ||
-        (years[currentYear] >= termYear && index + 1 > termType),
+        (years[currentYear]! >= termYear && index + 1 > termType),
     })
   }
 

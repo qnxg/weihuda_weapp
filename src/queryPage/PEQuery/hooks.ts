@@ -53,14 +53,14 @@ const usePE = () => {
     })
     try {
       // 发起请求
-      const res = await getFitness(years[current])
+      const res = await getFitness(years[current]!)
       // 更新数据
       const newData = JSON.parse(JSON.stringify(state))
       // 处理引体向上/仰卧起坐
       const index = res.items.findIndex(
         item => item.name == '引体向上/仰卧起坐'
       )
-      res.items[index].name = sex == '男' ? '引体向上' : '仰卧起坐'
+      res.items[index]!.name = sex == '男' ? '引体向上' : '仰卧起坐'
       // 设置数据
       newData[current] = res
       setState(newData)
@@ -80,7 +80,7 @@ const usePE = () => {
     }
   }, [current, run, state])
 
-  const refresh = async close => {
+  const refresh = async (close: () => void) => {
     try {
       await run()
     } catch (e) {

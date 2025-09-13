@@ -31,7 +31,7 @@ const Index: React.FC = () => {
 
   // 远端拉取到的数据
   const [examIdList, refreshExamIdList] = useExamId()
-  const [runDeleteId] = useDeleteId()
+  const runDeleteId = useDeleteId()
 
   // 未完成 非置顶的考号
   const [unExamIds, setUnExamIds] = useState<ExamId[]>([])
@@ -122,7 +122,7 @@ const Index: React.FC = () => {
         : type === 'unfinished'
           ? setUnExamIds
           : setPastExamIds
-    await runDeleteId(itemList[index].keyId, () => {
+    await runDeleteId(itemList[index]!.keyId, () => {
       itemList.splice(index, 1)
       setItemList([...itemList])
     })
@@ -190,7 +190,7 @@ const Index: React.FC = () => {
               <ContentLine
                 key={item.keyId}
                 examIdItem={item}
-                lineColor={onColors[i % onColors.length]}
+                lineColor={onColors[i % onColors.length]!}
                 index={i}
                 addTopping={addToppingItem}
                 deleteTopping={deleteToppingItem}

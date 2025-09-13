@@ -26,7 +26,7 @@ const PickerArea: React.FC<Props> = props => {
    * @param e
    */
   const pickerChange: CommonEventFunction = (e): void => {
-    setState(s => ({
+    setState((s: any) => ({
       ...s,
       pickerValue: e.detail.value,
     }))
@@ -37,7 +37,7 @@ const PickerArea: React.FC<Props> = props => {
    * @param e
    */
   const radioChange = (e: number): void => {
-    setState(s => ({
+    setState((s: any) => ({
       ...s,
       radioValue: e,
     }))
@@ -80,7 +80,7 @@ const PickerArea: React.FC<Props> = props => {
           <Image src={iconFinger} className={styles.preIcon} />
           <View className={styles.titles}>选择楼栋、周数、星期</View>
           <Text decode className={styles.pickerText}>
-            {`${multiArray[0][pickerValue[0]]}  ${multiArray[1][pickerValue[1]]}  ${multiArray[2][pickerValue[2]]}`}
+            {`${multiArray[0]![pickerValue[0]!]}  ${multiArray[1]![pickerValue[1]!]}  ${multiArray[2]![pickerValue[2]!]}`}
           </Text>
         </Picker>
       </View>

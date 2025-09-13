@@ -58,7 +58,7 @@ const Index: React.FC = () => {
     setCurrent(index)
   }
 
-  const onRefresh = async close => {
+  const onRefresh = async (close: () => void) => {
     await getData()
     close()
   }
@@ -77,12 +77,12 @@ const Index: React.FC = () => {
                   const temp = item.return_date.split('-')
                   const date = item.return_date.replace(/-/g, '/')
                   const rest = dayjs(
-                    new Date(+temp[0], +temp[1] - 1, +temp[2])
+                    new Date(+temp[0]!, +temp[1]! - 1, +temp[2]!)
                   ).diff(dayjs(), 'day')
                   return (
                     <Card
                       key={`${date}-${item.title}`}
-                      lineColor={onColors[index % onColors.length]}
+                      lineColor={onColors[index % onColors.length]!}
                       renderLeft={
                         <Left title={`${rest}天`} content='过期时间' />
                       }
@@ -124,7 +124,7 @@ const Index: React.FC = () => {
                   return (
                     <Card
                       key={`${date}-${item.title}-${item.type}`}
-                      lineColor={onColors[index % onColors.length]}
+                      lineColor={onColors[index % onColors.length]!}
                       renderLeft={<Left title={date} content={item.type} />}
                       renderRight={
                         <Right

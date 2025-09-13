@@ -5,6 +5,7 @@ import styles from './index.module.scss'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import storage from '@/utils/storage/cache'
+import type { BaseEventOrig, PickerSelectorProps} from '@tarojs/components';
 
 export interface OptionProps {
   showOption: boolean
@@ -31,10 +32,10 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
    * 选择学期
    * @param e 事件传的参数
    */
-  const onSelectXq = (e): void => {
+  const onSelectXq = (e: BaseEventOrig<PickerSelectorProps.ChangeEventDetail>): void => {
     dispatch(
       saveClassTable({
-        currentSem: e.detail.value,
+        currentSem: e.detail.value as number,
         currentWeeks: 1,
       })
     )
@@ -45,7 +46,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
    * 选择星期
    * @param e 事件传的参数
    */
-  const onSelectWeek = (e): void => {
+  const onSelectWeek = (e: BaseEventOrig): void => {
     dispatch(
       saveClassTable({
         currentWeeks: parseInt(e.detail.value) + 1,
@@ -57,7 +58,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
    * 改变模式
    * @param e 事件传的参数
    */
-  const onModeChange = (e): void => {
+  const onModeChange = (e: BaseEventOrig): void => {
     storage.setTableMode(e.detail.value)
     dispatch(
       saveClassTable({
@@ -101,7 +102,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
             rangeKey='show'
             mode='selector'
           >
-            <Text>当前学期：{semesters[currentSem].show}</Text>
+            <Text>当前学期：{semesters[currentSem]!.show}</Text>
           </Picker>
           <Picker
             onChange={onSelectWeek}

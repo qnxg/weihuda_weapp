@@ -56,7 +56,7 @@ async function initAndFetchRawUserSettings() {
 }
 
 export async function fetchUserSettings(): Promise<UserSettings> {
-  const res = await initAndFetchRawUserSettings()
+  const res: any = await initAndFetchRawUserSettings()
   if (typeof res !== 'object') {
     console.log(`无效的用户设置：${JSON.stringify(res)}，将使用默认设置。`)
     return DEFAULT_SETTINGS
