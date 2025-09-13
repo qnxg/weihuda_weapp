@@ -41,7 +41,7 @@ const Index: React.FC = () => {
   }, [refreshKey, currentTabIdx, zhihuPostListLengthRef])
 
   // 取消下拉刷新组件的下拉刷新状态的回调函数，见PullRefresh组件
-  const clearPullRefreshRefreshingState = useRef(() => { })
+  const clearPullRefreshRefreshingState = useRef(() => {})
 
   const appendToZhihuPostList = useCallback(
     // TODO: https://github.com/NervJS/taro/discussions/12369
@@ -80,7 +80,7 @@ const Index: React.FC = () => {
   // 设置padding-top，避免被顶部tab遮挡
   // TODO: 研究这段代码怎么工作的以及是否存在替代方法
   const calcPaddingTop = useCallback(async () => {
-    await new Promise(res => setTimeout(res, 200));
+    await new Promise(res => setTimeout(res, 200))
     const rects = await getBoundingClientRect(`.${styles.tabsWrapper}`)
     return rects[0].height + 4
   }, [])
@@ -91,12 +91,12 @@ const Index: React.FC = () => {
   ])
 
   const panels = useMemo(
-    () => (JSON.parse(tags) as TagItem[]).map(item => ({
-      key: item.value,
-      title: item.label,
-      component: <></>,
-    }))
-    ,
+    () =>
+      (JSON.parse(tags) as TagItem[]).map(item => ({
+        key: item.value,
+        title: item.label,
+        component: <></>,
+      })),
     [tags]
   )
 

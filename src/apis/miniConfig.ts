@@ -23,7 +23,7 @@ export interface IMiniConfigPageResponseData {
 
 export interface IMiniConfigPageQueryData
   extends IPageQueryData,
-  Partial<IMiniConfig> { }
+    Partial<IMiniConfig> {}
 
 /**
  * 获取小程序配置列表分页
@@ -45,7 +45,7 @@ export interface TagItem {
 
 /**
  * 获取前100个知湖Tag
- * 
+ *
  * 以JSON格式返回
  */
 export const getZhihuTagsJSON = async () => {
@@ -63,7 +63,6 @@ export const getZhihuTagsJSON = async () => {
 
 /**
  * 获取前100个知湖Tag
-*/
+ */
 export const getZhihuTags = async () =>
   JSON.parse(await getZhihuTagsJSON()) as TagItem[]
-
