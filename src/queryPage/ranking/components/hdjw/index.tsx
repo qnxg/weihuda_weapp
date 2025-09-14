@@ -48,7 +48,7 @@ const HdjwIndex: React.FC = () => {
   const [hdjwForm, setHdjwForm] = useState<HdjwGradeRankForm>(initHdjwForm)
   const hdjwFormRef = useRef(hdjwForm)
   // 学期选择
-  const termRes = useAppSelector(state => state.smester) // 根据当前学期和入学年份生成学年学期选择
+  const termRes = useAppSelector(state => state.semester) // 根据当前学期和入学年份生成学年学期选择
   const termYear = termRes.termYear
   const userInfo = useAppSelector(state => state.userInfo)
   const termYearPicker = ['全部学年']

@@ -1,9 +1,9 @@
 import request from './request'
 
 /**
- * SmesterInfo，本学期信息
+ * SemesterInfo，本学期信息
  */
-export interface SmesterInfo {
+export interface SemesterInfo {
   /**
    * 下一个学期开始时间，用来首页的倒计时
    */
@@ -68,8 +68,8 @@ export interface UserInfo {
  * 获取本学期信息
  * @returns 本学期信息
  */
-export const getSmesterInfo = async () => {
-  return request.get<SmesterInfo>('/info/smester')
+export const getSemesterInfo = async () => {
+  return request.get<SemesterInfo>('/info/smester')
 }
 
 /**

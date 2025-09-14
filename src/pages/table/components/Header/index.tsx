@@ -23,7 +23,7 @@ const Header: React.FC<Props> = props => {
     state => state.classTable
   )
   const { dayOfWeek, weekNum, termYear, termType } = useAppSelector(
-    state => state.smester
+    state => state.semester
   )
   const { curDatesOfWeek = [] } = props
 

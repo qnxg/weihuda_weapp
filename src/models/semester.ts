@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import { getSmesterInfo } from '@/apis/info'
+import { getSemesterInfo } from '@/apis/info'
 import { dayOfWeek, nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 /**
- * SmesterInfo，本学期信息
+ * SemesterInfo，本学期信息
  */
 export interface StateType {
   /**
@@ -32,7 +32,7 @@ export interface StateType {
   dayOfWeek: number
 }
 
-export const getSmesterInfoThunk = createAsyncThunk(
+export const getSemesterInfoThunk = createAsyncThunk(
   'smester/getSmesterInfo',
   async () => {
     // 学期配置
@@ -62,12 +62,12 @@ export const getSmesterInfoThunk = createAsyncThunk(
         title: '加载中...',
         mask: true,
       })
-      const smesterInfo = await getSmesterInfo()
+      const semesterInfo = await getSemesterInfo()
       // 规范化数据
       termConfig = {
-        term: smesterInfo.term,
-        year: smesterInfo.year,
-        start: smesterInfo.startDate,
+        term: semesterInfo.term,
+        year: semesterInfo.year,
+        start: semesterInfo.startDate,
       }
       storage.setTermConfig(termConfig)
     }
@@ -90,7 +90,7 @@ const initialState: StateType = {
   dayOfWeek: 0,
 }
 
-export const smesterSlice = createSlice({
+export const semesterSlice = createSlice({
   name: 'smester',
   initialState,
   reducers: {
@@ -105,10 +105,10 @@ export const smesterSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(getSmesterInfoThunk.fulfilled, (_, action) => {
+    builder.addCase(getSemesterInfoThunk.fulfilled, (_, action) => {
       return action.payload
     })
   },
 })
 
-export default smesterSlice.reducer
+export default semesterSlice.reducer

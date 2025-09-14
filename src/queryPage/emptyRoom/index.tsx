@@ -15,7 +15,7 @@ const Index: React.FC = () => {
    * 获得全局状态, 初始化当前状态
    */
   const { termYear, termType, weekNum, dayOfWeek } = useAppSelector(
-    state => state.smester
+    state => state.semester
   )
   const [state, setState] = useState(() => initFunction(weekNum, dayOfWeek))
   const [show, setShow] = useState(false)

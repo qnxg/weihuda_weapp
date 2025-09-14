@@ -3,13 +3,13 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import classTable from './classTable'
 import notice from './notice'
-import smester from './smester'
+import semester from './semester'
 import userInfo from './userInfo'
 
 const store = configureStore({
   reducer: {
     userInfo,
-    smester,
+    semester,
     classTable,
     notice,
   },

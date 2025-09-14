@@ -64,7 +64,7 @@ export const initClassTableThunk = createAsyncThunk(
     // 获取常量
     const termText: Array<string> = ['秋季学期', '春季学期', '夏季学期']
     const state = thunkAPI.getState() as RootState
-    const { termYear, termStart, termType, weekNum } = state.smester
+    const { termYear, termStart, termType, weekNum } = state.semester
     const { enterYear } = state.userInfo
     const oldState = state.classTable
     // 计算学期
