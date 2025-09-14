@@ -47,7 +47,7 @@ const Index: React.FC = () => {
     void getData()
   }, [getData, index])
 
-  const onRefresh = async close => {
+  const onRefresh = async (close: () => void) => {
     await getData()
     close()
   }

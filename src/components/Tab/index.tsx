@@ -48,7 +48,7 @@ const Index: React.FC<Props> = props => {
         return
       }
       // 获取触摸时的原点
-      _touchDot.current = e.touches[0].pageX
+      _touchDot.current = e.touches[0]!.pageX
       // 使用js计时器记录时间
       _timer.current = setInterval(() => {
         _interval.current++
@@ -62,7 +62,7 @@ const Index: React.FC<Props> = props => {
       if (!swipeable) {
         return
       }
-      const touchMove = e.touches[0].pageX
+      const touchMove = e.touches[0]!.pageX
       const moveDistance = touchMove - _touchDot.current
       const maxIndex = items.length
 

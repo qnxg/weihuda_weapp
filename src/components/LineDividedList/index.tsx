@@ -21,8 +21,7 @@ const LineDividedList = (<T extends LineDividedItem>({
   items,
 }: LineDividedListProps<T>) => {
   const res: ReactNode[] = []
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i]
+  for (const [i, item] of items.entries()) {
     res.push(
       <View className={style.item} onClick={item.onClick}>
         <View className={style.imgContainer}>{item.icon ?? <></>}</View>

@@ -56,8 +56,8 @@ const useAddCourse = () => {
       week: formatValue.week,
       section: formatValue.section,
       day: String(state.picker[0] === 0 ? 7 : state.picker[0]),
-      xn: semesters[currentSem].xn,
-      xq: semesters[currentSem].xq,
+      xn: semesters[currentSem]!.xn,
+      xq: semesters[currentSem]!.xq,
     }
 
     await Taro.showLoading({

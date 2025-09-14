@@ -93,7 +93,7 @@ export interface RadioGroupsProps {
   /**
    * 子组件，该组件内只能包含Radio组件
    */
-  children?: JSX.Element[] | any
+  children: JSX.Element[]
   /**
    * 内联样式
    */
@@ -120,7 +120,7 @@ export interface RadioGroupsProps {
  */
 const RadioGroups: React.FC<RadioGroupsProps> = props => {
   const { children, current, style } = props
-  const handleClick = val => {
+  const handleClick = (val: string) => {
     props.onChange && props.onChange(val)
   }
   return (

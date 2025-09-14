@@ -50,7 +50,7 @@ const Index: React.FC = () => {
         await getZhihuPageApi({
           offset: zhihuPostListLengthRef.current,
           req_count: 15,
-          tags: (JSON.parse(tags) as TagItem[])[currentTabIdx].value,
+          tags: (JSON.parse(tags) as TagItem[])[currentTabIdx]!.value,
         })
       ).rows
       setZhihuPostList(oldList => [...oldList, ...resRows])
@@ -82,7 +82,7 @@ const Index: React.FC = () => {
   const calcPaddingTop = useCallback(async () => {
     await new Promise(res => setTimeout(res, 200))
     const rects = await getBoundingClientRect(`.${styles.tabsWrapper}`)
-    return rects[0].height + 4
+    return rects[0]!.height + 4
   }, [])
   const [paddingTop] = usePromise(calcPaddingTop, 70, [
     calcPaddingTop,

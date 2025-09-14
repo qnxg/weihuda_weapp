@@ -75,7 +75,7 @@ const notice = createSlice({
         if (index === -1) return state
         // 更新数据
         state.data[index] = {
-          ...state.data[index],
+          ...state.data[index]!,
           ...payload,
         }
         // 更新未读数量

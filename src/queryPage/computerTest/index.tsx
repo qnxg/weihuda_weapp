@@ -48,7 +48,7 @@ const Index: React.FC = () => {
     void getData()
   }, [])
 
-  const onRefresh = async close => {
+  const onRefresh = async (close: () => void) => {
     await getData()
     close()
   }
@@ -60,12 +60,12 @@ const Index: React.FC = () => {
           {data.map((item, index) => {
             const start = item.startTime.split(' ')
             const end = item.endTime.split(' ')
-            const day = start[0].replace(/-/g, '/')
+            const day = start[0]!.replace(/-/g, '/')
             return (
               <LineDividedLeftRightCard
                 key={item.name}
                 className={styles.cardOuter}
-                lineColor={onColors[index % onColors.length]}
+                lineColor={onColors[index % onColors.length]!}
                 renderLeft={
                   <LeftPart title={day} content={`${start[1]}-${end[1]}`} />
                 }

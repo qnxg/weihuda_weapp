@@ -35,7 +35,7 @@ const Index: React.FC = () => {
   })
 
   // 改变表单的内容
-  const change = (key, newVal) => {
+  const change = (key: string, newVal: any) => {
     setData({
       ...data,
       [key]: newVal,
@@ -47,7 +47,7 @@ const Index: React.FC = () => {
     void Taro.chooseImage({
       count: 1,
       success(res) {
-        const imgUrl = res.tempFilePaths[0]
+        const imgUrl = res.tempFilePaths[0]!
         setData({
           ...data,
           imgUrl,

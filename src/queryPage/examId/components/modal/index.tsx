@@ -6,11 +6,11 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import ReactDOM from 'react-dom'
+import { createPortal } from 'react-dom'
 import styles from './index.module.scss'
 
 interface ModalContext {
-  elm: React.FC | undefined // 接收modal注入的元素
+  elm: Element | null // 接收modal注入的元素
   showModal: (props: ModalProps) => void
   closeModal: () => void
 }
@@ -31,7 +31,7 @@ const Context = React.createContext<ModalContext>({} as ModalContext)
 export const ModalProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const modalRef = useRef<React.FC>()
+  const modalRef = useRef<Element | null>(null)
   const [context, setContext] = useState<ModalContext>()
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [modalProps, setModalProps] = useState<ModalProps>()
@@ -62,7 +62,7 @@ export const ModalProvider: React.FC<React.PropsWithChildren> = ({
  * 显示弹窗hook
  */
 export const useShowModal = () => {
-  return [useContext(Context).showModal]
+  return useContext(Context).showModal
 }
 
 const Modal: React.FC<ModalProps> = props => {
@@ -88,23 +88,23 @@ const Modal: React.FC<ModalProps> = props => {
   }, [closeModal, onConfirm])
 
   return elm
-    ? ReactDOM.createPortal(
-        <Block>
-          <View className={styles.overlay} onClick={handleCancel} />
-          <View className={styles.dialog} {...rest}>
-            {children}
-            {content}
-            <View className={styles.btnContainer}>
-              <View className={styles.cancelBtn} onClick={handleCancel}>
-                {cancelText}
-              </View>
-              <View className={styles.confirmBtn} onClick={handleConfirm}>
-                {confirmText}
-              </View>
+    ? createPortal(
+      <Block>
+        <View className={styles.overlay} onClick={handleCancel} />
+        <View className={styles.dialog} {...rest}>
+          {children}
+          {content}
+          <View className={styles.btnContainer}>
+            <View className={styles.cancelBtn} onClick={handleCancel}>
+              {cancelText}
+            </View>
+            <View className={styles.confirmBtn} onClick={handleConfirm}>
+              {confirmText}
             </View>
           </View>
-        </Block>,
-        elm
-      )
+        </View>
+      </Block>,
+      elm
+    )
     : null
 }

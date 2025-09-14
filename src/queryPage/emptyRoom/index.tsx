@@ -41,10 +41,10 @@ const Index: React.FC = () => {
       const res = await getEmptyRoom({
         xn: termYear,
         xq: termType,
-        week: state.pickerValue[1] + 1,
-        day: state.pickerValue[2],
-        jc: radio[state.radioValue].id,
-        buildId: buildingInfo[state.pickerValue[0]].id,
+        week: state.pickerValue[1]! + 1,
+        day: state.pickerValue[2]!,
+        jc: radio[state.radioValue]!.id,
+        buildId: buildingInfo[state.pickerValue[0]!]!.id,
       })
       if (!res) {
         setShow(false)

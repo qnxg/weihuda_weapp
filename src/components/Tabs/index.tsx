@@ -97,13 +97,13 @@ export const Tabs: React.FC<ITabsProps> = props => {
         getBoundingClientRect('.tab-item'),
         getBoundingClientRect(`.${styles.activeLine}`),
       ])
-    const activeRect = rects[newIdx]
+    const activeRect = rects[newIdx]!
     setActiveLineLeft(
       activeRect.left +
         scrollLeft -
-        scrollViewRects[0].left +
+        scrollViewRects[0]!.left +
         activeRect.width / 2 -
-        activeLineRects[0].width / 2
+        activeLineRects[0]!.width / 2
     )
   }, [])
 
@@ -184,7 +184,7 @@ export const Tabs: React.FC<ITabsProps> = props => {
         })
       ) : (
         <View className={classNames(props.contentClassName)}>
-          {panels[currentTab].component}
+          {panels[currentTab]!.component}
         </View>
       )}
     </View>

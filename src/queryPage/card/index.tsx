@@ -47,8 +47,8 @@ const Index: React.FC = () => {
     })
     try {
       const res = await getCardHistory({
-        year: yearPicker0,
-        month: months[picker[1]],
+        year: yearPicker0!,
+        month: months[picker[1]]!,
         type: String(index + 1),
       })
       if (!res) {
@@ -72,7 +72,7 @@ const Index: React.FC = () => {
     void getData()
   }, [getData, index, picker])
 
-  const onRefresh = async close => {
+  const onRefresh = async (close: () => void) => {
     await getData()
     close()
   }

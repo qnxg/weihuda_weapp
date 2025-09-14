@@ -22,7 +22,7 @@ const getRankTotal = (str?: string) => {
 }
 
 // 保留两位小数，并去掉多余的 0
-const formatDecimal = num => {
+const formatDecimal = (num: number) => {
   return parseFloat(num.toFixed(2)).toString()
 }
 
@@ -44,7 +44,7 @@ const CaIndex = () => {
     }
     Taro.hideLoading()
   }
-  const onRefresh = async close => {
+  const onRefresh = async (close: () => void) => {
     await getData()
     close()
   }

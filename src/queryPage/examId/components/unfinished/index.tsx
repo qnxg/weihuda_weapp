@@ -24,7 +24,7 @@ const Index: React.FC<Props> = props => {
       {topExamIds?.map((item, index) => (
         <ContentLine
           key={item.keyId}
-          lineColor={onColors[index % onColors.length]}
+          lineColor={onColors[index % onColors.length]!}
           examIdItem={item}
           index={index}
           addTopping={addTopping}
@@ -37,7 +37,7 @@ const Index: React.FC<Props> = props => {
         <ContentLine
           key={item.keyId}
           lineColor={
-            onColors[(index + (topExamIds?.length || 0)) % onColors.length]
+            onColors[(index + (topExamIds?.length || 0)) % onColors.length]!
           }
           examIdItem={item}
           index={index}

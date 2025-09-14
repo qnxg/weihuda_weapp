@@ -2,6 +2,7 @@ import { View } from '@tarojs/components'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
 import type { FitnessItem, Total } from '@/apis/pt/fitness'
+import type { BaseEventOrig} from '@tarojs/components';
 
 interface CardProps {
   total: Total
@@ -25,7 +26,7 @@ const Card: React.FC<CardProps> = props => {
   const { total, sex, name, items } = props
   const [nowAt, setNowAt] = useState(7)
 
-  const onChangeNowAt = e => {
+  const onChangeNowAt = (e: BaseEventOrig) => {
     setNowAt(e.target.dataset.id)
   }
 
@@ -45,18 +46,18 @@ const Card: React.FC<CardProps> = props => {
         {nowAt !== 7 && (
           <View className={styles.content}>
             <View className={styles.title} style={{ color: bgColors[nowAt] }}>
-              {items && items[nowAt].name}
+              {items && items[nowAt]!.name}
             </View>
             <View
               className={styles.percent}
-            >{`占比${percent[nowAt]}% 得分: ${items && items[nowAt].grade}`}</View>
+            >{`占比${percent[nowAt]}% 得分: ${items && items[nowAt]!.grade}`}</View>
           </View>
         )}
         <View className={styles.banner}>
           {bgColors.map((color, index) => {
             let width = percent[index]
             if (items && items[0] && items[0].grade !== undefined) {
-              width = (percent[index] * +items[index].grade) / 100
+              width = (percent[index]! * +items[index]!.grade) / 100
             }
             return (
               <View

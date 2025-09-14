@@ -28,7 +28,7 @@ export interface FeedbackData {
   /**
    * 处理状态
    */
-  status: number
+  status: 0 | 1 | 2 | 3
   /**
    * 处理结果
    */

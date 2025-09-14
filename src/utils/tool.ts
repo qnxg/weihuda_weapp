@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import type { NodesRef } from '@tarojs/taro'
 
-export const isPlainObject = value => {
+export const isPlainObject = (value: any) => {
   if (
     value == null ||
     typeof value !== 'object' ||

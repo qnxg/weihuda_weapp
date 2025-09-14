@@ -10,9 +10,9 @@ import shiftRight from '@/static/calendar/shift-right.svg'
 import type DateType from '@/apis/hdjw/examArrange'
 
 interface Props {
-  display
+  display: DateType
   setDisplay: any
-  highlight
+  highlight: DateType
   setHighlight: any
   prev: DateType[]
   valid: DateType[]
@@ -64,7 +64,7 @@ const Index: React.FC<Props> = props => {
   }
 
   /** 处理点击日期 */
-  const onClickCell = (d): void => {
+  const onClickCell = (d: DateType): void => {
     if (
       d.date !== highlight.date ||
       d.month !== highlight.month ||

@@ -39,7 +39,7 @@ export const Upload: React.FC<IUploadProps> = props => {
     void Taro.chooseImage({
       count: 1,
       success(res) {
-        const filePath = res.tempFilePaths[0]
+        const filePath = res.tempFilePaths[0]!
         setImgUrl(filePath)
         if (onChoose) {
           onChoose(filePath)

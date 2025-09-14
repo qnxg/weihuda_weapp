@@ -37,7 +37,7 @@ const PickerArea: React.FC<Props> = props => {
           <Image src={iconFinger} className={styles.preIcon} />
           <View className={styles.titles}>选择学年、学期</View>
           <Text decode className={styles.pickerText}>
-            {semesters[currentSem].show}
+            {semesters[currentSem]!.show}
           </Text>
         </Picker>
       </View>

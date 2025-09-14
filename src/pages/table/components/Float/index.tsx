@@ -25,7 +25,7 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
       })
     )
   }
-  const deleteCourse = async id => {
+  const deleteCourse = async (id: number) => {
     const deleteRes = await Taro.showModal({
       title: '确认删除',
       content: '将会删除本课程并重新拉取课表',
@@ -39,7 +39,7 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
           title: '加载中',
           mask: true,
         })
-        await deleteCourseApi(parseInt(id))
+        await deleteCourseApi(id)
         await dispatch(refreshClassTableThunk())
         Taro.hideLoading()
       } catch {

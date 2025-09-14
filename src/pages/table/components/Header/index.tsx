@@ -44,13 +44,13 @@ const Header: React.FC<Props> = props => {
         <View>
           {currentWeeks >= 0 ? (
             <Text decode>
-              {semesters[currentSem].show}
+              {semesters[currentSem]!.show}
               &nbsp;&nbsp;&nbsp;&nbsp;第
               {currentWeeks}周
             </Text>
           ) : (
             <Text decode>
-              {semesters[currentSem].show}
+              {semesters[currentSem]!.show}
               &nbsp;&nbsp;&nbsp;&nbsp;距离开学还有
               {-currentWeeks}周
             </Text>
@@ -66,8 +66,8 @@ const Header: React.FC<Props> = props => {
               index === dayOfWeek &&
               (currentWeeks < 0 ? currentWeeks + 1 : currentWeeks - 1) ===
                 weekNum &&
-              semesters[currentSem].xn === termYear &&
-              semesters[currentSem].xq === termType,
+              semesters[currentSem]!.xn === termYear &&
+              semesters[currentSem]!.xq === termType,
           })
           return (
             <View className={cx} key={String(index)}>

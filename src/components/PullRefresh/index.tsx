@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import styles from './index.module.scss'
-import type { ScrollViewProps } from '@tarojs/components'
+import type { BaseEventOrig, ScrollViewProps } from '@tarojs/components'
 
 export interface Props {
   runFunc: (closer: () => void) => any
@@ -29,7 +29,7 @@ const Index: IndexType = (props, ref) => {
 
   const darkMode = Taro.getSystemInfoSync().theme === 'dark'
 
-  const pullingRefresh = e => {
+  const pullingRefresh = (e: BaseEventOrig) => {
     const d = e.detail.dy || 0
     if (d > 64) {
       setIsToRefresh(true)

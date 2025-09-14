@@ -59,25 +59,25 @@ const Index: React.FC = () => {
       <Tabs items={pages} current={index} onChange={onChangeTab}>
         <Panel current={index} index={0}>
           <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]} mode='widthFix' />
+            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
           </View>
         </Panel>
 
         <Panel current={index} index={1}>
           <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]} mode='widthFix' />
+            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
           </View>
         </Panel>
 
         <Panel current={index} index={2}>
           <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]} mode='widthFix' />
+            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
           </View>
         </Panel>
 
         <Panel current={index} index={3}>
           <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]} mode='widthFix' />
+            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
           </View>
         </Panel>
       </Tabs>

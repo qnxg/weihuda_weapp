@@ -26,8 +26,8 @@ const Index: React.FC = () => {
       title: '加载中...',
     })
     try {
-      const xn = semesters[semester].xn
-      const xq = semesters[semester].xq
+      const xn = semesters[semester]!.xn
+      const xq = semesters[semester]!.xq
       const res = await getCourseDetail(xn, xq, keyword)
       if (!res) {
         setShow(false)
@@ -74,7 +74,7 @@ const Index: React.FC = () => {
       )}
       {searched && show && data?.data?.hdjw.course.length !== 0 && (
         <View className={styles.outer}>
-          {data?.data?.hdjw?.course.map(item => {
+          {data?.data?.hdjw?.course.map((item: any) => {
             return (
               <DisplayCard
                 title={item.name}

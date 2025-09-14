@@ -34,7 +34,7 @@ const Index: React.FC = () => {
     }
   }, [dispatch, semesters])
 
-  const onRefresh = async close => {
+  const onRefresh = async (close: () => void) => {
     await dispatch(refreshClassTableThunk())
     close()
   }
@@ -91,12 +91,12 @@ const Index: React.FC = () => {
         // 计算是否为本周课程
         if (course.weeks.includes(currentWeeks)) {
           // 是本周的课则放在前面，否则放在后面。这样可以保证本周课程在前面显示
-          schedule[course.day][time].courses.unshift(course)
+          schedule[course.day]![time]!.courses.unshift(course)
         } else if (!mode) {
           // 没有开启仅显示本周课程
           course.bgColor = offColor
           course.fontColor = offFontColor
-          schedule[course.day][time].courses.push(course)
+          schedule[course.day]![time]!.courses.push(course)
         }
       }
       // 把可以合并的格子都给合并，向上合并
@@ -104,8 +104,8 @@ const Index: React.FC = () => {
         let lastPos = 0
         for (let j = 1; j < 12; ++j) {
           // 判断两个格子是否是本质相同的
-          const now = schedule[i][j]
-          const last = schedule[i][lastPos]
+          const now = schedule[i]![j]!
+          const last = schedule[i]![lastPos]!
           let flag = true
           if (
             now.courses.length > 0 &&
@@ -126,9 +126,9 @@ const Index: React.FC = () => {
             flag = false
           }
           if (flag) {
-            schedule[i][j].courses = [] // 清空当前格子，就不会再显示了
-            schedule[i][j].merged = true // 标记为被合并
-            schedule[i][lastPos].len = last.len + 1
+            schedule[i]![j]!.courses = [] // 清空当前格子，就不会再显示了
+            schedule[i]![j]!.merged = true // 标记为被合并
+            schedule[i]![lastPos]!.len = last.len + 1
           } else {
             lastPos = j
           }

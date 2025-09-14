@@ -13,6 +13,7 @@ import Copyright from '@/components/Copyright'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import { useAppSelector } from '@/utils/hooks/redux'
+import type { BaseEventOrig } from '@tarojs/components';
 
 const CourseTypeList = ['', '全部', '必修', '核心']
 const RankTypeList = ['', '算数平均', '加权平均', '绩点']
@@ -55,12 +56,12 @@ const HdjwIndex: React.FC = () => {
   for (let i = userInfo.enterYear; i <= termYear; ++i) {
     termYearPicker.push(`${i} - ${i + 1} 学年`)
   }
-  const [termPickerValue, setTermPickerValue] = useState([0, 0])
-  const pickerChange = e => {
+  const [termPickerValue, setTermPickerValue] = useState<[number, number]>([0, 0])
+  const pickerChange = (e: BaseEventOrig) => {
     const [yearIndex, typeIndex] = e.detail.value
     setTermPickerValue([yearIndex, typeIndex])
   }
-  const columnChange = e => {
+  const columnChange = (e: BaseEventOrig) => {
     if (e.detail.column === 0) {
       if (e.detail.value === 0) {
         setTermTypePicker(['全部学期'])
@@ -106,7 +107,7 @@ const HdjwIndex: React.FC = () => {
     if (term) newForm = { ...newForm, term }
     await getData(newForm)
   }
-  const onRefresh = async close => {
+  const onRefresh = async (close: () => void) => {
     await getData(hdjwFormRef.current)
     close()
   }
