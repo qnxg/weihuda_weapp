@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react'
-import CaIndex from './components/ca'
 import HdjwIndex from './components/hdjw'
+// 修复编译时css顺序问题：
+// eslint-disable-next-line import/order
+import CaIndex from './components/ca'
 import TabBar from '@/components/TabBar'
 
 const Index: React.FC = () => {
