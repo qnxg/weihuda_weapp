@@ -1,76 +1,71 @@
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
-import defaultTags from './defaultTags'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './index.module.scss'
-import { getMiniConfigPageApi } from '@/apis/miniConfig'
+import { getZhihuTagsJSON } from '@/apis/miniConfig'
 import { getZhihuPageApi } from '@/apis/zhihu'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
-import { TabPanel, Tabs } from '@/components/Tabs'
-import { getBoundingClientRect, parseJSON } from '@/utils/tool'
+import { Tabs } from '@/components/Tabs'
+import useLayoutLatestRef from '@/utils/hooks/useLayoutLatestRef'
+import usePromise from '@/utils/hooks/usePromise'
+import useRefreshKey from '@/utils/hooks/useRefreshKey'
+import { getBoundingClientRect } from '@/utils/tool'
+import type { TagItem } from '@/apis/miniConfig'
 import type { IZhihu } from '@/apis/zhihu'
 
+const DEFAULT_PANEL_INDEX = 0
+
 const Index: React.FC = () => {
-  // 标签
-  const [tags, setTags] = useState(defaultTags)
-  // 知湖页面数据
-  const [data, setData] = useState<IZhihu[]>([])
-  // 总数，分页时会用到
-  const [total, setTotal] = useState(0)
-  // 是否正在加载数据
-  const [loading, setLoading] = useState(true)
-  // 查询数据
-  const [queryData, setQueryData] = useState({
-    page: 1,
-    pageSize: 10,
-    tags: '',
-  })
+  // 处理下拉刷新
+  const [refreshKey, refreshTrigger] = useRefreshKey()
+  // 处理滚动到页面底部后的懒加载
+  const [scrollToLowerKey, scrollToLowerTrigger] = useRefreshKey()
+  // 知湖文章标签
+  const [tags, loadingTags] = usePromise<string>(
+    getZhihuTagsJSON,
+    '[{"label":"","value":"加载中"}]',
+    [getZhihuTagsJSON, refreshKey]
+  )
+  // 当前选项卡序号
+  const [currentTabIdx, setCurrentTabIdx] = useState(DEFAULT_PANEL_INDEX)
+  // 知湖文章列表
+  const [zhihuPostList, setZhihuPostList] = useState<IZhihu[]>([])
+  // 知湖文章列表长度
+  const zhihuPostListLengthRef = useLayoutLatestRef(zhihuPostList.length)
+  useEffect(() => {
+    setZhihuPostList([])
+    zhihuPostListLengthRef.current = 0 // 让后续append的effect能立即得到最新的值
+  }, [refreshKey, currentTabIdx, zhihuPostListLengthRef])
 
-  // 获取tags
-  const getTags = async () => {
-    const res = await getMiniConfigPageApi({
-      page: 1,
-      pageSize: 100,
-      key: 'zhihuTags',
-    })
-    if (res.rows.length) {
-      // 先解析，没有报错就存储
-      const resTags = parseJSON(res.rows[0].value)
-      Taro.setStorageSync('zhihuTags', res.rows[0].value)
-      setTags(resTags)
-    }
-  }
+  // 取消下拉刷新组件的下拉刷新状态的回调函数，见PullRefresh组件
+  const clearPullRefreshRefreshingState = useRef(() => {})
 
-  // 获取知湖页面数据
-  const getData = async (
-    newQueryData: typeof queryData,
-    force: boolean = false
-  ) => {
-    setLoading(true)
-    const res = await getZhihuPageApi(newQueryData)
-    if (force) {
-      // 切换标签时，直接替换数据
-      setData(res.rows)
-    } else {
-      // 滑倒底部（分页）时，追加数据
-      setData([...data, ...res.rows])
-    }
-    setTotal(res.count)
-    setLoading(false)
-  }
-
-  // 切换标签，获取对应标签的数据
-  const handleChange = (value: string) => {
-    const newQueryData = { ...queryData, tags: value, page: 1 }
-    setQueryData(newQueryData)
-    void getData(newQueryData, true)
-  }
+  const appendToZhihuPostList = useCallback(
+    // TODO: https://github.com/NervJS/taro/discussions/12369
+    async () => {
+      const resRows = (
+        await getZhihuPageApi({
+          offset: zhihuPostListLengthRef.current,
+          req_count: 15,
+          tags: (JSON.parse(tags) as TagItem[])[currentTabIdx].value,
+        })
+      ).rows
+      setZhihuPostList(oldList => [...oldList, ...resRows])
+      clearPullRefreshRefreshingState.current()
+    },
+    [zhihuPostListLengthRef, tags, currentTabIdx]
+  )
+  const [_, loadingZhihuPost] = usePromise<void>(
+    appendToZhihuPostList,
+    undefined,
+    [appendToZhihuPostList, scrollToLowerKey, refreshKey]
+  )
 
   // 点击卡片，跳转到详情页
-  const handleClick = (item: IZhihu) => {
+  const handlePostClick = useCallback((item: IZhihu) => {
     if (item.type === 'link') {
       void Taro.navigateTo({
         url: `/pages/webview/index?url=${item.content}&title=${item.title}&from=zhihu`,
@@ -80,63 +75,51 @@ const Index: React.FC = () => {
         url: `/pages/detail/index?id=${item.id}&title=${item.title}&publishTime=${item.publishTime}`,
       })
     }
-  }
-
-  const scrollToLower = () => {
-    if (data.length >= total) return
-    const newQueryData = { ...queryData, page: queryData.page + 1 }
-    setQueryData(newQueryData)
-    void getData(newQueryData)
-  }
-
-  useEffect(() => {
-    void getData(queryData, true)
-    void getTags()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // 下拉刷新
-  const runRefresh = async closer => {
-    const newQueryData = { ...queryData, page: 1 }
-    setQueryData(newQueryData)
-    await getData(newQueryData, true)
-    closer()
-  }
 
   // 设置padding-top，避免被顶部tab遮挡
-  const [paddingTop, setPaddingTop] = useState(70)
-  const updatePaddingTop = async () => {
+  // TODO: 研究这段代码怎么工作的以及是否存在替代方法
+  const calcPaddingTop = useCallback(async () => {
+    await new Promise(res => setTimeout(res, 200))
     const rects = await getBoundingClientRect(`.${styles.tabsWrapper}`)
-    setPaddingTop(rects[0].height + 4)
-  }
-  useEffect(() => {
-    void updatePaddingTop()
+    return rects[0].height + 4
   }, [])
+  const [paddingTop] = usePromise(calcPaddingTop, 70, [
+    calcPaddingTop,
+    refreshKey,
+    tags,
+  ])
+
+  const panels = useMemo(
+    () =>
+      (JSON.parse(tags) as TagItem[]).map(item => ({
+        key: item.value,
+        title: item.label,
+        component: <></>,
+      })),
+    [tags]
+  )
 
   return (
     <View>
       {/* 顶部tab栏 */}
       <View className={styles.tabsWrapper}>
-        <Tabs tabsClassName={styles.tabs} onChange={handleChange}>
-          {tags.map(item => (
-            <TabPanel
-              key={item.value}
-              title={item.label}
-              value={item.value}
-            ></TabPanel>
-          ))}
-          {/* <TabPanel title='首页' value=''></TabPanel>
-          <TabPanel title='活动' value='活动'></TabPanel>
-          <TabPanel title='讲座' value='讲座'></TabPanel>
-          <TabPanel title='通知' value='通知'></TabPanel> */}
-        </Tabs>
+        <Tabs
+          tabsClassName={styles.tabs}
+          onSelect={setCurrentTabIdx}
+          defaultPanelIndex={DEFAULT_PANEL_INDEX}
+          panels={panels}
+        />
       </View>
       <PullRefresh
         scrollViewProps={{
-          onScrollToLower: scrollToLower,
+          onScrollToLower: scrollToLowerTrigger,
         }}
         topGap={0}
-        runFunc={runRefresh}
+        runFunc={clearRefreshingState => {
+          clearPullRefreshRefreshingState.current = clearRefreshingState
+          refreshTrigger()
+        }}
       >
         {/* 文章列表 */}
         <View
@@ -145,14 +128,14 @@ const Index: React.FC = () => {
             paddingTop: `${paddingTop}px`,
           }}
         >
-          {data.map(item => {
+          {zhihuPostList.map(item => {
             return (
               <Card
                 key={item.id}
                 wrapperClassName={styles.articleItemWrapper}
                 className={styles.articleItem}
                 hoverClass={styles.active}
-                onClick={() => handleClick(item)}
+                onClick={() => handlePostClick(item)}
               >
                 <View className={styles.left}>
                   <View className={styles.title}>{item.title}</View>
@@ -178,7 +161,9 @@ const Index: React.FC = () => {
               </Card>
             )
           })}
-          {loading && <View className={styles.loading}>加载中...</View>}
+          {(loadingTags || loadingZhihuPost) && (
+            <View className={styles.loading}>加载中...</View>
+          )}
         </View>
       </PullRefresh>
 

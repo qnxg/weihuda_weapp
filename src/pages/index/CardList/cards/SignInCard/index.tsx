@@ -18,7 +18,7 @@ import type { IZhihu } from '@/apis/zhihu'
 const getJifenNum = async () => (await getJifenTotalApi()).jifen
 
 const getRecentZhihu = async () =>
-  (await getZhihuPageApi({ page: 1, pageSize: 3, tags: '' })).rows
+  (await getZhihuPageApi({ offset: 0, req_count: 3, tags: '' })).rows
 
 const ZhihuItem: React.FC<{ izhihu: IZhihu }> = props => {
   const { izhihu } = props

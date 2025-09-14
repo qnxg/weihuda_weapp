@@ -1,3 +1,4 @@
 *.min.cjs
 *.min.mjs
 *.min.js
+src/index.html

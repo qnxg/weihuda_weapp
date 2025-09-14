@@ -17,7 +17,7 @@ const HomeSwiperCard: React.FC<CardProps> = ({
 }) => {
   const fetchLatestArticles = useCallback(
     async () =>
-      (await getZhihuPageApi({ page: 1, pageSize: 6, tags: '' })).rows,
+      (await getZhihuPageApi({ offset: 0, req_count: 6, tags: '' })).rows,
     []
   )
   const [latestArticles, isLatestArticlesLoading, latestArticlesError] =
