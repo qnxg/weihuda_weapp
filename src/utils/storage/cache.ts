@@ -61,9 +61,6 @@ const setTermConfig = (v: TermConfig) => Taro.setStorageSync(KEY.TERM_CONFIG, v)
 const getUserInfo = () => Taro.getStorageSync<UserInfo>(KEY.USER_INFO)
 const setUserInfo = (v: UserInfo) => Taro.setStorageSync(KEY.USER_INFO, v)
 
-const getLocalVersion = () => Taro.getStorageSync<string>(KEY.VERSION)
-const setLocalVersion = (v: string) => Taro.setStorageSync(KEY.VERSION, v)
-
 const getTableMode = () => Taro.getStorageSync<boolean>(KEY.TABLE_MODE)
 const setTableMode = (v: boolean) => Taro.setStorageSync(KEY.TABLE_MODE, v)
 
@@ -84,8 +81,6 @@ export default {
   setTermConfig,
   getUserInfo,
   setUserInfo,
-  getLocalVersion,
-  setLocalVersion,
   getTableMode,
   setTableMode,
   getClassTable,
