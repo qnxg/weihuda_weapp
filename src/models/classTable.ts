@@ -61,56 +61,64 @@ const initialState: StateType = {
 export const initClassTableThunk = createAsyncThunk(
   'classTable/initClassTable',
   async (_, thunkAPI) => {
-    // 获取常量
-    const termText: Array<string> = ['秋季学期', '春季学期', '夏季学期']
-    const state = thunkAPI.getState() as RootState
-    const { termYear, termStart, termType, weekNum } = state.smester
-    const { enterYear } = state.userInfo
-    const oldState = state.classTable
-    // 计算学期
-    const semesters: Array<Semester> = []
-    for (let i = termYear; i >= enterYear; --i) {
-      for (let j = 3; j >= 1; --j) {
-        semesters.push({
-          show: `${i}-${i + 1}学年${termText[j - 1]}`,
-          xn: i,
-          xq: j,
+    try {
+      // 获取常量
+      const termText: Array<string> = ['秋季学期', '春季学期', '夏季学期']
+      const state = thunkAPI.getState() as RootState
+      const { termYear, termStart, termType, weekNum } = state.smester
+      const { enterYear } = state.userInfo
+      const oldState = state.classTable
+
+      // 计算学期
+      const semesters: Array<Semester> = []
+      // TODO 这里先进行特判，到了第三学期就先人为添加一个新学期，确保能够查看新课表。后续打算大力修改前端
+      if (termType === 3) {
+        semesters.unshift({
+          show: `${termYear + 1}-${termYear + 2}学年秋季学期`,
+          xn: termYear + 1,
+          xq: 1,
         })
       }
-    }
-    // 计算周数分开学前后
-    let tempWeekNum: number = dayjs().isBefore(termStart)
-      ? weekNum - 1
-      : weekNum + 1
-    tempWeekNum = tempWeekNum > 18 ? 18 : tempWeekNum
-    // 处理毕业生逻辑
-    let tempStart: string = termStart
-    if (termYear !== semesters[0]!.xn) {
-      tempStart = storage.getTermStart(semesters[0]!.xn, semesters[0]!.xq)
-      tempWeekNum = 1
-    }
-    // TODO 这里先进行特判，到了第三学期就先人为添加一个新学期，确保能够查看新课表。后续打算大力修改前端
-    // 要在最后添加，因为上面有意的使用了第一个元素的 xn
-    if (termType === 3) {
-      semesters.unshift({
-        show: `${termYear + 1}-${termYear + 2}学年秋季学期`,
-        xn: termYear + 1,
-        xq: 1,
-      })
-    }
-    const termConfig = storage.getTermConfig()
-    // 生成基础信息
-    return {
-      ...oldState,
-      semesters: semesters,
-      currentSem: semesters.findIndex(
-        item => item.xn == termYear && item.xq == termType
-      ),
-      currentWeeks: tempWeekNum,
-      currentWeek: tempWeekNum,
-      currentStart: tempStart,
-      mode: storage.getTableMode() && true,
-      classTable: storage.getClassTable(termConfig.year, termConfig.term) || [],
+      // 从当前学年开始倒序枚举到入学年份。有可能入学年份大于当前学年（新生），此时下界取 min，确保当前学年被加入
+      for (let i = termYear; i >= Math.min(enterYear, termYear); --i) {
+        for (let j = 3; j >= 1; --j) {
+          semesters.push({
+            show: `${i}-${i + 1}学年${termText[j - 1]}`,
+            xn: i,
+            xq: j,
+          })
+        }
+      }
+      // 计算周数分开学前后
+      let tempWeekNum: number = dayjs().isBefore(termStart)
+        ? weekNum - 1
+        : weekNum + 1
+      tempWeekNum = tempWeekNum > 18 ? 18 : tempWeekNum
+      // 处理毕业生逻辑
+      // let tempStart: string = termStart
+      // console.log('semesters', semesters)
+      // if (termYear !== semesters[0]!.xn) {
+      //   tempStart = storage.getTermStart(semesters[0]!.xn, semesters[0]!.xq)
+      //   tempWeekNum = 1
+      // }
+      const termConfig = storage.getTermConfig()
+      // 生成基础信息
+      const res: StateType = {
+        ...oldState,
+        semesters: semesters,
+        currentSem: semesters.findIndex(
+          item => item.xn == termYear && item.xq == termType
+        ),
+        currentWeeks: tempWeekNum,
+        currentWeek: tempWeekNum,
+        currentStart: termStart,
+        mode: storage.getTableMode() && true,
+        classTable:
+          storage.getClassTable(termConfig.year, termConfig.term) || [],
+      }
+      return res
+    } catch (e) {
+      console.log('初始化课表数据失败', e)
     }
   }
 )
