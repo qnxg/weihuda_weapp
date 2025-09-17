@@ -57,6 +57,15 @@ const initialState: StateType = {
 
 /**
  * 进行课表基础数据的初始化
+ * 
+ * 修改了
+ * `semesters`
+ * `currentSem`
+ * `currentWeeks`
+ * `currentWeek`
+ * `currentStart`
+ * `mode`
+ * `classTable`
  */
 export const initClassTableThunk = createAsyncThunk(
   'classTable/initClassTable',
