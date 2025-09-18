@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import { getSemesterInfo } from '@/apis/info'
+import { getSemesterInfo } from '@/apis/semester'
 import { dayOfWeek, nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
 import type { PayloadAction } from '@reduxjs/toolkit'

@@ -4,11 +4,11 @@ import React, { useEffect, useMemo } from 'react'
 
 import CardLayout from '../utils/CardLayout'
 import styles from './index.module.scss'
-import { getSemesterInfo } from '@/apis/info'
+import { getSemesterInfo } from '@/apis/semester'
 import icon from '@/static/index/icon/days-left.svg'
 import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
-import type { CurrentSemesterInfo } from '@/apis/info'
+import type { CurrentSemesterInfo } from '@/apis/semester'
 
 interface Props {
   daysLeft: number
