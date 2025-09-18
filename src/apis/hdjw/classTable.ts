@@ -35,19 +35,6 @@ export const getClassTable = async (xn: string, xq: number) => {
 }
 
 /**
- * 获取开课时间
- * @returns 开课时间
- */
-export const getClassStartDate = async (xn: string, xq: number) => {
-  return request.get<string>('/hdjw/class-start-date', {
-    data: {
-      xn,
-      xq,
-    },
-  })
-}
-
-/**
  * 添加课程时的请求数据
  */
 export interface PostData {

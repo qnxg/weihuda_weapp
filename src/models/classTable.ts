@@ -3,9 +3,9 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import {
   type CourseInfo,
-  getClassStartDate,
   getClassTable,
 } from '@/apis/hdjw/classTable'
+import { getClassStartDate } from '@/apis/semester'
 import { onColors, onFontColors, semesterWeekNum } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'

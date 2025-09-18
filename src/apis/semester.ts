@@ -33,3 +33,17 @@ export interface CurrentSemesterInfo {
 export const getSemesterInfo = async () => {
   return request.get<CurrentSemesterInfo>('/info/smester')
 }
+
+
+/**
+ * 获取开课时间
+ * @returns 开课时间
+ */
+export const getClassStartDate = async (xn: string, xq: number) => {
+  return request.get<string>('/hdjw/class-start-date', {
+    data: {
+      xn,
+      xq,
+    },
+  })
+}
