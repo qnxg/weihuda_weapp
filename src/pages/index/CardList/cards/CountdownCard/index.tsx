@@ -8,7 +8,7 @@ import { getSemesterInfo } from '@/apis/info'
 import icon from '@/static/index/icon/days-left.svg'
 import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
-import type { SemesterInfo } from '@/apis/info'
+import type { CurrentSemesterInfo } from '@/apis/info'
 
 interface Props {
   daysLeft: number
@@ -50,7 +50,7 @@ const CountdownCardDisplay: React.FC<Props> = ({ daysLeft }) => {
   )
 }
 
-function computeDaysLeft(semesterDate: SemesterInfo | undefined) {
+function computeDaysLeft(semesterDate: CurrentSemesterInfo | undefined) {
   if (!semesterDate) {
     return 999
   }

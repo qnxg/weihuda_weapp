@@ -7,7 +7,7 @@ import Tabs from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import { useAppSelector } from '@/utils/hooks/redux'
 import { staticBaseUrl as baseUrl } from '@/utils/url'
-import type { SemesterInfo } from '@/apis/info'
+import type { CurrentSemesterInfo } from '@/apis/info'
 
 const pages = ['秋季', '寒假', '春季', '夏季']
 const urls = [
@@ -20,7 +20,7 @@ const urls = [
 const Index: React.FC = () => {
   const { termType } = useAppSelector(state => state.semester)
 
-  const [data, setData] = useState<SemesterInfo | null>(null)
+  const [data, setData] = useState<CurrentSemesterInfo | null>(null)
   const [index, setIndex] = useState(termType && termType > 1 ? termType : 0)
 
   /**
