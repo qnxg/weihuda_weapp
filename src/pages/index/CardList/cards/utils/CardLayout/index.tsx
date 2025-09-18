@@ -19,7 +19,7 @@ export interface CardLayoutProps {
   moreUrl2?: string
   moreTitle2?: string
   /** 需要有子组件内容 */
-  children?: JSX.Element
+  children?: React.JSX.Element
 }
 
 const CardLayout: React.FC<CardLayoutProps> = props => {
