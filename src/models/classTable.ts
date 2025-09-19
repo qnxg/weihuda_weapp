@@ -6,7 +6,7 @@ import {
   getClassTable,
 } from '@/apis/hdjw/classTable'
 import { getClassStartDate } from '@/apis/semester'
-import { onColors, onFontColors, semesterWeekNum } from '@/utils/config'
+import {  onColors, onFontColors, semesterWeekNum } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'

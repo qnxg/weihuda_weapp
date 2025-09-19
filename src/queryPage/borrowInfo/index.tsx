@@ -12,7 +12,7 @@ import PullRefresh from '@/components/PullRefresh'
 import Tab from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import book from '@/static/empty/book.svg'
-import { onColors } from '@/utils/config'
+import { Theme1 } from '@/utils/colors'
 import type { LibraryRes } from '@/apis/library'
 
 const items = ['在借图书', '借阅清单', '借阅账单']
@@ -82,7 +82,7 @@ const Index: React.FC = () => {
                   return (
                     <Card
                       key={`${date}-${item.title}`}
-                      lineColor={onColors[index % onColors.length]!}
+                      lineColor={Theme1[index % Theme1.length]!}
                       renderLeft={
                         <Left title={`${rest}天`} content='过期时间' />
                       }
@@ -124,7 +124,7 @@ const Index: React.FC = () => {
                   return (
                     <Card
                       key={`${date}-${item.title}-${item.type}`}
-                      lineColor={onColors[index % onColors.length]!}
+                      lineColor={Theme1[index % Theme1.length]!}
                       renderLeft={<Left title={date} content={item.type} />}
                       renderRight={
                         <Right
