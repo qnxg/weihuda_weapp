@@ -5,8 +5,8 @@ import {
   type CourseInfo,
   getClassTable,
 } from '@/apis/hdjw/classTable'
-import { getClassStartDate } from '@/apis/semester'
-import {  onColors, onFontColors, semesterWeekNum } from '@/utils/config'
+import { getClassStartDateApi } from '@/apis/semester'
+import { onColors, onFontColors, semesterWeekNum } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -175,7 +175,7 @@ export const refreshClassTableThunk = createAsyncThunk(
       }
       // 进行数据缓存
       storage.setClassTable(+xn, xq, course)
-      const startDate = await getClassStartDate(xn, xq)
+      const startDate = await getClassStartDateApi(xn, xq)
       const start = startDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3')
       storage.setTermStart(+xn, xq, start)
       Taro.hideLoading()

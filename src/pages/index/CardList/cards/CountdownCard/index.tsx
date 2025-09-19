@@ -4,7 +4,7 @@ import React, { useEffect, useMemo } from 'react'
 
 import CardLayout from '../utils/CardLayout'
 import styles from './index.module.scss'
-import { getSemesterInfo } from '@/apis/semester'
+import { getCurrentSemesterInfoApi } from '@/apis/semester'
 import icon from '@/static/index/icon/days-left.svg'
 import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
@@ -73,9 +73,9 @@ const CountdownCard: React.FC<CardProps> = ({
   reloadController,
 }) => {
   const [semesterDate, isSemesterDateLoading] = usePromise(
-    getSemesterInfo,
+    getCurrentSemesterInfoApi,
     undefined,
-    [getSemesterInfo, reloadController]
+    [getCurrentSemesterInfoApi, reloadController]
   )
   useEffect(() => {
     onLoadingStatusChange(isSemesterDateLoading)
