@@ -19,6 +19,7 @@ const Index: React.FC = () => {
 
   const cw = useAppSelector(s => s.classTable.currentWeek);
   const [tableCurrentWeek, setTableCurrentWeek] = useState(cw);
+
   const [
     classDetailsForFloatComponentToShow,
     setClassDetailsForFloatComponentToShow
@@ -26,13 +27,14 @@ const Index: React.FC = () => {
   const clearClassDetailsForFloatComponentToShow =
     () => setClassDetailsForFloatComponentToShow([])
 
+  const [shouldShowOptions, setShouldShowOptions] = useState(false)
+
   const {
     semesters,
     currentSem,
     classTable,
     mode,
     currentStart,
-    showOptions,
   } = useAppSelector(state => state.classTable)
 
   const dispatch = useAppDispatch()
@@ -152,7 +154,12 @@ const Index: React.FC = () => {
 
   return (
     <Fragment>
-      <Header curMonthOfDay={curMonthOfDay} curDatesOfWeek={curDatesOfWeek} tableCurrentWeek={tableCurrentWeek} />
+      <Header
+        curMonthOfDay={curMonthOfDay}
+        curDatesOfWeek={curDatesOfWeek}
+        tableCurrentWeek={tableCurrentWeek}
+        setShouldShowOptions={setShouldShowOptions}
+      />
       <PullRefresh runFunc={onRefresh} topGap={124}>
         <TableBody
           formatTable={formatTable}
@@ -163,7 +170,8 @@ const Index: React.FC = () => {
         />
       </PullRefresh>
       <Options
-        showOption={showOptions}
+        show={shouldShowOptions}
+        setShow={setShouldShowOptions}
         tableCurrentWeek={tableCurrentWeek}
         setTableCurrentWeek={setTableCurrentWeek}
       />

@@ -2,8 +2,7 @@ import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
-import { saveClassTable } from '@/models/classTable'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import { useAppSelector } from '@/utils/hooks/redux'
 import type { CurDatesOfWeek } from '../../interface'
 
 /**
@@ -15,6 +14,7 @@ interface Props {
   //当前周的日期
   curDatesOfWeek: Array<CurDatesOfWeek>,
   tableCurrentWeek: number,
+  setShouldShowOptions: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const text = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
@@ -28,15 +28,9 @@ const Header: React.FC<Props> = props => {
   )
   const { curDatesOfWeek = [] } = props
 
-  const dispatch = useAppDispatch()
-
   /** 显示课表选项 */
   const onShowOptions = () => {
-    dispatch(
-      saveClassTable({
-        showOptions: true,
-      })
-    )
+    props.setShouldShowOptions(true)
   }
 
   return (
@@ -66,7 +60,7 @@ const Header: React.FC<Props> = props => {
             [styles.selected]:
               index === dayOfWeek &&
               (props.tableCurrentWeek < 0 ? props.tableCurrentWeek + 1 : props.tableCurrentWeek - 1) ===
-                weekNum &&
+              weekNum &&
               semesters[currentSem]!.xn === termYear &&
               semesters[currentSem]!.xq === termType,
           })

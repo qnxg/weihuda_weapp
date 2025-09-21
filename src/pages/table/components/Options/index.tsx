@@ -8,13 +8,14 @@ import storage from '@/utils/storage/cache'
 import type { BaseEventOrig, PickerSelectorProps } from '@tarojs/components';
 
 export interface OptionProps {
-  showOption: boolean
+  show: boolean
+  setShow: React.Dispatch<React.SetStateAction<boolean>>
   tableCurrentWeek: number,
   setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>,
 }
 
-const Options: React.FC<OptionProps> = (prop) => {
-  const { semesters, currentSem, weeks, mode, showOptions } =
+const Options: React.FC<OptionProps> = (props) => {
+  const { semesters, currentSem, weeks, mode } =
     useAppSelector(state => state.classTable)
 
   const dispatch = useAppDispatch()
@@ -23,11 +24,7 @@ const Options: React.FC<OptionProps> = (prop) => {
    * 隐藏选项
    */
   const onHideOptions = () => {
-    dispatch(
-      saveClassTable({
-        showOptions: false,
-      })
-    )
+    props.setShow(false)
   }
 
   /**
@@ -40,7 +37,7 @@ const Options: React.FC<OptionProps> = (prop) => {
         currentSem: e.detail.value as number,
       })
     )
-    prop.setTableCurrentWeek(1) // why?
+    props.setTableCurrentWeek(1) // why?
     void dispatch(refreshClassTableThunk())
   }
 
@@ -49,7 +46,7 @@ const Options: React.FC<OptionProps> = (prop) => {
    * @param e 事件传的参数
    */
   const onSelectWeek = (e: BaseEventOrig): void => {
-    prop.setTableCurrentWeek(parseInt(e.detail.value) + 1)
+    props.setTableCurrentWeek(parseInt(e.detail.value) + 1)
   }
 
   /**
@@ -67,7 +64,7 @@ const Options: React.FC<OptionProps> = (prop) => {
 
   const cxHeaderMask = classNames({
     [styles.headerMask]: true,
-    [styles.slideDown]: showOptions,
+    [styles.slideDown]: props.show,
   })
 
   return (
@@ -83,7 +80,7 @@ const Options: React.FC<OptionProps> = (prop) => {
       onTouchEnd={(e): void => {
         e.stopPropagation()
       }}
-      style={`display: ${prop.showOption ? 'block' : 'none'}`}
+      style={`display: ${props.show ? 'block' : 'none'}`}
     >
       <View
         className={cxHeaderMask}
@@ -106,13 +103,13 @@ const Options: React.FC<OptionProps> = (prop) => {
             onChange={onSelectWeek}
             className={styles['container-item']}
             range={weeks}
-            value={prop.tableCurrentWeek - 1}
+            value={props.tableCurrentWeek - 1}
             mode='selector'
           >
-            {prop.tableCurrentWeek >= 0 ? (
-              <Text>当前周数：--------第{prop.tableCurrentWeek}周----------</Text>
+            {props.tableCurrentWeek >= 0 ? (
+              <Text>当前周数：--------第{props.tableCurrentWeek}周----------</Text>
             ) : (
-              <Text>当前周数：---距离开学还有{-prop.tableCurrentWeek}周----</Text>
+              <Text>当前周数：---距离开学还有{-props.tableCurrentWeek}周----</Text>
             )}
           </Picker>
           <View className={styles['switch-item']}>

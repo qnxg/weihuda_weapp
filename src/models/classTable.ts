@@ -35,7 +35,6 @@ export interface StateType {
   mode: boolean
   currentStart: string
   classTable: Array<CourseInfo> // 总课表数据
-  showOptions: boolean
 }
 
 const initialState: StateType = {
@@ -46,7 +45,6 @@ const initialState: StateType = {
   mode: false,
   currentStart: '',
   classTable: [],
-  showOptions: false,
 }
 
 /**
