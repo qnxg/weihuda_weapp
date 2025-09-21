@@ -19,8 +19,12 @@ const Index: React.FC = () => {
 
   const cw = useAppSelector(s => s.classTable.currentWeek);
   const [tableCurrentWeek, setTableCurrentWeek] = useState(cw);
-  const [showClassDetailFloat, setShowClassDetailFloat] = useState(false)
-  const [classDetailFloatData, setClassDetailFloatData] = useState<CourseInfo[]>([])
+  const [
+    classDetailsForFloatComponentToShow,
+    setClassDetailsForFloatComponentToShow
+  ] = useState<CourseInfo[]>([])
+  const clearClassDetailsForFloatComponentToShow =
+    () => setClassDetailsForFloatComponentToShow([])
 
   const {
     semesters,
@@ -155,8 +159,7 @@ const Index: React.FC = () => {
           tableCurrentWeek={tableCurrentWeek}
           setTableCurrentWeek={setTableCurrentWeek}
           onRefresh={onRefresh}
-          setShowClassDetailFloat={setShowClassDetailFloat}
-          setClassDetailFloatData={setClassDetailFloatData}
+          setClassDetailsForFloatComponentToShow={setClassDetailsForFloatComponentToShow}
         />
       </PullRefresh>
       <Options
@@ -165,9 +168,8 @@ const Index: React.FC = () => {
         setTableCurrentWeek={setTableCurrentWeek}
       />
       <ClassDetailFloat
-        show={showClassDetailFloat}
-        setShow={setShowClassDetailFloat}
-        classDetailFloatData={classDetailFloatData}
+        classDetailsToShow={classDetailsForFloatComponentToShow}
+        clearClassDetailsToShow={clearClassDetailsForFloatComponentToShow}
       />
       <AddCourseButton
         xn={semesters[currentSem]!.xn}

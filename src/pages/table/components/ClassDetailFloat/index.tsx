@@ -9,9 +9,8 @@ import { useAppDispatch } from '@/utils/hooks/redux'
 import type { CourseInfo } from '@/apis/hdjw/classTable';
 
 export interface FloatProps {
-  show: boolean
-  setShow: React.Dispatch<React.SetStateAction<boolean>>,
-  classDetailFloatData: CourseInfo[],
+  classDetailsToShow: CourseInfo[],
+  clearClassDetailsToShow: () => void,
 }
 
 const ClassDetailFloat: React.FC<FloatProps> = props => {
@@ -21,7 +20,7 @@ const ClassDetailFloat: React.FC<FloatProps> = props => {
    * 隐藏float
    */
   const onHideFloat = (): void => {
-    props.setShow(false)
+    props.clearClassDetailsToShow()
   }
   const deleteCourse = async (id: number) => {
     const deleteRes = await Taro.showModal({
@@ -50,14 +49,14 @@ const ClassDetailFloat: React.FC<FloatProps> = props => {
     <View
       className={styles.firstMask}
       onClick={onHideFloat}
-      style={`display: ${props.show ? 'block' : 'none'}`}
+      style={`display: ${props.classDetailsToShow.length > 0 ? 'block' : 'none'}`}
     >
       <Swiper
         className={styles.swiper}
         previousMargin='150rpx'
         nextMargin='152rpx'
       >
-        {props.classDetailFloatData.map((item, index) => {
+        {props.classDetailsToShow.map((item, index) => {
           return (
             <SwiperItem key={String(index)} className={styles.swiperItem}>
               <View

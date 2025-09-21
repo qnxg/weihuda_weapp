@@ -14,9 +14,8 @@ interface Props {
   formatTable: Array<Array<ClassTableItem>>
   tableCurrentWeek: number
   setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>
-  setShowClassDetailFloat: React.Dispatch<React.SetStateAction<boolean>>
   onRefresh: (close: () => any) => any
-  setClassDetailFloatData: React.Dispatch<React.SetStateAction<CourseInfo[]>>
+  setClassDetailsForFloatComponentToShow: React.Dispatch<React.SetStateAction<CourseInfo[]>>
 }
 
 const TableBody: React.FC<Props> = (props: Props) => {
@@ -84,8 +83,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
           >
             <Day
               dayCourse={item}
-              setShowClassDetailFloat={props.setShowClassDetailFloat}
-              setClassDetailFloatData={props.setClassDetailFloatData}
+              setClassDetailsForFloatComponentToShow={props.setClassDetailsForFloatComponentToShow}
             />
           </View>
         )

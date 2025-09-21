@@ -14,8 +14,7 @@ import type { CourseInfo } from '@/apis/hdjw/classTable'
 interface Props {
   /** 当天的课程数组 */
   dayCourse: Array<ClassTableItem>
-  setShowClassDetailFloat: React.Dispatch<React.SetStateAction<boolean>>,
-  setClassDetailFloatData: React.Dispatch<React.SetStateAction<CourseInfo[]>>
+  setClassDetailsForFloatComponentToShow: React.Dispatch<React.SetStateAction<CourseInfo[]>>
 }
 
 const Day: React.FC<Props> = props => {
@@ -25,8 +24,7 @@ const Day: React.FC<Props> = props => {
    * @param e 当前点击的格子
    */
   const onShowFloat = (e: ClassTableItem): void => {
-    props.setShowClassDetailFloat(true)
-    props.setClassDetailFloatData(e.courses)
+    props.setClassDetailsForFloatComponentToShow(e.courses)
   }
 
   return (
