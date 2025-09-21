@@ -1,8 +1,9 @@
 import { Picker, Switch, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from './index.module.scss'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
+import { semesterWeekNum } from '@/utils/config'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import storage from '@/utils/storage/cache'
 import type { BaseEventOrig, PickerSelectorProps } from '@tarojs/components';
@@ -15,7 +16,7 @@ export interface OptionProps {
 }
 
 const Options: React.FC<OptionProps> = (props) => {
-  const { semesters, currentSem, weeks, mode } =
+  const { semesters, currentSem, mode } =
     useAppSelector(state => state.classTable)
 
   const dispatch = useAppDispatch()
@@ -67,6 +68,8 @@ const Options: React.FC<OptionProps> = (props) => {
     [styles.slideDown]: props.show,
   })
 
+  const weekPeekerRange = useMemo(() => Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`), [])
+
   return (
     <View
       className={styles.compMask}
@@ -102,7 +105,7 @@ const Options: React.FC<OptionProps> = (props) => {
           <Picker
             onChange={onSelectWeek}
             className={styles['container-item']}
-            range={weeks}
+            range={weekPeekerRange}
             value={props.tableCurrentWeek - 1}
             mode='selector'
           >

@@ -6,7 +6,7 @@ import {
   getClassTable,
 } from '@/apis/hdjw/classTable'
 import { getClassStartDateApi } from '@/apis/semester'
-import { onColors, onFontColors, semesterWeekNum } from '@/utils/config'
+import { onColors, onFontColors } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -30,7 +30,6 @@ export interface Semester {
 export interface StateType {
   semesters: Array<Semester>
   currentSem: number
-  weeks: Array<string>
   currentWeek: number
   mode: boolean
   currentStart: string
@@ -40,7 +39,6 @@ export interface StateType {
 const initialState: StateType = {
   semesters: [],
   currentSem: 0,
-  weeks: Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`),
   currentWeek: 0,
   mode: false,
   currentStart: '',
