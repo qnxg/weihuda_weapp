@@ -1,10 +1,10 @@
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import { cellHeight } from '../../index.config'
 import styles from './index.module.scss'
+import { useAppDispatch } from '@/utils/hooks/redux'
 import type { ClassTableItem } from '../../interface'
 
 /**
@@ -18,7 +18,7 @@ interface Props {
 
 const Day: React.FC<Props> = props => {
   const { dayCourse = [] } = props
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   /**
    * 显示课程的详细信息
    * @param e 当前点击的格子

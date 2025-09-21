@@ -1,11 +1,11 @@
 import Taro from '@tarojs/taro'
 import { useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { postCourseApi } from '@/apis/hdjw/classTable'
+import { useAppDispatch } from '@/utils/hooks/redux'
 
 const useAddCourse = (xn: number, xq: number) => {
   // 全局状态
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   /**
    * classname 课程名称
