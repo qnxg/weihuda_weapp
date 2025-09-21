@@ -13,13 +13,14 @@ interface Props {
   //当前的月份
   curMonthOfDay: number
   //当前周的日期
-  curDatesOfWeek: Array<CurDatesOfWeek>
+  curDatesOfWeek: Array<CurDatesOfWeek>,
+  tableCurrentWeek: number,
 }
 
 const text = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 
 const Header: React.FC<Props> = props => {
-  const { currentWeeks, semesters, currentSem } = useAppSelector(
+  const { semesters, currentSem } = useAppSelector(
     state => state.classTable
   )
   const { dayOfWeek, weekNum, termYear, termType } = useAppSelector(
@@ -42,17 +43,17 @@ const Header: React.FC<Props> = props => {
     <View>
       <View className={styles['base-info']} onClick={onShowOptions}>
         <View>
-          {currentWeeks >= 0 ? (
+          {props.tableCurrentWeek >= 0 ? (
             <Text decode>
               {semesters[currentSem]!.show}
               &nbsp;&nbsp;&nbsp;&nbsp;第
-              {currentWeeks}周
+              {props.tableCurrentWeek}周
             </Text>
           ) : (
             <Text decode>
               {semesters[currentSem]!.show}
               &nbsp;&nbsp;&nbsp;&nbsp;距离开学还有
-              {-currentWeeks}周
+              {-props.tableCurrentWeek}周
             </Text>
           )}
         </View>
@@ -64,7 +65,7 @@ const Header: React.FC<Props> = props => {
             [styles['title-item']]: true,
             [styles.selected]:
               index === dayOfWeek &&
-              (currentWeeks < 0 ? currentWeeks + 1 : currentWeeks - 1) ===
+              (props.tableCurrentWeek < 0 ? props.tableCurrentWeek + 1 : props.tableCurrentWeek - 1) ===
                 weekNum &&
               semesters[currentSem]!.xn === termYear &&
               semesters[currentSem]!.xq === termType,

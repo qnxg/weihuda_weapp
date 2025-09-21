@@ -3,9 +3,7 @@ import React, { useState } from 'react'
 
 import Day from '../Day'
 import styles from './index.module.scss'
-import { saveClassTable } from '@/models/classTable'
 import { courseTime } from '@/utils/config'
-import { useAppDispatch } from '@/utils/hooks/redux'
 import type { ClassTableItem } from '../../interface'
 
 /**
@@ -13,13 +11,13 @@ import type { ClassTableItem } from '../../interface'
  */
 interface Props {
   formatTable: Array<Array<ClassTableItem>>
-  currentWeeks: number
+  tableCurrentWeek: number
+  setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>
   onRefresh: (close: () => any) => any
 }
 
 const TableBody: React.FC<Props> = (props: Props) => {
   const [startPos, setStartPos] = useState(0)
-  const dispatch = useAppDispatch()
   /**
    * 记录触摸开始位置
    * @param e 事件对象
@@ -35,16 +33,17 @@ const TableBody: React.FC<Props> = (props: Props) => {
    * @param e 事件对象
    */
   const onTouchEnd = (e: any) => {
-    const { currentWeeks } = props
+    const { tableCurrentWeek } = props
     if (e.changedTouches.length === 1) {
       const end = e.changedTouches[0].pageX
       const offset = end - startPos
       const diffWeek = Math.abs(offset) > 80 ? (offset > 0 ? -1 : 1) : 0
       if (diffWeek !== 0) {
-        let finalWeek = currentWeeks + diffWeek
+        let finalWeek = tableCurrentWeek + diffWeek
         if (finalWeek < 1) finalWeek = 18
         else if (finalWeek > 18) finalWeek = 1
-        dispatch(saveClassTable({ currentWeeks: finalWeek }))
+        // dispatch(saveClassTable({ currentWeeks: finalWeek }))
+        props.setTableCurrentWeek(finalWeek)
       }
     }
   }

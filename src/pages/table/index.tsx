@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import React, { Fragment, useEffect, useMemo } from 'react'
+import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import AddCourseButton from './components/AddCourseButton'
 import Float from './components/Float'
 import Header from './components/Header'
@@ -15,11 +15,14 @@ import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import type { CurDatesOfWeek, ClassTableItem } from './interface'
 
 const Index: React.FC = () => {
+
+  const cw = useAppSelector(s => s.classTable.currentWeek);
+  const [tableCurrentWeek, setTableCurrentWeek] = useState(cw);
+
   const {
     semesters,
     currentSem,
     classTable,
-    currentWeeks,
     mode,
     currentStart,
     showFloat,
@@ -42,19 +45,19 @@ const Index: React.FC = () => {
 
   // 计算当前的月份
   const curMonthOfDay = useMemo<number>(() => {
-    if (currentWeeks) {
-      const tempWeekNum = currentWeeks < 0 ? currentWeeks : currentWeeks - 1
+    if (tableCurrentWeek) {
+      const tempWeekNum = tableCurrentWeek < 0 ? tableCurrentWeek : tableCurrentWeek - 1
       return dayjs(currentStart).add(tempWeekNum, 'week').month() + 1
     } else {
       return 1
     }
-  }, [currentWeeks, currentStart])
+  }, [tableCurrentWeek, currentStart])
 
   // 计算当前选定周的日期
   const curDatesOfWeek = useMemo<Array<CurDatesOfWeek>>(() => {
-    if (currentWeeks) {
+    if (tableCurrentWeek) {
       const daysArrayTemp: Array<CurDatesOfWeek> = []
-      const curWeek = currentWeeks < 0 ? currentWeeks + 1 : currentWeeks - 1
+      const curWeek = tableCurrentWeek < 0 ? tableCurrentWeek + 1 : tableCurrentWeek - 1
       const startDate = dayjs(currentStart).add(curWeek, 'week')
       for (let i = 0; i < 7; ++i) {
         const temp = startDate.add(i, 'day')
@@ -67,7 +70,7 @@ const Index: React.FC = () => {
     } else {
       return []
     }
-  }, [currentWeeks, currentStart])
+  }, [tableCurrentWeek, currentStart])
 
   // 格式化课表，我们会处理得到一个 Array<Array<ClassTableItem>> 类型的格式化之后的课表
   // 数组下标的含义为 formatTable[周几][第几节课]
@@ -90,7 +93,7 @@ const Index: React.FC = () => {
         course.time = -1 // 为了便于后续合并格子，这里全都改成 -1
         course.day = course.day === 7 ? 0 : course.day
         // 计算是否为本周课程
-        if (course.weeks.includes(currentWeeks)) {
+        if (course.weeks.includes(tableCurrentWeek)) {
           // 是本周的课则放在前面，否则放在后面。这样可以保证本周课程在前面显示
           schedule[course.day]![time]!.courses.unshift(course)
         } else if (!mode) {
@@ -139,19 +142,20 @@ const Index: React.FC = () => {
     } else {
       return []
     }
-  }, [classTable, currentWeeks, mode])
+  }, [classTable, tableCurrentWeek, mode])
 
   return (
     <Fragment>
-      <Header curMonthOfDay={curMonthOfDay} curDatesOfWeek={curDatesOfWeek} />
+      <Header curMonthOfDay={curMonthOfDay} curDatesOfWeek={curDatesOfWeek} tableCurrentWeek={tableCurrentWeek} />
       <PullRefresh runFunc={onRefresh} topGap={124}>
         <TableBody
           formatTable={formatTable}
-          currentWeeks={currentWeeks}
+          tableCurrentWeek={tableCurrentWeek}
+          setTableCurrentWeek={setTableCurrentWeek}
           onRefresh={onRefresh}
         />
       </PullRefresh>
-      <Options showOption={showOptions} />
+      <Options showOption={showOptions} tableCurrentWeek={tableCurrentWeek} setTableCurrentWeek={setTableCurrentWeek} />
       <Float showFloat={showFloat} />
       <AddCourseButton xn={semesters[currentSem]!.xn} xq={semesters[currentSem]!.xq} />
     </Fragment>

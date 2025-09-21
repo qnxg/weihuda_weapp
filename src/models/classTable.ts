@@ -31,7 +31,6 @@ export interface StateType {
   semesters: Array<Semester>
   currentSem: number
   weeks: Array<string>
-  currentWeeks: number
   currentWeek: number
   mode: boolean
   currentStart: string
@@ -45,7 +44,6 @@ const initialState: StateType = {
   semesters: [],
   currentSem: 0,
   weeks: Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`),
-  currentWeeks: 0,
   currentWeek: 0,
   mode: false,
   currentStart: '',
@@ -61,7 +59,6 @@ const initialState: StateType = {
  * 修改了
  * `semesters`
  * `currentSem`
- * `currentWeeks`
  * `currentWeek`
  * `currentStart`
  * `mode`
@@ -118,7 +115,6 @@ export const initClassTableThunk = createAsyncThunk(
         currentSem: semesters.findIndex(
           item => item.xn == termYear && item.xq == termType
         ),
-        currentWeeks: tempWeekNum,
         currentWeek: tempWeekNum,
         currentStart: termStart,
         mode: storage.getTableMode() && true,

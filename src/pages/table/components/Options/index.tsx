@@ -5,14 +5,16 @@ import styles from './index.module.scss'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import storage from '@/utils/storage/cache'
-import type { BaseEventOrig, PickerSelectorProps} from '@tarojs/components';
+import type { BaseEventOrig, PickerSelectorProps } from '@tarojs/components';
 
 export interface OptionProps {
   showOption: boolean
+  tableCurrentWeek: number,
+  setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>,
 }
 
-const Options: React.FC<OptionProps> = ({ showOption = false }) => {
-  const { semesters, currentSem, weeks, currentWeeks, mode, showOptions } =
+const Options: React.FC<OptionProps> = (prop) => {
+  const { semesters, currentSem, weeks, mode, showOptions } =
     useAppSelector(state => state.classTable)
 
   const dispatch = useAppDispatch()
@@ -36,9 +38,9 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
     dispatch(
       saveClassTable({
         currentSem: e.detail.value as number,
-        currentWeeks: 1,
       })
     )
+    prop.setTableCurrentWeek(1) // why?
     void dispatch(refreshClassTableThunk())
   }
 
@@ -47,11 +49,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
    * @param e 事件传的参数
    */
   const onSelectWeek = (e: BaseEventOrig): void => {
-    dispatch(
-      saveClassTable({
-        currentWeeks: parseInt(e.detail.value) + 1,
-      })
-    )
+    prop.setTableCurrentWeek(parseInt(e.detail.value) + 1)
   }
 
   /**
@@ -85,7 +83,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
       onTouchEnd={(e): void => {
         e.stopPropagation()
       }}
-      style={`display: ${showOption ? 'block' : 'none'}`}
+      style={`display: ${prop.showOption ? 'block' : 'none'}`}
     >
       <View
         className={cxHeaderMask}
@@ -108,13 +106,13 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
             onChange={onSelectWeek}
             className={styles['container-item']}
             range={weeks}
-            value={currentWeeks - 1}
+            value={prop.tableCurrentWeek - 1}
             mode='selector'
           >
-            {currentWeeks >= 0 ? (
-              <Text>当前周数：--------第{currentWeeks}周----------</Text>
+            {prop.tableCurrentWeek >= 0 ? (
+              <Text>当前周数：--------第{prop.tableCurrentWeek}周----------</Text>
             ) : (
-              <Text>当前周数：---距离开学还有{-currentWeeks}周----</Text>
+              <Text>当前周数：---距离开学还有{-prop.tableCurrentWeek}周----</Text>
             )}
           </Picker>
           <View className={styles['switch-item']}>
