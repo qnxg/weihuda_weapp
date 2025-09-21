@@ -34,7 +34,7 @@ const initState = (length: number): Fitness[] => {
 
 const usePE = () => {
   const { enterYear, sex } = useAppSelector(state => state.userInfo)
-  const { termYear } = useAppSelector(state => state.smester)
+  const { termYear } = useAppSelector(state => state.semester)
   const years = useMemo(() => {
     const temp: Array<number> = []
     for (let i = 0; enterYear + i <= termYear; ++i) {

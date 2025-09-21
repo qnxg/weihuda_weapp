@@ -30,7 +30,7 @@ const importantType2 = [
 ]
 
 const Index: React.FC = () => {
-  const { termYear, termType } = useAppSelector(state => state.smester)
+  const { termYear, termType } = useAppSelector(state => state.semester)
   const { enterYear } = useAppSelector(state => state.userInfo)
 
   const years = useMemo(() => {

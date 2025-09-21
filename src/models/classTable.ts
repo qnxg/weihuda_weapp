@@ -3,10 +3,10 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import {
   type CourseInfo,
-  getClassStartDate,
   getClassTable,
 } from '@/apis/hdjw/classTable'
-import { onColors, onFontColors, semesterWeekNum } from '@/utils/config'
+import { getClassStartDate } from '@/apis/semester'
+import {  onColors, onFontColors, semesterWeekNum } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -57,6 +57,15 @@ const initialState: StateType = {
 
 /**
  * 进行课表基础数据的初始化
+ * 
+ * 修改了
+ * `semesters`
+ * `currentSem`
+ * `currentWeeks`
+ * `currentWeek`
+ * `currentStart`
+ * `mode`
+ * `classTable`
  */
 export const initClassTableThunk = createAsyncThunk(
   'classTable/initClassTable',
@@ -65,7 +74,7 @@ export const initClassTableThunk = createAsyncThunk(
       // 获取常量
       const termText: Array<string> = ['秋季学期', '春季学期', '夏季学期']
       const state = thunkAPI.getState() as RootState
-      const { termYear, termStart, termType, weekNum } = state.smester
+      const { termYear, termStart, termType, weekNum } = state.semester
       const { enterYear } = state.userInfo
       const oldState = state.classTable
 

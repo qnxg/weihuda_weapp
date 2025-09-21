@@ -1,4 +1,5 @@
 import { View } from '@tarojs/components'
+import React from 'react'
 
 /**
  * Radio组件的属性
@@ -93,7 +94,7 @@ export interface RadioGroupsProps {
   /**
    * 子组件，该组件内只能包含Radio组件
    */
-  children: JSX.Element[]
+  children: React.JSX.Element[]
   /**
    * 内联样式
    */

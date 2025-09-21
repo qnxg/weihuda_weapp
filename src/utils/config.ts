@@ -1,3 +1,5 @@
+import { Theme2, Theme3 } from "./colors"
+
 /**
  * @interface CourseNum 课程时间与id对应关系字典
  */
@@ -169,31 +171,9 @@ export const months: Array<string> = [
   '12',
 ]
 
-export const onColors: Array<string> = [
-  '#E6F4FF',
-  '#FDEBDD',
-  '#DEFBF7',
-  '#EEEDFF',
-  '#FCEBCD',
-  '#FFEFF0',
-  '#EAF2FF',
-  '#FFEEF8',
-  '#FAEDFF',
-  '#FFF9C9',
-]
+export const onColors = Theme2
 
-export const onFontColors: Array<string> = [
-  '#08A0E2',
-  '#E97055',
-  '#3CB3C9',
-  '#7D7CDD',
-  '#FF9900',
-  '#DD5D75',
-  '#5D8FF8',
-  '#EC6DB8',
-  '#B769DF',
-  '#CBA715',
-]
+export const onFontColors = Theme3
 
 export const offColor = '#efefef'
 export const offFontColor = '#aeaeae'

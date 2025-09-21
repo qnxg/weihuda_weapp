@@ -193,7 +193,7 @@ const TodayClassCard: React.FC<CardProps> = ({ onLoadingStatusChange }) => {
     onLoadingStatusChange(false)
   }, [onLoadingStatusChange])
 
-  const { dayOfWeek } = useAppSelector(state => state.smester)
+  const { dayOfWeek } = useAppSelector(state => state.semester)
   const { currentWeek } = useAppSelector(state => state.classTable)
 
   return (

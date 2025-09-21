@@ -6,13 +6,13 @@ import type { CSSProperties } from 'react'
 
 interface Props {
   title: string
-  subTitle?: string | JSX.Element
+  subTitle?: string | React.JSX.Element
   icon?: string
   className?: string
   style?: string | CSSProperties
   content?: string
   subContent?: string
-  renderContent: JSX.Element
+  renderContent: React.JSX.Element
 }
 
 const RightPart: React.FC<Props> = props => {
