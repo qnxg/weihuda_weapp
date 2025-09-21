@@ -5,6 +5,7 @@ import Day from '../Day'
 import styles from './index.module.scss'
 import { courseTime } from '@/utils/config'
 import type { ClassTableItem } from '../../interface'
+import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 /**
  * @interface TableBody Component Props
@@ -13,7 +14,9 @@ interface Props {
   formatTable: Array<Array<ClassTableItem>>
   tableCurrentWeek: number
   setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>
+  setShowClassDetailFloat: React.Dispatch<React.SetStateAction<boolean>>
   onRefresh: (close: () => any) => any
+  setClassDetailFloatData: React.Dispatch<React.SetStateAction<CourseInfo[]>>
 }
 
 const TableBody: React.FC<Props> = (props: Props) => {
@@ -79,7 +82,11 @@ const TableBody: React.FC<Props> = (props: Props) => {
             className={styles['table-row']}
             key={String(index)}
           >
-            <Day dayCourse={item} />
+            <Day
+              dayCourse={item}
+              setShowClassDetailFloat={props.setShowClassDetailFloat}
+              setClassDetailFloatData={props.setClassDetailFloatData}
+            />
           </View>
         )
       })}

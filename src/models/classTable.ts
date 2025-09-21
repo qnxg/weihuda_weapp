@@ -36,8 +36,6 @@ export interface StateType {
   currentStart: string
   classTable: Array<CourseInfo> // 总课表数据
   showOptions: boolean
-  showFloat: boolean // 是否显示悬浮课程详情
-  floatData: Array<CourseInfo> // 悬浮课程详情数据
 }
 
 const initialState: StateType = {
@@ -49,8 +47,6 @@ const initialState: StateType = {
   currentStart: '',
   classTable: [],
   showOptions: false,
-  showFloat: false,
-  floatData: [],
 }
 
 /**

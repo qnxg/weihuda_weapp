@@ -4,8 +4,8 @@ import React from 'react'
 
 import { cellHeight } from '../../index.config'
 import styles from './index.module.scss'
-import { useAppDispatch } from '@/utils/hooks/redux'
 import type { ClassTableItem } from '../../interface'
+import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 /**
  * @interface Day Component Props
@@ -14,23 +14,19 @@ import type { ClassTableItem } from '../../interface'
 interface Props {
   /** 当天的课程数组 */
   dayCourse: Array<ClassTableItem>
+  setShowClassDetailFloat: React.Dispatch<React.SetStateAction<boolean>>,
+  setClassDetailFloatData: React.Dispatch<React.SetStateAction<CourseInfo[]>>
 }
 
 const Day: React.FC<Props> = props => {
   const { dayCourse = [] } = props
-  const dispatch = useAppDispatch()
   /**
    * 显示课程的详细信息
    * @param e 当前点击的格子
    */
   const onShowFloat = (e: ClassTableItem): void => {
-    dispatch({
-      type: 'classTable/save',
-      payload: {
-        showFloat: true,
-        floatData: e.courses,
-      },
-    })
+    props.setShowClassDetailFloat(true)
+    props.setClassDetailFloatData(e.courses)
   }
 
   return (
@@ -59,9 +55,8 @@ const Day: React.FC<Props> = props => {
         return (
           <View
             className={styles.cell}
-            style={`margin-top: ${index * cellHeight}rpx; height: ${
-              cell.len * cellHeight
-            }rpx;`}
+            style={`margin-top: ${index * cellHeight}rpx; height: ${cell.len * cellHeight
+              }rpx;`}
             key={String(index)}
           >
             <View

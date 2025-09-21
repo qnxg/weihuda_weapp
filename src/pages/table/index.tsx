@@ -13,11 +13,14 @@ import {
 import { offColor, offFontColor } from '@/utils/config'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import type { CurDatesOfWeek, ClassTableItem } from './interface'
+import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 const Index: React.FC = () => {
 
   const cw = useAppSelector(s => s.classTable.currentWeek);
   const [tableCurrentWeek, setTableCurrentWeek] = useState(cw);
+  const [showClassDetailFloat, setShowClassDetailFloat] = useState(false)
+  const [classDetailFloatData, setClassDetailFloatData] = useState<CourseInfo[]>([])
 
   const {
     semesters,
@@ -25,7 +28,6 @@ const Index: React.FC = () => {
     classTable,
     mode,
     currentStart,
-    showFloat,
     showOptions,
   } = useAppSelector(state => state.classTable)
 
@@ -153,11 +155,24 @@ const Index: React.FC = () => {
           tableCurrentWeek={tableCurrentWeek}
           setTableCurrentWeek={setTableCurrentWeek}
           onRefresh={onRefresh}
+          setShowClassDetailFloat={setShowClassDetailFloat}
+          setClassDetailFloatData={setClassDetailFloatData}
         />
       </PullRefresh>
-      <Options showOption={showOptions} tableCurrentWeek={tableCurrentWeek} setTableCurrentWeek={setTableCurrentWeek} />
-      <ClassDetailFloat showFloat={showFloat} />
-      <AddCourseButton xn={semesters[currentSem]!.xn} xq={semesters[currentSem]!.xq} />
+      <Options
+        showOption={showOptions}
+        tableCurrentWeek={tableCurrentWeek}
+        setTableCurrentWeek={setTableCurrentWeek}
+      />
+      <ClassDetailFloat
+        show={showClassDetailFloat}
+        setShow={setShowClassDetailFloat}
+        classDetailFloatData={classDetailFloatData}
+      />
+      <AddCourseButton
+        xn={semesters[currentSem]!.xn}
+        xq={semesters[currentSem]!.xq}
+      />
     </Fragment>
   )
 }
