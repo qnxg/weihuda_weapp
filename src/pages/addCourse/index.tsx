@@ -1,14 +1,21 @@
 import { Input, Picker, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useRouter } from '@tarojs/taro'
 import classNames from 'classnames'
 import React from 'react'
 import useAddCourse from './hooks'
 import styles from './index.module.scss'
 import { addCoursePicker } from '@/utils/config'
-import type { BaseEventOrig, PickerMultiSelectorProps} from '@tarojs/components';
+import type { BaseEventOrig, PickerMultiSelectorProps } from '@tarojs/components';
 
 const Index: React.FC = () => {
-  const { state, setState, formatValue, run } = useAddCourse()
+  const { params: { xn: xn_str, xq: xq_str } } = useRouter()
+  if (xn_str === undefined || xq_str === undefined) {
+    throw "bad xn xq router param!!!"
+  }
+  const xn = parseInt(xn_str, 10)
+  const xq = parseInt(xq_str, 10)
+
+  const { state, setState, formatValue, run } = useAddCourse(xn, xq)
   /**
    * 全选全不选
    */

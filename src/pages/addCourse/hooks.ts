@@ -2,12 +2,10 @@ import Taro from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { postCourseApi } from '@/apis/hdjw/classTable'
-import { useAppSelector } from '@/utils/hooks/redux'
 
-const useAddCourse = () => {
+const useAddCourse = (xn: number, xq: number) => {
   // 全局状态
   const dispatch = useDispatch()
-  const { semesters, currentSem } = useAppSelector(s => s.classTable)
 
   /**
    * classname 课程名称
@@ -56,8 +54,8 @@ const useAddCourse = () => {
       week: formatValue.week,
       section: formatValue.section,
       day: String(state.picker[0] === 0 ? 7 : state.picker[0]),
-      xn: semesters[currentSem]!.xn,
-      xq: semesters[currentSem]!.xq,
+      xn: xn,
+      xq: xq,
     }
 
     await Taro.showLoading({

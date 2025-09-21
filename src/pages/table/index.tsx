@@ -17,6 +17,7 @@ import type { CurDatesOfWeek, ClassTableItem } from './interface'
 const Index: React.FC = () => {
   const {
     semesters,
+    currentSem,
     classTable,
     currentWeeks,
     mode,
@@ -152,7 +153,7 @@ const Index: React.FC = () => {
       </PullRefresh>
       <Options showOption={showOptions} />
       <Float showFloat={showFloat} />
-      <AddCourseButton />
+      <AddCourseButton xn={semesters[currentSem]!.xn} xq={semesters[currentSem]!.xq} />
     </Fragment>
   )
 }
