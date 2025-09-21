@@ -11,7 +11,7 @@ export interface FloatProps {
   showFloat: boolean
 }
 
-const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
+const ClassDetailFloat: React.FC<FloatProps> = ({ showFloat = false }) => {
   /** 定义悬浮课程详情的数据 */
   const { floatData } = useAppSelector(state => state.classTable)
   const dispatch = useAppDispatch()
@@ -115,4 +115,4 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
   )
 }
 
-export default Float
+export default ClassDetailFloat

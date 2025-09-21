@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import AddCourseButton from './components/AddCourseButton'
-import Float from './components/Float'
+import ClassDetailFloat from './components/ClassDetailFloat'
 import Header from './components/Header'
 import Options from './components/Options'
 import TableBody from './components/TableBody'
@@ -156,7 +156,7 @@ const Index: React.FC = () => {
         />
       </PullRefresh>
       <Options showOption={showOptions} tableCurrentWeek={tableCurrentWeek} setTableCurrentWeek={setTableCurrentWeek} />
-      <Float showFloat={showFloat} />
+      <ClassDetailFloat showFloat={showFloat} />
       <AddCourseButton xn={semesters[currentSem]!.xn} xq={semesters[currentSem]!.xq} />
     </Fragment>
   )
