@@ -1,11 +1,11 @@
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import { cellHeight } from '../../index.config'
 import styles from './index.module.scss'
 import type { ClassTableItem } from '../../interface'
+import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 /**
  * @interface Day Component Props
@@ -14,23 +14,17 @@ import type { ClassTableItem } from '../../interface'
 interface Props {
   /** 当天的课程数组 */
   dayCourse: Array<ClassTableItem>
+  setClassDetailsForFloatComponentToShow: React.Dispatch<React.SetStateAction<CourseInfo[]>>
 }
 
 const Day: React.FC<Props> = props => {
   const { dayCourse = [] } = props
-  const dispatch = useDispatch()
   /**
    * 显示课程的详细信息
    * @param e 当前点击的格子
    */
   const onShowFloat = (e: ClassTableItem): void => {
-    dispatch({
-      type: 'classTable/save',
-      payload: {
-        showFloat: true,
-        floatData: e.courses,
-      },
-    })
+    props.setClassDetailsForFloatComponentToShow(e.courses)
   }
 
   return (
@@ -59,9 +53,8 @@ const Day: React.FC<Props> = props => {
         return (
           <View
             className={styles.cell}
-            style={`margin-top: ${index * cellHeight}rpx; height: ${
-              cell.len * cellHeight
-            }rpx;`}
+            style={`margin-top: ${index * cellHeight}rpx; height: ${cell.len * cellHeight
+              }rpx;`}
             key={String(index)}
           >
             <View

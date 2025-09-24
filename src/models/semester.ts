@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import { getSemesterInfo } from '@/apis/semester'
+import { getCurrentSemesterInfoApi } from '@/apis/semester'
 import { dayOfWeek, nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -62,7 +62,7 @@ export const getSemesterInfoThunk = createAsyncThunk(
         title: '加载中...',
         mask: true,
       })
-      const semesterInfo = await getSemesterInfo()
+      const semesterInfo = await getCurrentSemesterInfoApi()
       // 规范化数据
       termConfig = {
         term: semesterInfo.term,

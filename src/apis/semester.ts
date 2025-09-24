@@ -30,7 +30,7 @@ export interface CurrentSemesterInfo {
  * 获取本学期信息
  * @returns 本学期信息
  */
-export const getSemesterInfo = async () => {
+export const getCurrentSemesterInfoApi = async () => {
   return request.get<CurrentSemesterInfo>('/info/smester')
 }
 
@@ -39,7 +39,7 @@ export const getSemesterInfo = async () => {
  * 获取开课时间
  * @returns 开课时间
  */
-export const getClassStartDate = async (xn: string, xq: number) => {
+export const getClassStartDateApi = async (xn: string, xq: number) => {
   return request.get<string>('/hdjw/class-start-date', {
     data: {
       xn,
@@ -47,3 +47,12 @@ export const getClassStartDate = async (xn: string, xq: number) => {
     },
   })
 }
+
+// /**
+//  * 获取学期开始时间表
+//  * 
+//  * 详情见后端代码和工作台的小程序设置页面
+//  */
+// export const getClassStartDateTableApi = async () => {
+//   return request.get<[string, string][]>('/info/smester')
+// }

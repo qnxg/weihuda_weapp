@@ -2,7 +2,7 @@ import { Image, View } from '@tarojs/components'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getSemesterInfo } from '@/apis/semester'
+import { getCurrentSemesterInfoApi } from '@/apis/semester'
 import Tabs from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
 import { useAppSelector } from '@/utils/hooks/redux'
@@ -27,7 +27,7 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
-    const res = await getSemesterInfo()
+    const res = await getCurrentSemesterInfoApi()
     setData(res)
   }
 
