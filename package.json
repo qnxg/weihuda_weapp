@@ -13,7 +13,7 @@
     "dev": "taro build --type weapp --watch",
     "lint": "tsc --noEmit && eslint ./src",
     "postinstall": "weapp-tw patch",
-    "prettier": "npx prettier --write ."
+    "fmt": "prettier --write ."
   },
   "browserslist": [
     "last 3 versions",
