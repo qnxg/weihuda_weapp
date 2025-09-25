@@ -11,7 +11,7 @@ import styles from './index.module.scss'
 import TabBar from '@/components/TabBar'
 import iconNoCard from '@/static/empty/no-id-card.svg'
 import addImg from '@/static/index/add.svg'
-import { onColors } from '@/utils/config'
+import { Theme1 } from '@/utils/colors'
 import type { ExamId } from './interface'
 
 const LOCAL_STORAGE_KEY = 'ExamId-Topping'
@@ -190,7 +190,7 @@ const Index: React.FC = () => {
               <ContentLine
                 key={item.keyId}
                 examIdItem={item}
-                lineColor={onColors[i % onColors.length]!}
+                lineColor={Theme1[i % Theme1.length]!}
                 index={i}
                 addTopping={addToppingItem}
                 deleteTopping={deleteToppingItem}

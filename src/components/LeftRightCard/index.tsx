@@ -9,8 +9,8 @@ interface Props {
   className?: string
   style?: string | CSSProperties
   lineColor: string
-  renderLeft: JSX.Element
-  renderRight: JSX.Element
+  renderLeft: React.JSX.Element
+  renderRight: React.JSX.Element
 }
 
 const LineDividedLeftRightCard: React.FC<Props> = props => {

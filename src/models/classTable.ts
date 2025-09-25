@@ -3,10 +3,10 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import {
   type CourseInfo,
-  getClassStartDate,
   getClassTable,
 } from '@/apis/hdjw/classTable'
-import { onColors, onFontColors, semesterWeekNum } from '@/utils/config'
+import { getClassStartDateApi } from '@/apis/semester'
+import { onColors, onFontColors } from '@/utils/config'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -30,33 +30,31 @@ export interface Semester {
 export interface StateType {
   semesters: Array<Semester>
   currentSem: number
-  weeks: Array<string>
-  currentWeeks: number
   currentWeek: number
   mode: boolean
   currentStart: string
   classTable: Array<CourseInfo> // 总课表数据
-  showOptions: boolean
-  showFloat: boolean // 是否显示悬浮课程详情
-  floatData: Array<CourseInfo> // 悬浮课程详情数据
 }
 
 const initialState: StateType = {
   semesters: [],
   currentSem: 0,
-  weeks: Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`),
-  currentWeeks: 0,
   currentWeek: 0,
   mode: false,
   currentStart: '',
   classTable: [],
-  showOptions: false,
-  showFloat: false,
-  floatData: [],
 }
 
 /**
  * 进行课表基础数据的初始化
+ * 
+ * 修改了
+ * `semesters`
+ * `currentSem`
+ * `currentWeek`
+ * `currentStart`
+ * `mode`
+ * `classTable`
  */
 export const initClassTableThunk = createAsyncThunk(
   'classTable/initClassTable',
@@ -65,7 +63,7 @@ export const initClassTableThunk = createAsyncThunk(
       // 获取常量
       const termText: Array<string> = ['秋季学期', '春季学期', '夏季学期']
       const state = thunkAPI.getState() as RootState
-      const { termYear, termStart, termType, weekNum } = state.smester
+      const { termYear, termStart, termType, weekNum } = state.semester
       const { enterYear } = state.userInfo
       const oldState = state.classTable
 
@@ -109,7 +107,6 @@ export const initClassTableThunk = createAsyncThunk(
         currentSem: semesters.findIndex(
           item => item.xn == termYear && item.xq == termType
         ),
-        currentWeeks: tempWeekNum,
         currentWeek: tempWeekNum,
         currentStart: termStart,
         mode: storage.getTableMode() && true,
@@ -166,7 +163,7 @@ export const refreshClassTableThunk = createAsyncThunk(
       }
       // 进行数据缓存
       storage.setClassTable(+xn, xq, course)
-      const startDate = await getClassStartDate(xn, xq)
+      const startDate = await getClassStartDateApi(xn, xq)
       const start = startDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3')
       storage.setTermStart(+xn, xq, start)
       Taro.hideLoading()

@@ -1,3 +1,4 @@
+import { getMiniConfigPageApi } from './miniConfig'
 import request from './request'
 
 export interface IZhihu {
@@ -90,3 +91,36 @@ export const putZhihuByIdApi = async (id: number, putData: Partial<IZhihu>) => {
 // export const deleteZhihuByIdApi = async (id: number) => {
 //     return request.delete<string>(`/zhihu/${id}`)
 // }
+
+
+export interface TagItem {
+  /** Tag的人类可读的名称 */
+  label: string
+  /** Tag的唯一标识符 */
+  value: string
+}
+
+/**
+ * 获取前100个知湖Tag
+ *
+ * 以JSON格式返回
+ */
+export const getZhihuTagsJSON = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
+  const res = await getMiniConfigPageApi({
+    page: 1,
+    pageSize: 100,
+    key: 'zhihuTags',
+  })
+  if (res.rows.length) {
+    return res.rows[0]!.value
+  } else {
+    throw Error('获取知湖标签失败')
+  }
+}
+
+/**
+ * 获取前100个知湖Tag
+ */
+export const getZhihuTags = async () =>
+  JSON.parse(await getZhihuTagsJSON()) as TagItem[]

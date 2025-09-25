@@ -12,7 +12,7 @@ import LineDividedLeftRightCard from '@/components/LeftRightCard'
 import LeftPart from '@/components/LeftRightCard/components/LeftPart'
 import RightPart from '@/components/LeftRightCard/components/RightPart'
 import location from '@/static/icon/location.svg'
-import { onColors } from '@/utils/config'
+import { Theme1 } from '@/utils/colors'
 import type { ExamArrange } from '@/apis/hdjw/examArrange'
 
 interface Props {
@@ -81,7 +81,7 @@ const Index: React.FC<Props> = props => {
                   boxShadow: '0 0 20px 0 rgba(226, 226, 226, 0.34)',
                   borderRadius: '12px',
                 }}
-                lineColor={onColors[index % onColors.length]!}
+                lineColor={Theme1[index % Theme1.length]!}
                 renderLeft={
                   <LeftPart title={day} content={`${start[1]}-${end[1]}`} />
                 }

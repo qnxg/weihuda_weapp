@@ -1,19 +1,24 @@
 import { Picker, Switch, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from './index.module.scss'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
+import { semesterWeekNum } from '@/utils/config'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import storage from '@/utils/storage/cache'
 import type { BaseEventOrig, PickerSelectorProps } from '@tarojs/components'
 
 export interface OptionProps {
-  showOption: boolean
+  show: boolean
+  setShow: React.Dispatch<React.SetStateAction<boolean>>
+  tableCurrentWeek: number
+  setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Options: React.FC<OptionProps> = ({ showOption = false }) => {
-  const { semesters, currentSem, weeks, currentWeeks, mode, showOptions } =
-    useAppSelector(state => state.classTable)
+const Options: React.FC<OptionProps> = props => {
+  const { semesters, currentSem, mode } = useAppSelector(
+    state => state.classTable
+  )
 
   const dispatch = useAppDispatch()
 
@@ -21,11 +26,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
    * 隐藏选项
    */
   const onHideOptions = () => {
-    dispatch(
-      saveClassTable({
-        showOptions: false,
-      })
-    )
+    props.setShow(false)
   }
 
   /**
@@ -38,9 +39,9 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
     dispatch(
       saveClassTable({
         currentSem: e.detail.value as number,
-        currentWeeks: 1,
       })
     )
+    props.setTableCurrentWeek(1) // why?
     void dispatch(refreshClassTableThunk())
   }
 
@@ -49,11 +50,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
    * @param e 事件传的参数
    */
   const onSelectWeek = (e: BaseEventOrig): void => {
-    dispatch(
-      saveClassTable({
-        currentWeeks: parseInt(e.detail.value) + 1,
-      })
-    )
+    props.setTableCurrentWeek(parseInt(e.detail.value) + 1)
   }
 
   /**
@@ -71,8 +68,13 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
 
   const cxHeaderMask = classNames({
     [styles.headerMask]: true,
-    [styles.slideDown]: showOptions,
+    [styles.slideDown]: props.show,
   })
+
+  const weekPeekerRange = useMemo(
+    () => Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`),
+    []
+  )
 
   return (
     <View
@@ -87,7 +89,7 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
       onTouchEnd={(e): void => {
         e.stopPropagation()
       }}
-      style={`display: ${showOption ? 'block' : 'none'}`}
+      style={`display: ${props.show ? 'block' : 'none'}`}
     >
       <View
         className={cxHeaderMask}
@@ -109,14 +111,18 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
           <Picker
             onChange={onSelectWeek}
             className={styles['container-item']}
-            range={weeks}
-            value={currentWeeks - 1}
+            range={weekPeekerRange}
+            value={props.tableCurrentWeek - 1}
             mode='selector'
           >
-            {currentWeeks >= 0 ? (
-              <Text>当前周数：--------第{currentWeeks}周----------</Text>
+            {props.tableCurrentWeek >= 0 ? (
+              <Text>
+                当前周数：--------第{props.tableCurrentWeek}周----------
+              </Text>
             ) : (
-              <Text>当前周数：---距离开学还有{-currentWeeks}周----</Text>
+              <Text>
+                当前周数：---距离开学还有{-props.tableCurrentWeek}周----
+              </Text>
             )}
           </Picker>
           <View className={styles['switch-item']}>

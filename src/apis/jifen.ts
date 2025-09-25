@@ -1,3 +1,4 @@
+import { getMiniConfigPageApi } from './miniConfig'
 import request from './request'
 import type { IPageQueryData } from './interface'
 
@@ -180,3 +181,8 @@ export const postGoodsRecordApi = async (postData: Partial<IGoodsRecord>) => {
     data: postData,
   })
 }
+
+// eslint-disable-next-line @typescript-eslint/no-deprecated
+export const getExtraRules = async () => (await getMiniConfigPageApi({
+  key: 'exteraJifenRules',
+})).rows[0]?.value ?? ''

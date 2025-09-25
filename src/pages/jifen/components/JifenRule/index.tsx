@@ -1,36 +1,18 @@
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from './index.module.scss'
-import { getJifenRulePageApi } from '@/apis/jifen'
-import { getMiniConfigPageApi } from '@/apis/miniConfig'
-import type { IJifenRule } from '@/apis/jifen'
+import { getExtraRules, getJifenRulePageApi } from '@/apis/jifen'
+import usePromise from '@/utils/hooks/usePromise'
+
+const getNormalRules = async () => (await getJifenRulePageApi({
+  page: 1,
+  pageSize: 20,
+})).rows
 
 const JifenRule: React.FC = () => {
-  const [loading, setLoading] = React.useState(true)
-  const [data, setData] = React.useState<IJifenRule[]>([])
-  const [exteraRule, setExteraRule] = React.useState<string>('')
-
-  const getData = async () => {
-    await getMiniConfigPageApi({
-      key: 'exteraJifenRules',
-    }).then(res => {
-      if (res.rows.length === 0) return
-      setExteraRule(res.rows[0]!.value)
-    })
-    const res = await getJifenRulePageApi({
-      page: 1,
-      pageSize: 20,
-    })
-    setLoading(false)
-    if (res) {
-      setData(res.rows)
-    }
-  }
-
-  useEffect(() => {
-    void getData()
-  }, [])
+  const [extraRules, loadingExtraRules] = usePromise(getExtraRules, '', [getExtraRules]);
+  const [normalRules, loadingNormalRules] = usePromise(getNormalRules, [], [getNormalRules]);
 
   return (
     <View className={styles.ruleContainer}>
@@ -39,7 +21,7 @@ const JifenRule: React.FC = () => {
           <View className={styles.ruleDesc}>动作</View>
           <View className={classNames(styles.ruleJifen)}>积分</View>
         </View>
-        {data.map(item => (
+        {normalRules.map(item => (
           <View key={item.id} className={styles.ruleItem}>
             <View className={styles.ruleDesc}>{item.name}</View>
             <View
@@ -53,16 +35,16 @@ const JifenRule: React.FC = () => {
           </View>
         ))}
       </View>
-      {exteraRule && (
+      {extraRules && (
         <View className={styles.exteraRule}>
           <View className={styles.exteraTitle}>其他说明</View>
-          <View dangerouslySetInnerHTML={{ __html: exteraRule }} />
+          <View dangerouslySetInnerHTML={{ __html: extraRules }} />
           {/* <RichText nodes={exteraRule} /> */}
         </View>
       )}
-      {data.length === 0 && (
+      {normalRules.length === 0 && (
         <View className={styles.empty}>
-          <View>{loading ? '加载中...' : '暂无数据'}</View>
+          <View>{(loadingExtraRules && loadingNormalRules) ? '加载中...' : '暂无数据'}</View>
         </View>
       )}
     </View>

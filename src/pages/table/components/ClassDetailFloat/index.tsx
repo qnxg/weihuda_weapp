@@ -4,26 +4,23 @@ import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
 import { deleteCourseApi } from '@/apis/hdjw/classTable'
-import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import { refreshClassTableThunk } from '@/models/classTable'
+import { useAppDispatch } from '@/utils/hooks/redux'
+import type { CourseInfo } from '@/apis/hdjw/classTable';
 
 export interface FloatProps {
-  showFloat: boolean
+  classDetailsToShow: CourseInfo[],
+  clearClassDetailsToShow: () => void,
 }
 
-const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
+const ClassDetailFloat: React.FC<FloatProps> = props => {
   /** 定义悬浮课程详情的数据 */
-  const { floatData } = useAppSelector(state => state.classTable)
   const dispatch = useAppDispatch()
   /**
    * 隐藏float
    */
   const onHideFloat = (): void => {
-    dispatch(
-      saveClassTable({
-        showFloat: false,
-      })
-    )
+    props.clearClassDetailsToShow()
   }
   const deleteCourse = async (id: number) => {
     const deleteRes = await Taro.showModal({
@@ -52,14 +49,14 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
     <View
       className={styles.firstMask}
       onClick={onHideFloat}
-      style={`display: ${showFloat ? 'block' : 'none'}`}
+      style={`display: ${props.classDetailsToShow.length > 0 ? 'block' : 'none'}`}
     >
       <Swiper
         className={styles.swiper}
         previousMargin='150rpx'
         nextMargin='152rpx'
       >
-        {floatData.map((item, index) => {
+        {props.classDetailsToShow.map((item, index) => {
           return (
             <SwiperItem key={String(index)} className={styles.swiperItem}>
               <View
@@ -115,4 +112,4 @@ const Float: React.FC<FloatProps> = ({ showFloat = false }) => {
   )
 }
 
-export default Float
+export default ClassDetailFloat

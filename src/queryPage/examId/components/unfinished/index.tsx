@@ -2,7 +2,7 @@ import { View } from '@tarojs/components'
 import React from 'react'
 import ContentLine from '../contentLine'
 import styles from './index.module.scss'
-import { onColors } from '@/utils/config'
+import { Theme1 } from '@/utils/colors'
 import type { ExamId } from '../../interface'
 
 interface Props {
@@ -24,7 +24,7 @@ const Index: React.FC<Props> = props => {
       {topExamIds?.map((item, index) => (
         <ContentLine
           key={item.keyId}
-          lineColor={onColors[index % onColors.length]!}
+          lineColor={Theme1[index % Theme1.length]!}
           examIdItem={item}
           index={index}
           addTopping={addTopping}
@@ -37,7 +37,7 @@ const Index: React.FC<Props> = props => {
         <ContentLine
           key={item.keyId}
           lineColor={
-            onColors[(index + (topExamIds?.length || 0)) % onColors.length]!
+            Theme1[(index + (topExamIds?.length || 0)) % Theme1.length]!
           }
           examIdItem={item}
           index={index}

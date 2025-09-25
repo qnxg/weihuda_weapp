@@ -49,7 +49,7 @@ const GradeCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
-  const { termYear, termType } = useAppSelector(state => state.smester)
+  const { termYear, termType } = useAppSelector(state => state.semester)
   const [gradeData, setGradeData] = useState<undefined | GradeItem[]>(undefined)
   useEffect(() => {
     onLoadingStatusChange(false)

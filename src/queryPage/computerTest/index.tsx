@@ -9,7 +9,7 @@ import RightPart from '@/components/LeftRightCard/components/RightPart'
 import PullRefresh from '@/components/PullRefresh'
 import iconNoJK from '@/static/empty/no-exam.svg'
 import location from '@/static/icon/location.svg'
-import { onColors } from '@/utils/config'
+import { Theme1 } from '@/utils/colors'
 import type { ExamArrange } from '@/apis/hdjw/computerExam'
 
 const Index: React.FC = () => {
@@ -65,7 +65,7 @@ const Index: React.FC = () => {
               <LineDividedLeftRightCard
                 key={item.name}
                 className={styles.cardOuter}
-                lineColor={onColors[index % onColors.length]!}
+                lineColor={Theme1[index % Theme1.length]!}
                 renderLeft={
                   <LeftPart title={day} content={`${start[1]}-${end[1]}`} />
                 }

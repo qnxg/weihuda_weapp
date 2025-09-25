@@ -110,6 +110,7 @@ const modifyUserSettings = async <T extends UserSettings>(
   modifier: (
     oldUserSettings: UserSettings
   ) => Promise<T & Record<Exclude<keyof T, keyof UserSettings>, never>>
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 ) => setAllUserSettings(await modifier(await fetchUserSettings()))
 
 /**
@@ -123,6 +124,7 @@ export const modifyUserSettingsPart = async <K extends keyof UserSettings>(
     oldUserSettingsPart: UserSettings[K]
   ) => Promise<Omit<UserSettings[K], 'settingsMajorVersion'>>
 ) => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   await modifyUserSettings(async old => {
     const newPart: Omit<UserSettings[K], 'settingsMajorVersion'> &
       Partial<Pick<UserSettings[K], 'settingsMajorVersion'>> = await modifier(
