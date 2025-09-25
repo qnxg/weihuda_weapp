@@ -147,6 +147,11 @@ const Index: React.FC = () => {
                   </View>
                   <View className={styles.exteraInfo}>
                     <View>
+                      {item.tags.map((tag, idx) => (
+                        <Tag key={tag + idx} theme='warning'>
+                          {tag}
+                        </Tag>
+                      ))}
                       <Tag
                         theme={
                           importantType1.includes(item.courseType1)

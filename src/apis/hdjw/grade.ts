@@ -11,6 +11,7 @@ export interface GradeItem {
   score: number // 成绩
   courseType1: string // 课程类别1
   courseType2: string // 课程类别2
+  tags: string[]
 }
 
 /**
