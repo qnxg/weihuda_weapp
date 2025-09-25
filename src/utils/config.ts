@@ -1,4 +1,4 @@
-import { Theme2, Theme3 } from "./colors"
+import { Theme2, Theme3 } from './colors'
 
 /**
  * @interface CourseNum 课程时间与id对应关系字典

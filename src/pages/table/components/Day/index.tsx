@@ -14,7 +14,9 @@ import type { CourseInfo } from '@/apis/hdjw/classTable'
 interface Props {
   /** 当天的课程数组 */
   dayCourse: Array<ClassTableItem>
-  setClassDetailsForFloatComponentToShow: React.Dispatch<React.SetStateAction<CourseInfo[]>>
+  setClassDetailsForFloatComponentToShow: React.Dispatch<
+    React.SetStateAction<CourseInfo[]>
+  >
 }
 
 const Day: React.FC<Props> = props => {
@@ -53,8 +55,9 @@ const Day: React.FC<Props> = props => {
         return (
           <View
             className={styles.cell}
-            style={`margin-top: ${index * cellHeight}rpx; height: ${cell.len * cellHeight
-              }rpx;`}
+            style={`margin-top: ${index * cellHeight}rpx; height: ${
+              cell.len * cellHeight
+            }rpx;`}
             key={String(index)}
           >
             <View

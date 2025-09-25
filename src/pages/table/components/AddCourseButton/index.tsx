@@ -6,7 +6,7 @@ import styles from './index.module.scss'
 import Button from '@/components/Button'
 import AddIcon from '@/static/table/add.svg'
 
-const AddCourseButton: React.FC<{ xn: number, xq: number }> = (prop) => {
+const AddCourseButton: React.FC<{ xn: number; xq: number }> = prop => {
   return (
     <Button
       className={classNames(styles.button)}

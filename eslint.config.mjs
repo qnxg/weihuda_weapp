@@ -89,7 +89,7 @@ export default defineConfig([
       // 这个规则能够降低循环依赖的风险
       // 这个规则有可用的自动修复
       '@typescript-eslint/consistent-type-imports': ['warn'],
-      "@typescript-eslint/no-deprecated": "warn",
+      '@typescript-eslint/no-deprecated': 'warn',
       'react/jsx-curly-brace-presence': 'off',
 
       // 小程序特殊规则

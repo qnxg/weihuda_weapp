@@ -16,26 +16,20 @@ import type { CurDatesOfWeek, ClassTableItem } from './interface'
 import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 const Index: React.FC = () => {
-
-  const cw = useAppSelector(s => s.classTable.currentWeek);
-  const [tableCurrentWeek, setTableCurrentWeek] = useState(cw);
+  const cw = useAppSelector(s => s.classTable.currentWeek)
+  const [tableCurrentWeek, setTableCurrentWeek] = useState(cw)
 
   const [
     classDetailsForFloatComponentToShow,
-    setClassDetailsForFloatComponentToShow
+    setClassDetailsForFloatComponentToShow,
   ] = useState<CourseInfo[]>([])
-  const clearClassDetailsForFloatComponentToShow =
-    () => setClassDetailsForFloatComponentToShow([])
+  const clearClassDetailsForFloatComponentToShow = () =>
+    setClassDetailsForFloatComponentToShow([])
 
   const [shouldShowOptions, setShouldShowOptions] = useState(false)
 
-  const {
-    semesters,
-    currentSem,
-    classTable,
-    mode,
-    currentStart,
-  } = useAppSelector(state => state.classTable)
+  const { semesters, currentSem, classTable, mode, currentStart } =
+    useAppSelector(state => state.classTable)
 
   const dispatch = useAppDispatch()
 
@@ -54,7 +48,8 @@ const Index: React.FC = () => {
   // 计算当前的月份
   const curMonthOfDay = useMemo<number>(() => {
     if (tableCurrentWeek) {
-      const tempWeekNum = tableCurrentWeek < 0 ? tableCurrentWeek : tableCurrentWeek - 1
+      const tempWeekNum =
+        tableCurrentWeek < 0 ? tableCurrentWeek : tableCurrentWeek - 1
       return dayjs(currentStart).add(tempWeekNum, 'week').month() + 1
     } else {
       return 1
@@ -65,7 +60,8 @@ const Index: React.FC = () => {
   const curDatesOfWeek = useMemo<Array<CurDatesOfWeek>>(() => {
     if (tableCurrentWeek) {
       const daysArrayTemp: Array<CurDatesOfWeek> = []
-      const curWeek = tableCurrentWeek < 0 ? tableCurrentWeek + 1 : tableCurrentWeek - 1
+      const curWeek =
+        tableCurrentWeek < 0 ? tableCurrentWeek + 1 : tableCurrentWeek - 1
       const startDate = dayjs(currentStart).add(curWeek, 'week')
       for (let i = 0; i < 7; ++i) {
         const temp = startDate.add(i, 'day')
@@ -166,7 +162,9 @@ const Index: React.FC = () => {
           tableCurrentWeek={tableCurrentWeek}
           setTableCurrentWeek={setTableCurrentWeek}
           onRefresh={onRefresh}
-          setClassDetailsForFloatComponentToShow={setClassDetailsForFloatComponentToShow}
+          setClassDetailsForFloatComponentToShow={
+            setClassDetailsForFloatComponentToShow
+          }
         />
       </PullRefresh>
       <Options

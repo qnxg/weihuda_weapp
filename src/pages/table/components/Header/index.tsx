@@ -12,17 +12,15 @@ interface Props {
   //当前的月份
   curMonthOfDay: number
   //当前周的日期
-  curDatesOfWeek: Array<CurDatesOfWeek>,
-  tableCurrentWeek: number,
+  curDatesOfWeek: Array<CurDatesOfWeek>
+  tableCurrentWeek: number
   setShouldShowOptions: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const text = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 
 const Header: React.FC<Props> = props => {
-  const { semesters, currentSem } = useAppSelector(
-    state => state.classTable
-  )
+  const { semesters, currentSem } = useAppSelector(state => state.classTable)
   const { dayOfWeek, weekNum, termYear, termType } = useAppSelector(
     state => state.semester
   )
@@ -59,8 +57,9 @@ const Header: React.FC<Props> = props => {
             [styles['title-item']]: true,
             [styles.selected]:
               index === dayOfWeek &&
-              (props.tableCurrentWeek < 0 ? props.tableCurrentWeek + 1 : props.tableCurrentWeek - 1) ===
-              weekNum &&
+              (props.tableCurrentWeek < 0
+                ? props.tableCurrentWeek + 1
+                : props.tableCurrentWeek - 1) === weekNum &&
               semesters[currentSem]!.xn === termYear &&
               semesters[currentSem]!.xq === termType,
           })

@@ -6,11 +6,11 @@ import styles from './index.module.scss'
 import { deleteCourseApi } from '@/apis/hdjw/classTable'
 import { refreshClassTableThunk } from '@/models/classTable'
 import { useAppDispatch } from '@/utils/hooks/redux'
-import type { CourseInfo } from '@/apis/hdjw/classTable';
+import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 export interface FloatProps {
-  classDetailsToShow: CourseInfo[],
-  clearClassDetailsToShow: () => void,
+  classDetailsToShow: CourseInfo[]
+  clearClassDetailsToShow: () => void
 }
 
 const ClassDetailFloat: React.FC<FloatProps> = props => {

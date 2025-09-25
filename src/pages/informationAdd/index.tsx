@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import React, { useCallback, useState } from 'react'
 import styles from './index.module.scss'
 import { uploadImgApi } from '@/apis/upload'
-import { getZhihuTags , postZhihuApi } from '@/apis/zhihu'
+import { getZhihuTags, postZhihuApi } from '@/apis/zhihu'
 
 import Button from '@/components/Button'
 import Card from '@/components/Card'

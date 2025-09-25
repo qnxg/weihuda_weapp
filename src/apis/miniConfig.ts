@@ -27,9 +27,9 @@ export interface IMiniConfigPageQueryData
 
 /**
  * 获取小程序配置列表分页
- * 
+ *
  * TODO: DELETE THIS API
- * 
+ *
  * @deprecated
  */
 export const getMiniConfigPageApi = async (

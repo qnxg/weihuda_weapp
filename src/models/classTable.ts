@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import {
-  type CourseInfo,
-  getClassTable,
-} from '@/apis/hdjw/classTable'
+import { type CourseInfo, getClassTable } from '@/apis/hdjw/classTable'
 import { getClassStartDateApi } from '@/apis/semester'
 import { onColors, onFontColors } from '@/utils/config'
 import storage from '@/utils/storage/cache'
@@ -47,7 +44,7 @@ const initialState: StateType = {
 
 /**
  * 进行课表基础数据的初始化
- * 
+ *
  * 修改了
  * `semesters`
  * `currentSem`

@@ -1,4 +1,4 @@
-import request from "./request"
+import request from './request'
 
 /**
  * UserInfo，当前用户信息

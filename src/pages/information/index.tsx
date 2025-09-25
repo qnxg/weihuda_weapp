@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './index.module.scss'
-import { getZhihuTagsJSON , getZhihuPageApi } from '@/apis/zhihu'
+import { getZhihuTagsJSON, getZhihuPageApi } from '@/apis/zhihu'
 
 import Button from '@/components/Button'
 import Card from '@/components/Card'
@@ -13,8 +13,7 @@ import useLayoutLatestRef from '@/utils/hooks/useLayoutLatestRef'
 import usePromise from '@/utils/hooks/usePromise'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import { getBoundingClientRect } from '@/utils/tool'
-import type { TagItem , IZhihu } from '@/apis/zhihu'
-
+import type { TagItem, IZhihu } from '@/apis/zhihu'
 
 const DEFAULT_PANEL_INDEX = 0
 

@@ -5,14 +5,23 @@ import styles from './index.module.scss'
 import { getExtraRules, getJifenRulePageApi } from '@/apis/jifen'
 import usePromise from '@/utils/hooks/usePromise'
 
-const getNormalRules = async () => (await getJifenRulePageApi({
-  page: 1,
-  pageSize: 20,
-})).rows
+const getNormalRules = async () =>
+  (
+    await getJifenRulePageApi({
+      page: 1,
+      pageSize: 20,
+    })
+  ).rows
 
 const JifenRule: React.FC = () => {
-  const [extraRules, loadingExtraRules] = usePromise(getExtraRules, '', [getExtraRules]);
-  const [normalRules, loadingNormalRules] = usePromise(getNormalRules, [], [getNormalRules]);
+  const [extraRules, loadingExtraRules] = usePromise(getExtraRules, '', [
+    getExtraRules,
+  ])
+  const [normalRules, loadingNormalRules] = usePromise(
+    getNormalRules,
+    [],
+    [getNormalRules]
+  )
 
   return (
     <View className={styles.ruleContainer}>
@@ -44,7 +53,9 @@ const JifenRule: React.FC = () => {
       )}
       {normalRules.length === 0 && (
         <View className={styles.empty}>
-          <View>{(loadingExtraRules && loadingNormalRules) ? '加载中...' : '暂无数据'}</View>
+          <View>
+            {loadingExtraRules && loadingNormalRules ? '加载中...' : '暂无数据'}
+          </View>
         </View>
       )}
     </View>

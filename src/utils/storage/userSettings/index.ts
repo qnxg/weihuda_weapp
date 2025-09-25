@@ -110,7 +110,7 @@ const modifyUserSettings = async <T extends UserSettings>(
   modifier: (
     oldUserSettings: UserSettings
   ) => Promise<T & Record<Exclude<keyof T, keyof UserSettings>, never>>
-// eslint-disable-next-line @typescript-eslint/no-deprecated
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
 ) => setAllUserSettings(await modifier(await fetchUserSettings()))
 
 /**
