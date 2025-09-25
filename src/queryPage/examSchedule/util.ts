@@ -23,7 +23,7 @@ export const ExamDate = (e: ExamArrange): DateType => {
   const numArr = e.startTime.match(/[1-9][0-9]*/g) as RegExpMatchArray
   const [y, m, d] = numArr
   if (y === undefined || m == undefined || d == undefined) {
-    throw Error("考试日期提取错误")
+    throw Error('考试日期提取错误')
   }
   return {
     year: +y,

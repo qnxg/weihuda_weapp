@@ -225,7 +225,11 @@ const Index: React.FC = () => {
               }
             }}
             onChange={value => {
-              const [yi, mi, di] = (value.detail.value) as [number, number, number]
+              const [yi, mi, di] = value.detail.value as [
+                number,
+                number,
+                number,
+              ]
               setSltByDay({ year: yi, month: mi, day: di })
               setByDay([
                 yearSltData[yi]!.value,

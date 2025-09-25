@@ -5,7 +5,10 @@ import React from 'react'
 import useAddCourse from './hooks'
 import styles from './index.module.scss'
 import { addCoursePicker } from '@/utils/config'
-import type { BaseEventOrig, PickerMultiSelectorProps} from '@tarojs/components';
+import type {
+  BaseEventOrig,
+  PickerMultiSelectorProps,
+} from '@tarojs/components'
 
 const Index: React.FC = () => {
   const { state, setState, formatValue, run } = useAddCourse()
@@ -49,7 +52,9 @@ const Index: React.FC = () => {
    * 某一列改变进行判断 感觉有点问题
    * @param e
    */
-  const columnChange = (e: BaseEventOrig<PickerMultiSelectorProps.ColumnChangeEventDetail>): void => {
+  const columnChange = (
+    e: BaseEventOrig<PickerMultiSelectorProps.ColumnChangeEventDetail>
+  ): void => {
     if (e.detail.column === 1) {
       const [...temp] = state.picker
       temp[1] = temp[2] = e.detail.value
@@ -84,7 +89,9 @@ const Index: React.FC = () => {
    * 设置星期
    * @param e
    */
-  const pickerChange = (e: BaseEventOrig<PickerMultiSelectorProps.ChangeEventDetail>): void => {
+  const pickerChange = (
+    e: BaseEventOrig<PickerMultiSelectorProps.ChangeEventDetail>
+  ): void => {
     const [...temp] = state.picker
     temp[0] = e.detail.value[0]
     setState(s => ({
@@ -204,8 +211,9 @@ const Index: React.FC = () => {
               onChange={pickerChange}
             >
               <View>
-                {`${addCoursePicker[0]![state.picker[0]]} ${addCoursePicker[1]![state.picker[1]]}-${addCoursePicker[2]![state.picker[2]]
-                  }`}
+                {`${addCoursePicker[0]![state.picker[0]]} ${addCoursePicker[1]![state.picker[1]]}-${
+                  addCoursePicker[2]![state.picker[2]]
+                }`}
               </View>
             </Picker>
           </View>

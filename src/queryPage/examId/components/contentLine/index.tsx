@@ -122,7 +122,7 @@ const Index: React.FC<Props> = props => {
       content: '确认删除这一项吗',
       cancelText: '取消删除',
       confirmText: '确认删除',
-      onCancel: () => { },
+      onCancel: () => {},
       onConfirm: () => {
         deleteItem(index, type)
         setLeftOffset(INIT_OFFSET)

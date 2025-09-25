@@ -89,22 +89,22 @@ const Modal: React.FC<ModalProps> = props => {
 
   return elm
     ? createPortal(
-      <Block>
-        <View className={styles.overlay} onClick={handleCancel} />
-        <View className={styles.dialog} {...rest}>
-          {children}
-          {content}
-          <View className={styles.btnContainer}>
-            <View className={styles.cancelBtn} onClick={handleCancel}>
-              {cancelText}
-            </View>
-            <View className={styles.confirmBtn} onClick={handleConfirm}>
-              {confirmText}
+        <Block>
+          <View className={styles.overlay} onClick={handleCancel} />
+          <View className={styles.dialog} {...rest}>
+            {children}
+            {content}
+            <View className={styles.btnContainer}>
+              <View className={styles.cancelBtn} onClick={handleCancel}>
+                {cancelText}
+              </View>
+              <View className={styles.confirmBtn} onClick={handleConfirm}>
+                {confirmText}
+              </View>
             </View>
           </View>
-        </View>
-      </Block>,
-      elm
-    )
+        </Block>,
+        elm
+      )
     : null
 }

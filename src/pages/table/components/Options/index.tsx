@@ -5,7 +5,7 @@ import styles from './index.module.scss'
 import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import storage from '@/utils/storage/cache'
-import type { BaseEventOrig, PickerSelectorProps} from '@tarojs/components';
+import type { BaseEventOrig, PickerSelectorProps } from '@tarojs/components'
 
 export interface OptionProps {
   showOption: boolean
@@ -32,7 +32,9 @@ const Options: React.FC<OptionProps> = ({ showOption = false }) => {
    * 选择学期
    * @param e 事件传的参数
    */
-  const onSelectXq = (e: BaseEventOrig<PickerSelectorProps.ChangeEventDetail>): void => {
+  const onSelectXq = (
+    e: BaseEventOrig<PickerSelectorProps.ChangeEventDetail>
+  ): void => {
     dispatch(
       saveClassTable({
         currentSem: e.detail.value as number,

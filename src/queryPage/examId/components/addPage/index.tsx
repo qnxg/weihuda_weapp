@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react'
 import styles from './index.module.scss'
 import { postExamNumApi } from '@/apis/examNum'
 import type { ExamId } from '../../interface'
-import type { BaseEventOrig} from '@tarojs/components';
+import type { BaseEventOrig } from '@tarojs/components'
 
 interface AddPageProps {
   cancelHandle?: () => void

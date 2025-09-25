@@ -13,7 +13,7 @@ import Copyright from '@/components/Copyright'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
 import { useAppSelector } from '@/utils/hooks/redux'
-import type { BaseEventOrig } from '@tarojs/components';
+import type { BaseEventOrig } from '@tarojs/components'
 
 const CourseTypeList = ['', '全部', '必修', '核心']
 const RankTypeList = ['', '算数平均', '加权平均', '绩点']
@@ -56,7 +56,9 @@ const HdjwIndex: React.FC = () => {
   for (let i = userInfo.enterYear; i <= termYear; ++i) {
     termYearPicker.push(`${i} - ${i + 1} 学年`)
   }
-  const [termPickerValue, setTermPickerValue] = useState<[number, number]>([0, 0])
+  const [termPickerValue, setTermPickerValue] = useState<[number, number]>([
+    0, 0,
+  ])
   const pickerChange = (e: BaseEventOrig) => {
     const [yearIndex, typeIndex] = e.detail.value
     setTermPickerValue([yearIndex, typeIndex])

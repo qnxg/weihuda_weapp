@@ -2,7 +2,7 @@ import { View } from '@tarojs/components'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
 import type { FitnessItem, Total } from '@/apis/pt/fitness'
-import type { BaseEventOrig} from '@tarojs/components';
+import type { BaseEventOrig } from '@tarojs/components'
 
 interface CardProps {
   total: Total
