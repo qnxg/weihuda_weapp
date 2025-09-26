@@ -80,12 +80,16 @@ const ClassDetailFloat: React.FC<FloatProps> = props => {
                           : item.area}
                       </View>
                     )}
+                    <View className='my-1'>{item.className}</View>
                     {item.teacher && (
                       <View className='my-1'>{item.teacher}</View>
                     )}
                     <View className='my-1'>第 {item.weeks.join(', ')} 周</View>
                     {item.credit && (
                       <View className='my-1'>{item.credit} 学分</View>
+                    )}
+                    {item.courseId && (
+                      <View className='my-1'>上课人数：{item.people}</View>
                     )}
                     {item.extra && <View className='my-1'>{item.extra}</View>}
                   </View>

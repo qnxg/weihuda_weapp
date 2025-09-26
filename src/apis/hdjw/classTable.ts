@@ -12,6 +12,7 @@ export interface CourseInfo {
   extra?: string // 额外备注信息
   place?: string // 上课地点
   area?: string // 上课校区
+  people: number // 上课人数
   time: number // 上课节次。注意，ClassTableItem 里的 time 都是 -1
   teacher?: string // 教师
   weeks: number[] // 在哪周上课
