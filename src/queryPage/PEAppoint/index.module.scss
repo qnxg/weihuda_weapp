@@ -9,25 +9,6 @@
   }
 }
 
-.container {
-  @include flex(normal, center, column);
-  width: 100%;
-  height: 100%;
-  padding-top: 368px;
-
-  .iconNoJK {
-    width: 160px;
-    height: 160px;
-  }
-
-  .text {
-    margin-top: 28px;
-    font-size: $fontMedium;
-    line-height: 40px;
-    color: $thirdTextColor;
-  }
-}
-
 @media (prefers-color-scheme: dark) {
   .outer {
     .cardOuter {

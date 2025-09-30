@@ -1,14 +1,12 @@
 import { View } from '@tarojs/components'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
-import type { FitnessItem, Total } from '@/apis/pt/fitness'
+import type { Fitness } from '@/apis/pt/fitness'
 import type { BaseEventOrig } from '@tarojs/components'
 
 interface CardProps {
-  total: Total
+  data: Fitness
   sex: string
-  name: string
-  items?: FitnessItem[] | undefined
 }
 
 const bgColors = [
@@ -23,7 +21,8 @@ const bgColors = [
 const percent = [20, 15, 10, 10, 20, 10, 15]
 
 const Card: React.FC<CardProps> = props => {
-  const { total, sex, name, items } = props
+  const { data, sex } = props
+  const { student, total, items } = data
   const [nowAt, setNowAt] = useState(7)
 
   const onChangeNowAt = (e: BaseEventOrig) => {
@@ -38,9 +37,11 @@ const Card: React.FC<CardProps> = props => {
     <View className={styles.container}>
       <View style={{ opacity: nowAt === 7 ? 1 : 0, transition: '0.05s' }}>
         <View className={styles.name}>
-          {name} ({sex})
+          {student.name} ({sex})
         </View>
-        <View className={styles.score}>总得分 : {total.score || '加载中'}</View>
+        <View className={styles.score}>
+          总得分 : {total.score} ({total.grade})
+        </View>
       </View>
       <View className={styles.bnOuter}>
         {nowAt !== 7 && (
@@ -75,6 +76,7 @@ const Card: React.FC<CardProps> = props => {
           })}
         </View>
       </View>
+      <View className={styles.tips}>长按上方的彩色条可查看具体成绩。</View>
     </View>
   )
 }

@@ -25,17 +25,16 @@
     width: 100%;
     text-align: left;
     height: 40px;
-    font-size: $fontMedium;
+    font-size: $fontNormal;
     line-height: 40px;
     letter-spacing: 0.2px;
-    color: #808080;
   }
 
   .score {
     font-size: $fontNormal;
     line-height: 46px;
     height: 46px;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
     letter-spacing: 0.1px;
     color: #3e3e3e;
   }
@@ -99,6 +98,12 @@
       }
     }
   }
+
+  .tips {
+    color: #808080;
+    font-size: $fontMedium;
+    margin-top: 16px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -126,5 +131,9 @@
         }
       }
     }
+  }
+
+  .tips {
+    color: $darkTextColor;
   }
 }

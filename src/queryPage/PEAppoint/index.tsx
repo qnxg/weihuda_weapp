@@ -1,11 +1,11 @@
-import { Image, View } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { getFitnessAppoint } from '@/apis/pt/fitness'
 import DisplayCard from '@/components/DisplayCard'
+import NoData from '@/components/NoData'
 import PullRefresh from '@/components/PullRefresh'
-import iconNoJK from '@/static/empty/no-exam.svg'
 import type { FitnessAppointItem } from '@/apis/pt/fitness'
 
 const Index: React.FC = () => {
@@ -110,10 +110,7 @@ const Index: React.FC = () => {
           })}
         </View>
       ) : (
-        <View className={styles.container}>
-          <Image src={iconNoJK} className={styles.iconNoJK} />
-          <View className={styles.text}>暂时没有体测预约</View>
-        </View>
+        <NoData text='暂无体测预约信息' />
       )}
     </PullRefresh>
   )

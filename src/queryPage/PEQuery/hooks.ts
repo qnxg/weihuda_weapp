@@ -4,34 +4,6 @@ import { getFitness } from '@/apis/pt/fitness'
 import { useAppSelector } from '@/utils/hooks/redux'
 import type { Fitness } from '@/apis/pt/fitness'
 
-const init = {
-  student: {
-    name: '加载中',
-    number: '',
-  },
-  total: {
-    grade: '不及格',
-    score: 0,
-  },
-  eye: {
-    eye_ametropia_left: '加载中',
-    eye_ametropia_right: '加载中',
-    eye_mirror_left: '加载中',
-    eye_mirror_right: '加载中',
-    eyesight_left: '加载中',
-    eyesight_right: '加载中',
-  },
-  items: [],
-}
-
-const initState = (length: number): Fitness[] => {
-  const temp: Fitness[] = []
-  for (let i = 0; i < length; ++i) {
-    temp.push(init)
-  }
-  return temp
-}
-
 const usePE = () => {
   const { enterYear, sex } = useAppSelector(state => state.userInfo)
   const { termYear } = useAppSelector(state => state.semester)
@@ -44,7 +16,9 @@ const usePE = () => {
   }, [enterYear, termYear])
 
   const [current, setCurrent] = useState<number>(0)
-  const [state, setState] = useState<Fitness[]>(initState(years.length))
+  const [state, setState] = useState<(Fitness | null)[]>(
+    new Array(years.length).fill(null)
+  )
 
   const run = useCallback(async () => {
     await Taro.showLoading({
@@ -75,7 +49,7 @@ const usePE = () => {
   }, [current, sex, state, years])
 
   useEffect(() => {
-    if (JSON.stringify(state[current]) === JSON.stringify(init)) {
+    if (state[current] === null) {
       void run()
     }
   }, [current, run, state])

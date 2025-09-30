@@ -3,6 +3,7 @@ import React from 'react'
 import Card from './components/Card'
 import HalfCard from './components/HalfCard'
 import usePE from './hooks'
+import NoData from '@/components/NoData'
 import PullRefresh from '@/components/PullRefresh'
 import Tab from '@/components/Tab'
 import Panel from '@/components/Tab/components/Panel'
@@ -31,29 +32,35 @@ const Index: React.FC = () => {
         return (
           <Panel current={current} index={index} key={String(years[index])}>
             <PullRefresh runFunc={refresh} topGap={68}>
-              <Card
-                items={item.items}
-                total={item.total}
-                name={item.student.name}
-                sex={sex}
-              />
-              {item.items &&
-                item.items.map(project => {
-                  return (
+              {item === null ? (
+                <NoData text='暂无体测数据' />
+              ) : (
+                <>
+                  <Card data={item} sex={sex} />
+                  {item.items &&
+                    item.items.map(project => {
+                      return (
+                        <HalfCard
+                          key={project.name}
+                          name={project.name}
+                          color={project.class}
+                          rank={project.rank}
+                          score={project.score}
+                        />
+                      )
+                    })}
+                  <Navigator
+                    url={`/queryPage/PEQuery/eye?${obj2query(state[0]?.eye)}`}
+                  >
                     <HalfCard
-                      key={project.name}
-                      name={project.name}
-                      color={project.class}
-                      rank={project.rank}
-                      score={project.score}
+                      name='视力'
+                      color='white'
+                      rank=''
+                      score='点击查看'
                     />
-                  )
-                })}
-              <Navigator
-                url={`/queryPage/PEQuery/eye?${obj2query(state[0]?.eye)}`}
-              >
-                <HalfCard name='视力' color='white' rank='' score='点击查看' />
-              </Navigator>
+                  </Navigator>
+                </>
+              )}
             </PullRefresh>
           </Panel>
         )
