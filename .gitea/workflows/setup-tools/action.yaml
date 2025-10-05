@@ -1,0 +1,21 @@
+name: Setup Tools
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Package Manager
+      run: |
+        corepack enable
+        corepack install
+
+    - name: Setup Node
+      uses: actions/setup-node@v5
+      with:
+        node-version: 24
+        cache: 'yarn'
+
+    - name: Use `npmmirror`
+      run: npx yarn config set registry https://registry.npmmirror.com
+
+    - name: Yarn Install
+      run: npx yarn install --frozen-lockfile

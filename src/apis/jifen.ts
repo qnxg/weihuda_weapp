@@ -182,9 +182,9 @@ export const postGoodsRecordApi = async (postData: Partial<IGoodsRecord>) => {
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-deprecated
 export const getExtraRules = async () =>
   (
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     await getMiniConfigPageApi({
       key: 'exteraJifenRules',
     })

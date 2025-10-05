@@ -8,6 +8,7 @@
     "typescript": true,
     "css": "sass"
   },
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "build": "yarn lint && taro build --type weapp",
     "dev": "taro build --type weapp --watch",
