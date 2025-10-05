@@ -17,4 +17,3 @@ jobs:
 
       - name: Run Lint
         run: npx yarn lint
-      
