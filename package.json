@@ -12,7 +12,7 @@
   "scripts": {
     "build": "yarn lint && taro build --type weapp",
     "dev": "taro build --type weapp --watch",
-    "lint": "tsc --noEmit && eslint ./src",
+    "lint": "tsc --noEmit && eslint ./src --max-warnings 0",
     "postinstall": "weapp-tw patch",
     "fmt": "prettier --write ."
   },
