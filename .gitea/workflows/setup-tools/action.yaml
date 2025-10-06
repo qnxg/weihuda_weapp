@@ -9,7 +9,7 @@ runs:
         corepack install
 
     - name: Setup Node
-      uses: https://gitea.com/actions/setup-node@v5
+      uses: https://gitee.com/skr2005/setup-node@v5
       with:
         node-version: 24
         cache: 'yarn'

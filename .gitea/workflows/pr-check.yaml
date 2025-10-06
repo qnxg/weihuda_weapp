@@ -10,7 +10,7 @@ jobs:
   lint:
     runs-on: ubuntu-22.04
     steps:
-      - uses: https://gitea.com/actions/checkout@v4
+      - uses: https://gitee.com/skr2005/checkout@v5
 
       - name: Setup
         uses: ./.gitea/workflows/setup-tools
