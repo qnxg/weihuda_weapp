@@ -13,6 +13,10 @@ const Index: React.FC = () => {
           title: <Text>首页卡片设置</Text>,
           onClick: nav('./indexCardSettings/index'),
         },
+        {
+          title: <Text>大物实验平台绑定设置</Text>,
+          onClick: nav('./labBindSettings/index'),
+        },
       ]}
     />
   )

@@ -1,24 +1,16 @@
-import { Image, View } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useState } from 'react'
-import styles from './index.module.scss'
-import { getLabArrange } from '@/apis/pt/labArrange'
+import { getLabArrange } from '@/apis/lab'
 import DisplayCard from '@/components/DisplayCard'
+import NoData from '@/components/NoData'
 import PullRefresh from '@/components/PullRefresh'
-import TabBar from '@/components/TabBar'
-import empty from '@/static/empty/no-grade.svg'
+import type { LabArrange } from '@/apis/lab';
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)
-  const [index, setIndex] = useState(0)
-  const type = ['未做', '已做']
-
-  const onChangeFirstTab = (i: number): void => {
-    setIndex(i)
-  }
-
-  const [data, setData] = useState<any[] | null>(null)
+  const [data, setData] = useState<LabArrange[]>([])
 
   /**
    * 获取数据
@@ -30,19 +22,15 @@ const Index: React.FC = () => {
     })
     try {
       const res = await getLabArrange()
-      if (!res) {
-        setShow(false)
-      } else {
-        const nowDate = dayjs()
-        res.forEach(value => {
-          if (nowDate.isAfter(dayjs(value.date), 'day')) {
-            value.finished = 1
-          } else {
-            value.finished = 0
-          }
-        })
+      if (res) {
         setData(res)
         setShow(true)
+      } else {
+        setShow(false)
+        setData([])
+        await Taro.navigateTo({
+          url: '/settingsPage/labBindSettings/index?tips=true',
+        })
       }
     } catch (err) {
       setShow(false)
@@ -57,7 +45,7 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     void getData()
-  }, [index])
+  }, [])
 
   const onRefresh = async (close: () => void) => {
     await getData()
@@ -66,43 +54,37 @@ const Index: React.FC = () => {
 
   return (
     <Fragment>
-      <TabBar items={type} num={0} onClick={onChangeFirstTab} current={index} />
-      <PullRefresh runFunc={onRefresh} topGap={68}>
-        {data && show && data.length > 0 ? (
+      <PullRefresh runFunc={onRefresh}>
+        {show && data.length > 0 ? (
           <View style={{ padding: 0 }}>
             {data.map(item => {
-              const temp = item.date.split('/')
-              const rest = dayjs(
-                new Date(+temp[0], +temp[1] - 1, +temp[2])
-              ).diff(dayjs(), 'day')
-              if (item.finished === index) {
-                return (
-                  <DisplayCard
-                    title={item.name}
-                    key={Math.random()}
-                    subTitle={rest >= 0 ? `${rest}天` : ''}
-                  >
-                    <View>实验地点：{item.place}</View>
-                    <View>
-                      实验时间：
-                      {`${item.date}  ${item.time}`}
-                    </View>
-                    <view>
-                      课程：{item.classname} {item.classtype}
-                    </view>
-                  </DisplayCard>
-                )
-              }
+              const rest = dayjs(item.date).diff(dayjs(), 'day')
+              return (
+                <DisplayCard
+                  title={item.name}
+                  key={Math.random()}
+                  subTitle={rest >= 0 ? `${rest}天` : '已结束'}
+                >
+                  <view>课程：{item.course}</view>
+                  <View>
+                    时间：
+                    {`${item.date} ${item.time} (第 ${item.week} 周 ${item.day})`}
+                  </View>
+                  <View>地点：{item.place}</View>
+                  <View>座位号：{item.seat}</View>
+                  <View>教师：{item.teacher}</View>
+                  {item.phone && <View>教师电话：{item.phone}</View>}
+                  {item.email && <View>教师邮箱：{item.email}</View>}
+                  <View></View>
+                </DisplayCard>
+              )
             })}
             <DisplayCard>
               <View style='text-align: center;'>见底了</View>
             </DisplayCard>
           </View>
         ) : (
-          <View className={styles.empty}>
-            <Image src={empty} className={styles.img} />
-            <View className={styles.text}>暂时没有实验</View>
-          </View>
+          <NoData text='暂时没有实验' />
         )}
       </PullRefresh>
     </Fragment>

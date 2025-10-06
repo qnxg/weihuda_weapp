@@ -1,0 +1,55 @@
+@import '~@/utils/scss/global.scss';
+
+.dataItem {
+  width: 100%;
+  margin: 0 auto;
+
+  .itemTitle {
+    font-size: $fontNormal;
+    margin: 24px 0 0;
+    color: #3e3e3e;
+  }
+
+  .inputArea {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 16px;
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    font-size: $fontNormal;
+    line-height: 48px;
+  }
+
+  .placeholder {
+    color: #bbb;
+    font-size: $fontNormal;
+  }
+}
+
+.confirmBtn {
+  @include shadow($primaryBlue, rgba(50, 140, 203, 0.5));
+  border-radius: $borderRadiusBig;
+  width: 570px;
+  height: 80px;
+  margin: 48px auto;
+  color: $primaryColor;
+  font-size: $fontLarge;
+  text-align: center;
+  line-height: 80px;
+}
+
+.tips {
+  font-size: $fontMedium;
+}
+
+@media (prefers-color-scheme: dark) {
+  .itemTitle {
+    color: $darkTextColor !important;
+  }
+
+  .inputArea {
+    background: #333333 !important;
+  }
+}
