@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 // 需要重构：循环依赖
 
 import classTable from './classTable'
-import notice from './notice'
 import semester from './semester'
 import userInfo from './userInfo'
 
@@ -11,7 +10,6 @@ const store = configureStore({
     userInfo,
     semester,
     classTable,
-    notice,
   },
 })
 

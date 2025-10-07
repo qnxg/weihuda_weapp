@@ -3,9 +3,12 @@ import Taro from '@tarojs/taro'
 import React from 'react'
 import styles from './index.module.scss'
 import { postUnbind } from '@/apis/bind'
+import { getRecentNotices } from '@/apis/notice'
 import Copyright from '@/components/Copyright'
 import { LineDividedButtonList } from '@/components/LineDividedButtonList'
 import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
+import useShowCount from '@/utils/hooks/useShowCount'
 
 /**
  * 解绑操作
@@ -131,11 +134,23 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
   />
 )
 
+const getRecentNoticesUnread =
+  async () =>
+    (await getRecentNotices())
+      .filter(item => item.status === 0)
+      .length
+
 const Index: React.FC = () => {
   const { name: userRealName, stuId: userRealId } = useAppSelector(
     state => state.userInfo
   )
-  const unread = useAppSelector(state => state.notice.unread)
+
+  // 用户返回此页时也重新加载
+  const pageShowCnt = useShowCount()
+
+  const [unread] = 
+    usePromise(getRecentNoticesUnread, 0, [getRecentNoticesUnread, pageShowCnt])
+
   return (
     <Block>
       <View className={styles.outer}>

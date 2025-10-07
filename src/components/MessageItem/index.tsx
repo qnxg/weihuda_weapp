@@ -4,10 +4,8 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
+import { modifyNotice, type IBtnConfigItem, type INotice } from '@/apis/notice'
 import Button from '@/components/Button'
-import { putNoticeByIdThunk } from '@/models/notice'
-import { useAppDispatch } from '@/utils/hooks/redux'
-import type { IBtnConfigItem, INotice } from '@/apis/notice'
 
 interface IMessageItemProps {
   /**
@@ -30,29 +28,22 @@ const MessageItem: React.FC<IMessageItemProps> = ({
   afterMarkAsRead,
 }) => {
   const [data, setData] = useState<INotice>(propsData)
-  const dispatch = useAppDispatch()
 
   // 如果有回调，则调用回调
   const handleAfterMarkAsRead = (id: number) => {
     if (afterMarkAsRead) {
-      setTimeout(() => {
-        afterMarkAsRead(id)
-      }, 1000)
+      afterMarkAsRead(id)
     }
   }
 
   // 标记为已读
   const markAsRead = async (id: number) => {
-    void dispatch(
-      putNoticeByIdThunk({
-        id,
-        status: 1,
-      })
-    )
+    await modifyNotice({id, status: 1})
     setData({
       ...data,
       status: 1,
     })
+    handleAfterMarkAsRead(id)
   }
 
   // 当按钮点击时
@@ -68,14 +59,7 @@ const MessageItem: React.FC<IMessageItemProps> = ({
       })
     } else if (type === 'button' && value !== undefined) {
       // 更新数据
-      void dispatch(
-        putNoticeByIdThunk({
-          id,
-          status: 1,
-          result: value,
-        })
-      )
-      handleAfterMarkAsRead(id)
+      await modifyNotice({id, status: 1})
       setData({
         ...data,
         status: 1,

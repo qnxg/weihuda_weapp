@@ -4,34 +4,27 @@ import React, { useEffect, useMemo, useState } from 'react'
 import MessageItem from '../../../../../components/MessageItem'
 import styles from './index.module.scss'
 import { getMessage } from '@/apis/message'
+import { getRecentNotices, type INotice } from '@/apis/notice'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import icon from '@/static/index/icon/message.svg'
-import { useAppSelector } from '@/utils/hooks/redux'
 import usePromise from '@/utils/hooks/usePromise'
+import useShowCount from '@/utils/hooks/useShowCount'
 import { getBoundingClientRect } from '@/utils/tool'
 import type CardProps from '../../CardProps'
 import type { Message } from '@/apis/message'
 import type { BaseEventOrig, SwiperProps } from '@tarojs/components'
 
 interface IProps {
+  noticeToShow: INotice[]
   message: Message[]
 }
 
-const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
-  // 消息通知
-  const notice = useAppSelector(state => state.notice)
-  // 总数
-  const [total, setTotal] = useState(message.length)
+const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
   // 当前显示的消息
   const [current, setCurrent] = useState(0)
   // 高度，用于swiper的高度
   const [height, setHeight] = useState(0)
-
-  // 更新总数
-  useEffect(() => {
-    setTotal(message.length + notice.unread)
-  }, [message, notice])
 
   // 计算后的高度
   const calcedHeights = useMemo(async () => {
@@ -43,7 +36,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
       return 120
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notice, message])
+  }, [noticeToShow, message])
 
   // 滑块切换
   const handleSwiperChange = (
@@ -55,12 +48,14 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
     })
   }
 
+  const totalCount = message.length + noticeToShow.length;
+
   return (
     <View>
-      {total > 0 && (
+      {totalCount > 0 && (
         <Card>
           <CardHeader
-            title={`消息盒子(${total})`}
+            title={`消息盒子(${totalCount})`}
             footer={
               <View
                 onClick={() => {
@@ -87,14 +82,11 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
             className={styles.swiper}
           >
             {/* 消息通知 */}
-            {notice.data.flatMap((item, i) => {
-              if (item.status === 1 || item.isShow === 0) return []
-              return [
-                <SwiperItem key={`notice-${i}`}>
-                  <MessageItem className={styles.messageItem} data={item} />
-                </SwiperItem>,
-              ]
-            })}
+            {noticeToShow.map((item, i) =>
+              <SwiperItem key={`notice-${i}`}>
+                <MessageItem className={styles.messageItem} data={item} />
+              </SwiperItem>,
+            )}
             {/* 公告 */}
             {message.map(item => {
               return (
@@ -120,19 +112,37 @@ const MessageCardDisplay: React.FC<IProps> = ({ message }) => {
   )
 }
 
+const getNoticeToShow =
+  async () => (await getRecentNotices())
+    .filter(item => item.status !== 1 && item.isShow !== 0)
+
 const MessageCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
+
+  // 在用户返回首页时也重新加载
+  const pageShowCnt = useShowCount()
+
   const [messageData, isMessageDataLoading] = usePromise(
     getMessage,
-    undefined,
-    [getMessage, reloadController]
+    [],
+    [getMessage, reloadController, pageShowCnt]
   )
+
+  const [noticeToShow, isLoadingNoticeToShow] = usePromise(
+    getNoticeToShow,
+    [],
+    [getNoticeToShow, reloadController, pageShowCnt]
+  )
+
+  const combinedLoadingState = isMessageDataLoading || isLoadingNoticeToShow;
+
   useEffect(() => {
-    onLoadingStatusChange(isMessageDataLoading)
-  }, [isMessageDataLoading, onLoadingStatusChange])
-  return <MessageCardDisplay message={messageData || []} />
+    onLoadingStatusChange(combinedLoadingState)
+  }, [combinedLoadingState, onLoadingStatusChange])
+
+  return <MessageCardDisplay message={messageData} noticeToShow={noticeToShow} />
 }
 
 export default MessageCard

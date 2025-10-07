@@ -38,12 +38,12 @@ export interface INoticePageResponseData {
 
 export interface INoticePageQueryData
   extends IPageQueryData,
-    Partial<INotice> {}
+  Partial<INotice> { }
 
 /**
  * 获取消息通知列表分页
  */
-export const getNoticePageApi = async (queryData: INoticePageQueryData) => {
+const getNoticePageApi = async (queryData: INoticePageQueryData) => {
   return request.get<INoticePageResponseData>('/notice', {
     data: queryData,
   })
@@ -52,11 +52,23 @@ export const getNoticePageApi = async (queryData: INoticePageQueryData) => {
 /**
  * 编辑消息通知
  */
-export const putNoticeByIdApi = async (
+const putNoticeByIdApi = async (
   id: number,
   putData: Partial<INotice>
 ) => {
   return request.put<INoticePageResponseData>(`/notice/${id}`, {
     data: putData,
   })
+}
+
+export const getRecentNotices = async (): Promise<INotice[]> =>
+  (await getNoticePageApi({ page: 1, pageSize: 20 })).rows.map(item => {
+    if (item.btnConfig && typeof item.btnConfig === 'string') {
+      item.btnConfig = JSON.parse(item.btnConfig).reverse()
+    }
+    return item
+  })
+
+export const modifyNotice = async (noticeItem: Partial<INotice> & {id: number}) => {
+  await putNoticeByIdApi(noticeItem.id, noticeItem)
 }

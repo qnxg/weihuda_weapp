@@ -1,14 +1,12 @@
 import { Block, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import ConfigurableCardList from './ConfigurableCardList'
 import { customizableCardsMap, topCards } from './index.config'
 
 import style from './index.module.scss'
 import Card from '@/components/Card'
-import { fetchNoticeThunk } from '@/models/notice'
-import { useAppDispatch } from '@/utils/hooks/redux'
 import { useFinalCardDisplay } from '@/utils/storage/userSettings/customAccessors/computeFinalCardDisplay'
 import type { Key } from 'react'
 
@@ -39,15 +37,6 @@ const CardList: React.FC<CardListProps> = ({
   fetchDataControl,
   onFetchDataFinished,
 }) => {
-  const dispatch = useAppDispatch()
-  // notice?
-  // 暂时不跟踪loading状态
-  useEffect(() => {
-    void (async () => {
-      await dispatch(fetchNoticeThunk())
-    })()
-  }, [dispatch, fetchDataControl])
-
   const [cardsToShow] = useFinalCardDisplay([fetchDataControl])
 
   return (

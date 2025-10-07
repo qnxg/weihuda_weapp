@@ -11,6 +11,29 @@ export default interface CardProps {
    * 请求结束触发一次false
    *
    * 满足这个要求的最简单方式是使用`usePromise`管理你的请求。
+   * 
+   * @example
+   ```tsx
+    const [messageData, isMessageDataLoading] = usePromise(
+      getMessage,
+      [],
+      [getMessage, reloadController]
+    )
+
+    const [noticeToShow, isLoadingNoticeToShow] = usePromise(
+      getNoticeToShow,
+      [],
+      [getNoticeToShow, reloadController]
+    )
+
+    const combinedLoadingState = isMessageDataLoading || isLoadingNoticeToShow;
+
+    useEffect(() => {
+      onLoadingStatusChange(combinedLoadingState)
+    }, [combinedLoadingState, onLoadingStatusChange])
+
+    return <MessageCardDisplay message={messageData} noticeToShow={noticeToShow} />
+   ```
    */
   onLoadingStatusChange: (isLoading: boolean) => any
   /** 当这一项变化时，卡片应该重新请求数据 */
