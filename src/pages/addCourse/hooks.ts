@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 import { postCourseApi } from '@/apis/hdjw/classTable'
+import { refreshClassTableThunk } from '@/models/classTable'
 import { useAppDispatch } from '@/utils/hooks/redux'
 
 const useAddCourse = (xn: number, xq: number) => {
@@ -66,12 +67,10 @@ const useAddCourse = (xn: number, xq: number) => {
     try {
       // 发起请求
       await postCourseApi(data)
+      await dispatch(refreshClassTableThunk())
       await Taro.showToast({
         title: '添加成功',
         duration: 1500,
-      })
-      dispatch({
-        type: 'classTable/handleRefreshTable',
       })
       setTimeout(() => {
         void Taro.navigateBack()

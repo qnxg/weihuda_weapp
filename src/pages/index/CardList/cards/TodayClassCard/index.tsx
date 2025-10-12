@@ -113,18 +113,23 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
       })
       // 从后向前枚举，合并
       for (let i = mergedClass.length - 1; i >= 0; i--) {
-        const item = todayClass[i]!
-        const p = todayClass.findIndex(
-          x =>
-            x.courseName === item.courseName &&
-            x.place === item.place &&
-            x.time === item.time - 1
-        )
-        if (p !== -1) {
-          if (mergedClass[p]!._endTime < item.time) {
-            mergedClass[p]!._endTime = item.time
+        const item = mergedClass[i]!
+        if (!item._show) {
+          continue
+        }
+        for (let j = i - 1; j >= 0; j--) {
+          const preItem = mergedClass[j]!
+          if (
+            item.courseName === preItem.courseName &&
+            item.place === preItem.place &&
+            item.time === preItem.time + 1
+          ) {
+            // 可以合并
+            item.time = preItem.time
+            preItem._show = false
+          } else {
+            break
           }
-          mergedClass[i]!._show = false
         }
       }
       mergedClass = mergedClass.filter(item => item._show)
