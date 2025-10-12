@@ -58,41 +58,28 @@ const Index: React.FC = () => {
     }))
   }
   /**
-   * 某一列改变进行判断 感觉有点问题
+   * 某一列改变进行判断
    * @param e
    */
   const columnChange = (
     e: BaseEventOrig<PickerMultiSelectorProps.ColumnChangeEventDetail>
   ): void => {
-    if (e.detail.column === 1) {
-      const [...temp] = state.picker
-      temp[1] = temp[2] = e.detail.value
-      setState(s => ({
-        ...s,
-        picker: temp,
-      }))
-    } else if (e.detail.column === 2) {
-      const [...temp] = state.picker
-      if (e.detail.value >= temp[1]) {
-        temp[2] = e.detail.value
-        setState(s => ({
-          ...s,
-          picker: temp,
-        }))
-      } else {
-        setState(s => ({
-          ...s,
-          picker: temp,
-        }))
-      }
-    } else {
-      const [...temp] = state.picker
-      temp[0] = e.detail.value
-      setState(s => ({
-        ...s,
-        picker: temp,
-      }))
+    const { column, value } = e.detail
+    const [...temp] = state.picker
+
+    temp[column] = value
+
+    // 保证第三列 >= 第二列, 且被修改方始终为主动方
+    if (column === 1) {
+      if (temp[1] > temp[2]) temp[2] = temp[1]
+    } else if (column === 2) {
+      if (temp[2] < temp[1]) temp[1] = temp[2]
     }
+
+    setState(s => ({
+      ...s,
+      picker: temp,
+    }))
   }
   /**
    * 设置星期
