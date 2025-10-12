@@ -11,7 +11,7 @@ runs:
     - name: Setup Node
       uses: https://gitee.com/skr2005/setup-node@v5
       with:
-        mirror: 'https://code.qnxg.cn/qnxg/front'
+        mirror: 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
         node-version: 24
         cache: 'yarn'
 
