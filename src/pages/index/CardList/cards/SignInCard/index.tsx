@@ -10,6 +10,7 @@ import Card from '@/components/Card'
 import SignButton from '@/pages/jifen/components/Qiandao/SignButton'
 import usePromise from '@/utils/hooks/usePromise'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
+import useShowCount from '@/utils/hooks/useShowCount'
 import { fetchUserSettings } from '@/utils/storage/userSettings'
 import { setNeedShowHintAfterSignIn } from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
 import type CardProps from '../../CardProps'
@@ -87,25 +88,24 @@ const SignInCard: React.FC<CardProps> = props => {
     async () => (await fetchUserSettings()).indexSignInCardSettings,
     []
   )
-  const [reloadJifenController, reloadJifenTrigger] = useRefreshKey()
 
-  // 每分钟刷新一次积分
-  useEffect(() => {
-    const timer = setInterval(() => {
-      reloadJifenTrigger()
-    }, 60 * 1000)
-    return () => clearInterval(timer)
-  }, [reloadJifenTrigger])
+  const showCnt = useShowCount()
+
+  const [reloadJifenController, reloadJifenTrigger] = useRefreshKey()
 
   const [settings] = usePromise(getSettings, undefined, [
     getSettings,
     props.reloadController,
   ])
+
   const [jifen, loadingJifen, error] = usePromise(getJifenNum, NaN, [
     getJifenNum,
     props.reloadController,
     reloadJifenController,
+    // 每次重新显示页面时刷新积分
+    showCnt
   ])
+
   useEffect(() => {
     onLoadingStatusChange(loadingJifen)
   }, [onLoadingStatusChange, loadingJifen])
