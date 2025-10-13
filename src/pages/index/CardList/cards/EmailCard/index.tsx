@@ -13,11 +13,22 @@ interface DisplayProps {
 
 const EmailCardDisplay: React.FC<DisplayProps> = props => {
   const { unReadCount } = props
+
+  const formatMsg = () => {
+    if (unReadCount === null) {
+      return '查询失败, 请到"个人门户/安全中心"绑定邮箱'
+    }
+    if (unReadCount === 0) {
+      return '暂无新邮件'
+    }
+    return `您有 ${unReadCount} 封未读邮件`
+  }
+
   return (
     <CardLayout icon={icon} title='校园邮箱'>
       <View className={styles.outer}>
         <View className={`${styles.item} ${styles.left}`}>
-          <Text>未读邮件数: {unReadCount ?? '查询失败'}</Text>
+          <Text>{formatMsg()}</Text>
         </View>
       </View>
     </CardLayout>
