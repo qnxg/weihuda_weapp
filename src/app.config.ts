@@ -34,15 +34,15 @@ export default {
         'experimentGrade/index', // 物理实验成绩查询
         'PEQuery/index', // 体测成绩查询
         'PEQuery/eye', // 视力查询
-        'course/index', // 课程信息查询
+        // 'course/index', // 课程信息查询
         'experimentArrange/index', // 物理实验安排查询
         'examSchedule/index', // 考试安排
-        'computerTest/index', // 机考查询
+        // 'computerTest/index', // 机考查询
         'PEAppoint/index', // 体测预约结果查询
         'examId/index', // 准考证预存
         'schoolCalendar/index', // 校历查看
         'PEStandard/index', // 体测标准
-        'borrowInfo/index', // 图书借阅查询
+        // 'borrowInfo/index', // 图书借阅查询
         'emptyRoom/index', // 空教室查询
         'card/index', // 校园卡账单
         'card/detail', // 交易详情

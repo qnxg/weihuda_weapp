@@ -54,7 +54,6 @@
     "@types/webpack-env": "^1.18.2",
     "autoprefixer": "^10.4.21",
     "babel-preset-taro": "^3.6.17",
-    "echarts": "=5.4.3",
     "eslint": "^9.27.0",
     "eslint-import-resolver-typescript": "^4.4",
     "eslint-plugin-import": "^2.31",
