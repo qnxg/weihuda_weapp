@@ -20,17 +20,22 @@ const obj2query = (obj: any): string => {
 }
 
 const Index: React.FC = () => {
-  const { years, current, setCurrent, state, sex, refresh } = usePE()
+  const { years, currentTabIndex, setCurrentTabIndex, state, sex, refresh } =
+    usePE()
 
   const onChangeTab = (index: number): void => {
-    setCurrent(index)
+    setCurrentTabIndex(index)
   }
 
   return (
-    <Tab items={years} current={current} onChange={onChangeTab}>
+    <Tab items={years} current={currentTabIndex} onChange={onChangeTab}>
       {state.map((item, index) => {
         return (
-          <Panel current={current} index={index} key={String(years[index])}>
+          <Panel
+            current={currentTabIndex}
+            index={index}
+            key={String(years[index])}
+          >
             <PullRefresh runFunc={refresh} topGap={68}>
               {item === null ? (
                 <NoData text='暂无体测数据' />

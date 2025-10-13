@@ -14,9 +14,10 @@ const Index: React.FC = () => {
   /**
    * 获得全局状态, 初始化当前状态
    */
-  const { termYear, termType, weekNum, dayOfWeek } = useAppSelector(
+  const { termYear, termType, weekNum } = useAppSelector(
     state => state.semester
   )
+  const dayOfWeek = new Date().getDay()
   const [state, setState] = useState(() => initFunction(weekNum, dayOfWeek))
   const [show, setShow] = useState(false)
   const [highlight, setHighlight] = useState<EmptyRoom>({

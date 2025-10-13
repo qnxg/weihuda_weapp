@@ -1,6 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-// 需要重构：循环依赖
-
 import classTable from './classTable'
 import semester from './semester'
 import userInfo from './userInfo'

@@ -14,7 +14,7 @@
     "dev": "taro build --type weapp --watch",
     "lint": "prettier --check . && tsc --noEmit && eslint ./src --max-warnings 0",
     "postinstall": "weapp-tw patch",
-    "fmt": "prettier --write ."
+    "fmt": "prettier --write . --log-level warn"
   },
   "browserslist": [
     "last 3 versions",

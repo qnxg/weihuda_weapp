@@ -1,4 +1,5 @@
 import request from './request'
+import { nowWeek } from '@/utils/day'
 
 /**
  * 本学期信息
@@ -17,7 +18,10 @@ export interface CurrentSemesterInfo {
    */
   term: number
   /**
-   * 下一个假期开始时间，用来首页的倒计时
+   * 假期开始时间，用来首页的倒计时
+   *
+   * 如果当前处于寒暑假，则为当前假期开始时间，
+   * 否则为下一个寒暑假开始时间。
    */
   vacation: string
   /**
@@ -47,11 +51,29 @@ export const getClassStartDateApi = async (xn: string, xq: number) => {
   })
 }
 
-// /**
-//  * 获取学期开始时间表
-//  *
-//  * 详情见后端代码和工作台的小程序设置页面
-//  */
-// export const getClassStartDateTableApi = async () => {
-//   return request.get<[string, string][]>('/info/smester')
-// }
+// 下面拆分函数是有意的，当前后端的这两个接口过于混乱，因此将其抽象，方便以后大改这两个接口
+// 当前后端处理这种请求的性能足够，重复请求不是问题
+
+export const getCurrentWeekIndex = async (): Promise<number> =>
+  nowWeek(await getCurrentSemesterStartDate())
+
+export const getCurrentSemesterStartDate = async (): Promise<string> =>
+  (await getCurrentSemesterInfoApi()).startDate
+
+export const getNextSemesterStartDate = async (): Promise<string> =>
+  (await getCurrentSemesterInfoApi()).next
+
+/**
+ * 如果当前处于寒暑假，则为当前假期开始时间，
+ * 否则为下一个寒暑假开始时间。
+ */
+export const getVacationStartDate = async (): Promise<string> =>
+  (await getCurrentSemesterInfoApi()).vacation
+
+/**
+ * 获取当前学年学期
+ */
+export const getCurrentXnXq = async (): Promise<[number, number]> => {
+  const r = await getCurrentSemesterInfoApi()
+  return [r.year, r.term]
+}

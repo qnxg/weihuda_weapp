@@ -15,7 +15,7 @@ const usePE = () => {
     return temp
   }, [enterYear, termYear])
 
-  const [current, setCurrent] = useState<number>(0)
+  const [currentTabIndex, setCurrentTabIndex] = useState<number>(0)
   const [state, setState] = useState<(Fitness | null)[]>(
     new Array(years.length).fill(null)
   )
@@ -27,16 +27,18 @@ const usePE = () => {
     })
     try {
       // 发起请求
-      const res = await getFitness(years[current]!)
+      const res = await getFitness(years[currentTabIndex]!)
       // 更新数据
       const newData = JSON.parse(JSON.stringify(state))
       // 处理引体向上/仰卧起坐
       const index = res.items.findIndex(
         item => item.name == '引体向上/仰卧起坐'
       )
-      res.items[index]!.name = sex == '男' ? '引体向上' : '仰卧起坐'
+      if (index != -1) {
+        res.items[index]!.name = sex == '男' ? '引体向上' : '仰卧起坐'
+      }
       // 设置数据
-      newData[current] = res
+      newData[currentTabIndex] = res
       setState(newData)
     } catch (error) {
       await Taro.showToast({
@@ -46,13 +48,13 @@ const usePE = () => {
     } finally {
       Taro.hideLoading()
     }
-  }, [current, sex, state, years])
+  }, [currentTabIndex, sex, state, years])
 
   useEffect(() => {
-    if (state[current] === null) {
+    if (state[currentTabIndex] === null) {
       void run()
     }
-  }, [current, run, state])
+  }, [currentTabIndex, run, state])
 
   const refresh = async (close: () => void) => {
     try {
@@ -64,8 +66,8 @@ const usePE = () => {
   }
 
   return {
-    current,
-    setCurrent,
+    currentTabIndex,
+    setCurrentTabIndex,
     state,
     years,
     sex,

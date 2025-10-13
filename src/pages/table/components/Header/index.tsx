@@ -2,7 +2,9 @@ import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
+import { getCurrentWeekIndex, getCurrentXnXq } from '@/apis/semester'
 import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 import type { CurDatesOfWeek } from '../../interface'
 
 /**
@@ -21,9 +23,16 @@ const text = ['周日', '周一', '周二', '周三', '周四', '周五', '周�
 
 const Header: React.FC<Props> = props => {
   const { semesters, currentSem } = useAppSelector(state => state.classTable)
-  const { dayOfWeek, weekNum, termYear, termType } = useAppSelector(
-    state => state.semester
+  const [weekNum] = usePromise<number | null>(getCurrentWeekIndex, null, [
+    getCurrentWeekIndex,
+  ])
+  const [[xn, xq]] = usePromise<[number | null, number | null]>(
+    getCurrentXnXq,
+    [null, null],
+    [getCurrentXnXq]
   )
+
+  const dayOfWeek = new Date().getDay()
   const { curDatesOfWeek = [] } = props
 
   /** 显示课表选项 */
@@ -60,8 +69,8 @@ const Header: React.FC<Props> = props => {
               (props.tableCurrentWeek < 0
                 ? props.tableCurrentWeek + 1
                 : props.tableCurrentWeek - 1) === weekNum &&
-              semesters[currentSem]!.xn === termYear &&
-              semesters[currentSem]!.xq === termType,
+              semesters[currentSem]!.xn === xn &&
+              semesters[currentSem]!.xq === xq,
           })
           return (
             <View className={cx} key={String(index)}>

@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react'
 import styles from './index.module.scss'
-import { getGrade } from '@/apis/hdjw/grade'
+import { getGradeApi } from '@/apis/hdjw/grade'
 import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
 import Tag from '@/components/Tag'
@@ -58,7 +58,10 @@ const Index: React.FC = () => {
       title: '加载中...',
     })
     try {
-      const res = await getGrade(yearsCurrentYear, gradeState.currentSemester)
+      const res = await getGradeApi(
+        yearsCurrentYear,
+        gradeState.currentSemester
+      )
       if (!res || res.length === 0) {
         setShow(false)
       } else {

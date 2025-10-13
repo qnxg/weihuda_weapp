@@ -1,4 +1,5 @@
 import request from '../request'
+import { getCurrentXnXq } from '../semester'
 
 /**
  * GradeItem，成绩
@@ -19,7 +20,7 @@ export interface GradeItem {
  * @param xn 学年
  * @param xq 学期
  */
-export const getGrade = async (xn: string | number, xq: string | number) => {
+export const getGradeApi = async (xn: string | number, xq: string | number) => {
   return request.get<GradeItem[]>('/hdjw/grade', {
     data: {
       xn,
@@ -27,3 +28,6 @@ export const getGrade = async (xn: string | number, xq: string | number) => {
     },
   })
 }
+
+export const getThisSemesterGrade = async (): Promise<GradeItem[]> =>
+  await getGradeApi.apply(null, await getCurrentXnXq())

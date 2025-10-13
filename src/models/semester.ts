@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { getCurrentSemesterInfoApi } from '@/apis/semester'
-import { dayOfWeek, nowWeek } from '@/utils/day'
+import { nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
@@ -26,10 +26,6 @@ export interface StateType {
    * 第几周
    */
   weekNum: number
-  /**
-   * 星期几
-   */
-  dayOfWeek: number
 }
 
 export const getSemesterInfoThunk = createAsyncThunk(
@@ -77,7 +73,6 @@ export const getSemesterInfoThunk = createAsyncThunk(
       termType: termConfig.term,
       termYear: termConfig.year,
       weekNum: nowWeek(termConfig.start),
-      dayOfWeek: dayOfWeek(),
     }
   }
 )
@@ -87,7 +82,6 @@ const initialState: StateType = {
   termType: null,
   termYear: 2023,
   weekNum: 0,
-  dayOfWeek: 0,
 }
 
 export const semesterSlice = createSlice({

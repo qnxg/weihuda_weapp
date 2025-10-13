@@ -15,15 +15,8 @@ function calDiffDate(date: string): string {
 }
 
 /**
- * 返回当前的星期数
- */
-export function dayOfWeek(): number {
-  return dayjs().day()
-}
-
-/**
- * 返回学期的开始时间
- * @param startDate 学期的开始时间
+ * 返回当前周数
+ * @param startDate 本学期的开始时间
  */
 export function nowWeek(startDate: string): number {
   return Math.floor(dayjs(new Date()).diff(dayjs(startDate), 'day') / 7)
