@@ -8,7 +8,7 @@ import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
 
 interface DisplayProps {
-  unReadCount?: number
+  unReadCount: number | null
 }
 
 const EmailCardDisplay: React.FC<DisplayProps> = props => {
@@ -39,11 +39,10 @@ const EmailCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
-  const [unReadCount, isUnReadCountLoading] = usePromise(
+  const [unReadCount, isUnReadCountLoading] = usePromise(getUnReadCount, null, [
     getUnReadCount,
-    undefined,
-    [getUnReadCount, reloadController]
-  )
+    reloadController,
+  ])
   useEffect(() => {
     onLoadingStatusChange(isUnReadCountLoading)
   }, [isUnReadCountLoading, onLoadingStatusChange])
