@@ -10,11 +10,12 @@
   },
   "packageManager": "yarn@1.22.22",
   "scripts": {
-    "build": "yarn lint && taro build --type weapp",
-    "dev": "taro build --type weapp --watch",
-    "lint": "prettier --check . && tsc --noEmit && eslint ./src --max-warnings 0",
     "postinstall": "weapp-tw patch",
-    "fmt": "prettier --write . --log-level warn"
+    "lint": "tsc --noEmit && eslint ./src --max-warnings 0",
+    "fmt": "prettier --write . --log-level warn",
+    "dev": "taro build --type weapp --watch",
+    "build": "yarn lint && taro build --type weapp",
+    "pr-check": "prettier --check . && yarn lint"
   },
   "browserslist": [
     "last 3 versions",

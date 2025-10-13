@@ -15,5 +15,5 @@ jobs:
       - name: Setup
         uses: ./.gitea/workflows/setup-tools
 
-      - name: Run Lint
-        run: npx yarn lint
+      - name: Run PR Check
+        run: npx yarn pr-check
