@@ -2726,6 +2726,33 @@
     resolve "^1.22.8"
     supports-hyperlinks "^3.0.0"
 
+"@tarojs/helper@^4.1.7":
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@tarojs/helper/-/helper-4.1.7.tgz#07969dfabf51abff9ebcac5b303977fba50a24c3"
+  integrity sha512-bOll/uJuH/ChiCdcmJK6H3rDkt5R4WVMqzLTCCdN5FnlsL+UMFosj9dgPZmMwoyQq4Tf6m5b3cHg6FUtsU7ahA==
+  dependencies:
+    "@babel/core" "^7.24.4"
+    "@babel/generator" "^7.24.4"
+    "@babel/parser" "^7.24.4"
+    "@babel/traverse" "^7.24.1"
+    "@babel/types" "^7.24.0"
+    "@swc/core" "1.3.96"
+    "@swc/register" "0.1.10"
+    ansi-escapes "^4.3.2"
+    chalk "^4.1.2"
+    chokidar "^3.6.0"
+    cross-spawn "^7.0.3"
+    debug "^4.3.4"
+    dotenv "^16.4.5"
+    dotenv-expand "^11.0.6"
+    esbuild "~0.21.0"
+    find-yarn-workspace-root "^2.0.0"
+    fs-extra "^11.2.0"
+    lodash "^4.17.21"
+    require-from-string "^2.0.2"
+    resolve "^1.22.8"
+    supports-hyperlinks "^3.0.0"
+
 "@tarojs/mini-runner@^3.6.17":
   version "3.6.35"
   resolved "https://registry.npmmirror.com/@tarojs/mini-runner/-/mini-runner-3.6.35.tgz#6bf9ceeae439e73965347e78d586baa4b666a5b4"
