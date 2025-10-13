@@ -6,7 +6,7 @@ import { getLabArrange } from '@/apis/lab'
 import DisplayCard from '@/components/DisplayCard'
 import NoData from '@/components/NoData'
 import PullRefresh from '@/components/PullRefresh'
-import type { LabArrange } from '@/apis/lab';
+import type { LabArrange } from '@/apis/lab'
 
 const Index: React.FC = () => {
   const [show, setShow] = useState(false)

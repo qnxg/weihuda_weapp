@@ -38,7 +38,7 @@ const MessageItem: React.FC<IMessageItemProps> = ({
 
   // 标记为已读
   const markAsRead = async (id: number) => {
-    await modifyNotice({id, status: 1})
+    await modifyNotice({ id, status: 1 })
     setData({
       ...data,
       status: 1,
@@ -59,7 +59,7 @@ const MessageItem: React.FC<IMessageItemProps> = ({
       })
     } else if (type === 'button' && value !== undefined) {
       // 更新数据
-      await modifyNotice({id, status: 1})
+      await modifyNotice({ id, status: 1 })
       setData({
         ...data,
         status: 1,

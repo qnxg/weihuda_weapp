@@ -36,7 +36,7 @@ const SignButton: React.FC<{
   }, [])
 
   // 重显示页面时刷新状态
-  const showCnt = useShowCount();
+  const showCnt = useShowCount()
   useEffect(() => {
     void (async () => {
       setStatus(await fetchStatus())

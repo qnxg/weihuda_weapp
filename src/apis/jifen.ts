@@ -183,6 +183,7 @@ export const postGoodsRecordApi = async (postData: Partial<IGoodsRecord>) => {
 }
 
 export const getExtraRules = async () =>
+  /* prettier-ignore */
   (
     // eslint-disable-next-line @typescript-eslint/no-deprecated
     await getMiniConfigPageApi({

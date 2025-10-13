@@ -8,7 +8,6 @@ import Card from '@/components/Card'
 import DisplayCard from '@/components/DisplayCard'
 import { useAppSelector } from '@/utils/hooks/redux'
 
-
 const Index: React.FC = () => {
   const router = useRouter()
   const params = router.params

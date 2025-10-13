@@ -12,10 +12,13 @@ import usePromise from '@/utils/hooks/usePromise'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 
 const Index: React.FC = () => {
-
   const [refreshKey, refreshTrigger] = useRefreshKey()
 
-  const [recentNotices] = usePromise(getRecentNotices, [], [getRecentNotices, refreshKey]);
+  const [recentNotices] = usePromise(
+    getRecentNotices,
+    [],
+    [getRecentNotices, refreshKey]
+  )
   const [recentMessages] = usePromise(getMessage, [], [getMessage, refreshKey])
 
   const unreadCount = recentNotices.filter(item => item.status === 0).length

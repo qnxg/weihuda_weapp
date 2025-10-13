@@ -6,8 +6,8 @@ import { getLabGrade, getLabSemInfo } from '@/apis/lab'
 import Button from '@/components/Button'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
-import type { LabGrade, LabSemInfo } from '@/apis/lab';
-import type { BaseEventOrig} from '@tarojs/components';
+import type { LabGrade, LabSemInfo } from '@/apis/lab'
+import type { BaseEventOrig } from '@tarojs/components'
 
 const NormalLabIndex: React.FC = () => {
   const [semesterIndex, setSemesterIndex] = useState(0)

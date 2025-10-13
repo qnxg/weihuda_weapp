@@ -103,7 +103,7 @@ const SignInCard: React.FC<CardProps> = props => {
     props.reloadController,
     reloadJifenController,
     // 每次重新显示页面时刷新积分
-    showCnt
+    showCnt,
   ])
 
   useEffect(() => {

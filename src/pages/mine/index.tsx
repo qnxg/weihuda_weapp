@@ -134,11 +134,8 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
   />
 )
 
-const getRecentNoticesUnread =
-  async () =>
-    (await getRecentNotices())
-      .filter(item => item.status === 0)
-      .length
+const getRecentNoticesUnread = async () =>
+  (await getRecentNotices()).filter(item => item.status === 0).length
 
 const Index: React.FC = () => {
   const { name: userRealName, stuId: userRealId } = useAppSelector(
@@ -148,8 +145,10 @@ const Index: React.FC = () => {
   // 用户返回此页时也重新加载
   const pageShowCnt = useShowCount()
 
-  const [unread] = 
-    usePromise(getRecentNoticesUnread, 0, [getRecentNoticesUnread, pageShowCnt])
+  const [unread] = usePromise(getRecentNoticesUnread, 0, [
+    getRecentNoticesUnread,
+    pageShowCnt,
+  ])
 
   return (
     <Block>

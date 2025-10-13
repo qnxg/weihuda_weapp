@@ -48,7 +48,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
     })
   }
 
-  const totalCount = message.length + noticeToShow.length;
+  const totalCount = message.length + noticeToShow.length
 
   return (
     <View>
@@ -82,11 +82,11 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
             className={styles.swiper}
           >
             {/* 消息通知 */}
-            {noticeToShow.map((item, i) =>
+            {noticeToShow.map((item, i) => (
               <SwiperItem key={`notice-${i}`}>
                 <MessageItem className={styles.messageItem} data={item} />
-              </SwiperItem>,
-            )}
+              </SwiperItem>
+            ))}
             {/* 公告 */}
             {message.map(item => {
               return (
@@ -112,15 +112,15 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
   )
 }
 
-const getNoticeToShow =
-  async () => (await getRecentNotices())
-    .filter(item => item.status !== 1 && item.isShow !== 0)
+const getNoticeToShow = async () =>
+  (await getRecentNotices()).filter(
+    item => item.status !== 1 && item.isShow !== 0
+  )
 
 const MessageCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
-
   // 在用户返回首页时也重新加载
   const pageShowCnt = useShowCount()
 
@@ -136,13 +136,15 @@ const MessageCard: React.FC<CardProps> = ({
     [getNoticeToShow, reloadController, pageShowCnt]
   )
 
-  const combinedLoadingState = isMessageDataLoading || isLoadingNoticeToShow;
+  const combinedLoadingState = isMessageDataLoading || isLoadingNoticeToShow
 
   useEffect(() => {
     onLoadingStatusChange(combinedLoadingState)
   }, [combinedLoadingState, onLoadingStatusChange])
 
-  return <MessageCardDisplay message={messageData} noticeToShow={noticeToShow} />
+  return (
+    <MessageCardDisplay message={messageData} noticeToShow={noticeToShow} />
+  )
 }
 
 export default MessageCard

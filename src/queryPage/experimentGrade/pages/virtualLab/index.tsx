@@ -5,7 +5,7 @@ import { getVirtualLabGrade } from '@/apis/lab'
 import DisplayCard from '@/components/DisplayCard'
 import NoData from '@/components/NoData'
 import PullRefresh from '@/components/PullRefresh'
-import type { VirtualLabGrade} from '@/apis/lab';
+import type { VirtualLabGrade } from '@/apis/lab'
 
 const VirtualLabIndex: React.FC = () => {
   const [grade, setGrade] = useState<VirtualLabGrade[]>([])

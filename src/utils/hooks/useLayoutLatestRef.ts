@@ -2,14 +2,14 @@ import { useRef, useLayoutEffect } from 'react'
 
 /**
  * TL;DR: 想要访问某个state但是又不想写进dep数组，可能可以用这个
- * 
+ *
  * React state hook that stores the latest version of a value.
- * 
- * This can be used to access the latest ("fresh") value of some props or state 
+ *
+ * This can be used to access the latest ("fresh") value of some props or state
  * inside an event handler or `useLayoutEffect()`
  * **without specifying the value in a dependency array**.
  * This hook provides the latest value even when the ref is accessed in a `useLayoutEffect()`.
- * 
+ *
  * @example
  * ```jsx
  * const Demo = () => {
