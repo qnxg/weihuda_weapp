@@ -29,9 +29,9 @@ const Index: React.FC = () => {
         当前有 {recentMessages.length} 条公告，
         {unreadCount} 条未读的用户消息。
       </Card>
-      {recentMessages.map((item, i) => {
+      {recentMessages.map(item => {
         const CardComp = (
-          <Card key={`msg-card-${i}`}>
+          <Card key={`msg-card-${item.id}`}>
             <CardHeader title={item.create_at} icon={icon} />
             <View className={styles.content_out}>
               <View className={styles.title}>{item.title}</View>
@@ -41,16 +41,16 @@ const Index: React.FC = () => {
         )
         if (item.url) {
           return (
-            <Navigator key={`msg-navi-${i}`} url={item.url}>
+            <Navigator key={`msg-navi-${item.id}`} url={item.url}>
               {CardComp}
             </Navigator>
           )
         }
         return CardComp
       })}
-      {recentNotices.map((item, i) => {
+      {recentNotices.map(item => {
         return (
-          <Card key={`notice-card-${i}`}>
+          <Card key={`notice-${item.id}`}>
             <MessageItem
               className={styles.messageItem}
               data={item}

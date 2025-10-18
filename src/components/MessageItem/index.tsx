@@ -59,12 +59,13 @@ const MessageItem: React.FC<IMessageItemProps> = ({
       })
     } else if (type === 'button' && value !== undefined) {
       // 更新数据
-      await modifyNotice({ id, status: 1 })
+      await modifyNotice({ id, status: 1, result: value })
       setData({
         ...data,
         status: 1,
-        result: value!,
+        result: value,
       })
+      handleAfterMarkAsRead(id)
     }
   }
 
