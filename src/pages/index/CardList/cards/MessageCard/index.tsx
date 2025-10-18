@@ -82,8 +82,8 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
             className={styles.swiper}
           >
             {/* 消息通知 */}
-            {noticeToShow.map((item, i) => (
-              <SwiperItem key={`notice-${i}`}>
+            {noticeToShow.map(item => (
+              <SwiperItem key={`notice-${item.id}`}>
                 <MessageItem className={styles.messageItem} data={item} />
               </SwiperItem>
             ))}
@@ -91,7 +91,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
             {message.map(item => {
               return (
                 <SwiperItem
-                  key={item.title}
+                  key={`message-${item.id}`}
                   onClick={() => {
                     void Taro.navigateTo({
                       url: item.url ? item.url : '/pages/messageBox/index',
