@@ -1,21 +1,17 @@
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { getGradeApi } from '@/apis/hdjw/grade'
+import { getCurrentXnXq } from '@/apis/semester'
+import { getUserInfoApi } from '@/apis/userInfo'
 import PullRefresh from '@/components/PullRefresh'
 import TabBar from '@/components/TabBar'
 import Tag from '@/components/Tag'
 import empty from '@/static/empty/no-grade.svg'
 import notStart from '@/static/empty/term-not-start.svg'
-import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 import type { GradeState } from './interface'
 import type { GradeItem } from '@/apis/hdjw/grade'
 
@@ -29,38 +25,60 @@ const importantType2 = [
   '专业核心',
 ]
 
+const preparePrerequisites = async () => {
+  const [[xn, xq], userEnterYear] = await Promise.all([
+    getCurrentXnXq(),
+    (async () => (await getUserInfoApi()).enter)(),
+  ])
+  const yearsArr: number[] = []
+  for (let i = 0; userEnterYear + i <= xn; ++i) {
+    yearsArr.unshift(userEnterYear + i)
+  }
+  return {
+    currentXn: xn,
+    currentXq: xq,
+    selectableYears: yearsArr,
+  }
+}
+
 const Index: React.FC = () => {
-  const { termYear, termType } = useAppSelector(state => state.semester)
-  const { enterYear } = useAppSelector(state => state.userInfo)
+  const [prerequisites] = usePromise(preparePrerequisites, null, [
+    preparePrerequisites,
+  ])
 
-  const years = useMemo(() => {
-    const yearsArr: number[] = []
-    for (let i = 0; enterYear + i <= termYear; ++i) {
-      yearsArr.unshift(enterYear + i)
-    }
-    return yearsArr
-  }, [enterYear, termYear])
-
-  const [gradeState, setGradeState] = useState<GradeState>({
-    currentSemester: termType ?? 0,
-    currentYear: 0,
-    isNotStart: false,
+  const [
+    { selectedXnIndex: selectedXnIdx, selectedXq: selectedXqIdx },
+    setSelectedTabStates,
+  ] = useState<GradeState>({
+    selectedXnIndex: 0,
+    selectedXq: 1,
   })
+  // 设置默认选项卡
+  useEffect(() => {
+    if (prerequisites !== null) {
+      setSelectedTabStates({
+        selectedXnIndex: 0,
+        selectedXq: prerequisites.currentXq,
+      })
+    }
+  }, [prerequisites])
+
   const [data, setData] = useState<GradeItem[]>([])
 
   const [show, setShow] = useState(false)
 
-  const yearsCurrentYear = years[gradeState.currentYear]!
-
   const getData = useCallback(async () => {
+    if (prerequisites === null) {
+      return
+    }
     await Taro.showLoading({
       mask: true,
       title: '加载中...',
     })
     try {
       const res = await getGradeApi(
-        yearsCurrentYear,
-        gradeState.currentSemester
+        prerequisites.selectableYears[selectedXnIdx]!,
+        selectedXqIdx
       )
       if (!res || res.length === 0) {
         setShow(false)
@@ -77,31 +95,23 @@ const Index: React.FC = () => {
       })
     }
     Taro.hideLoading()
-  }, [gradeState.currentSemester, yearsCurrentYear])
+  }, [selectedXnIdx, selectedXqIdx, prerequisites])
 
   useEffect(() => {
     void getData()
-  }, [getData, gradeState.currentSemester, gradeState.currentYear])
-
-  const { currentYear, currentSemester, isNotStart } = gradeState
+  }, [getData])
 
   const onChangeFirstTab = (index: number): void => {
-    setGradeState({
-      ...gradeState,
-      currentYear: index,
-      isNotStart:
-        termType === null ||
-        (years[index]! >= termYear && currentSemester > termType),
+    setSelectedTabStates({
+      selectedXq: selectedXqIdx,
+      selectedXnIndex: index,
     })
   }
 
   const onChangeSecondTab = (index: number): void => {
-    setGradeState({
-      ...gradeState,
-      currentSemester: index + 1,
-      isNotStart:
-        termType === null ||
-        (years[currentYear]! >= termYear && index + 1 > termType),
+    setSelectedTabStates({
+      selectedXnIndex: selectedXnIdx,
+      selectedXq: index + 1,
     })
   }
 
@@ -110,19 +120,28 @@ const Index: React.FC = () => {
     close()
   }
 
+  if (prerequisites === null) {
+    console.log('正在加载用户信息和学期信息……')
+    return <></>
+  }
+
+  const hasSelectedSemesterNotStarted =
+    [prerequisites.currentXn, prerequisites.currentXq] <
+    [prerequisites.selectableYears[selectedXnIdx]!, selectedXqIdx]
+
   return (
     <Fragment>
       <TabBar
-        items={years}
+        items={prerequisites.selectableYears}
         num={0}
         onClick={onChangeFirstTab}
-        current={currentYear}
+        current={selectedXnIdx}
       />
       <TabBar
         items={semester}
         num={1}
         onClick={onChangeSecondTab}
-        current={currentSemester - 1}
+        current={selectedXqIdx - 1}
       />
       <PullRefresh topGap={136} runFunc={onRefresh}>
         {data && show && data.length > 0 ? (
@@ -182,9 +201,14 @@ const Index: React.FC = () => {
           })
         ) : (
           <View className={styles.empty}>
-            <Image src={isNotStart ? notStart : empty} className={styles.img} />
+            <Image
+              src={hasSelectedSemesterNotStarted ? notStart : empty}
+              className={styles.img}
+            />
             <View className={styles.text}>
-              {isNotStart ? '学期还没有开始哦🤔' : '还没有成绩信息哦😀'}
+              {hasSelectedSemesterNotStarted
+                ? '学期还没有开始哦🤔'
+                : '还没有成绩信息哦😀'}
             </View>
           </View>
         )}

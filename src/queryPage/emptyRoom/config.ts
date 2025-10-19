@@ -1,4 +1,4 @@
-import type { EmptyRoomState, Radio } from './interface'
+import type { Radio } from './interface'
 
 export const radio: Radio[] = [
   {
@@ -22,21 +22,3 @@ export const radio: Radio[] = [
     text: ['9-11节', '19 : 00-21 : 35'],
   },
 ]
-
-export function initFunction(
-  weekNum: number,
-  dayOfWeek: number
-): EmptyRoomState {
-  const temp = [0]
-  let tempWeek = 0
-  if (weekNum >= 0) {
-    tempWeek = weekNum > 17 ? 17 : weekNum
-  }
-  temp.push(tempWeek)
-  temp.push(dayOfWeek)
-
-  return {
-    pickerValue: temp,
-    radioValue: 0,
-  }
-}

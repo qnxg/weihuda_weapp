@@ -42,6 +42,6 @@ export interface UserInfo {
  * 获取当前用户信息
  * @returns 当前用户信息
  */
-export const getUserInfo = async () => {
+export const getUserInfoApi = async () => {
   return request.get<UserInfo>('/info/user')
 }

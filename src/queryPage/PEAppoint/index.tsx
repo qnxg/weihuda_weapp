@@ -2,7 +2,7 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getFitnessAppoint } from '@/apis/pt/fitness'
+import { getFitnessAppointApi } from '@/apis/pt/fitness'
 import DisplayCard from '@/components/DisplayCard'
 import NoData from '@/components/NoData'
 import PullRefresh from '@/components/PullRefresh'
@@ -22,7 +22,7 @@ const Index: React.FC = () => {
       title: '加载中...',
     })
     try {
-      const res = await getFitnessAppoint()
+      const res = await getFitnessAppointApi()
       if (!res) {
         setShow(false)
       } else {

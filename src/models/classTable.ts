@@ -2,8 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import { type CourseInfo, getClassTable } from '@/apis/hdjw/classTable'
-import { getClassStartDateApi } from '@/apis/semester'
+import {
+  getClassStartDateApi,
+  getCurrentSemesterInfoApi,
+} from '@/apis/semester'
 import { onColors, onFontColors } from '@/utils/config'
+import { nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
 import type { RootState } from '.'
 import type { PayloadAction } from '@reduxjs/toolkit'
@@ -60,7 +64,12 @@ export const initClassTableThunk = createAsyncThunk(
       // 获取常量
       const termText: Array<string> = ['秋季学期', '春季学期', '夏季学期']
       const state = thunkAPI.getState() as RootState
-      const { termYear, termStart, termType, weekNum } = state.semester
+      const {
+        term: termType,
+        year: termYear,
+        startDate: termStart,
+      } = await getCurrentSemesterInfoApi()
+      const weekNum = nowWeek(termStart)
       const { enterYear } = state.userInfo
       const oldState = state.classTable
 

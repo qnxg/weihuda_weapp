@@ -3,14 +3,6 @@ export interface Radio {
   text: Array<string>
 }
 
-/**
- * @interface EmptyRoomState 空教室列表State
- */
-export interface EmptyRoomState {
-  pickerValue: Array<number>
-  radioValue: number // 现在 radio 改成单选
-}
-
 export interface EmptyRoom {
   name: string
   type: string
@@ -27,4 +19,19 @@ export interface Hdjw {
  */
 export interface RootObject {
   hdjw: Hdjw
+}
+
+export type PickerValue = {
+  /**
+   * 教学楼id
+   */
+  buildId: number
+  /**
+   * 第几周
+   */
+  weekIndex: number
+  /**
+   * 星期几
+   */
+  dayOfTheWeek: number
 }

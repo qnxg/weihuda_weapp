@@ -1,25 +1,45 @@
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PickerArea from './components/PickerArea'
 import ResultArea from './components/ResultArea'
-import { initFunction, radio } from './config'
+import { radio } from './config'
 import { getEmptyRoom } from '@/apis/hdjw/emptyRoom'
+import { getCurrentWeekIndex } from '@/apis/semester'
 import { buildingInfo } from '@/utils/config'
-import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
+import type { PickerStates } from './components/PickerArea'
 import type { EmptyRoom } from './interface'
 import type { EmptyRoomItem } from '@/apis/hdjw/emptyRoom'
 
 const Index: React.FC = () => {
-  /**
-   * 获得全局状态, 初始化当前状态
-   */
-  const { termYear, termType, weekNum } = useAppSelector(
-    state => state.semester
+  const [currentWeekIndex] = usePromise(getCurrentWeekIndex, null, [
+    getCurrentWeekIndex,
+  ])
+
+  const defaultPickerState = useCallback(
+    (): PickerStates => ({
+      pickerValue: {
+        buildId: 0,
+        weekIndex:
+          currentWeekIndex === null
+            ? 0
+            : Math.min(17, Math.max(0, currentWeekIndex)),
+        dayOfTheWeek: new Date().getDay(),
+      },
+      radioValue: 0,
+    }),
+    [currentWeekIndex]
   )
-  const dayOfWeek = new Date().getDay()
-  const [state, setState] = useState(() => initFunction(weekNum, dayOfWeek))
-  const [show, setShow] = useState(false)
+
+  const [pickerStates, setPickerStates] =
+    useState<PickerStates>(defaultPickerState)
+  // 当前周数加载完毕之后更新默认取值
+  useEffect(() => {
+    setPickerStates(defaultPickerState())
+  }, [defaultPickerState])
+
+  const [shouldShowRoomList, setShouldShowRoomList] = useState(false)
   const [highlight, setHighlight] = useState<EmptyRoom>({
     name: '',
     type: '',
@@ -27,7 +47,7 @@ const Index: React.FC = () => {
     seat: 0,
   })
 
-  const [data, setData] = useState<EmptyRoomItem[] | null>(null)
+  const [roomList, setRoomList] = useState<EmptyRoomItem[] | null>(null)
 
   /**
    * 获取数据
@@ -38,23 +58,20 @@ const Index: React.FC = () => {
       title: '加载中...',
     })
     try {
-      if (termType === null) throw 'null termYear'
       const res = await getEmptyRoom({
-        xn: termYear,
-        xq: termType,
-        week: state.pickerValue[1]! + 1,
-        day: state.pickerValue[2]!,
-        jc: radio[state.radioValue]!.id,
-        buildId: buildingInfo[state.pickerValue[0]!]!.id,
+        week: pickerStates.pickerValue.weekIndex + 1,
+        day: pickerStates.pickerValue.dayOfTheWeek,
+        jc: radio[pickerStates.radioValue]!.id,
+        buildId: buildingInfo[pickerStates.pickerValue.buildId]!.id,
       })
-      if (!res) {
-        setShow(false)
+      if (res === null || res === undefined) {
+        setShouldShowRoomList(false)
       } else {
-        setData(res)
-        setShow(true)
+        setRoomList(res)
+        setShouldShowRoomList(true)
       }
     } catch (err) {
-      setShow(false)
+      setShouldShowRoomList(false)
       await Taro.showToast({
         icon: 'none',
         title: err.toString(),
@@ -64,18 +81,27 @@ const Index: React.FC = () => {
     }
   }
 
+  const onPickerStatesChange = (
+    newStates: React.SetStateAction<PickerStates>
+  ) => {
+    setPickerStates(newStates)
+    // 切换时间后不再显示旧的数据，提示用户重新请求
+    setShouldShowRoomList(false)
+  }
+
   return (
     <View style={{ paddingBottom: '48rpx' }}>
       <PickerArea
-        setState={setState}
-        pickerValue={state.pickerValue}
-        radioValue={state.radioValue}
+        setState={onPickerStatesChange}
+        pickerValue={pickerStates.pickerValue}
+        radioValue={pickerStates.radioValue}
       />
       <ResultArea
         run={getData}
-        roomList={show && data ? data : []}
+        roomList={roomList !== null ? roomList : []}
         highlight={highlight}
         setHighlight={setHighlight}
+        shouldShowResult={shouldShowRoomList}
       />
     </View>
   )

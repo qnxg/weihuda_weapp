@@ -5,10 +5,7 @@ import CalenderPage from './components/calendarPage'
 import { getExamArrange } from '@/apis/hdjw/examArrange'
 import PullRefresh from '@/components/PullRefresh'
 import Tabs from '@/components/Tab'
-import Panel from '@/components/Tab/components/Panel'
 import type { ExamArrange } from '@/apis/hdjw/examArrange'
-
-const pages = ['全部考试', '考试日历']
 
 const Index: React.FC = () => {
   const [index, setIndex] = useState(0)
@@ -51,18 +48,30 @@ const Index: React.FC = () => {
   }
 
   return (
-    <Tabs items={pages} current={index} onChange={onChangeTab}>
-      <Panel current={index} index={0}>
-        <PullRefresh runFunc={onRefresh} topGap={88}>
-          <AllPage exam={data ? data : []} />
-        </PullRefresh>
-      </Panel>
-      <Panel current={index} index={1}>
-        <PullRefresh runFunc={onRefresh} topGap={88}>
-          <CalenderPage exam={data ? data : []} />
-        </PullRefresh>
-      </Panel>
-    </Tabs>
+    <Tabs
+      current={index}
+      onChange={onChangeTab}
+      items={[
+        {
+          key: '全部考试',
+          label: '全部考试',
+          body: (
+            <PullRefresh runFunc={onRefresh} topGap={88}>
+              <AllPage exam={data ? data : []} />
+            </PullRefresh>
+          ),
+        },
+        {
+          key: '考试日历',
+          label: '考试日历',
+          body: (
+            <PullRefresh runFunc={onRefresh} topGap={88}>
+              <CalenderPage exam={data ? data : []} />
+            </PullRefresh>
+          ),
+        },
+      ]}
+    ></Tabs>
   )
 }
 

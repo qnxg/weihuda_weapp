@@ -1,18 +1,19 @@
 import { View, Picker } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import styles from './index.module.scss'
 import {
   getGradeRankFromHdjw,
   type HdjwGradeRank,
   type HdjwGradeRankForm,
 } from '@/apis/hdjw/gradeRank'
+import { getCurrentXnXq } from '@/apis/semester'
+import { getUserInfoApi } from '@/apis/userInfo'
 import Button from '@/components/Button'
-import Copyright from '@/components/Copyright'
 import DisplayCard from '@/components/DisplayCard'
 import PullRefresh from '@/components/PullRefresh'
-import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 import type { BaseEventOrig } from '@tarojs/components'
 
 const CourseTypeList = ['', '全部', '必修', '核心']
@@ -34,35 +35,58 @@ const buildFooterInfo = (year?: number, term?: number): string => {
   return res
 }
 
+// 获取当前学期和用户信息
+const preparePrerequisites = async () => {
+  const [[xn, xq], userEnterYear] = await Promise.all([
+    getCurrentXnXq(),
+    (async () => (await getUserInfoApi()).enter)(),
+  ])
+  const yearsArr: number[] = []
+  for (let i = 0; userEnterYear + i <= xn; ++i) {
+    yearsArr.unshift(userEnterYear + i)
+  }
+  return {
+    currentXn: xn,
+    currentXq: xq,
+    selectableYears: yearsArr,
+  }
+}
+
 const HdjwIndex: React.FC = () => {
   // 初始表单，默认初始查询核心加权（应该多数人关心这个）
   const initHdjwForm: HdjwGradeRankForm = {
     course: 3,
     rank: 2,
   }
-  const [hdjwData, setHdjwData] = useState<HdjwGradeRank>({
-    score: '无数据',
-    rank: '无数据',
-  })
+  const [hdjwData, setHdjwData] = useState<HdjwGradeRank | null>(null)
   // 这里存的是已经发送请求的表单
   const [hdjwForm, setHdjwForm] = useState<HdjwGradeRankForm>(initHdjwForm)
   const hdjwFormRef = useRef(hdjwForm)
-  // 学期选择
-  const termRes = useAppSelector(state => state.semester) // 根据当前学期和入学年份生成学年学期选择
-  const termYear = termRes.termYear
-  const userInfo = useAppSelector(state => state.userInfo)
-  const termYearPicker = ['全部学年']
-  const [termTypePicker, setTermTypePicker] = useState(['全部学期'])
-  for (let i = userInfo.enterYear; i <= termYear; ++i) {
-    termYearPicker.push(`${i} - ${i + 1} 学年`)
-  }
-  const [termPickerValue, setTermPickerValue] = useState<[number, number]>([
-    0, 0,
+
+  // 根据当前学期和入学年份生成学年学期选择
+  // 当前学期和用户信息
+  const [prerequisites] = usePromise(preparePrerequisites, null, [
+    preparePrerequisites,
   ])
+
+  const termYearPicker = ['全部学年']
+  if (prerequisites !== null) {
+    for (const selectableYear of prerequisites.selectableYears) {
+      termYearPicker.push(`${selectableYear} - ${selectableYear + 1} 学年`)
+    }
+  }
+
+  const [[yearIndex, typeIndex], setTermPickerValue] = useState<
+    [number, number]
+  >([0, 0])
+
   const pickerChange = (e: BaseEventOrig) => {
     const [yearIndex, typeIndex] = e.detail.value
     setTermPickerValue([yearIndex, typeIndex])
   }
+
+  const [termTypePicker, setTermTypePicker] = useState(['全部学期'])
+
   const columnChange = (e: BaseEventOrig) => {
     if (e.detail.column === 0) {
       if (e.detail.value === 0) {
@@ -73,11 +97,17 @@ const HdjwIndex: React.FC = () => {
       setTermPickerValue([e.detail.value, 0])
     }
   }
+
   const [hdjwFormCourse, setHdjwFormCourse] = useState(3) // 课程类型
   const [hdjwFormRank, setHdjwFormRank] = useState(2) // 排名类型
   const hdjwFormCourseRef = useRef(hdjwFormCourse)
   const hdjwFormRankRef = useRef(hdjwFormRank)
+
   const getData = async (form: HdjwGradeRankForm) => {
+    if (prerequisites === null) {
+      return
+    }
+
     await Taro.showLoading({
       mask: true,
       title: '加载中...',
@@ -92,13 +122,18 @@ const HdjwIndex: React.FC = () => {
         icon: 'none',
         title: err.toString(),
       })
+      setHdjwData(null)
     }
     Taro.hideLoading()
   }
+
   const handleSearch = async () => {
-    const [yearIndex, typeIndex] = termPickerValue
+    if (prerequisites === null) {
+      return
+    }
+
     const year =
-      yearIndex === 0 ? undefined : userInfo.enterYear + yearIndex - 1
+      yearIndex === 0 ? undefined : prerequisites.selectableYears[yearIndex - 1]
     const term = typeIndex === 0 ? undefined : typeIndex
     let newForm: HdjwGradeRankForm = {
       course: hdjwFormCourseRef.current,
@@ -109,39 +144,39 @@ const HdjwIndex: React.FC = () => {
     if (term) newForm = { ...newForm, term }
     await getData(newForm)
   }
+
   const onRefresh = async (close: () => void) => {
     await getData(hdjwFormRef.current)
     close()
   }
-  useEffect(() => {
-    void getData(hdjwFormRef.current)
-  }, [])
+
   return (
     <PullRefresh runFunc={onRefresh} topGap={72}>
       <View className='flex flex-col h-full'>
         <View>
-          <DisplayCard
-            title={`${CourseTypeList[hdjwForm.course]}课程成绩`}
-            footer={buildFooterInfo(hdjwForm.year, hdjwForm.term)}
-          >
-            <View className='flex'>
-              <View className='flex-1'>
-                {hdjwForm.rank === 3
-                  ? '绩点：'
-                  : `${RankTypeList[hdjwForm.rank]}分：`}
-                <View className='inline text-primary font-bold text-lg'>
-                  {hdjwData.score}
+          {hdjwData !== null && (
+            <DisplayCard
+              title={`${CourseTypeList[hdjwForm.course]}课程成绩`}
+              footer={buildFooterInfo(hdjwForm.year, hdjwForm.term)}
+            >
+              <View className='flex'>
+                <View className='flex-1'>
+                  {hdjwForm.rank === 3
+                    ? '绩点：'
+                    : `${RankTypeList[hdjwForm.rank]}分：`}
+                  <View className='inline text-primary font-bold text-lg'>
+                    {hdjwData.score}
+                  </View>
+                </View>
+                <View className='flex-1'>
+                  排名：
+                  <View className='inline text-primary font-bold text-lg'>
+                    {hdjwData.rank}
+                  </View>
                 </View>
               </View>
-              <View className='flex-1'>
-                排名：
-                <View className='inline text-primary font-bold text-lg'>
-                  {hdjwData.rank}
-                </View>
-                {/* <View className='inline text-primary font-bold text-xs'>/999</View> */}
-              </View>
-            </View>
-          </DisplayCard>
+            </DisplayCard>
+          )}
           <DisplayCard title='筛选'>
             <View className='flex items-center'>
               <View className='text-xs'>课程范围：</View>
@@ -187,18 +222,22 @@ const HdjwIndex: React.FC = () => {
               <View className='text-xs'>时间范围：</View>
               <Picker
                 range={[termYearPicker, termTypePicker]}
-                value={termPickerValue}
+                value={[yearIndex, typeIndex]}
                 mode='multiSelector'
                 onColumnChange={columnChange}
                 onChange={pickerChange}
                 className='flex-1 mr-1'
               >
                 <View className='border-b py-0.5 ml-1 w-full'>
-                  {`${termYearPicker[termPickerValue[0]]} ${termTypePicker[termPickerValue[1]]}`}
+                  {`${termYearPicker[yearIndex]} ${termTypePicker[typeIndex]}`}
                 </View>
               </Picker>
             </View>
-            <Button className='text-sm mt-4 py-2' onClick={handleSearch}>
+            <Button
+              className='text-sm mt-4 py-2'
+              onClick={handleSearch}
+              disabled={prerequisites === null}
+            >
               查询
             </Button>
             <View className={styles.warningInfo}>
@@ -212,7 +251,6 @@ const HdjwIndex: React.FC = () => {
             若对成绩有疑问，请联系 湖南大学信息化办
           </View>
           <View className={styles.bottomInfo}>联系方式：88821520</View>
-          <Copyright />
         </View>
       </View>
     </PullRefresh>

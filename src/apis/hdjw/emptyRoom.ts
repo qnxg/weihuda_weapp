@@ -21,13 +21,13 @@ export interface EmptyRoomParams {
    */
   week: number
   /**
-   * 学年
+   * 学年，默认当前学年
    */
-  xn: number
+  xn?: number
   /**
-   * 学期
+   * 学期，默认当前学期
    */
-  xq: number
+  xq?: number
 }
 
 /**

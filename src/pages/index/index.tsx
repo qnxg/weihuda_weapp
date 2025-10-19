@@ -9,7 +9,6 @@ import {
   initClassTableThunk,
   refreshClassTableThunk,
 } from '@/models/classTable'
-import { getSemesterInfoThunk } from '@/models/semester'
 import { getUserInfoThunk } from '@/models/userInfo'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
@@ -26,9 +25,7 @@ const Index: React.FC = () => {
   /** 拉取基本信息 */
   useEffect(() => {
     void dispatch(getUserInfoThunk())
-    void dispatch(getSemesterInfoThunk()).then(() => {
-      void dispatch(initClassTableThunk())
-    })
+    void dispatch(initClassTableThunk())
   }, [dispatch])
 
   const { currentWeek, semesters: terms } = useAppSelector(

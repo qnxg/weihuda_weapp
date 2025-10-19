@@ -1,7 +1,6 @@
 export interface GradeState {
-  currentYear: number
-  currentSemester: number
-  isNotStart: boolean
+  selectedXnIndex: number
+  selectedXq: number
 }
 
 export interface Grade {

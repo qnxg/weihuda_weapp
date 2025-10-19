@@ -106,7 +106,7 @@ export interface Total {
  * 获取体测成绩
  * @param xn 学年
  */
-export const getFitness = async (xn: string | number) => {
+export const getFitnessApi = async (xn: string | number) => {
   return request.get<Fitness>('/pt/fitness', {
     data: {
       xn,
@@ -148,6 +148,6 @@ export interface FitnessAppointItem {
  * 获取体测预约信息
  * @param xn 学年
  */
-export const getFitnessAppoint = async () => {
+export const getFitnessAppointApi = async () => {
   return request.get<FitnessAppointItem[]>('/pt/fitness-appoint')
 }

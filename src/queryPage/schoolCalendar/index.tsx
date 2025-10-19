@@ -1,13 +1,11 @@
 import { Image, View } from '@tarojs/components'
 import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getCurrentSemesterInfoApi } from '@/apis/semester'
+import { getCurrentSemesterInfoApi, getCurrentXnXq } from '@/apis/semester'
 import Tabs from '@/components/Tab'
-import Panel from '@/components/Tab/components/Panel'
-import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 import { staticBaseUrl as baseUrl } from '@/utils/url'
-import type { CurrentSemesterInfo } from '@/apis/semester'
 
 const pages = ['秋季', '寒假', '春季', '夏季']
 const urls = [
@@ -17,70 +15,53 @@ const urls = [
   `${baseUrl}xiaoli/pic3.svg`,
 ]
 
+const getCurrentXq = async () => (await getCurrentXnXq())[1]
+
 const Index: React.FC = () => {
-  const { termType } = useAppSelector(state => state.semester)
+  const [xq] = usePromise(getCurrentXq, null, [getCurrentXq])
 
-  const [data, setData] = useState<CurrentSemesterInfo | null>(null)
-  const [index, setIndex] = useState(termType && termType > 1 ? termType : 0)
+  const defaultTabIndex = useCallback(() => (xq && xq > 1 ? xq : 0), [xq])
+  const [tabIndex, setTabIndex] = useState(defaultTabIndex)
+  useEffect(() => {
+    setTabIndex(defaultTabIndex())
+  }, [defaultTabIndex])
 
-  /**
-   * 获取数据
-   */
-  const getData = async () => {
-    const res = await getCurrentSemesterInfoApi()
-    setData(res)
-  }
+  const [currentSemesterInfo] = usePromise(getCurrentSemesterInfoApi, null, [
+    getCurrentSemesterInfoApi,
+  ])
 
   useEffect(() => {
-    void getData()
-  }, [])
-
-  useEffect(() => {
-    if (termType === 1 && data) {
+    if (xq === 1 && currentSemesterInfo) {
       const today = dayjs()
-      const vacationDay = dayjs(data.vacation)
-      const nextDay = dayjs(data.next)
+      const vacationDay = dayjs(currentSemesterInfo.vacation)
+      const nextDay = dayjs(currentSemesterInfo.next)
       if (
         (today.isSame(vacationDay, 'day') ||
           today.isAfter(vacationDay, 'day')) &&
         (today.isSame(nextDay, 'day') || today.isBefore(nextDay, 'day'))
       ) {
-        setIndex(1)
+        setTabIndex(1)
       }
     }
-  }, [data, termType])
+  }, [currentSemesterInfo, xq])
 
   const onChangeTab = (page: number): void => {
-    setIndex(page)
+    setTabIndex(page)
   }
+
+  const tabItems = pages.map((page, idx) => ({
+    key: idx,
+    label: page,
+    body: (
+      <View className={styles.box}>
+        <Image className={styles.pic} src={urls[tabIndex]!} mode='widthFix' />
+      </View>
+    ),
+  }))
 
   return (
     <View>
-      <Tabs items={pages} current={index} onChange={onChangeTab}>
-        <Panel current={index} index={0}>
-          <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
-          </View>
-        </Panel>
-
-        <Panel current={index} index={1}>
-          <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
-          </View>
-        </Panel>
-
-        <Panel current={index} index={2}>
-          <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
-          </View>
-        </Panel>
-
-        <Panel current={index} index={3}>
-          <View className={styles.box}>
-            <Image className={styles.pic} src={urls[index]!} mode='widthFix' />
-          </View>
-        </Panel>
-      </Tabs>
+      <Tabs current={tabIndex} onChange={onChangeTab} items={tabItems} />
     </View>
   )
 }

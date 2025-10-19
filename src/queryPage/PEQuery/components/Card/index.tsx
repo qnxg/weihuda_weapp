@@ -6,7 +6,6 @@ import type { BaseEventOrig } from '@tarojs/components'
 
 interface CardProps {
   data: Fitness
-  sex: string
 }
 
 const bgColors = [
@@ -21,7 +20,7 @@ const bgColors = [
 const percent = [20, 15, 10, 10, 20, 10, 15]
 
 const Card: React.FC<CardProps> = props => {
-  const { data, sex } = props
+  const { data } = props
   const { student, total, items } = data
   const [nowAt, setNowAt] = useState(7)
 
@@ -36,9 +35,7 @@ const Card: React.FC<CardProps> = props => {
   return (
     <View className={styles.container}>
       <View style={{ opacity: nowAt === 7 ? 1 : 0, transition: '0.05s' }}>
-        <View className={styles.name}>
-          {student.name} ({sex})
-        </View>
+        <View className={styles.name}>{student.name}</View>
         <View className={styles.score}>
           总得分 : {total.score} ({total.grade})
         </View>

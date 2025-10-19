@@ -5,30 +5,39 @@ import styles from './index.module.scss'
 import iconFinger from '@/static/emptyRoom/icon-finger.svg'
 
 import { buildingInfo, semesterWeekNum, weekdayText } from '@/utils/config'
+import type { PickerValue } from '../../interface'
 import type { CommonEventFunction } from '@tarojs/components/types/common'
 
-interface Props {
-  pickerValue: number[]
+export type PickerStates = {
+  pickerValue: PickerValue
   radioValue: number
-  setState: any
 }
 
-const multiArray = [
+type Props = PickerStates & {
+  setState: React.Dispatch<React.SetStateAction<PickerStates>>
+}
+
+const multiArray: [string[], string[], string[]] = [
   buildingInfo.map(item => item.building),
   Array.from({ length: semesterWeekNum }, (_, i) => `第${i + 1}周`),
   weekdayText.map(item => `星期${item}`),
 ]
 
 const PickerArea: React.FC<Props> = props => {
-  const { pickerValue = [], radioValue = 0, setState } = props
+  const { pickerValue, radioValue, setState } = props
   /**
    * picker的值发生改变
    * @param e
    */
   const pickerChange: CommonEventFunction = (e): void => {
-    setState((s: any) => ({
-      ...s,
-      pickerValue: e.detail.value,
+    const [buildId, weekIndex, dayOfTheWeek] = e.detail.value
+    setState(old => ({
+      ...old,
+      pickerValue: {
+        buildId,
+        weekIndex,
+        dayOfTheWeek,
+      },
     }))
   }
 
@@ -73,14 +82,18 @@ const PickerArea: React.FC<Props> = props => {
         <Picker
           mode='multiSelector'
           range={multiArray}
-          value={pickerValue}
+          value={[
+            pickerValue.buildId,
+            pickerValue.weekIndex,
+            pickerValue.dayOfTheWeek,
+          ]}
           onChange={pickerChange}
           className={styles.picker}
         >
           <Image src={iconFinger} className={styles.preIcon} />
           <View className={styles.titles}>选择楼栋、周数、星期</View>
           <Text decode className={styles.pickerText}>
-            {`${multiArray[0]![pickerValue[0]!]}  ${multiArray[1]![pickerValue[1]!]}  ${multiArray[2]![pickerValue[2]!]}`}
+            {`${multiArray[0][pickerValue.buildId]}  ${multiArray[1][pickerValue.weekIndex]}  ${multiArray[2][pickerValue.dayOfTheWeek]}`}
           </Text>
         </Picker>
       </View>

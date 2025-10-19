@@ -13,15 +13,15 @@ import styles from './index.module.scss'
  * onClick 点击函数
  */
 interface Props {
-  items: Array<any>
-  current: number
+  items: Array<string | number>
+  current: number | null
   num: number
-  onClick: (i: number) => void
+  onClick: (indexOfTabClicked: number) => void
   className?: string
 }
 
 const TabBar: React.FC<Props> = props => {
-  const { items = [], current, num, onClick } = props
+  const { items, current, num, onClick } = props
   const preIndexRef = useRef<number | null>(0)
   const clickFunc = useCallback(
     (index: number) => () => {

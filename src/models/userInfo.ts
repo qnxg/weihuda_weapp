@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import Taro from '@tarojs/taro'
-import { getUserInfo } from '@/apis/userInfo'
+import { getUserInfoApi } from '@/apis/userInfo'
 import storage from '@/utils/storage/cache'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
@@ -24,7 +24,7 @@ export const getUserInfoThunk = createAsyncThunk(
         storage.setUserInfo(userInfo)
       }
       if (!userInfo) {
-        const infoRes = await getUserInfo()
+        const infoRes = await getUserInfoApi()
         if (infoRes && infoRes.xz !== null) {
           storage.setUserInfo(infoRes)
           userInfo = infoRes

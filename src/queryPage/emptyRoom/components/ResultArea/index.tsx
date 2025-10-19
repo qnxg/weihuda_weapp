@@ -1,6 +1,6 @@
 import { View, Image, Text } from '@tarojs/components'
 import classnames from 'classnames'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styles from './index.module.scss'
 import DisplayCard from '@/components/DisplayCard'
 import iconNo from '@/static/empty/no-room.svg'
@@ -11,14 +11,17 @@ interface Props {
   roomList: EmptyRoom[]
   run: () => unknown
   highlight: EmptyRoom
-  setHighlight: any
+  shouldShowResult: boolean
+  setHighlight: React.Dispatch<React.SetStateAction<EmptyRoom>>
 }
 
-const ResultArea: React.FC<Props> = props => {
-  const { roomList, run, highlight, setHighlight } = props
-  /**用户点击搜索按钮的记录 */
-  const [searched, setSearched] = useState<boolean>(false)
-
+const ResultArea: React.FC<Props> = ({
+  roomList,
+  run,
+  highlight,
+  setHighlight,
+  shouldShowResult,
+}) => {
   /** 处理点击教室 */
   const onClickCell = (item: EmptyRoom): void => {
     if (item.name !== highlight.name) {
@@ -29,27 +32,21 @@ const ResultArea: React.FC<Props> = props => {
   // 默认高亮第一个
   useEffect(() => {
     if (roomList.length > 0) {
-      setHighlight(roomList[0])
+      setHighlight(roomList[0]!)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomList])
 
   return (
     <View className={styles.container}>
-      <View
-        className={styles.search}
-        onClick={(): void => {
-          run()
-          setSearched(true)
-        }}
-      >
+      <View className={styles.search} onClick={run}>
         搜索
       </View>
       <View className={styles.tips}>
         <View>空教室所查数据均来自教务系统，仅供参考</View>
         <View>请以实际情况为准</View>
       </View>
-      {searched && roomList.length > 0 && (
+      {shouldShowResult && roomList.length > 0 && (
         <View>
           <View className={styles.itemContainer}>
             <View className={styles.head}>
@@ -84,7 +81,7 @@ const ResultArea: React.FC<Props> = props => {
           </View>
         </View>
       )}
-      {searched && roomList.length === 0 && (
+      {shouldShowResult && roomList.length === 0 && (
         <View className={styles.itemContainer}>
           <View className={styles.head}>
             <Image src={iconFilter} className={styles.preIcon} />
