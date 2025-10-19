@@ -64,7 +64,6 @@ const Index: React.FC = () => {
     })
     try {
       // 发起请求
-      // TODO: sex
       const res = await getFitnessApi(years[currentTabIndex]!)
       // 更新数据
       const newData = [...tabData]
