@@ -23,8 +23,10 @@ const obj2query = (obj: any): string => {
 }
 
 const getAvailableYears = async (): Promise<number[]> => {
-  const enterYear = (await getUserInfoApi()).enter
-  const [currentXn] = await getCurrentXnXq()
+  const [enterYear, [currentXn]] = await Promise.all([
+    getUserInfoApi().then(v => v.enter),
+    getCurrentXnXq(),
+  ])
 
   const res: Array<number> = []
   for (let i = 0; enterYear + i <= currentXn; ++i) {
