@@ -46,13 +46,13 @@ const Header: React.FC<Props> = props => {
         <View>
           {props.tableCurrentWeek >= 0 ? (
             <Text decode>
-              {semesters[currentSem]!.show}
+              {semesters[currentSem]?.show ?? '网络错误!'}
               &nbsp;&nbsp;&nbsp;&nbsp;第
               {props.tableCurrentWeek}周
             </Text>
           ) : (
             <Text decode>
-              {semesters[currentSem]!.show}
+              {semesters[currentSem]?.show ?? '网络错误!'}
               &nbsp;&nbsp;&nbsp;&nbsp;距离开学还有
               {-props.tableCurrentWeek}周
             </Text>

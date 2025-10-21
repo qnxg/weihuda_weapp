@@ -106,7 +106,7 @@ const Options: React.FC<OptionProps> = props => {
             rangeKey='show'
             mode='selector'
           >
-            <Text>当前学期：{semesters[currentSem]!.show}</Text>
+            <Text>当前学期：{semesters[currentSem]?.show ?? '网络错误!'}</Text>
           </Picker>
           <Picker
             onChange={onSelectWeek}

@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import AddCourseButton from './components/AddCourseButton'
 import ClassDetailFloat from './components/ClassDetailFloat'
+import ErrorModal from './components/ErrorModal'
 import Header from './components/Header'
 import Options from './components/Options'
 import TableBody from './components/TableBody'
@@ -177,10 +178,13 @@ const Index: React.FC = () => {
         classDetailsToShow={classDetailsForFloatComponentToShow}
         clearClassDetailsToShow={clearClassDetailsForFloatComponentToShow}
       />
-      <AddCourseButton
-        xn={semesters[currentSem]!.xn}
-        xq={semesters[currentSem]!.xq}
-      />
+      {semesters[currentSem] && (
+        <AddCourseButton
+          xn={semesters[currentSem].xn}
+          xq={semesters[currentSem].xq}
+        />
+      )}
+      {!semesters[currentSem] && <ErrorModal />}
     </Fragment>
   )
 }
