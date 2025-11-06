@@ -58,12 +58,25 @@ const Index: React.FC = () => {
         {show && data.length > 0 ? (
           <View style={{ padding: 0 }}>
             {data.map(item => {
-              const rest = dayjs(item.date).diff(dayjs(), 'day')
+              const subtitleFmt = () => {
+                const now = dayjs()
+                const time = dayjs(`${item.date} ${item.time}`)
+
+                if (time.isBefore(now)) return '已结束'
+
+                const dayDiff = time
+                  .startOf('day')
+                  .diff(now.startOf('day'), 'day')
+                if (dayDiff > 0) return `${dayDiff}天`
+
+                const hourDiff = time.diff(now, 'hour')
+                return hourDiff > 0 ? `${hourDiff}小时` : '即将开始'
+              }
               return (
                 <DisplayCard
                   title={item.name}
                   key={Math.random()}
-                  subTitle={rest >= 0 ? `${rest}天` : '已结束'}
+                  subTitle={subtitleFmt()}
                 >
                   <view>课程：{item.course}</view>
                   <View>
