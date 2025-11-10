@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useState } from 'react'
 import AddPage from './components/addPage'
 import ContentLine from './components/contentLine'
-import { ModalProvider } from './components/modal'
 import Unfinished from './components/unfinished'
 import { useDeleteId, useExamId } from './hooks'
 import styles from './index.module.scss'
@@ -136,7 +135,7 @@ const Index: React.FC = () => {
   }, [topExamIds, init])
 
   return (
-    <ModalProvider>
+    <View>
       {edit ? (
         <AddPage
           cancelHandle={() => {
@@ -200,7 +199,7 @@ const Index: React.FC = () => {
             ))}
         </Block>
       )}
-    </ModalProvider>
+    </View>
   )
 }
 

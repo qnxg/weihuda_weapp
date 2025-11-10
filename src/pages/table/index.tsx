@@ -1,8 +1,8 @@
+import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import AddCourseButton from './components/AddCourseButton'
 import ClassDetailFloat from './components/ClassDetailFloat'
-import ErrorModal from './components/ErrorModal'
 import Header from './components/Header'
 import Options from './components/Options'
 import TableBody from './components/TableBody'
@@ -33,6 +33,9 @@ const Index: React.FC = () => {
     useAppSelector(state => state.classTable)
 
   const dispatch = useAppDispatch()
+
+  // 加载错误弹窗用
+  const [loadingError, setLoadingError] = useState(false)
 
   // 初始化
   useEffect(() => {
@@ -149,6 +152,26 @@ const Index: React.FC = () => {
     }
   }, [classTable, tableCurrentWeek, mode])
 
+  // 加载失败弹窗
+  const currentSemInfo = semesters[currentSem]
+  useEffect(() => {
+    if (!currentSemInfo && !loadingError) {
+      setLoadingError(true)
+
+      void Taro.showModal({
+        title: '',
+        content: '课表加载失败。',
+        confirmText: '重新加载',
+        showCancel: false,
+        success: () => {
+          void dispatch(initClassTableThunk()).finally(() => {
+            setLoadingError(false)
+          })
+        },
+      })
+    }
+  }, [currentSemInfo, dispatch, loadingError])
+
   return (
     <Fragment>
       <Header
@@ -184,7 +207,6 @@ const Index: React.FC = () => {
           xq={semesters[currentSem].xq}
         />
       )}
-      {!semesters[currentSem] && <ErrorModal />}
     </Fragment>
   )
 }

@@ -1,7 +1,6 @@
 import { Block, Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useMemo, useState } from 'react'
-import { useShowModal } from '../modal'
 import styles from './index.module.scss'
 import LineDividedLeftRightCard from '@/components/LeftRightCard'
 import LeftPart from '@/components/LeftRightCard/components/LeftPart'
@@ -56,9 +55,6 @@ const Index: React.FC<Props> = props => {
   const [startX, setStartX] = useState<number>(0)
   const [originOffset, setOriginOffset] = useState<number>(INIT_OFFSET)
   const [transitionTime, setTransitionTime] = useState<number>(0)
-
-  // 用于显示确认弹窗
-  const showModal = useShowModal()
 
   // 长按复制考号
   const handleLongPress = () => {
@@ -118,14 +114,17 @@ const Index: React.FC<Props> = props => {
   }
 
   const handleDelete = (): void => {
-    showModal({
-      content: '确认删除这一项吗',
+    void Taro.showModal({
+      title: '',
+      content: '确认删除这一项吗?',
       cancelText: '取消删除',
       confirmText: '确认删除',
-      onCancel: () => {},
-      onConfirm: () => {
-        deleteItem(index, type)
-        setLeftOffset(INIT_OFFSET)
+      confirmColor: '#ff0000',
+      success: res => {
+        if (res.confirm) {
+          deleteItem(index, type)
+          setLeftOffset(INIT_OFFSET)
+        }
       },
     })
   }
