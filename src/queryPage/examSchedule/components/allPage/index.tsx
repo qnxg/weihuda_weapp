@@ -1,11 +1,8 @@
-import { View, Image, Block } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import React from 'react'
+import ExamArrangeItem from '../ExamArrangeItem'
 import styles from './index.module.scss'
-import LineDividedLeftRightCard from '@/components/LeftRightCard'
-import LeftPart from '@/components/LeftRightCard/components/LeftPart'
-import RightPart from '@/components/LeftRightCard/components/RightPart'
 import iconNoK from '@/static/empty/no-exam.svg'
-import location from '@/static/icon/location.svg'
 import { Theme1 } from '@/utils/colors'
 import type { ExamArrange } from '@/apis/hdjw/examArrange'
 
@@ -19,27 +16,11 @@ const Index: React.FC<Props> = props => {
     return (
       <View>
         {exam.map((item, index) => {
-          const start = item.startTime.split(' ')
-          const end = item.endTime.split(' ')
-          const day = start[0]!.replace(/-/g, '/')
           return (
-            <LineDividedLeftRightCard
+            <ExamArrangeItem
               key={`${item.name}${1000 - index}`}
-              className={styles.cardOuter}
+              data={item}
               lineColor={Theme1[index % Theme1.length]!}
-              renderLeft={
-                <LeftPart title={day} content={`${start[1]}-${end[1]}`} />
-              }
-              renderRight={
-                <RightPart
-                  title={item.name}
-                  subTitle={item.number}
-                  renderContent={
-                    <Block>{`${item.classroom} 座位${item.seat}号`}</Block>
-                  }
-                  icon={location}
-                />
-              }
             />
           )
         })}

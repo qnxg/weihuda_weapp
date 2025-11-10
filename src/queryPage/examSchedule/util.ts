@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
+import type { DateType } from './index.config'
 import type { ExamArrange } from '@/apis/hdjw/examArrange'
-import type DateType from '@/apis/hdjw/examArrange'
 
 /**星期英文简写标题 */
 export const dayTitles: Array<string> = [
@@ -20,7 +20,7 @@ export const dayTitles: Array<string> = [
  */
 export const ExamDate = (e: ExamArrange): DateType => {
   /** 正则表达式提取数字 */
-  const numArr = e.startTime.match(/[1-9][0-9]*/g) as RegExpMatchArray
+  const numArr = e.date.match(/[1-9][0-9]*/g) as RegExpMatchArray
   const [y, m, d] = numArr
   if (y === undefined || m == undefined || d == undefined) {
     throw Error('考试日期提取错误')

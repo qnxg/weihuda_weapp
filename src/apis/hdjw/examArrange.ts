@@ -1,35 +1,12 @@
 import request from '../request'
 
 export interface ExamArrange {
-  number: string
+  id: string
   name: string
-  classroom: string
-  startTime: string
-  endTime: string
+  place: string
+  date: string
+  time: string
   seat: string
-}
-
-/**
- * 日期类型
- */
-export default interface DateType {
-  year: number
-  /**
-   * 月份，从 0 开始算起
-   */
-  month: number
-  /**
-   * 日
-   */
-  date: number
-  /**
-   * 星期，从 0 开始算起
-   */
-  day: number
-  /**
-   * 考试信息
-   */
-  exams?: ExamArrange[]
 }
 
 /**
@@ -41,7 +18,7 @@ export const getExamArrange = async (
   xn: string | number = '',
   xq: string | number = ''
 ) => {
-  return request.get<any>('/hdjw/exam-arrange', {
+  return request.get<ExamArrange[]>('/hdjw/exam-arrange', {
     data: {
       xn,
       xq,

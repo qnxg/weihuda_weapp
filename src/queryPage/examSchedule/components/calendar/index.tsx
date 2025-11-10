@@ -7,7 +7,7 @@ import { dayTitles, totalCells } from '../../util'
 import styles from './index.module.scss'
 import shiftLeft from '@/static/calendar/shift-left.svg'
 import shiftRight from '@/static/calendar/shift-right.svg'
-import type DateType from '@/apis/hdjw/examArrange'
+import type { DateType } from '../../index.config'
 
 interface Props {
   display: DateType

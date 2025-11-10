@@ -1,9 +1,5 @@
 @import '~@/utils/scss/global.scss';
 
-.cardOuter {
-  @include shadow;
-}
-
 .container {
   @include flex(normal, center, column);
   width: 100%;
@@ -25,10 +21,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .cardOuter {
-    background-color: $darkBgColor;
-    box-shadow: 0 0 20px 0 $darkBoxShadowColor;
-  }
   .container {
     .iconNoJK {
       filter: invert(0.8) hue-rotate(180deg);
