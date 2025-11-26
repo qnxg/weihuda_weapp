@@ -41,7 +41,7 @@ interface GetResponse {
 }
 
 /**
- * 添加反馈
+ * 查询反馈
  */
 export const getFeedbackPageApi = async (stuId: string) => {
   return request.get<GetResponse>('/feedback/no-auth', {
