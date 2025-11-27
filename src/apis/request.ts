@@ -41,10 +41,6 @@ export async function getTokenApi() {
  */
 export interface Response {
   /**
-   * 状态码
-   */
-  code: number
-  /**
    * 具体数据，请求失败时为null
    */
   data: Data
@@ -146,13 +142,7 @@ async function request<T extends Data>(
     }
   }
 
-  if (response.data.code === 401) {
-    // 重新获取token，并重新发起请求
-    await getTokenApi()
-    return request<T>(options)
-  }
-
-  if (response.data.code !== 200) {
+  if (response.statusCode !== 200) {
     // 有些请求不需要弹出提示，例如知湖阅读文章获取积分的请求
     // 不用弹出提示的请求会在msg中包含NO_TOAST
     if (!response.data.msg.includes('NO_TOAST')) {
