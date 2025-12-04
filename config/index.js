@@ -71,6 +71,9 @@ const config = {
       })
     },
   },
+  h5: {
+    esnextModules: ['@taroify'],
+  },
 }
 
 export default function (merge) {
