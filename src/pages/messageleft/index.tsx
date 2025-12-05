@@ -12,19 +12,15 @@ import { useState } from 'react'
 import styles from './index.module.scss'
 import { postMessageLeftApi } from '@/apis/messageleft'
 import Button from '@/components/Button'
-import { useAppSelector } from '@/utils/hooks/redux'
 import type { IMessageLeft } from '@/apis/messageleft'
 
 const Index: React.FC = () => {
-  const { stuId } = useAppSelector(state => state.userInfo)
-
   // const type_list = [
   //   { label: '产品建议', value: 'suggestion', checked: true },
   //   { label: '功能故障或其他问题', value: 'bug', checked: false }
   // ]
 
   const [data, setData] = useState({
-    stuId: stuId,
     isAgree: true,
     isSend: false,
     sendTime: dayjs().add(100, 'day').format('YYYY-MM-DD'),
@@ -66,7 +62,6 @@ const Index: React.FC = () => {
       desc: data.desc,
       isSend: data.isSend ? 1 : 0,
       sendTime: fullDateTime, // 格式化用户选择的时间
-      stuId: data.stuId,
     }
     try {
       await postMessageLeftApi(reqData)

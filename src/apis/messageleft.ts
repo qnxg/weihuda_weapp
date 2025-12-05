@@ -6,8 +6,6 @@ export interface IMessageLeft {
   id: number
   /** 留言内容 */
   desc: string
-  /** 学号 */
-  stuId: string
   /** 是否公开 */
   isAgree: number
   /** 发送时间 */
