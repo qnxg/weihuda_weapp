@@ -27,7 +27,7 @@ const Index: React.FC = () => {
             : Math.min(17, Math.max(0, currentWeekIndex)),
         dayOfTheWeek: new Date().getDay(),
       },
-      radioValue: 0,
+      radioValue: [],
     }),
     [currentWeekIndex]
   )
@@ -61,7 +61,7 @@ const Index: React.FC = () => {
       const res = await getEmptyRoom({
         week: pickerStates.pickerValue.weekIndex + 1,
         day: pickerStates.pickerValue.dayOfTheWeek,
-        jc: radio[pickerStates.radioValue]!.id,
+        jc: pickerStates.radioValue.map(v => radio[v]!.id).join(','),
         buildId: buildingInfo[pickerStates.pickerValue.buildId]!.id,
       })
       if (res === null || res === undefined) {

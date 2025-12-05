@@ -13,7 +13,7 @@ export interface EmptyRoomParams {
    */
   day: number
   /**
-   * 第几节
+   * 第几节，多个节次用,分割
    */
   jc: string
   /**

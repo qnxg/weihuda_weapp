@@ -10,7 +10,7 @@ import type { CommonEventFunction } from '@tarojs/components/types/common'
 
 export type PickerStates = {
   pickerValue: PickerValue
-  radioValue: number
+  radioValue: number[]
 }
 
 type Props = PickerStates & {
@@ -48,7 +48,9 @@ const PickerArea: React.FC<Props> = props => {
   const radioChange = (e: number): void => {
     setState((s: any) => ({
       ...s,
-      radioValue: e,
+      radioValue: s.radioValue.includes(e)
+        ? s.radioValue.filter((item: number) => item !== e)
+        : [...s.radioValue, e],
     }))
   }
 
@@ -66,7 +68,7 @@ const PickerArea: React.FC<Props> = props => {
           <Radio
             color='#328ccb'
             value={item.id}
-            checked={radioValue === index}
+            checked={radioValue.includes(index)}
             className={styles.radios}
           />
           <Text>{item.text[0]}</Text>
