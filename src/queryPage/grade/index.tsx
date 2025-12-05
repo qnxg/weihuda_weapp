@@ -1,9 +1,11 @@
-import { Image, View } from '@tarojs/components'
+import { Popup, Cell } from '@taroify/core'
+import { Image, View, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getGradeApi } from '@/apis/hdjw/grade'
+import './taroify.scss'
+import { getGradeApi, getGradeDetailApi } from '@/apis/hdjw/grade'
 import { getCurrentXnXq } from '@/apis/semester'
 import { getUserInfoApi } from '@/apis/userInfo'
 import PullRefresh from '@/components/PullRefresh'
@@ -13,7 +15,7 @@ import empty from '@/static/empty/no-grade.svg'
 import notStart from '@/static/empty/term-not-start.svg'
 import usePromise from '@/utils/hooks/usePromise'
 import type { GradeState } from './interface'
-import type { GradeItem } from '@/apis/hdjw/grade'
+import type { GradeDetail, GradeItem } from '@/apis/hdjw/grade'
 
 const semester = ['秋季学期', '春季学期', '夏季学期']
 const importantType1 = ['必修']
@@ -66,6 +68,10 @@ const Index: React.FC = () => {
   const [data, setData] = useState<GradeItem[]>([])
 
   const [show, setShow] = useState(false)
+
+  const [showGradeDetail, setShowGradeDetail] = useState<GradeDetail | null>(
+    null
+  )
 
   const getData = useCallback(async () => {
     if (prerequisites === null) {
@@ -129,8 +135,55 @@ const Index: React.FC = () => {
     [prerequisites.currentXn, prerequisites.currentXq] <
     [prerequisites.selectableYears[selectedXnIdx]!, selectedXqIdx]
 
+  const getGradeDetail = async (jx0404id: string | null) => {
+    if (jx0404id === null) {
+      await Taro.showToast({
+        icon: 'none',
+        title: '暂无成绩详情',
+      })
+      return
+    }
+    await Taro.showLoading({
+      mask: true,
+      title: '加载中...',
+    })
+    try {
+      const res = await getGradeDetailApi(jx0404id)
+      setShowGradeDetail(res)
+    } catch (err) {
+      await Taro.showToast({
+        icon: 'none',
+        title: err.toString(),
+      })
+    }
+    Taro.hideLoading()
+  }
+
   return (
     <Fragment>
+      <Popup
+        lock
+        open={showGradeDetail !== null}
+        onClose={() => setShowGradeDetail(null)}
+        placement='bottom'
+        rounded
+      >
+        <View className='pt-3'>
+          <Text className='p-3 text-base'>分数详情</Text>
+        </View>
+        {showGradeDetail &&
+          showGradeDetail.map((item, index) => (
+            <Cell
+              key={item.name + index}
+              title={item.name}
+              brief={item.percentage}
+              align='center'
+              size='large'
+            >
+              {item.score}
+            </Cell>
+          ))}
+      </Popup>
       <TabBar
         items={prerequisites.selectableYears}
         num={0}
@@ -145,60 +198,68 @@ const Index: React.FC = () => {
       />
       <PullRefresh topGap={136} runFunc={onRefresh}>
         {data && show && data.length > 0 ? (
-          data.map((item, i) => {
-            return (
-              <View
-                key={item.courseName + i}
-                className={styles.gradeCardContainer}
-              >
-                <View className={styles.gradeCard}>
-                  <View className={styles.nameAndGrade}>
-                    <View>
-                      <View>{item.courseName}</View>
-                      <View className={styles.courseID}>{item.courseId}</View>
-                    </View>
-                    <View>
-                      <View className={classNames('inline', styles.score)}>
-                        {item.score}
+          <Fragment>
+            <View className='pt-1'>
+              <Text className={styles.tips}>点击可查看课程具体分数组成。</Text>
+            </View>
+            {data.map((item, i) => {
+              return (
+                <View
+                  key={item.courseName + i}
+                  className={styles.gradeCardContainer}
+                >
+                  <View
+                    className={styles.gradeCard}
+                    onClick={() => getGradeDetail(item.jx0404id)}
+                  >
+                    <View className={styles.nameAndGrade}>
+                      <View>
+                        <View>{item.courseName}</View>
+                        <View className={styles.courseID}>{item.courseId}</View>
                       </View>
-                      <View className={classNames('inline', styles.gpa)}>
-                        {' '}
-                        / {item.gpa.toFixed(1)}
+                      <View>
+                        <View className={classNames('inline', styles.score)}>
+                          {item.score}
+                        </View>
+                        <View className={classNames('inline', styles.gpa)}>
+                          {' '}
+                          / {item.gpa.toFixed(1)}
+                        </View>
                       </View>
                     </View>
-                  </View>
-                  <View className={styles.exteraInfo}>
-                    <View>
-                      {item.tags.map((tag, idx) => (
-                        <Tag key={tag + idx} theme='warning'>
-                          {tag}
+                    <View className={styles.exteraInfo}>
+                      <View>
+                        {item.tags.map((tag, idx) => (
+                          <Tag key={tag + idx} theme='warning'>
+                            {tag}
+                          </Tag>
+                        ))}
+                        <Tag
+                          theme={
+                            importantType1.includes(item.courseType1)
+                              ? 'primary'
+                              : 'default'
+                          }
+                        >
+                          {item.courseType1}
                         </Tag>
-                      ))}
-                      <Tag
-                        theme={
-                          importantType1.includes(item.courseType1)
-                            ? 'primary'
-                            : 'default'
-                        }
-                      >
-                        {item.courseType1}
-                      </Tag>
-                      <Tag
-                        theme={
-                          importantType2.includes(item.courseType2)
-                            ? 'primary'
-                            : 'default'
-                        }
-                      >
-                        {item.courseType2}
-                      </Tag>
+                        <Tag
+                          theme={
+                            importantType2.includes(item.courseType2)
+                              ? 'primary'
+                              : 'default'
+                          }
+                        >
+                          {item.courseType2}
+                        </Tag>
+                      </View>
+                      <View>学分：{item.credit}</View>
                     </View>
-                    <View>学分：{item.credit}</View>
                   </View>
                 </View>
-              </View>
-            )
-          })
+              )
+            })}
+          </Fragment>
         ) : (
           <View className={styles.empty}>
             <Image

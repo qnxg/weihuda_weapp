@@ -72,10 +72,19 @@
   }
 }
 
+.tips {
+  font-size: $fontMedium;
+  color: $thirdTextColor;
+  margin-left: 24px;
+}
+
 @media (prefers-color-scheme: dark) {
   .empty {
     .img {
       filter: invert(0.8) hue-rotate(180deg);
     }
+  }
+  .tips {
+    color: $darkTextColor;
   }
 }

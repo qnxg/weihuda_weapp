@@ -1,0 +1,24 @@
+@import '~@/utils/scss/global.scss';
+
+.taroify-cell__value {
+  font-size: 34px !important;
+  color: black !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .taroify-popup {
+    background-color: $darkBgColor !important;
+  }
+  .taroify-cell {
+    background-color: $darkBgColor !important;
+  }
+  .taroify-cell::after {
+    border-bottom-color: #3b3b3b !important;
+  }
+  .taroify-cell__title {
+    color: $darkTextColor !important;
+  }
+  .taroify-cell__value {
+    color: white !important;
+  }
+}
