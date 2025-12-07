@@ -9,10 +9,9 @@ runs:
         corepack install
 
     - name: Setup Node
-      uses: https://gitee.com/skr2005/setup-node@v5
+      uses: https://gitee.com/skr2005/setup-node@641a5f27d9d3241b501f5ae40ac61aa9d04c04ca
       with:
-        mirror: 'https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/'
-        node-version: 24
+        node-version: lts/*
         cache: 'yarn'
 
     - name: Use `npmmirror`
