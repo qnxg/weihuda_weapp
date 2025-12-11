@@ -16,14 +16,17 @@ export const dayTitles: Array<string> = [
 
 /**
  * @returns 返回考试日期的DateType形式
- * @param e 考试信息
+ * @param e 考试信息，如果无法解析则返回null
  */
-export const ExamDate = (e: ExamArrange): DateType => {
+export const ExamDate = (e: ExamArrange): DateType | null => {
   /** 正则表达式提取数字 */
   const numArr = e.date.match(/[1-9][0-9]*/g) as RegExpMatchArray
+  if (!numArr) {
+    return null
+  }
   const [y, m, d] = numArr
   if (y === undefined || m == undefined || d == undefined) {
-    throw Error('考试日期提取错误')
+    return null
   }
   return {
     year: +y,
@@ -104,6 +107,9 @@ export const initialHighlight = (es: Array<ExamArrange>): DateType => {
   h.exams = []
   for (const e of es) {
     const et = ExamDate(e)
+    if (et === null) {
+      continue
+    }
     if (et.year === h.year && et.month === h.month && et.date === h.date) {
       h.exams.push(e)
     }
@@ -142,6 +148,9 @@ export const prevBlank = (
     prev[0]!.exams = []
     for (const e of es) {
       const et = ExamDate(e)
+      if (et === null) {
+        continue
+      }
       if (
         et.year === prev[0]!.year &&
         et.month === prev[0]!.month &&
@@ -180,6 +189,9 @@ export const nextBlank = (
     }
     for (const e of es) {
       const et = ExamDate(e)
+      if (et === null) {
+        continue
+      }
       if (
         et.year === temp.year &&
         et.month === temp.month &&
@@ -217,6 +229,9 @@ export const datesInMonth = (
     /** 存储考试信息 */
     for (const e of es) {
       const et = ExamDate(e)
+      if (et === null) {
+        continue
+      }
       if (
         et.year === temp.year &&
         et.month === temp.month &&
