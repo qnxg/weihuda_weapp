@@ -29,11 +29,18 @@ export default {
               `请将函数定义使用useCallback包裹或者提取至全局。`,
           })
         } else if (thirdArg) {
-          // 2. 当第一个参数不是 inline 函数时，如果第三个参数存在，则要求第三个参数为数组字面量
-          if (thirdArg.type !== 'ArrayExpression') {
+          // 2. 当第一个参数不是 inline 函数时，
+          // 如果第三个参数存在，则要求第三个参数为数组字面量或者undefined
+          if (
+            !(
+              thirdArg.type === 'ArrayExpression' ||
+              (thirdArg.type === 'Identifier' && thirdArg.name === 'undefined')
+            )
+          ) {
             context.report({
               node: thirdArg,
-              message: 'usePromise的第三个参数为什么不是数组字面量？',
+              message:
+                'usePromise的第三个参数为什么不是数组字面量或者`undefined`？',
             })
           } else {
             // 检查数组是否包含第一个参数的引用（假设引用通过标识符判断）
