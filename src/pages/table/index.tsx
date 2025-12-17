@@ -85,67 +85,109 @@ const Index: React.FC = () => {
   // 当前周数改变时需要重新计算一个新表
   const formatTable = useMemo((): Array<Array<ClassTableItem>> => {
     if (classTable) {
-      const schedule: Array<Array<ClassTableItem>> = []
       // 初始化数组
-      for (let i = 0; i < 7; i++) {
-        const temp: Array<ClassTableItem> = []
-        for (let j = 0; j < 12; j++) {
-          temp.push({ courses: [], len: 1, merged: false })
+      const schedule: ClassTableItem[][] = (() => {
+        const temp = []
+        for (let i = 0; i < 7; i++) {
+          const day = []
+          for (let j = 0; j < 12; j++) {
+            day.push({ courses: [], len: 1, merged: false })
+          }
+          temp.push(day)
         }
-        schedule.push(temp)
-      }
+        return temp
+      })()
+
       // 格式化 Table
-      for (let i = 0; i < classTable.length; i++) {
-        const course = Object.assign({}, classTable[i]) // classTable 是只读的，需要先复制一下
-        const time = course.time - 1 // 因为 time 是从 1 开始的，而我们数组是从 0 开始的
-        course.time = -1 // 为了便于后续合并格子，这里全都改成 -1
-        course.day = course.day === 7 ? 0 : course.day
-        // 计算是否为本周课程
+      classTable.forEach(item => {
+        const course = { ...item }
+        const time = course.time - 1 // 因为 time 是从 1 开始的, 而我们数组是从 0 开始的
+        course.time = -1 // 为了便于后续合并格子, 这里全都改成 -1
+        course.day = course.day % 7
+
         if (course.weeks.includes(tableCurrentWeek)) {
-          // 是本周的课则放在前面，否则放在后面。这样可以保证本周课程在前面显示
+          // 是本周的课则放在前面, 保证本周课程在前面显示
           schedule[course.day]![time]!.courses.unshift(course)
         } else if (!mode) {
-          // 没有开启仅显示本周课程
+          // 未开启仅显示本周课程
           course.bgColor = offColor
           course.fontColor = offFontColor
           schedule[course.day]![time]!.courses.push(course)
         }
+      })
+
+      // 课程数组比对辅助函数
+      const isCoursesSame = (a: CourseInfo[], b: CourseInfo[]): boolean => {
+        if (a.length !== b.length) return false
+
+        const sortedA = Array.from(a).sort((a, b) =>
+          a.courseName.localeCompare(b.courseName)
+        )
+        const sortedB = Array.from(b).sort((a, b) =>
+          a.courseName.localeCompare(b.courseName)
+        )
+
+        return sortedA.every((a, index) => {
+          const b = sortedB[index]!
+          const requiredFields = [
+            'courseName',
+            'courseId',
+            'area',
+            'className',
+            'teacher',
+            'place',
+          ] as const
+
+          return requiredFields.every(field => a[field] === b[field])
+        })
       }
-      // 把可以合并的格子都给合并，向上合并
-      for (let i = 0; i < 7; ++i) {
-        let lastPos = 0
-        for (let j = 1; j < 12; ++j) {
-          // 判断两个格子是否是本质相同的
-          const now = schedule[i]![j]!
-          const last = schedule[i]![lastPos]!
-          let flag = true
-          if (
-            now.courses.length > 0 &&
-            now.courses.length === last.courses.length
-          ) {
-            // 进行这么复杂比较的原因是可能 courses 的顺序不同
-            const tmp: { [index: string]: number } = {}
-            for (const item of now.courses) {
-              tmp[JSON.stringify(item)] = 1
-            }
-            for (const item of last.courses) {
-              if (tmp[JSON.stringify(item)] === undefined) {
-                flag = false
-                break
+
+      // 向上合并相同的课程
+      schedule.forEach(day => {
+        let prevIndex = 0
+        day.forEach((cell, index) => {
+          if (index === 0) return // 第一节课不需要和上面合并
+
+          const prevCell = day[prevIndex]!
+          let isNeedMerged = false
+
+          // 判断当前显示课程是否相同
+          if (cell.courses.length > 0 && prevCell.courses.length > 0) {
+            if (mode) {
+              // 开启仅显示本周课程, 则仅比较并合并本周课程
+              const now = cell.courses.filter(item =>
+                item.weeks.includes(tableCurrentWeek)
+              )
+              const prev = prevCell.courses.filter(item =>
+                item.weeks.includes(tableCurrentWeek)
+              )
+
+              if (now && prev && isCoursesSame(now, prev)) {
+                isNeedMerged = true
+              }
+            } else {
+              // 未开启仅显示本周课程, 需要比较两个格子的所有课程是否相同
+              if (
+                cell.courses &&
+                prevCell.courses &&
+                isCoursesSame(cell.courses, prevCell.courses)
+              ) {
+                isNeedMerged = true
               }
             }
-          } else {
-            flag = false
           }
-          if (flag) {
-            schedule[i]![j]!.courses = [] // 清空当前格子，就不会再显示了
-            schedule[i]![j]!.merged = true // 标记为被合并
-            schedule[i]![lastPos]!.len = last.len + 1
+
+          // 进行合并
+          if (isNeedMerged) {
+            cell.courses = [] // 清空当前格子, 保证不显示
+            cell.merged = true // 标记为被合并
+            prevCell.len++
           } else {
-            lastPos = j
+            prevIndex = index
           }
-        }
-      }
+        })
+      })
+
       return schedule
     } else {
       return []
