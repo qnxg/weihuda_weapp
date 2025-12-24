@@ -143,23 +143,28 @@ export const refreshClassTableThunk = createAsyncThunk(
     })
     try {
       const course = await getClassTable(xn, xq)
+      // 基础染色索引
+      let baseColorIndex = 0
+      const colorMap: Map<string, number> = new Map()
       // 进行染色
       if (course) {
-        // 整理课程名并去重, 排序
-        const courseList = Array.from(
-          new Set(course.map(item => item.courseName))
-        ).sort()
-        // 按课程名生成颜色映射
-        const colorMap: Map<string, number> = new Map(
-          courseList.map((item, index) => [item!, index])
-        )
-        const totalColor = onColors.length
-
-        course.forEach(item => {
-          // 从映射中获取颜色序号
-          const index = colorMap.get(item.courseName)! % totalColor
-          item.bgColor = onColors[index]
-          item.fontColor = onFontColors[index]
+        course.map(item => {
+          // 类型规范化
+          item.day = parseInt(item.day.toString())
+          // 进行染色
+          let colorIndex: number
+          if (colorMap.has(item.courseName)) {
+            colorIndex = colorMap.get(item.courseName)!
+          } else if (baseColorIndex > 9) {
+            colorIndex = Math.round(Math.random() * 9)
+            colorMap.set(item.courseName, colorIndex)
+          } else {
+            colorIndex = baseColorIndex
+            colorMap.set(item.courseName, colorIndex)
+            baseColorIndex++
+          }
+          item.bgColor = onColors[colorIndex]
+          item.fontColor = onFontColors[colorIndex]
         })
       }
       // 进行数据缓存
