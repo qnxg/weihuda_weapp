@@ -31,6 +31,7 @@ export interface CardHistoryData {
   items: CardHistoryItem[]
   /**
    * 总交易金额
+   * 如果是充值金额则是正数，如果是消费金额则是负数
    */
   total: number
   /**
@@ -94,6 +95,7 @@ interface CardHistoryParams {
 
 /**
  * 获取校园账单
+ * 获取充值记录和消费记录都是走这个接口，需要注意获取的消费总额默认是负数
  */
 export const getCardHistory = async (params: CardHistoryParams) => {
   return request.get<CardHistoryData>('/pt/card-history', {

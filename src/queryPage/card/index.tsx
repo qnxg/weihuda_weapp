@@ -86,8 +86,10 @@ const Index: React.FC = () => {
           <View style={{ padding: 0 }}>
             <View className={styles.totalAmount}>
               {index == 0
-                ? `共有${data.items.length}次消费，消费了${data.total}元`
-                : `共有${data.items.length}次充值，充值了${data.total}元`}
+                ? // 消费和充值的获取走的是同一个后端接口，因此消费的原始数据是负数
+                  // 具体数据处理见爬虫 src/handlers/pt.rs get_card_history_handler()
+                  `共有${data.items.length}次消费，消费了${(-data.total).toFixed(2)}元`
+                : `共有${data.items.length}次充值，充值了${data.total.toFixed(2)}元`}
             </View>
             {data.items.map(item => {
               return (
