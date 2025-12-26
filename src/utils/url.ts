@@ -1,17 +1,10 @@
-// BASE_URL: 服务器地址
-// export const BASE_URL = 'http://127.0.0.1:8000'
-export const BASE_URL = 'https://qnxg.cn/api/middleware-2023'
-// export const BASE_URL = 'https://qnxg.cn/node/grade'
+/* 见项目根目录的.env文件 */
 
+// 服务器地址
+export const BASE_URL = process.env.TARO_APP_BASE_URL
 // 图片上传地址
-export const urlUploadImg = 'https://new.qnxg.cn/api/upload-2023/upload-img'
-// export const urlUploadImg = 'https://qnxg.cn/node/grade/upload-img'
-
+export const urlUploadImg = process.env.TARO_APP_URL_UPLOAD_IMG
 // 新的静态资源地址，不带斜杠
-export const newStaticBaseUrl = 'https://static.qnxg.cn'
-
-// TODO: 以下是旧的地址，后续会逐渐废弃
+export const newStaticBaseUrl = process.env.TARO_APP_NEW_STATIC_BASE_URL
 // 静态资源地址
-export const staticBaseUrl = 'https://new.qnxg.cn/mp-static/static/'
-// 知乎文章的获取地址
-export const urlArticleContent = 'https://new.qnxg.cn/zhihulist/getContent'
+export const staticBaseUrl = process.env.TARO_APP_STATIC_BASE_URL
