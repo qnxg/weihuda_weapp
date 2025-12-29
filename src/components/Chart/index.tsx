@@ -91,7 +91,7 @@ const Index: React.FC<Props> = ({
         .fields({ node: true, size: true })
         .exec(res => {
           const canvasNode = res[0].node
-          const canvasDpr = Taro.getSystemInfoSync().pixelRatio
+          const canvasDpr = Taro.getWindowInfo().pixelRatio // 获取设备像素比
           const canvasWidth = res[0].width
           const canvasHeight = res[0].height
           const ctx = canvasNode.getContext('2d')

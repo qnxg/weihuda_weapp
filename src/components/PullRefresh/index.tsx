@@ -27,7 +27,7 @@ const Index: IndexType = (props, ref) => {
   const [refreshing, setRefreshing] = useState<boolean>(false)
   const [isToRefresh, setIsToRefresh] = useState<boolean>(false)
 
-  const darkMode = Taro.getSystemInfoSync().theme === 'dark'
+  const darkMode = Taro.getAppBaseInfo().theme === 'dark'
 
   const pullingRefresh = (e: BaseEventOrig) => {
     const d = e.detail.dy || 0
