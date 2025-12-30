@@ -234,15 +234,17 @@ const Index: React.FC = () => {
                             {tag}
                           </Tag>
                         ))}
-                        <Tag
-                          theme={
-                            importantType1.includes(item.courseType1)
-                              ? 'primary'
-                              : 'default'
-                          }
-                        >
-                          {item.courseType1}
-                        </Tag>
+                        {item.courseType1 && (
+                          <Tag
+                            theme={
+                              importantType1.includes(item.courseType1)
+                                ? 'primary'
+                                : 'default'
+                            }
+                          >
+                            {item.courseType1}
+                          </Tag>
+                        )}
                         <Tag
                           theme={
                             importantType2.includes(item.courseType2)

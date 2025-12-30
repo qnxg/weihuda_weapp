@@ -10,7 +10,7 @@ export interface GradeItem {
   credit: number // 学分
   gpa: number // 绩点
   score: number // 成绩
-  courseType1: string // 课程类别1
+  courseType1?: string // 课程类别1
   courseType2: string // 课程类别2
   tags: string[]
   jx0404id: string | null // 用于获取成绩详情
