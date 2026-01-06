@@ -1,7 +1,7 @@
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import CardEmpty from '../utils/CardEmpty'
 import styles from './index.module.scss'
 import Card from '@/components/Card'
@@ -65,18 +65,6 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
       return []
     }
   }, [classTable, currentWeek, dayOfTheWeek])
-
-  const [currentDate, setCurrentDate] = useState(new Date())
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentDate(new Date())
-    }, 60 * 1000) // 每分钟更新一次
-
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [currentDate])
 
   const formattedData = useMemo<Array<FormatData>>(() => {
     // 是否已经出现了一次特殊类型，防止同时出现正在进行和即将开始
