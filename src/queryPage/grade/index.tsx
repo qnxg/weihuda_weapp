@@ -21,7 +21,7 @@ const semester = ['秋季学期', '春季学期', '夏季学期']
 const importantType1 = ['必修']
 const importantType2 = [
   '专业课',
-  '专业基础课',
+  '专业基础',
   '学类核心',
   '学门核心',
   '专业核心',
