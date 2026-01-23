@@ -161,7 +161,7 @@ npx yarn pr-check
 
 上线之前你需要：
 
-1. 确保`.env`文件的配置没有被误改。其中的各个URL应为正式环境，且`TARO_APP_USE_TESTING_CODE`应当为`false`。
+1. 确保`.env`文件和`.env.local`等文件的配置是正确的。各个URL应为正式环境，且`TARO_APP_USE_TESTING_CODE`应当为`false`。
 2. 设置中取消勾选不校验合法域名选项，然后对你所写的功能进行测试
 
 运行以下命令对项目打包：
