@@ -73,3 +73,9 @@
     margin-left: 40px;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    @include darkShadow;
+  }
+}

@@ -92,7 +92,6 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
           <View className={styles.title}>考试</View>
           <Input
             placeholder='未填写'
-            placeholderStyle='color: #eaeaea'
             onInput={editExamName}
             className={styles.inputArea}
           />
@@ -101,7 +100,6 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
           <View className={styles.title}>考号</View>
           <Input
             placeholder='未填写'
-            placeholderStyle='color: #eaeaea'
             onInput={editExamId}
             className={styles.inputArea}
           />
