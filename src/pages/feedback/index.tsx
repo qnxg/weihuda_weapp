@@ -8,36 +8,61 @@ import {
 } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { postFeedback } from '@/apis/feedback'
 import { uploadImgApi } from '@/apis/upload'
+import { getUserInfoApi } from '@/apis/userInfo'
 import Button from '@/components/Button'
-import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 import type { FeedbackData } from '@/apis/feedback'
 
 const Index: React.FC = () => {
   const { params } = useRouter()
-  const noAuth = params.noAuth && params.noAuth == '1'
-  const { stuId } = useAppSelector(state => state.userInfo)
+  const noAuth = !!(params.noAuth && params.noAuth == '1')
+
+  const getSubmitterStuId = useCallback(async () => {
+    if (noAuth) {
+      return null
+    }
+    return (await getUserInfoApi()).stuId
+  }, [noAuth])
+
+  const [submitterStuId] = usePromise(getSubmitterStuId, null, [
+    getSubmitterStuId,
+  ])
 
   // const type_list = [
   //   { label: '产品建议', value: 'suggestion', checked: true },
   //   { label: '功能故障或其他问题', value: 'bug', checked: false }
   // ]
 
-  const [data, setData] = useState({
+  const [feedbackState, setFeedbackState] = useState({
     type: 'suggestion',
-    stuId: stuId,
+    stuId: '',
     contact: '',
     desc: '',
     imgUrl: '',
   })
 
+  // 拿到学号之后自动填入输入框
+  useEffect(
+    () =>
+      void (async () => {
+        if (submitterStuId == null) {
+          return
+        }
+        setFeedbackState(old =>
+          old.stuId !== '' ? old : { ...old, stuId: submitterStuId }
+        )
+      })(),
+    [noAuth, submitterStuId]
+  )
+
   // 改变表单的内容
   const change = (key: string, newVal: any) => {
-    setData({
-      ...data,
+    setFeedbackState({
+      ...feedbackState,
       [key]: newVal,
     })
   }
@@ -48,8 +73,8 @@ const Index: React.FC = () => {
       count: 1,
       success(res) {
         const imgUrl = res.tempFilePaths[0]!
-        setData({
-          ...data,
+        setFeedbackState({
+          ...feedbackState,
           imgUrl,
         })
       },
@@ -63,11 +88,14 @@ const Index: React.FC = () => {
       desc: data.desc,
       contact: data.contact != '' ? data.contact : null,
       createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-      stuId: data.stuId === stuId ? data.stuId : stuId + '/' + data.stuId,
+      stuId:
+        data.stuId === submitterStuId
+          ? data.stuId
+          : submitterStuId + '/' + data.stuId,
       imgUrl: data.imgUrl ? data.imgUrl : null,
     }
     try {
-      await postFeedback(reqData, !!noAuth)
+      await postFeedback(reqData, noAuth)
       await Taro.showToast({
         title: '提交成功',
         icon: 'success',
@@ -89,22 +117,22 @@ const Index: React.FC = () => {
     // })
 
     // 验证
-    if (noAuth && data.stuId === '') {
+    if (noAuth && feedbackState.stuId === '') {
       await Taro.showToast({ title: '请填写学号', icon: 'none' })
       return
     }
-    if (data.desc === '') {
+    if (feedbackState.desc === '') {
       await Taro.showToast({ title: '请填写反馈内容', icon: 'none' })
       return
     }
 
     // 上传图片
-    if (data.imgUrl !== '') {
+    if (feedbackState.imgUrl !== '') {
       // 如果有图片那就先上传图片，拿到图片地址后再提交表单
       await Taro.showToast({ title: '正在上传图片', icon: 'loading' })
       try {
-        const uploadUrl = await uploadImgApi(data.imgUrl)
-        data.imgUrl = uploadUrl
+        const uploadUrl = await uploadImgApi(feedbackState.imgUrl)
+        feedbackState.imgUrl = uploadUrl
         await Taro.showToast({ title: '上传图片成功', icon: 'none' })
       } catch {
         await Taro.showToast({ title: '上传图片失败', icon: 'none' })
@@ -114,7 +142,7 @@ const Index: React.FC = () => {
     // 没有选择图片直接提交
     await Taro.showLoading({ title: '正在提交' })
     await submitData({
-      ...data,
+      ...feedbackState,
     })
   }
 
@@ -146,7 +174,7 @@ const Index: React.FC = () => {
         学号：
       </View>
       <Input
-        value={data.stuId}
+        value={feedbackState.stuId}
         onInput={e => {
           change('stuId', (e.target as any).value)
         }}
@@ -173,7 +201,7 @@ const Index: React.FC = () => {
       </View>
       <View className={styles.input}>
         <Textarea
-          value={data.desc}
+          value={feedbackState.desc}
           onInput={e => {
             change('desc', (e.target as any).value)
           }}
@@ -181,13 +209,13 @@ const Index: React.FC = () => {
         />
         <View className={styles.upload}>
           <View className={styles.content}>
-            {data.imgUrl !== '' && (
+            {feedbackState.imgUrl !== '' && (
               <View className={styles.image}>
-                <Image src={data.imgUrl}></Image>
+                <Image src={feedbackState.imgUrl}></Image>
               </View>
             )}
             {/* 如果是非登录的用户，不让上传图片 */}
-            {!noAuth && data.imgUrl === '' && (
+            {!noAuth && feedbackState.imgUrl === '' && (
               <View className={styles.uploadButton} onClick={handleChoose}>
                 <View className={styles.uploadIcon}></View>
                 <View className={styles.placeholder}>
@@ -205,7 +233,7 @@ const Index: React.FC = () => {
         </Button>
       </View>
       <View className={styles.feedbackLink}>
-        <Navigator url={`/pages/feedbackHistory/index?stuId=${stuId}`}>
+        <Navigator url={`/pages/feedbackHistory/index?stuId=${submitterStuId}`}>
           <Text>反馈历史</Text>
         </Navigator>
       </View>

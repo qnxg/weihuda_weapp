@@ -6,6 +6,7 @@ import {
   getClassStartDateApi,
   getCurrentSemesterInfoApi,
 } from '@/apis/semester'
+import { getUserInfoApi } from '@/apis/userInfo'
 import { onColors, onFontColors } from '@/utils/config'
 import { nowWeek } from '@/utils/day'
 import storage from '@/utils/storage/cache'
@@ -70,7 +71,7 @@ export const initClassTableThunk = createAsyncThunk(
         startDate: termStart,
       } = await getCurrentSemesterInfoApi()
       const weekNum = nowWeek(termStart)
-      const { enterYear } = state.userInfo
+      const { enter } = await getUserInfoApi()
       const oldState = state.classTable
 
       // 计算学期
@@ -84,7 +85,7 @@ export const initClassTableThunk = createAsyncThunk(
         })
       }
       // 从当前学年开始倒序枚举到入学年份。有可能入学年份大于当前学年（新生），此时下界取 min，确保当前学年被加入
-      for (let i = termYear; i >= Math.min(enterYear, termYear); --i) {
+      for (let i = termYear; i >= Math.min(enter, termYear); --i) {
         for (let j = 3; j >= 1; --j) {
           semesters.push({
             show: `${i}-${i + 1}学年${termText[j - 1]}`,

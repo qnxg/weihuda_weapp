@@ -4,16 +4,18 @@ import classNames from 'classnames'
 import { Fragment, useRef } from 'react'
 import styles from './index.module.scss'
 import { setLabPassword } from '@/apis/lab'
+import { getUserInfoApi } from '@/apis/userInfo'
 import Card from '@/components/Card'
 import DisplayCard from '@/components/DisplayCard'
-import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 
 const Index: React.FC = () => {
   const router = useRouter()
   const params = router.params
   const showTips = params.tips === 'true'
 
-  const { stuId } = useAppSelector(state => state.userInfo)
+  const [userInfo] = usePromise(getUserInfoApi, null, [getUserInfoApi])
+
   const labPwdRef = useRef('')
 
   const submit = async () => {
@@ -64,7 +66,7 @@ const Index: React.FC = () => {
           <Input
             className={styles.inputArea}
             disabled={true}
-            value={stuId}
+            value={userInfo?.stuId} // 这里的学号纯展示用的，所以没有太在意获取到值没有
             placeholder='请输入学号'
             placeholderClass={styles.placeholder}
             cursorSpacing={5}

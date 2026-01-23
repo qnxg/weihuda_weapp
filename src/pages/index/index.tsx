@@ -9,7 +9,6 @@ import {
   initClassTableThunk,
   refreshClassTableThunk,
 } from '@/models/classTable'
-import { getUserInfoThunk } from '@/models/userInfo'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import type { RefProps } from '@/components/PullRefresh'
@@ -18,13 +17,11 @@ const CardListMemo = memo(CardList)
 
 const Index: React.FC = () => {
   const [fetchDataControl, fetchDataTrigger] = useRefreshKey()
-  const { isBind } = useAppSelector(state => state.userInfo)
 
   const dispatch = useAppDispatch()
 
   /** 拉取基本信息 */
   useEffect(() => {
-    void dispatch(getUserInfoThunk())
     void dispatch(initClassTableThunk())
   }, [dispatch])
 
@@ -32,14 +29,12 @@ const Index: React.FC = () => {
     state => state.classTable
   )
   useEffect(() => {
-    if (isBind) {
-      if (terms && terms.length > 0) {
-        void dispatch(refreshClassTableThunk())
-      } else {
-        void dispatch(initClassTableThunk())
-      }
+    if (terms && terms.length > 0) {
+      void dispatch(refreshClassTableThunk())
+    } else {
+      void dispatch(initClassTableThunk())
     }
-  }, [isBind, terms, dispatch])
+  }, [terms, dispatch])
 
   useEffect(() => {
     if (currentWeek !== undefined && currentWeek !== null) {

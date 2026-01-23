@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import classTable from './classTable'
-import userInfo from './userInfo'
 
 const store = configureStore({
   reducer: {
-    userInfo,
     classTable,
   },
 })

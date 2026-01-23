@@ -6,12 +6,14 @@ import JifenRule from './components/JifenRule'
 import Qiandao from './components/Qiandao'
 import styles from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
+import { getUserInfoApi } from '@/apis/userInfo'
 import Card from '@/components/Card'
 import { Tabs } from '@/components/Tabs'
-import { useAppSelector } from '@/utils/hooks/redux'
+import usePromise from '@/utils/hooks/usePromise'
 
 const Index: React.FC = () => {
-  const userInfo = useAppSelector(state => state.userInfo)
+  const [userInfo] = usePromise(getUserInfoApi, null, [getUserInfoApi])
+
   const [total, setTotal] = React.useState(0)
   const jifenRecordRef = React.useRef<any>(null)
 
@@ -43,7 +45,7 @@ const Index: React.FC = () => {
       {/* 积分数展示卡片 */}
       <Card className={styles.myJifenCard}>
         <View className={styles.left}>
-          <View className={styles.username}>{userInfo.name}</View>
+          <View className={styles.username}>{userInfo?.name ?? ''}</View>
         </View>
         <View className={styles.right}>
           <View className='title'>我的积分</View>

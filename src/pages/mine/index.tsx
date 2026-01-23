@@ -4,9 +4,9 @@ import React from 'react'
 import styles from './index.module.scss'
 import { postUnbind } from '@/apis/bind'
 import { getRecentNotices } from '@/apis/notice'
+import { getUserInfoApi } from '@/apis/userInfo'
 import Copyright from '@/components/Copyright'
 import { LineDividedButtonList } from '@/components/LineDividedButtonList'
-import { useAppSelector } from '@/utils/hooks/redux'
 import usePromise from '@/utils/hooks/usePromise'
 import useShowCount from '@/utils/hooks/useShowCount'
 
@@ -138,9 +138,7 @@ const getRecentNoticesUnread = async () =>
   (await getRecentNotices()).filter(item => item.status === 0).length
 
 const Index: React.FC = () => {
-  const { name: userRealName, stuId: userRealId } = useAppSelector(
-    state => state.userInfo
-  )
+  const [userInfo] = usePromise(getUserInfoApi, null, [getUserInfoApi])
 
   // 用户返回此页时也重新加载
   const pageShowCnt = useShowCount()
@@ -155,9 +153,11 @@ const Index: React.FC = () => {
       <View className={styles.outer}>
         <View className={styles.personalInfo}>
           <View className={styles.nickName}>
-            {userRealName || '湖南大学微生活'}
+            {userInfo?.name ?? '湖南大学微生活'}
           </View>
-          <View className={styles.nickId}>{userRealId || 'HNU20150415'}</View>
+          <View className={styles.nickId}>
+            {userInfo?.stuId ?? 'HNU20150415'}
+          </View>
         </View>
         <OptionsList messageUnread={unread} />
       </View>

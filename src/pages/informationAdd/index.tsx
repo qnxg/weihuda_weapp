@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import React, { useCallback, useState } from 'react'
 import styles from './index.module.scss'
 import { uploadImgApi } from '@/apis/upload'
+import { getUserInfoApi } from '@/apis/userInfo'
 import { getZhihuTags, postZhihuApi } from '@/apis/zhihu'
 
 import Button from '@/components/Button'
@@ -13,7 +14,6 @@ import Input from '@/components/Input/Input'
 import Label from '@/components/Input/Label'
 import Textarea from '@/components/Input/Textarea'
 import { Upload } from '@/components/Upload'
-import { useAppSelector } from '@/utils/hooks/redux'
 import usePromise from '@/utils/hooks/usePromise'
 
 const getTitle = (content: string, length = 20) => {
@@ -32,8 +32,6 @@ const Index: React.FC = () => {
   const [imgUrl, setImgUrl] = useState('')
   // 选中的标签
   const [selectedTag, setSelectedTag] = useState('')
-  // 用户信息
-  const userInfo = useAppSelector(state => state.userInfo)
   // 知湖文章标签
   const [tags] = usePromise(getZhihuTags, [], [getZhihuTags])
 
@@ -91,7 +89,7 @@ const Index: React.FC = () => {
     await postZhihuApi({
       content: finalContent,
       title: getTitle(title.trim()),
-      stuId: userInfo.stuId,
+      stuId: (await getUserInfoApi()).stuId,
       publishTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       cover: uploadedImgUrl ? uploadedImgUrl : null,
       type: 'article',
@@ -112,7 +110,7 @@ const Index: React.FC = () => {
     setTimeout(() => {
       void Taro.navigateBack()
     }, 1000)
-  }, [content, imgUrl, selectedTag, title, userInfo.stuId])
+  }, [content, imgUrl, selectedTag, title])
 
   return (
     <Card>
