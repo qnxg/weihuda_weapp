@@ -5,7 +5,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './index.module.scss'
 import { getZhihuTagsJSON, getZhihuPageApi } from '@/apis/zhihu'
 
-import Button from '@/components/Button'
 import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import { Tabs } from '@/components/Tabs'
@@ -165,20 +164,6 @@ const Index: React.FC = () => {
           )}
         </View>
       </PullRefresh>
-
-      {/* 发布按钮 */}
-      <View className={styles.publishBtnWarpper}>
-        <Button
-          className={styles.publishBtn}
-          onClick={() =>
-            Taro.navigateTo({
-              url: '/pages/informationAdd/index',
-            })
-          }
-        >
-          发布
-        </Button>
-      </View>
     </View>
   )
 }
