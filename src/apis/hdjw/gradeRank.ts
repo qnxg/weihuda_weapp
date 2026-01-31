@@ -13,7 +13,7 @@ export interface HdjwGradeRank {
   rank: string // 排名
 }
 
-export interface CaGradeRank {
+export interface CaGradeRankDetail {
   all_gpa: string
   all_gpa_rank: string
   all_weighted: string
@@ -28,6 +28,11 @@ export interface CaGradeRank {
   core_arithmetic_rank: string
 }
 
+export interface CaGradeRank {
+  detail: CaGradeRankDetail
+  update_at: string // 数据更新时间
+}
+
 /**
  * 从教务系统获取成绩排名
  */
@@ -40,4 +45,8 @@ export const getGradeRankFromHdjw = async (data: HdjwGradeRankForm) => {
  */
 export const getGradeRankFromCa = async () => {
   return request.get<CaGradeRank>('/hdjw/grade-rank-from-ca')
+}
+
+export const refreshCaGradeRank = async () => {
+  await request.get('/hdjw/grade-rank-from-ca/refresh')
 }
