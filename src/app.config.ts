@@ -2,7 +2,7 @@ export default {
   pages: [
     'pages/index/index', // 首页
     'pages/information/index', // 知湖
-    'pages/informationAdd/index', // 发布知湖
+    // 'pages/informationAdd/index', // 发布知湖
     'pages/jifen/index', // 积分中心
     'pages/webview/index', // webview
     'pages/table/index', // 微课表
