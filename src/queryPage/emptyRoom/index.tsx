@@ -53,6 +53,11 @@ const Index: React.FC = () => {
    * 获取数据
    */
   const getData = async () => {
+    if (pickerStates.radioValue.length === 0) {
+      await Taro.showToast({ title: '未选择时间段', icon: 'error' })
+      return
+    }
+
     await Taro.showLoading({
       mask: true,
       title: '加载中...',
