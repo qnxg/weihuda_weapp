@@ -13,8 +13,8 @@
     "postinstall": "weapp-tw patch",
     "lint": "tsc --noEmit && eslint ./src --max-warnings 0",
     "fmt": "prettier --write . --log-level warn",
-    "dev": "taro build --type weapp --watch",
-    "build": "yarn lint && taro build --type weapp",
+    "dev": "cross-env BROWSERSLIST_IGNORE_OLD_DATA=true taro build --type weapp --watch",
+    "build": "cross-env BROWSERSLIST_IGNORE_OLD_DATA=true yarn lint && cross-env BROWSERSLIST_IGNORE_OLD_DATA=true taro build --type weapp",
     "pr-check": "prettier --check . && yarn lint"
   },
   "browserslist": [
@@ -68,6 +68,7 @@
     "typescript-eslint": "^8.32.1",
     "weapp-tailwindcss": "^4.1.1",
     "webpack": "^5.88.2",
-    "webpack-bundle-analyzer": "^4.9.1"
+    "webpack-bundle-analyzer": "^4.9.1",
+    "cross-env": "^7.0.3"
   }
 }

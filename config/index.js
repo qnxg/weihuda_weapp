@@ -28,6 +28,9 @@ const config = {
     },
   },
   mini: {
+    miniCssExtractPluginOption: {
+      ignoreOrder: true,
+    },
     postcss: {
       autoprefixer: {
         enable: true,

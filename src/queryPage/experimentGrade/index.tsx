@@ -1,9 +1,7 @@
 import React, { Fragment, useState } from 'react'
-// import { getLabGrade } from '@/apis/pt/labGrade'
 import NormalLabIndex from './pages/normalLab'
 import VirtualLabIndex from './pages/virtualLab'
 import TabBar from '@/components/TabBar'
-// import type { LabGradeData } from '@/apis/pt/labGrade'
 
 const Index: React.FC = () => {
   const [index, setIndex] = useState(0)
