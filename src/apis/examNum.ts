@@ -7,7 +7,7 @@ export interface ExamNumItem {
   /**
    * 时间
    */
-  date: string
+  examDate: string
   /**
    * id
    */
@@ -15,11 +15,11 @@ export interface ExamNumItem {
   /**
    * 名称
    */
-  name: string
+  examName: string
   /**
    * 考号
    */
-  num: string
+  examNum: string
 }
 
 /**

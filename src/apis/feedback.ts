@@ -1,65 +1,86 @@
 import request from './request'
 
-export interface FeedbackData {
+export interface FeedbackInfo {
   /**
-   * 反馈类型，两种取值，suggestion / bug
+   * 反馈 id
    */
-  type: string
+  id: number
+  /**
+   * 联系方式
+   */
+  contact?: string
   /**
    * 反馈描述
    */
   desc: string
   /**
-   * 联系方式
-   */
-  contact: string
-  /**
-   * 反馈时间，Unix 时间戳
-   */
-  createTime: string | number
-  /**
-   * 学号
-   */
-  stuId: string
-  /**
    * 图片地址
    */
-  imgUrl: string
+  imgUrl?: string
+  /**
+   * 学号，未登录时提交的问题反馈，学号才会为空
+   */
+  stuId?: string
+  /**
+   * 反馈时间
+   */
+  createdAt: string
+  /**
+   * 最后更新时间
+   */
+  updatedAt: string
   /**
    * 处理状态
    */
   status: 0 | 1 | 2 | 3
-  /**
-   * 处理结果
-   */
-  comment: string
 }
 
 interface GetResponse {
   count: number
-  rows: FeedbackData[]
+  rows: FeedbackInfo[]
 }
 
 /**
  * 查询反馈
  */
-export const getFeedbackPageApi = async (stuId: string) => {
-  return request.get<GetResponse>('/feedback/no-auth', {
+export const getFeedbackPageApi = async (page: number) => {
+  return request.get<GetResponse>('/feedback', {
     data: {
-      stuId,
+      page,
     },
   })
 }
 
+export interface AddFeedbackReq {
+  stuId?: string
+  desc: string
+  contact?: string
+  imgUrl?: string
+}
 /**
  * 添加反馈
  */
 export const postFeedback = async (
-  data: Partial<FeedbackData>,
-  noAuth = false
+  data: AddFeedbackReq,
+  noAuth: boolean = false
 ) => {
-  const url = noAuth ? '/feedback/no-auth' : '/feedback'
+  const url = noAuth ? '/feedback/no_auth' : '/feedback'
   return request.post<string>(url, {
     data,
+  })
+}
+
+export interface FeedbackMsg {
+  id: number
+  typ: string
+  msg?: string
+  stuId: string
+  createdAt: string
+}
+export const getFeedbackMsg = async (feedbackId: number) => {
+  return request.get<FeedbackMsg[]>('/feedback/msg', {
+    data: {
+      feedbackId,
+    },
   })
 }

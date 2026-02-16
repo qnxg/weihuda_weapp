@@ -50,7 +50,6 @@ const SignButton: React.FC<{
     const res = await postJifenRecordApi({
       key: 'qiandao',
       param: dayjs().format('YYYY-MM-DD'),
-      createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     })
     if (res) {
       setStatus('signed')

@@ -41,11 +41,11 @@ export const useExamId = (): [ExamId[], () => any] => {
     let result: ExamId[] = []
     if (data) {
       result = data.map(item => ({
-        examName: item.name,
-        examDate: item.date.replace(/-/g, '/'),
-        examId: item.num,
+        examName: item.examName,
+        examDate: item.examDate.replace(/-/g, '/'),
+        examId: item.examNum,
         keyId: item.id,
-        sub: calcDaysLeft(item.date),
+        sub: calcDaysLeft(item.examDate),
       }))
     }
     return result

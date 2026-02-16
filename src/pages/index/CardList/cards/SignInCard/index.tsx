@@ -16,8 +16,6 @@ import { setNeedShowHintAfterSignIn } from '@/utils/storage/userSettings/customA
 import type CardProps from '../../CardProps'
 import type { IZhihu } from '@/apis/zhihu'
 
-const getJifenNum = async () => (await getJifenTotalApi()).jifen
-
 const getRecentZhihu = async () =>
   (await getZhihuPageApi({ offset: 0, req_count: 3, tags: '' })).rows
 
@@ -98,8 +96,8 @@ const SignInCard: React.FC<CardProps> = props => {
     props.reloadController,
   ])
 
-  const [jifen, loadingJifen, error] = usePromise(getJifenNum, NaN, [
-    getJifenNum,
+  const [jifen, loadingJifen, error] = usePromise(getJifenTotalApi, NaN, [
+    getJifenTotalApi,
     props.reloadController,
     reloadJifenController,
     // 每次重新显示页面时刷新积分

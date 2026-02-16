@@ -20,9 +20,7 @@ const Index: React.FC = () => {
   // 获取总积分
   const getData = async () => {
     const res = await getJifenTotalApi()
-    if (res) {
-      setTotal(res.jifen)
-    }
+    setTotal(res)
   }
 
   const updateJifenRecord = () => {

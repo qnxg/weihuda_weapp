@@ -2,7 +2,7 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
-import { getExtraRules, getJifenRulePageApi } from '@/apis/jifen'
+import { getJifenDesc, getJifenRulePageApi } from '@/apis/jifen'
 import usePromise from '@/utils/hooks/usePromise'
 
 const getNormalRules = async () =>
@@ -14,8 +14,8 @@ const getNormalRules = async () =>
   ).rows
 
 const JifenRule: React.FC = () => {
-  const [extraRules, loadingExtraRules] = usePromise(getExtraRules, '', [
-    getExtraRules,
+  const [extraRules, loadingExtraRules] = usePromise(getJifenDesc, '', [
+    getJifenDesc,
   ])
   const [normalRules, loadingNormalRules] = usePromise(
     getNormalRules,

@@ -45,7 +45,7 @@ const JifenRecord: React.FC<IJifenRecordProps> = props => {
         {data.map(item => (
           <View key={item.id} className={styles.recordItem}>
             <View className={styles.recordCreateTime}>
-              {dayjs(item.createTime).format('YYYY-MM-DD')}
+              {dayjs(item.createdAt).format('YYYY-MM-DD')}
             </View>
             <View className={styles.recordDesc}>{item.desc}</View>
             <View

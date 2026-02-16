@@ -3,8 +3,8 @@ import Taro from '@tarojs/taro'
 import React, { useEffect, useMemo, useState } from 'react'
 import MessageItem from '../../../../../components/MessageItem'
 import styles from './index.module.scss'
-import { getMessage } from '@/apis/message'
-import { getRecentNotices, type INotice } from '@/apis/notice'
+import { getAnnouncement } from '@/apis/announcement'
+import { type INotice, getNoticePageApi } from '@/apis/notice'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import icon from '@/static/index/icon/message.svg'
@@ -12,15 +12,18 @@ import usePromise from '@/utils/hooks/usePromise'
 import useShowCount from '@/utils/hooks/useShowCount'
 import { getBoundingClientRect } from '@/utils/tool'
 import type CardProps from '../../CardProps'
-import type { Message } from '@/apis/message'
+import type { Announcement } from '@/apis/announcement'
 import type { BaseEventOrig, SwiperProps } from '@tarojs/components'
 
 interface IProps {
   noticeToShow: INotice[]
-  message: Message[]
+  announcement: Announcement[]
 }
 
-const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
+const MessageCardDisplay: React.FC<IProps> = ({
+  announcement,
+  noticeToShow,
+}) => {
   // 当前显示的消息
   const [current, setCurrent] = useState(0)
   // 高度，用于swiper的高度
@@ -36,7 +39,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
       return 120
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [noticeToShow, message])
+  }, [noticeToShow, announcement])
 
   // 滑块切换
   const handleSwiperChange = (
@@ -48,7 +51,7 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
     })
   }
 
-  const totalCount = message.length + noticeToShow.length
+  const totalCount = announcement.length + noticeToShow.length
 
   return (
     <View>
@@ -83,15 +86,22 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
           >
             {/* 消息通知 */}
             {noticeToShow.map(item => (
-              <SwiperItem key={`notice-${item.id}`}>
+              <SwiperItem
+                key={`notice-${item.id}`}
+                onClick={() => {
+                  void Taro.navigateTo({
+                    url: item.url ? item.url : '/pages/messageBox/index',
+                  })
+                }}
+              >
                 <MessageItem className={styles.messageItem} data={item} />
               </SwiperItem>
             ))}
             {/* 公告 */}
-            {message.map(item => {
+            {announcement.map(item => {
               return (
                 <SwiperItem
-                  key={`message-${item.id}`}
+                  key={`announcement-${item.id}`}
                   onClick={() => {
                     void Taro.navigateTo({
                       url: item.url ? item.url : '/pages/messageBox/index',
@@ -113,8 +123,8 @@ const MessageCardDisplay: React.FC<IProps> = ({ message, noticeToShow }) => {
 }
 
 const getNoticeToShow = async () =>
-  (await getRecentNotices()).filter(
-    item => item.status !== 1 && item.isShow !== 0
+  (await getNoticePageApi({ page: 1, pageSize: 20 })).rows.filter(
+    item => item.status !== 1
   )
 
 const MessageCard: React.FC<CardProps> = ({
@@ -124,10 +134,10 @@ const MessageCard: React.FC<CardProps> = ({
   // 在用户返回首页时也重新加载
   const pageShowCnt = useShowCount()
 
-  const [messageData, isMessageDataLoading] = usePromise(
-    getMessage,
+  const [announcementData, isAnnouncementDataLoading] = usePromise(
+    getAnnouncement,
     [],
-    [getMessage, reloadController, pageShowCnt]
+    [getAnnouncement, reloadController, pageShowCnt]
   )
 
   const [noticeToShow, isLoadingNoticeToShow] = usePromise(
@@ -136,14 +146,18 @@ const MessageCard: React.FC<CardProps> = ({
     [getNoticeToShow, reloadController, pageShowCnt]
   )
 
-  const combinedLoadingState = isMessageDataLoading || isLoadingNoticeToShow
+  const combinedLoadingState =
+    isAnnouncementDataLoading || isLoadingNoticeToShow
 
   useEffect(() => {
     onLoadingStatusChange(combinedLoadingState)
   }, [combinedLoadingState, onLoadingStatusChange])
 
   return (
-    <MessageCardDisplay message={messageData} noticeToShow={noticeToShow} />
+    <MessageCardDisplay
+      announcement={announcementData}
+      noticeToShow={noticeToShow}
+    />
   )
 }
 

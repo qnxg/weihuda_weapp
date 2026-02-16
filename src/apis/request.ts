@@ -80,7 +80,7 @@ const toBind = () => {
   }, duration)
 }
 // 白名单，不需要token的请求
-const whiteList = ['/bind', '/token', '/feedback/no-auth']
+const whiteList = ['/bind', '/token', '/feedback/no_auth']
 /**
  * 请求函数
  * @param options 请求配置项

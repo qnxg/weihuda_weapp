@@ -1,7 +1,7 @@
 export default {
   pages: [
     'pages/index/index', // 首页
-    'pages/information/index', // 知湖
+    'pages/zhihu/index', // 知湖
     // 'pages/informationAdd/index', // 发布知湖
     'pages/jifen/index', // 积分中心
     'pages/webview/index', // webview
@@ -92,7 +92,7 @@ export default {
         selectedIconPath: '@selectedIconHomePath',
       },
       {
-        pagePath: 'pages/information/index',
+        pagePath: 'pages/zhihu/index',
         text: '知湖',
         iconPath: '@iconInfoPath',
         selectedIconPath: '@selectedIconInfoPath',

@@ -19,10 +19,9 @@ const Second: React.FC = () => {
     try {
       const code = await getLoginCode()
       const res = await postBind({
-        code,
+        code: code,
         stuId: stuIdRef.current,
-        stuPassword: stuPassRef.current,
-        hdjwPassword: stuPassRef.current,
+        password: stuPassRef.current,
       })
 
       console.log('res', res)

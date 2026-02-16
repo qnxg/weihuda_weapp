@@ -1,9 +1,8 @@
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getJifenGoodsPageApi, postGoodsRecordApi } from '@/apis/jifen'
+import { getJifenGoodsPageApi } from '@/apis/jifen'
 import Button from '@/components/Button'
 import type { IJifenGoods } from '@/apis/jifen'
 
@@ -46,18 +45,13 @@ const Goods: React.FC<IGoodsProps> = props => {
       setExchangeLoading(false)
       return
     }
-    await Taro.showLoading({ title: '兑换中...' })
-    const res = await postGoodsRecordApi({
-      goodsId: id,
-      exchangeTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-    })
-    console.log(res)
-    if (res) {
+    try {
+      await Taro.showLoading({ title: '兑换中...' })
+      await exchangeGoods(id)
       await Taro.showToast({
         title: '兑换成功',
         icon: 'success',
       })
-      setExchangeLoading(false)
       await getData()
       if (props.updateTotal) {
         props.updateTotal()
@@ -65,7 +59,8 @@ const Goods: React.FC<IGoodsProps> = props => {
       if (props.updateJifenRecord) {
         props.updateJifenRecord()
       }
-    }
+    } catch {}
+    setExchangeLoading(false)
   }
 
   const getBtnText = (item: IJifenGoods) => {

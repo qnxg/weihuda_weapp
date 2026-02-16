@@ -1,10 +1,9 @@
 import { View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import styles from './index.module.scss'
-import { modifyNotice, type IBtnConfigItem, type INotice } from '@/apis/notice'
+import { putNoticeByIdApi, type INotice } from '@/apis/notice'
 import Button from '@/components/Button'
 
 interface IMessageItemProps {
@@ -38,64 +37,12 @@ const MessageItem: React.FC<IMessageItemProps> = ({
 
   // 标记为已读
   const markAsRead = async (id: number) => {
-    await modifyNotice({ id, status: 1 })
+    await putNoticeByIdApi(id, 1)
     setData({
       ...data,
       status: 1,
     })
     handleAfterMarkAsRead(id)
-  }
-
-  // 当按钮点击时
-  const onBtnClick = async (
-    id: number,
-    type: IBtnConfigItem['type'],
-    value: IBtnConfigItem['value']
-  ) => {
-    if (type === 'link') {
-      // 跳转到链接
-      void Taro.navigateTo({
-        url: value!,
-      })
-    } else if (type === 'button' && value !== undefined) {
-      // 更新数据
-      await modifyNotice({ id, status: 1, result: value })
-      setData({
-        ...data,
-        status: 1,
-        result: value,
-      })
-      handleAfterMarkAsRead(id)
-    }
-  }
-
-  // 获取按钮
-  const getBtn = (id: number, btnConfigItem: IBtnConfigItem) => {
-    if (!btnConfigItem || data.result) return null
-    let { theme, type } = btnConfigItem
-    const { text, value } = btnConfigItem
-    // 如果text为空，则不显示按钮
-    if (!text || text.trim() === '') return null
-    // 如果theme为空，则默认为primary
-    if (!theme) theme = 'primary'
-    // 如果type为空，则默认为button
-    if (!type) type = 'button'
-
-    const ResultButton = (
-      <Button
-        className={styles.btn}
-        theme={theme}
-        onClick={() => onBtnClick(id, type, value)}
-      >
-        {text}
-      </Button>
-    )
-
-    if (btnConfigItem.type === 'button') {
-      return ResultButton
-    }
-
-    return ResultButton
   }
 
   return (
@@ -110,7 +57,7 @@ const MessageItem: React.FC<IMessageItemProps> = ({
       <View className={styles.btnWrapper}>
         <View className={styles.left}>
           <View className={classNames(styles.sendTime, styles.btn)}>
-            {dayjs(data.sendTime).format('YYYY-MM-DD')}
+            {dayjs(data.createdAt).format('YYYY-MM-DD')}
           </View>
           <View className={classNames(styles.status, styles.btn)}>
             {data.status === 0 ? '未读' : '已读'}
@@ -125,16 +72,6 @@ const MessageItem: React.FC<IMessageItemProps> = ({
             >
               标记为已读
             </Button>
-          )}
-          {data.btnConfig &&
-            data.btnConfig.length > 0 &&
-            (data.btnConfig as IBtnConfigItem[]).map(btnConfigItem => {
-              return getBtn(data.id, btnConfigItem)
-            })}
-          {data.result && (
-            <View className={classNames(styles.result, styles.btn)}>
-              {data.result}
-            </View>
           )}
         </View>
       </View>

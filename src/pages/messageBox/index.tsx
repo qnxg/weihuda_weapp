@@ -1,9 +1,10 @@
 import { Navigator, View } from '@tarojs/components'
-import React from 'react'
+import dayjs from 'dayjs'
+import React, { useCallback } from 'react'
 import MessageItem from '../../components/MessageItem'
 import styles from './index.module.scss'
-import { getMessage } from '@/apis/message'
-import { getRecentNotices } from '@/apis/notice'
+import { getAnnouncement } from '@/apis/announcement'
+import { getNoticePageApi } from '@/apis/notice'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import Empty from '@/components/Empty'
@@ -14,25 +15,37 @@ import useRefreshKey from '@/utils/hooks/useRefreshKey'
 const Index: React.FC = () => {
   const [refreshKey, refreshTrigger] = useRefreshKey()
 
+  const getRecentNotices = useCallback(
+    async () => (await getNoticePageApi({ page: 1, pageSize: 20 })).rows,
+    []
+  )
+
   const [recentNotices] = usePromise(
     getRecentNotices,
     [],
     [getRecentNotices, refreshKey]
   )
-  const [recentMessages] = usePromise(getMessage, [], [getMessage, refreshKey])
+  const [recentAnnouncements] = usePromise(
+    getAnnouncement,
+    [],
+    [getAnnouncement, refreshKey]
+  )
 
   const unreadCount = recentNotices.filter(item => item.status === 0).length
 
   return (
     <View style={{ paddingBottom: '20px' }}>
       <Card className={styles.countInfo}>
-        当前有 {recentMessages.length} 条公告，
+        当前有 {recentAnnouncements.length} 条公告，
         {unreadCount} 条未读的用户消息。
       </Card>
-      {recentMessages.map(item => {
+      {recentAnnouncements.map(item => {
         const CardComp = (
           <Card key={`msg-card-${item.id}`}>
-            <CardHeader title={item.create_at} icon={icon} />
+            <CardHeader
+              title={dayjs(item.createdAt).format('YYYY-MM-DD')}
+              icon={icon}
+            />
             <View className={styles.content_out}>
               <View className={styles.title}>{item.title}</View>
               <View className={styles.content}>{item.content}</View>
@@ -59,7 +72,7 @@ const Index: React.FC = () => {
           </Card>
         )
       })}
-      {recentMessages.length + recentNotices.length == 0 && (
+      {recentAnnouncements.length + recentNotices.length == 0 && (
         <Card>
           <Empty>暂无消息</Empty>
         </Card>

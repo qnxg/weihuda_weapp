@@ -70,11 +70,9 @@ const HomeSwiperCard: React.FC<CardProps> = ({
                 <View className={styles.left}>
                   <View className={styles.title}>{item.title}</View>
                   <View className={styles.exteraInfo}>
-                    {item.publishTime && (
-                      <View className={styles.publishTime}>
-                        {dayjs(item.publishTime).format('YYYY-MM-DD')}
-                      </View>
-                    )}
+                    <View className={styles.publishTime}>
+                      {dayjs(item.createdAt).format('YYYY-MM-DD')}
+                    </View>
                     {item.status !== 1 && (
                       <View className={styles.status}>
                         {item.status == 0 ? '审核中' : '审核未通过'}

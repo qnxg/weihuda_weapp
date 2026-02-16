@@ -12,6 +12,8 @@ export interface IMessageLeft {
   sendTime: string
   /** 是否发送 */
   isSend: number
+  /** 邮箱 */
+  email?: string
 }
 
 export interface IMessageLeftPageResponseData {
@@ -25,9 +27,10 @@ export interface IMessageLeftPageQueryData
 
 /**
  * 新增留言板
+ * @returns 成功时返回提示文案
  */
 export const postMessageLeftApi = async (postData: Partial<IMessageLeft>) => {
-  return request.post<IMessageLeftPageResponseData>('/message-left', {
+  return request.post<string>('/message-left', {
     data: postData,
   })
 }

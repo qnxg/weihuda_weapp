@@ -1,12 +1,16 @@
 // eslint-disable-next-line import/no-cycle
 import request from './request'
 
-// TODO: 绑定数据类型为any
+export interface Bind {
+  code: string
+  stuId: string
+  password: string
+}
 
 /**
  * 绑定
  */
-export const postBind = async (data: any) => {
+export const postBind = async (data: Bind) => {
   return request.post<string>('/bind', {
     data,
   })

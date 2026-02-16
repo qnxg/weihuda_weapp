@@ -137,7 +137,7 @@ export const getNetflowOrder = async () => {
 /**
  * 月流量明细
  */
-export const getNetflowMonth = async (year: number, month: number) => {
+export const getNetflowMonth = async (year: string, month: string) => {
   return request.get<NetflowDetail>('/netflow/month-detail', {
     data: {
       year,
@@ -149,9 +149,9 @@ export const getNetflowMonth = async (year: number, month: number) => {
  * 日流量明细
  */
 export const getNetflowDay = async (
-  year: number,
-  month: number,
-  day: number
+  year: string,
+  month: string,
+  day: string
 ) => {
   return request.get<NetflowDetail>('/netflow/day-detail', {
     data: {

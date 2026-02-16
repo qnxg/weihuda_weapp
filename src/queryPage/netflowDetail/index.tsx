@@ -102,12 +102,12 @@ const Index: React.FC = () => {
       let month = byMonth[1]!
       let res: NetflowDetail | null = null
       if (!isDay) {
-        res = await getNetflowMonth(year, month)
+        res = await getNetflowMonth(String(year), String(month))
       } else {
         year = byDay[0]!
         month = byDay[1]!
         const day = byDay[2]!
-        res = await getNetflowDay(year, month, day)
+        res = await getNetflowDay(String(year), String(month), String(day))
       }
 
       if (res) {

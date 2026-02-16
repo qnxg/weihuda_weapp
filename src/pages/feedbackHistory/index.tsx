@@ -1,10 +1,10 @@
-import { Input, View } from '@tarojs/components'
-import Taro, { useRouter } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { getFeedbackPageApi } from '@/apis/feedback'
-import Button from '@/components/Button'
-import type { FeedbackData } from '@/apis/feedback'
+import { getFeedbackMsg, getFeedbackPageApi } from '@/apis/feedback'
+import NoData from '@/components/NoData'
+import type { FeedbackInfo } from '@/apis/feedback'
 
 const statusMap = {
   0: '待确认',
@@ -14,95 +14,63 @@ const statusMap = {
 }
 
 const Index: React.FC = () => {
-  const { params } = useRouter()
-  const [stuId, setStuId] = useState<string>(params.stuId || '')
-
-  const [data, setData] = useState<FeedbackData[]>([])
+  interface FeedbackHistoryItem {
+    info: FeedbackInfo
+    msg?: string
+  }
+  const [data, setData] = useState<FeedbackHistoryItem[]>([])
 
   // 请求反馈历史列表
-  const getData = async (stuIdParam: string) => {
+  const getData = async () => {
     await Taro.showLoading()
     try {
-      const res = await getFeedbackPageApi(stuIdParam)
-      if (res) {
-        setData(res.rows)
-        Taro.hideLoading()
-        await Taro.showToast({
-          title: '查询成功',
-          icon: 'success',
+      const res: FeedbackHistoryItem[] = []
+      const feedbackList = (await getFeedbackPageApi(1)).rows
+      for (const item of feedbackList) {
+        const msgList = await getFeedbackMsg(item.id)
+        res.push({
+          info: item,
+          msg: msgList.length > 0 ? msgList[0]?.msg : undefined,
         })
       }
-    } catch {
+      setData(res)
+    } finally {
       Taro.hideLoading()
     }
   }
 
-  // 点击查询按钮时
-  const handleSubmit = async () => {
-    // 非空检查
-    if (stuId.trim() === '') {
-      await Taro.showToast({
-        title: '学号不能为空',
-        icon: 'none',
-      })
-      return
-    }
-
-    // 长度检查
-    if (stuId.trim().length !== 12) {
-      await Taro.showToast({
-        title: '学号必须是12位',
-        icon: 'none',
-      })
-      return
-    }
-
-    // 请求数据
-    await getData(stuId)
-  }
-
   // 进入页面时发起请求
   useEffect(() => {
-    if (stuId === '') {
-      return
-    }
-
     // 请求数据
-    void getData(stuId)
+    void getData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <View className={styles.container}>
-      <View className={styles.form}>
-        <Input
-          value={stuId}
-          onInput={e => {
-            setStuId((e.target as any).value)
-          }}
-          className={styles.input}
-          type='text'
-          placeholder='请输入学号'
-        />
-        <Button onClick={handleSubmit} className={styles.submitButton}>
-          查询
-        </Button>
-      </View>
-      <View className={styles.historyList}>
-        {data.map((item, i) => {
-          return (
-            <View key={i} className={styles.historyCard}>
-              <View className={styles.label}>反馈内容：</View>
-              <View>{item.desc}</View>
-              <View className={styles.label}>
-                处理状态：{statusMap[item.status]}
+      {data.length === 0 ? (
+        <NoData text='暂无反馈历史' />
+      ) : (
+        <View className={styles.historyList}>
+          {data.map((item, i) => {
+            return (
+              <View key={i} className={styles.historyCard}>
+                <View className={styles.label}>反馈内容：</View>
+                <View>{item.info.desc}</View>
+                <View className={styles.label}>
+                  处理状态：{statusMap[item.info.status]}
+                </View>
+                {item.msg && (
+                  <>
+                    <View className={styles.label}>处理结果：</View>
+                    <View>{item.msg}</View>
+                  </>
+                )}
               </View>
-              <View className={styles.label}>处理结果：</View>
-              <View>{item.comment}</View>
-            </View>
-          )
-        })}
-      </View>
+            )
+          })}
+        </View>
+      )}
     </View>
   )
 }

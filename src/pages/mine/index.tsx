@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import React from 'react'
 import styles from './index.module.scss'
 import { postUnbind } from '@/apis/bind'
-import { getRecentNotices } from '@/apis/notice'
+import { getNoticePageApi } from '@/apis/notice'
 import { getUserInfoApi } from '@/apis/userInfo'
 import Copyright from '@/components/Copyright'
 import { LineDividedButtonList } from '@/components/LineDividedButtonList'
@@ -21,20 +21,20 @@ const unBind = async (): Promise<void> => {
     cancelColor: '#328ccb',
   })
   if (res.confirm) {
+    await Taro.showLoading({
+      title: '加载中',
+    })
+    Taro.clearStorageSync()
     try {
-      await Taro.showLoading({
-        title: '加载中',
-      })
+      // 这个操作算是个可有可无的操作。解绑主要还是把本地的 jwt 删掉。
       await postUnbind()
-      Taro.clearStorageSync()
-      Taro.hideLoading()
-      await Taro.reLaunch({
-        url: '/pages/bind/index',
-      })
     } catch (err) {
-      Taro.hideLoading()
       console.log(err)
     }
+    Taro.hideLoading()
+    await Taro.reLaunch({
+      url: '/pages/bind/index',
+    })
   }
 }
 
@@ -135,7 +135,9 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
 )
 
 const getRecentNoticesUnread = async () =>
-  (await getRecentNotices()).filter(item => item.status === 0).length
+  (await getNoticePageApi({ page: 1, pageSize: 20 })).rows.filter(
+    item => item.status === 0
+  ).length
 
 const Index: React.FC = () => {
   const [userInfo] = usePromise(getUserInfoApi, null, [getUserInfoApi])

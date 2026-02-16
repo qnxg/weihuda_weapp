@@ -133,6 +133,10 @@ export const Tabs: React.FC<ITabsProps> = props => {
     void handleTabSelect(initialPanelIndex ?? 0)
   }, [initialPanelIndex, updateActiveLine, panels, handleTabSelect])
 
+  // 支持异步加载：panels 为空时不渲染，避免 defaultPanelIndex=0 越界
+  if (panels.length === 0) {
+    return null
+  }
   if (panels.length <= currentTab) {
     throw Error(`选项卡个数为${panels.length}，然而当前选项卡id为${currentTab}`)
   }

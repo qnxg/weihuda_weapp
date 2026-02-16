@@ -50,7 +50,7 @@ export interface PostData {
   /**
    * 授课地点
    */
-  location: string
+  location?: string
   /**
    * 第几节
    */
@@ -58,7 +58,7 @@ export interface PostData {
   /**
    * 教师
    */
-  teachers: string
+  teachers?: string
   /**
    * 上课周数
    */

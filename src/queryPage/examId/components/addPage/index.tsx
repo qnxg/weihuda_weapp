@@ -20,9 +20,9 @@ const AddPage: React.FC<AddPageProps> = ({ cancelHandle, confirmHandle }) => {
   const runExamIdAdd = async () => {
     try {
       await postExamNumApi({
-        name: newItem.examName,
-        date: newItem.examDate.replace(/\//g, '-'),
-        num: newItem.examId || ' ',
+        examName: newItem.examName,
+        examDate: newItem.examDate.replace(/\//g, '-'),
+        examNum: newItem.examId || ' ',
       })
       await Taro.showToast({
         title: '添加成功',

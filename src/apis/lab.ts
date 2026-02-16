@@ -16,7 +16,8 @@ export interface LabArrange {
 
 export interface LabSetPasswordRes {
   success: boolean
-  msg: string
+  /** 失败时的错误信息，成功时为 undefined */
+  msg?: string
 }
 
 export const getLabArrange = async () => {
