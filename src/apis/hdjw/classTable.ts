@@ -93,3 +93,30 @@ export const deleteCourseApi = async (id: number) => {
     method: 'DELETE',
   })
 }
+
+export interface ExtraCourseInfo {
+  className: string
+  courseId: string
+  courseName: string
+  type: string
+  credit: number
+  area: string
+  people: number
+  extra?: string
+  teacher: string
+}
+
+/**
+ * 获取无课表课程
+ * @param xn 学年
+ * @param xq 学期
+ * @returns 无课表课程
+ */
+export const getExtraCourseApi = async (xn: number, xq: number) => {
+  return request.get<ExtraCourseInfo[]>('/hdjw/class-table-extra', {
+    data: {
+      xn,
+      xq,
+    },
+  })
+}

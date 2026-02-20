@@ -1,0 +1,21 @@
+.popupContent {
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollArea {
+  flex: 1;
+  min-height: 0;
+  height: 0; /* 配合 flex 使 ScrollView 正确计算高度 */
+}
+
+.wrapper :global(.taroify-cell__value),
+.wrapper :global(.taroify-cell__title) {
+  font-size: 28px !important;
+}
+
+/* 去掉 Cell.Group 上方的 border，避免堆叠时重复 */
+.wrapper :global(.taroify-hairline--top-bottom)::after {
+  border-top-width: 0 !important;
+}

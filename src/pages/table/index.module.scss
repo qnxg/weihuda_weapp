@@ -1,0 +1,19 @@
+@import '~@/utils/scss/global.scss';
+
+.extraCourseCard {
+  padding-bottom: 12px;
+}
+
+.extraCourseContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.extraCourseText {
+  color: $primaryBlue;
+  opacity: 0.75;
+  font-size: $fontBig;
+  margin: auto;
+}

@@ -1,11 +1,20 @@
+import { View, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import AddCourseButton from './components/AddCourseButton'
 import ClassDetailFloat from './components/ClassDetailFloat'
+import ExtraCourse from './components/ExtraCourse'
 import Header from './components/Header'
 import Options from './components/Options'
 import TableBody from './components/TableBody'
+import style from './index.module.scss'
+import {
+  getExtraCourseApi,
+  type CourseInfo,
+  type ExtraCourseInfo,
+} from '@/apis/hdjw/classTable'
+import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import {
   initClassTableThunk,
@@ -14,7 +23,6 @@ import {
 import { offColor, offFontColor } from '@/utils/config'
 import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
 import type { CurDatesOfWeek, ClassTableItem } from './interface'
-import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 const Index: React.FC = () => {
   const cw = useAppSelector(s => s.classTable.currentWeek)
@@ -36,6 +44,39 @@ const Index: React.FC = () => {
 
   // 加载错误弹窗用
   const [loadingError, setLoadingError] = useState(false)
+
+  // 无课表课程
+  const [showExtraCoursePopup, setShowExtraCoursePopup] = useState(false)
+  const [extraCourseData, setExtraCourseData] = useState<ExtraCourseInfo[]>([])
+  const handleShowExtraCourse = async () => {
+    if (
+      !semesters ||
+      semesters.length === 0 ||
+      !currentSem ||
+      !semesters[currentSem]
+    ) {
+      return
+    }
+    await Taro.showLoading({
+      mask: true,
+      title: '加载中...',
+    })
+    try {
+      const res = await getExtraCourseApi(
+        semesters[currentSem].xn,
+        semesters[currentSem].xq
+      )
+      setExtraCourseData(res)
+      setShowExtraCoursePopup(true)
+    } catch (err) {
+      await Taro.showToast({
+        icon: 'none',
+        title: err.toString(),
+      })
+    } finally {
+      Taro.hideLoading()
+    }
+  }
 
   // 初始化
   useEffect(() => {
@@ -180,6 +221,11 @@ const Index: React.FC = () => {
         tableCurrentWeek={tableCurrentWeek}
         setShouldShowOptions={setShouldShowOptions}
       />
+      <ExtraCourse
+        open={showExtraCoursePopup}
+        onClose={() => setShowExtraCoursePopup(false)}
+        data={extraCourseData}
+      />
       <PullRefresh runFunc={onRefresh} topGap={124}>
         <TableBody
           formatTable={formatTable}
@@ -190,6 +236,13 @@ const Index: React.FC = () => {
             setClassDetailsForFloatComponentToShow
           }
         />
+        <View className={style.extraCourseCard}>
+          <Card onClick={handleShowExtraCourse}>
+            <View className={style.extraCourseContainer}>
+              <Text className={style.extraCourseText}>查看无课表课程</Text>
+            </View>
+          </Card>
+        </View>
       </PullRefresh>
       <Options
         show={shouldShowOptions}
