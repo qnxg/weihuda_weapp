@@ -37,8 +37,10 @@ const Index: IndexType = (props, ref) => {
   }
 
   const stopRefresh = () => {
-    setRefreshing(false)
-    setIsToRefresh(false)
+    Taro.nextTick(() => {
+      setRefreshing(false)
+      setIsToRefresh(false)
+    })
   }
 
   const runRefresh = async () => {
