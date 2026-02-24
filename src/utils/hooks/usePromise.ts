@@ -68,6 +68,7 @@ export default function usePromise<T>(
           if (!isMounted) return
           setPromiseError({ thrown: e })
         } finally {
+          // eslint-disable-next-line no-unsafe-finally
           if (!isMounted) return
           setIsPromisePending(false)
         }

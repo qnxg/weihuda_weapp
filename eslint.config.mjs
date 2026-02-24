@@ -64,6 +64,7 @@ export default defineConfig([
       'no-var': ['error'],
       'no-shadow': 'off',
       'no-shadow-restricted-names': ['error'],
+      'no-unsafe-finally': ['warn'],
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
