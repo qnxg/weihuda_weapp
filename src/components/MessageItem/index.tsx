@@ -1,4 +1,5 @@
 import { View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
@@ -51,6 +52,12 @@ const MessageItem: React.FC<IMessageItemProps> = ({
         className={classNames(styles.content, {
           [styles.read]: data.status === 1,
         })}
+        onClick={() => {
+          void markAsRead(data.id)
+          void Taro.navigateTo({
+            url: data.url || '/pages/messageBox/index',
+          })
+        }}
       >
         {data.content}
       </View>

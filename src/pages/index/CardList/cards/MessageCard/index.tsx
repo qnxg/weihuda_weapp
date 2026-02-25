@@ -86,14 +86,7 @@ const MessageCardDisplay: React.FC<IProps> = ({
           >
             {/* 消息通知 */}
             {noticeToShow.map(item => (
-              <SwiperItem
-                key={`notice-${item.id}`}
-                onClick={() => {
-                  void Taro.navigateTo({
-                    url: item.url ? item.url : '/pages/messageBox/index',
-                  })
-                }}
-              >
+              <SwiperItem key={`notice-${item.id}`}>
                 <MessageItem className={styles.messageItem} data={item} />
               </SwiperItem>
             ))}
