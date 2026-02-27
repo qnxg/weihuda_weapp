@@ -1,8 +1,8 @@
 import { Image, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.scss'
-import { getJifenGoodsPageApi } from '@/apis/jifen'
+import { exchangeGoodsApi, getJifenGoodsPageApi } from '@/apis/jifen'
 import Button from '@/components/Button'
 import type { IJifenGoods } from '@/apis/jifen'
 
@@ -15,7 +15,7 @@ interface IGoodsProps {
 const Goods: React.FC<IGoodsProps> = props => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IJifenGoods[]>([])
-  const [exchangeLoading, setExchangeLoading] = useState(false)
+  const exchangeLoadingRef = useRef(false)
   const total = props.total || 0
 
   // 获取列表数据
@@ -32,8 +32,8 @@ const Goods: React.FC<IGoodsProps> = props => {
 
   // 兑换奖品
   const exchangeGoods = async (id: number) => {
-    if (exchangeLoading) return
-    setExchangeLoading(true)
+    if (exchangeLoadingRef.current) return
+    exchangeLoadingRef.current = true
 
     // 显示确认框
     const modalRes = await Taro.showModal({
@@ -41,13 +41,15 @@ const Goods: React.FC<IGoodsProps> = props => {
       content: '确定兑换吗？',
     })
 
+    console.log(modalRes)
+
     if (!modalRes.confirm) {
-      setExchangeLoading(false)
+      exchangeLoadingRef.current = false
       return
     }
     try {
       await Taro.showLoading({ title: '兑换中...' })
-      await exchangeGoods(id)
+      await exchangeGoodsApi(id)
       await Taro.showToast({
         title: '兑换成功',
         icon: 'success',
@@ -60,7 +62,7 @@ const Goods: React.FC<IGoodsProps> = props => {
         props.updateJifenRecord()
       }
     } catch {}
-    setExchangeLoading(false)
+    exchangeLoadingRef.current = false
   }
 
   const getBtnText = (item: IJifenGoods) => {

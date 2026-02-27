@@ -10,7 +10,14 @@ const Index: React.FC = () => {
     let cleanUp = () => {}
     if (from === 'zhihu') {
       const w = setTimeout(() => {
-        void getJifenWebviewReadApi({ url: url! })
+        getJifenWebviewReadApi({ url: url! })
+          .then(jifen =>
+            Taro.showToast({
+              title: `今日阅读积分 +${jifen}`,
+              icon: 'none',
+            })
+          )
+          .catch(() => {})
       }, 5000)
       cleanUp = () => clearTimeout(w)
     }

@@ -58,6 +58,7 @@ export const postJifenRecordApi = async (
 /**
  * 阅读文章获取积分，（webview页面的阅读事件除了现在用来获得积分外，未来
  * 还有可能用来统计用户的阅读行为，比如阅读时长，阅读次数等，所以单独提取出来一个请求）
+ * @returns 本次积分增量
  */
 export const getJifenWebviewReadApi = async (queryData: { url: string }) => {
   return request.get<number>('/jifen/webview-read', {
@@ -171,7 +172,7 @@ export const getGoodsExchangeRecordList = async (queryData: IPageQueryData) => {
 /**
  * 兑换奖品
  */
-export const exchangeGoods = async (goodsId: number) => {
+export const exchangeGoodsApi = async (goodsId: number) => {
   return request.post<string>('/jifen/exchange-record', {
     data: { goodsId },
   })
