@@ -1,0 +1,15 @@
+# 在本地运行：
+# git config blame.ignoreRevsFile .git-blame-ignore-revs
+# 以将这些提交忽略
+
+# Author: 孙康睿 <❤>
+# Date:   Sat May 31 23:02:00 2025 +0800
+# 
+#     chore & refactor: prettier
+7e0507cebeaaf52171f02d0f0b1bbe6b46e628fe
+
+# Author: caiwen <3102733279@qq.com>
+# Date:   Tue Sep 2 18:36:43 2025 +0800
+# 
+#     将 prettier 添加到 package.json 中，并对现有代码进行格式化
+8c8b20bde4fb73b341b5f92acdd7fdae45243fc5
