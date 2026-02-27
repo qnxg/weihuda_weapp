@@ -127,10 +127,10 @@ const Index: React.FC = () => {
       <View>字数：{data.desc.length}/255</View>
       {/* 是否选择器 */}
       <View className={styles.title} style={{ marginTop: '30px' }}>
-        是否愿意在公众号展示自己的留言：
+        是否愿意作为公众号文章投稿素材：
       </View>
       <View className={styles.ps}>
-        ps:公开可获得额外奖励并让心声被更多人听见
+        ps:同意可获得额外奖励并让心声被更多人听见
       </View>
       <RadioGroup
         onChange={e => {
@@ -140,12 +140,12 @@ const Index: React.FC = () => {
       >
         <View className={styles.radioItem}>
           <Radio value='true' checked={data.isAgree}>
-            公开
+            是
           </Radio>
         </View>
         <View className={styles.radioItem}>
           <Radio value='false' checked={!data.isAgree}>
-            不公开
+            否
           </Radio>
         </View>
       </RadioGroup>
