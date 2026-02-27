@@ -21,4 +21,10 @@
   .taroify-cell__value {
     color: white !important;
   }
+  .taroify-cell-group {
+    background-color: $darkBgColor !important;
+  }
+  .taroify-hairline--top-bottom::after {
+    border-color: #3b3b3b !important;
+  }
 }

@@ -31,3 +31,9 @@
     }
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .courseName {
+    color: $darkTextColor;
+  }
+}
