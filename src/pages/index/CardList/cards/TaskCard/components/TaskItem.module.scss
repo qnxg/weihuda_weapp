@@ -1,0 +1,99 @@
+@import '~@/utils/scss/global.scss';
+
+.outer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background: #dde2e238;
+  border-radius: 16px;
+  font-size: 24px;
+  color: var(--text-color-secondary);
+  border-left: 12px solid #dde2e25b;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:active {
+    opacity: 0.7;
+  }
+
+  &.upcoming {
+    background-color: var(--warning-color-1);
+    border-color: var(--warning-color-4);
+
+    .rightPart {
+      color: var(--warning-color-4);
+    }
+  }
+
+  &.soon {
+    background-color: var(--danger-color-1);
+    border-color: var(--danger-color-4);
+
+    .rightPart {
+      color: var(--danger-color-4);
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 8px;
+  }
+
+  .leftPart {
+    margin-right: 20px;
+    min-width: 120px;
+  }
+
+  .mainPart {
+    flex: 1;
+  }
+
+  .dateText,
+  .taskName {
+    margin-bottom: 12px;
+    font-size: 28px;
+    color: var(--text-color-primary);
+  }
+
+  .dateText {
+    font-size: 24px;
+  }
+
+  .timeText {
+    font-size: 22px;
+  }
+
+  .taskInfo {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .infoItem {
+    padding: 0 12px;
+    border-right: 3px solid var(--text-color-secondary);
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .rightPart {
+    margin-left: 20px;
+    font-size: 24px;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .outer {
+    color: $darkTextColor;
+    background: #dde2e214;
+    border-left: 12px solid #dde2e22f;
+  }
+}

@@ -58,6 +58,7 @@ export default {
         'indexCardSettings/index', // 小程序首页卡片设置
         'indexCardSettings/normalCardSettings/index', // 常规卡片排序
         'indexCardSettings/signInCardSettings/index', // 签到卡片设置
+        'indexCardSettings/taskCardSettings/index', // 待办卡片设置
         'labBindSettings/index', // 大物实验平台绑定设置
       ],
     },

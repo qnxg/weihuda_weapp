@@ -1,0 +1,119 @@
+@import '~@/utils/scss/global.scss';
+
+.container {
+  position: relative;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.cardWrapper {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  height: 90px;
+  transition:
+    top 0.3s ease,
+    opacity 0.3s ease;
+
+  &.dragging {
+    transition: none;
+    opacity: 0.8;
+    z-index: 1000;
+  }
+}
+
+.cardInner {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color-container);
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+
+.cardContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+.numberButton {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--brand-color);
+  color: var(--text-color-anti);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.disabled {
+    background: var(--bg-color-component-disabled);
+    color: var(--text-color-disabled);
+  }
+}
+
+.title {
+  flex: 1;
+  font-size: $fontBig;
+  font-weight: 500;
+  color: var(--text-color-base);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &.titleDisabled {
+    color: var(--text-color-disabled);
+    opacity: 0.5;
+  }
+}
+
+.dragHandle {
+  flex-shrink: 0;
+  padding: 8px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.hamburger {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.line {
+  width: 100%;
+  height: 3px;
+  background: var(--text-color-secondary);
+  border-radius: 2px;
+  transition: background 0.2s ease;
+
+  .dragHandle:active & {
+    background: var(--brand-color);
+  }
+}

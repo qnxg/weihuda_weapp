@@ -9,10 +9,11 @@ export interface IndexNormalCardSettings extends SettingsItem {
 
 /** 默认常规卡片设置，应该列举了所有能配置的卡片 */
 export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
-  settingsMajorVersion: '0',
+  settingsMajorVersion: '1',
   show: [
     '今日知湖',
-    '今日课程',
+    '近期课程',
+    '近期待办',
     '本月流量',
     '宿舍电量',
     '假期倒计时',
@@ -20,5 +21,5 @@ export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
     '校园邮箱',
     '成绩查询',
   ],
-  dontShow: [],
+  dontShow: ['今日课程'],
 }

@@ -1,7 +1,7 @@
 @import '~@/utils/scss/global.scss';
 
 .hint {
-  font-size: $fontBig;
+  font-size: $fontNormal;
   color: var(--text-color-primary);
 }
 
@@ -14,4 +14,6 @@
   font-size: $fontBig !important; // 我不知道怎么回事，我只能想到这么写了
   margin: auto;
   flex: 0 0 auto;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }

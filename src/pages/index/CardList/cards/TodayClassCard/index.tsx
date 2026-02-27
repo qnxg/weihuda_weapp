@@ -1,21 +1,25 @@
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import CardEmpty from '../utils/CardEmpty'
 import styles from './index.module.scss'
+import { getClassTable } from '@/apis/hdjw/classTable'
+import { getCurrentSemesterInfoApi } from '@/apis/semester'
 import Card from '@/components/Card'
 import CardHeader from '@/components/Card/CardHeader'
 import empty from '@/static/empty/no-today-class.svg'
 import cardIcon from '@/static/index/icon/today-class.svg'
 import { courseTime } from '@/utils/config'
-import { useAppSelector } from '@/utils/hooks/redux'
+import { nowWeek } from '@/utils/day'
+import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
 import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 interface TodayClassProps {
   currentWeek: number
   dayOfTheWeek: number
+  classTable: CourseInfo[]
 }
 
 interface FormatData {
@@ -38,9 +42,8 @@ interface FormatData {
 }
 
 const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
-  const { currentWeek = 0, dayOfTheWeek = 0 } = props
+  const { currentWeek = 0, dayOfTheWeek = 0, classTable } = props
 
-  const { classTable } = useAppSelector(state => state.classTable)
   const todayClass = useMemo<CourseInfo[]>(() => {
     if (classTable) {
       // 取出今日课程
@@ -180,19 +183,51 @@ const TodayClassCardDisplay: React.FC<TodayClassProps> = props => {
   )
 }
 
-/** 这个卡片无法刷新？ */
-const TodayClassCard: React.FC<CardProps> = ({ onLoadingStatusChange }) => {
-  useEffect(() => {
-    onLoadingStatusChange(false)
-  }, [onLoadingStatusChange])
+/** 今日课程卡片 - 直接从后端获取数据 */
+const TodayClassCard: React.FC<CardProps> = ({
+  onLoadingStatusChange,
+  reloadController,
+}) => {
+  // 获取学期信息
+  const [semesterInfo, isSemesterLoading] = usePromise(
+    getCurrentSemesterInfoApi,
+    undefined,
+    [getCurrentSemesterInfoApi, reloadController]
+  )
 
-  const dayOfWeek = new Date().getDay()
-  const { currentWeek } = useAppSelector(state => state.classTable)
+  // 根据学期信息获取课表
+  const fetchClassTable = useCallback(async () => {
+    if (!semesterInfo) {
+      return []
+    }
+    const { year, term } = semesterInfo
+    return await getClassTable(year.toString(), term)
+  }, [semesterInfo])
+
+  const [classTable, isClassTableLoading] = usePromise(
+    fetchClassTable,
+    [],
+    [fetchClassTable, reloadController]
+  )
+
+  // 计算当前周和星期几
+  const currentWeek = useMemo(() => {
+    if (!semesterInfo) return 0
+    return nowWeek(semesterInfo.startDate)
+  }, [semesterInfo])
+
+  const dayOfWeek = useMemo(() => new Date().getDay(), [])
+
+  // 更新加载状态
+  useEffect(() => {
+    onLoadingStatusChange(isSemesterLoading || isClassTableLoading)
+  }, [isSemesterLoading, isClassTableLoading, onLoadingStatusChange])
 
   return (
     <TodayClassCardDisplay
-      currentWeek={currentWeek || 0}
-      dayOfTheWeek={dayOfWeek || 0}
+      currentWeek={currentWeek}
+      dayOfTheWeek={dayOfWeek}
+      classTable={classTable}
     />
   )
 }
