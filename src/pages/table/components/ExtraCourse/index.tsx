@@ -16,13 +16,13 @@ const ExtraCourse: React.FC<ExtraCourseProps> = ({ open, onClose, data }) => {
   return (
     <Popup lock open={open} onClose={onClose} placement='bottom' rounded>
       <View className={styles.popupContent}>
-        <Text className='p-3 text-base'>无课表课程{countIndicator}</Text>
+        <Text className={styles.title}>无课表课程{countIndicator}</Text>
         <ScrollView className={styles.scrollArea} scrollY>
           <View className={styles.wrapper}>
             {data.length > 0 ? (
               data.map((item, index) => (
                 <Cell.Group key={`${item.className}-${index}`} className='mb-3'>
-                  <View className='text-sm mx-3'>{item.courseName}</View>
+                  <View className={styles.courseName}>{item.courseName}</View>
                   <Cell title='课程代码'>{item.courseId}</Cell>
                   <Cell title='教师'>{item.teacher}</Cell>
                   <Cell title='上课班级'>{item.className}</Cell>

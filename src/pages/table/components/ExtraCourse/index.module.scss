@@ -1,21 +1,33 @@
+@import '~@/utils/scss/global.scss';
+
 .popupContent {
-  max-height: 80vh;
   display: flex;
   flex-direction: column;
-}
+  height: 80vh;
+  .title {
+    font-size: $fontLarge;
+    padding: 26px;
+  }
+  .scrollArea {
+    flex: 1;
+    min-height: 0;
+    height: 0;
+    overflow: auto;
 
-.scrollArea {
-  flex: 1;
-  min-height: 0;
-  height: 0; /* 配合 flex 使 ScrollView 正确计算高度 */
-}
+    .courseName {
+      font-size: $fontBig;
+      margin-left: 24px;
+      margin-right: 24px;
+    }
 
-.wrapper :global(.taroify-cell__value),
-.wrapper :global(.taroify-cell__title) {
-  font-size: 28px !important;
-}
+    .wrapper :global(.taroify-cell__value),
+    .wrapper :global(.taroify-cell__title) {
+      font-size: 28px !important;
+    }
 
-/* 去掉 Cell.Group 上方的 border，避免堆叠时重复 */
-.wrapper :global(.taroify-hairline--top-bottom)::after {
-  border-top-width: 0 !important;
+    /* 去掉 Cell.Group 上方的 border，避免堆叠时重复 */
+    .wrapper :global(.taroify-hairline--top-bottom)::after {
+      border-top-width: 0 !important;
+    }
+  }
 }

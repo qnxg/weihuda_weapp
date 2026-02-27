@@ -78,6 +78,13 @@
   margin-left: 24px;
 }
 
+.gradeDatalPopup {
+  .title {
+    font-size: $fontLarge;
+    padding: 26px;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .empty {
     .img {

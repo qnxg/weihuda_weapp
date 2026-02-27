@@ -167,9 +167,10 @@ const Index: React.FC = () => {
         onClose={() => setShowGradeDetail(null)}
         placement='bottom'
         rounded
+        className={styles.gradeDatalPopup}
       >
         <View className='pt-3'>
-          <Text className='p-3 text-base'>分数详情</Text>
+          <Text className={styles.title}>分数详情</Text>
         </View>
         {showGradeDetail &&
           showGradeDetail.map((item, index) => (
