@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 // eslint-disable-next-line import/no-cycle
 import { postUnbind } from './bind'
 import getLoginCode from '@/utils/getLoginCode'
-import storage from '@/utils/storage/cache'
+import storage from '@/utils/storage/token'
 import { BASE_URL } from '@/utils/url'
 
 // 避免多次请求

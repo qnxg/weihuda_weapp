@@ -4,18 +4,20 @@ import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
 import { deleteCourseApi } from '@/apis/hdjw/classTable'
-import { refreshClassTableThunk } from '@/models/classTable'
-import { useAppDispatch } from '@/utils/hooks/redux'
 import type { CourseInfo } from '@/apis/hdjw/classTable'
 
 export interface FloatProps {
-  classDetailsToShow: CourseInfo[]
+  classDetailsToShow: {
+    courseItem: CourseInfo
+    bgColor: string
+    fgColor: string
+  }[]
   clearClassDetailsToShow: () => void
+  refreshTable: () => void
 }
 
+/** 定义悬浮课程详情的数据 */
 const ClassDetailFloat: React.FC<FloatProps> = props => {
-  /** 定义悬浮课程详情的数据 */
-  const dispatch = useAppDispatch()
   /**
    * 隐藏float
    */
@@ -37,7 +39,7 @@ const ClassDetailFloat: React.FC<FloatProps> = props => {
           mask: true,
         })
         await deleteCourseApi(id)
-        await dispatch(refreshClassTableThunk())
+        props.refreshTable()
         Taro.hideLoading()
       } catch {
         Taro.hideLoading()
@@ -56,50 +58,59 @@ const ClassDetailFloat: React.FC<FloatProps> = props => {
         previousMargin='150rpx'
         nextMargin='152rpx'
       >
-        {props.classDetailsToShow.map((item, index) => {
+        {props.classDetailsToShow.map(({ courseItem, fgColor }, index) => {
           return (
             <SwiperItem key={String(index)} className={styles.swiperItem}>
               <View
                 className={classNames(styles.card, 'shadow-lg')}
-                style={`background: ${item.fontColor}`}
+                style={`background: ${fgColor}`}
                 onClick={(e): void => {
                   e.stopPropagation()
                 }}
               >
                 <ScrollView>
-                  <View className='text-xs'>{item.type}</View>
-                  {item.courseId && (
-                    <View className='text-xs'>{item.courseId}</View>
+                  <View className='text-xs'>{courseItem.type}</View>
+                  {courseItem.courseId && (
+                    <View className='text-xs'>{courseItem.courseId}</View>
                   )}
-                  <View className={styles.className}>{item.courseName}</View>
+                  <View className={styles.className}>
+                    {courseItem.courseName}
+                  </View>
                   <View className={styles.classOther}>
-                    {(item.place || item.area) && (
+                    {(courseItem.place || courseItem.area) && (
                       <View>
-                        {item.place
-                          ? item.place + (item.area ? `(${item.area})` : '')
-                          : item.area}
+                        {courseItem.place
+                          ? courseItem.place +
+                            (courseItem.area ? `(${courseItem.area})` : '')
+                          : courseItem.area}
                       </View>
                     )}
-                    <View className='my-1'>{item.className}</View>
-                    {item.teacher && (
-                      <View className='my-1'>{item.teacher}</View>
+                    <View className='my-1'>{courseItem.className}</View>
+                    {courseItem.teacher && (
+                      <View className='my-1'>{courseItem.teacher}</View>
                     )}
-                    <View className='my-1'>第 {item.weeks.join(', ')} 周</View>
-                    {item.credit && (
-                      <View className='my-1'>{item.credit} 学分</View>
+                    <View className='my-1'>
+                      第 {courseItem.weeks.join(', ')} 周
+                    </View>
+                    {courseItem.credit && (
+                      <View className='my-1'>{courseItem.credit} 学分</View>
                     )}
-                    {item.courseId && (
-                      <View className='my-1'>上课人数：{item.people}</View>
+                    {courseItem.courseId && (
+                      <View className='my-1'>
+                        上课人数：{courseItem.people}
+                      </View>
                     )}
-                    {item.extra && <View className='my-1'>{item.extra}</View>}
+                    {courseItem.extra && (
+                      <View className='my-1'>{courseItem.extra}</View>
+                    )}
                   </View>
                 </ScrollView>
-                {item.customizeId !== -1 ? (
+                {courseItem.customizeId !== -1 ? (
                   <View className={styles.optionContainer}>
                     <View
                       className={styles.options}
                       onClick={() => {
-                        void deleteCourse(item.customizeId)
+                        void deleteCourse(courseItem.customizeId)
                       }}
                     >
                       <View className={styles.removeIcon} />

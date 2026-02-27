@@ -4,11 +4,12 @@ import React from 'react'
 import styles from './index.module.scss'
 import { postUnbind } from '@/apis/bind'
 import { getNoticePageApi } from '@/apis/notice'
-import { getUserInfoApi } from '@/apis/userInfo'
+import { useUserInfo } from '@/apis/userInfo'
 import Copyright from '@/components/Copyright'
 import { LineDividedButtonList } from '@/components/LineDividedButtonList'
 import usePromise from '@/utils/hooks/usePromise'
 import useShowCount from '@/utils/hooks/useShowCount'
+import { cleanNotImportantStorage } from '@/utils/storage/storage'
 
 /**
  * 解绑操作
@@ -51,7 +52,7 @@ const clean = async () => {
     cancelColor: '#328ccb',
   })
   if (res.confirm) {
-    Taro.clearStorageSync()
+    cleanNotImportantStorage()
     await Taro.showToast({
       title: '清除成功',
     })
@@ -140,7 +141,7 @@ const getRecentNoticesUnread = async () =>
   ).length
 
 const Index: React.FC = () => {
-  const [userInfo] = usePromise(getUserInfoApi, null, [getUserInfoApi])
+  const [userInfo] = useUserInfo([])
 
   // 用户返回此页时也重新加载
   const pageShowCnt = useShowCount()

@@ -1,27 +1,22 @@
-import { Picker, Switch, Text, View } from '@tarojs/components'
+import { Picker, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useMemo } from 'react'
 import styles from './index.module.scss'
-import { refreshClassTableThunk, saveClassTable } from '@/models/classTable'
 import { semesterWeekNum } from '@/utils/config'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
-import storage from '@/utils/storage/cache'
+import type { Semester } from '../..'
 import type { BaseEventOrig, PickerSelectorProps } from '@tarojs/components'
 
 export interface OptionProps {
   show: boolean
   setShow: React.Dispatch<React.SetStateAction<boolean>>
-  tableCurrentWeek: number
+  tableCurrentWeek: number | undefined
   setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>
+  tableCurrentSemIdx: number | undefined
+  setTableCurrentSem: (newSem: number) => void
+  semesters: Semester[] | undefined
 }
 
 const Options: React.FC<OptionProps> = props => {
-  const { semesters, currentSem, mode } = useAppSelector(
-    state => state.classTable
-  )
-
-  const dispatch = useAppDispatch()
-
   /**
    * 隐藏选项
    */
@@ -36,13 +31,8 @@ const Options: React.FC<OptionProps> = props => {
   const onSelectXq = (
     e: BaseEventOrig<PickerSelectorProps.ChangeEventDetail>
   ): void => {
-    dispatch(
-      saveClassTable({
-        currentSem: e.detail.value as number,
-      })
-    )
+    props.setTableCurrentSem(e.detail.value as number)
     props.setTableCurrentWeek(1) // why?
-    void dispatch(refreshClassTableThunk())
   }
 
   /**
@@ -51,19 +41,6 @@ const Options: React.FC<OptionProps> = props => {
    */
   const onSelectWeek = (e: BaseEventOrig): void => {
     props.setTableCurrentWeek(parseInt(e.detail.value) + 1)
-  }
-
-  /**
-   * 改变模式
-   * @param e 事件传的参数
-   */
-  const onModeChange = (e: BaseEventOrig): void => {
-    storage.setTableMode(e.detail.value)
-    dispatch(
-      saveClassTable({
-        mode: e.detail.value,
-      })
-    )
   }
 
   const cxHeaderMask = classNames({
@@ -101,39 +78,40 @@ const Options: React.FC<OptionProps> = props => {
           <Picker
             onChange={onSelectXq}
             className={styles['container-item']}
-            range={semesters}
-            value={currentSem}
+            disabled={props.semesters === undefined}
+            range={props.semesters ?? []}
+            value={props.semesters ? props.tableCurrentSemIdx : undefined}
             rangeKey='show'
             mode='selector'
           >
-            <Text>当前学期：{semesters[currentSem]?.show ?? '网络错误!'}</Text>
-          </Picker>
-          <Picker
-            onChange={onSelectWeek}
-            className={styles['container-item']}
-            range={weekPeekerRange}
-            value={props.tableCurrentWeek - 1}
-            mode='selector'
-          >
-            {props.tableCurrentWeek >= 0 ? (
+            {props.semesters && props.tableCurrentSemIdx !== undefined ? (
               <Text>
-                当前周数：--------第{props.tableCurrentWeek}周----------
+                当前学期：
+                {props.semesters[props.tableCurrentSemIdx]!.show}
               </Text>
             ) : (
-              <Text>
-                当前周数：---距离开学还有{-props.tableCurrentWeek}周----
-              </Text>
+              <Text>学期信息未知</Text>
             )}
           </Picker>
-          <View className={styles['switch-item']}>
-            <View>仅显示本周课程</View>
-            <Switch
-              color='#328ccb'
-              className={styles.switch}
-              checked={mode}
-              onChange={onModeChange}
-            />
-          </View>
+          {props.tableCurrentWeek !== undefined && (
+            <Picker
+              onChange={onSelectWeek}
+              className={styles['container-item']}
+              range={weekPeekerRange}
+              value={props.tableCurrentWeek - 1}
+              mode='selector'
+            >
+              {props.tableCurrentWeek >= 0 ? (
+                <Text>
+                  当前周数：--------第{props.tableCurrentWeek}周----------
+                </Text>
+              ) : (
+                <Text>
+                  当前周数：---距离开学还有{-props.tableCurrentWeek}周----
+                </Text>
+              )}
+            </Picker>
+          )}
         </View>
       </View>
     </View>

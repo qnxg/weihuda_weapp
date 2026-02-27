@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useIsLoadingCountZero } from './CardProps'
+import { useLoadingCounter } from './CardProps'
 import type CardProps from './CardProps'
 
-/** 半BUG: 当卡片内组件列表发生了变化时请销毁这个组件重新渲染（使用key），
- * 否则loadingCount会出现异常。
- * 这是loadingCount使用了useRef造成的
- */
 const ConfigurableCardList = <K extends React.Key>(props: {
   /** 置顶的卡片 */
   topCards: [React.Key, React.FC<CardProps>][]
@@ -40,16 +36,9 @@ const ConfigurableCardList = <K extends React.Key>(props: {
   )
 
   const onAllLoadFinished = props.onAllLoadFinished
-  // 根据CardProp里的要求，
-  // 第一次渲染会触发onOneFetchStatusChange(false)
-  // 后续请求开始执行会触发onOneFetchStatusChange(true)
-  // 请求完成后会触发onOneFetchStatusChange(false)
-  // 需要设置一定的LoadingCount初始值
   // 由于第一次渲染时loadingCount可能暂时会减到0
   // 需要设置一定的时间防止onFetchDataFinished触发
-  const [isFetchDataFinished, onOneFetchStatusChange] = useIsLoadingCountZero(
-    childrenList.length
-  )
+  const [loadingCount, onOneFetchStatusChange] = useLoadingCounter()
   const [enableOnFetchDataFinished, setEnableOnFetchDataFinished] =
     useState(false)
   useEffect(() => {
@@ -58,17 +47,17 @@ const ConfigurableCardList = <K extends React.Key>(props: {
     setTimeout(() => setEnableOnFetchDataFinished(true), 500)
   }, [props.reloadAllController])
   useEffect(() => {
-    if (isFetchDataFinished && enableOnFetchDataFinished) {
+    if (loadingCount === 0 && enableOnFetchDataFinished) {
       onAllLoadFinished()
     }
-  }, [isFetchDataFinished, enableOnFetchDataFinished, onAllLoadFinished])
+  }, [loadingCount, enableOnFetchDataFinished, onAllLoadFinished])
 
   return (
     <>
       {childrenList.map(([cardKey, Card]) => (
         <Card
           key={cardKey}
-          onLoadingStatusChange={onOneFetchStatusChange}
+          onLoadingStatusChange={onOneFetchStatusChange(cardKey)}
           reloadController={props.reloadAllController}
         />
       ))}

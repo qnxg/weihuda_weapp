@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import LineDividedSwitchList from '@/components/LineDividedSwitchList'
 import usePromise from '@/utils/hooks/usePromise'
 import useShouldRelaunchIndex from '@/utils/hooks/useShouldRelaunchIndex'
@@ -21,14 +21,6 @@ const SwitchList: React.FC<{
     [getSignInCardSettings]
   )
 
-  const needShowSignInCardChangeInit = useMemo(
-    () => ({
-      checked: signInCardSettings?.show,
-      disabled: loadingSignInCardSettings,
-    }),
-    [loadingSignInCardSettings, signInCardSettings?.show]
-  )
-
   const onNeedShowSignInCardChange = useCallback(
     async (e: SwitchChangeEvent) => {
       setShouldRelaunchIndex(true)
@@ -39,14 +31,6 @@ const SwitchList: React.FC<{
       }
     },
     [setShouldRelaunchIndex]
-  )
-
-  const needShowHintAfterSignInChangeInit = useMemo(
-    () => ({
-      checked: signInCardSettings?.showHintAfterSignIn,
-      disabled: loadingSignInCardSettings,
-    }),
-    [loadingSignInCardSettings, signInCardSettings?.showHintAfterSignIn]
   )
 
   const onNeedShowHintAfterSignInChange = useCallback(
@@ -66,12 +50,18 @@ const SwitchList: React.FC<{
       items={[
         {
           title: '显示签到卡片',
-          init: needShowSignInCardChangeInit,
+          init: {
+            checked: signInCardSettings?.show,
+            disabled: loadingSignInCardSettings,
+          },
           onChange: onNeedShowSignInCardChange,
         },
         {
           title: '签到后显示推荐',
-          init: needShowHintAfterSignInChangeInit,
+          init: {
+            checked: signInCardSettings?.showHintAfterSignIn,
+            disabled: loadingSignInCardSettings,
+          },
           onChange: onNeedShowHintAfterSignInChange,
         },
       ]}

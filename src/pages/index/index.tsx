@@ -4,12 +4,9 @@ import React, { Fragment, memo, useCallback, useEffect, useRef } from 'react'
 import CardList from './CardList'
 import DateBar from './DateBar'
 import styles from './index.module.scss'
+import { useCurrentSemesterInfo } from '@/apis/semester'
 import PullRefresh from '@/components/PullRefresh'
-import {
-  initClassTableThunk,
-  refreshClassTableThunk,
-} from '@/models/classTable'
-import { useAppDispatch, useAppSelector } from '@/utils/hooks/redux'
+import { tempWeekNum } from '@/utils/day'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import type { RefProps } from '@/components/PullRefresh'
 
@@ -18,32 +15,19 @@ const CardListMemo = memo(CardList)
 const Index: React.FC = () => {
   const [fetchDataControl, fetchDataTrigger] = useRefreshKey()
 
-  const dispatch = useAppDispatch()
-
-  /** 拉取基本信息 */
-  useEffect(() => {
-    void dispatch(initClassTableThunk())
-  }, [dispatch])
-
-  const { currentWeek, semesters: terms } = useAppSelector(
-    state => state.classTable
-  )
-  useEffect(() => {
-    if (terms && terms.length > 0) {
-      void dispatch(refreshClassTableThunk())
-    } else {
-      void dispatch(initClassTableThunk())
-    }
-  }, [terms, dispatch])
+  const [semInfo] = useCurrentSemesterInfo([fetchDataControl])
 
   useEffect(() => {
+    const currentWeek = semInfo ? tempWeekNum(semInfo.startDate) : undefined
     if (currentWeek !== undefined && currentWeek !== null) {
       void Taro.setNavigationBarTitle({
         title:
-          currentWeek >= 0 ? `第${currentWeek}周` : `距开学${-currentWeek}周`,
+          currentWeek >= 0
+            ? `第${currentWeek}周`
+            : /* TODO: dead? */ `距开学${-currentWeek}周`,
       })
     }
-  }, [currentWeek])
+  }, [semInfo])
 
   const scrollRef = useRef<RefProps | null>(null)
 

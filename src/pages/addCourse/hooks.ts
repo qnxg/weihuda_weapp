@@ -1,13 +1,8 @@
 import Taro from '@tarojs/taro'
 import { useMemo, useState } from 'react'
 import { postCourseApi } from '@/apis/hdjw/classTable'
-import { refreshClassTableThunk } from '@/models/classTable'
-import { useAppDispatch } from '@/utils/hooks/redux'
 
 const useAddCourse = (xn: number, xq: number) => {
-  // 全局状态
-  const dispatch = useAppDispatch()
-
   /**
    * classname 课程名称
    * location 上课地点
@@ -67,7 +62,6 @@ const useAddCourse = (xn: number, xq: number) => {
     try {
       // 发起请求
       await postCourseApi(data)
-      await dispatch(refreshClassTableThunk())
       await Taro.showToast({
         title: '添加成功',
         duration: 1500,

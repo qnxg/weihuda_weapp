@@ -15,7 +15,13 @@ interface Props {
   /** 当天的课程数组 */
   dayCourse: Array<ClassTableItem>
   setClassDetailsForFloatComponentToShow: React.Dispatch<
-    React.SetStateAction<CourseInfo[]>
+    React.SetStateAction<
+      {
+        courseItem: CourseInfo
+        bgColor: string
+        fgColor: string
+      }[]
+    >
   >
 }
 
@@ -63,14 +69,14 @@ const Day: React.FC<Props> = props => {
             <View
               onClick={(): void => onShowFloat(cell)}
               className={classNames(cx, 'font-bold')}
-              style={`background: ${cell.courses[0]!.bgColor}; color: ${cell.courses[0]!.fontColor}`}
+              style={`background: ${cell.courses[0]!.bgColor}; color: ${cell.courses[0]!.fgColor}`}
             >
               <View className={styles['course-title']}>
-                {cell.courses[0]!.courseName}
+                {cell.courses[0]!.courseItem.courseName}
               </View>
-              {cell.courses[0]!.place && (
+              {cell.courses[0]!.courseItem.place && (
                 <View className={styles['course-location']}>
-                  @{cell.courses[0]!.place}
+                  @{cell.courses[0]!.courseItem.place}
                 </View>
               )}
             </View>

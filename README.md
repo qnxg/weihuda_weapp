@@ -9,7 +9,6 @@
 | 微信小程序开发文档 | https://developers.weixin.qq.com/miniprogram/dev/framework/       | 微信小程序官方文档                                            |
 | Taro               | https://taro-docs.jd.com/docs/                                    | 移动端解决方案                                                |
 | React              | https://zh-hans.react.dev/reference/react                         | JS界面构建库                                                  |
-| Redux              | https://cn.redux.js.org/tutorials/index                           | 全局状态（正在考虑删掉这个依赖）                              |
 | Dayjs              | https://www.npmjs.com/package/dayjs https://dayjs.gitee.io/zh-CN/ | 轻量的处理时间和日期的 JavaScript 库（正在考虑删掉这个依赖）  |
 | classnames         | https://www.npmjs.com/package/classnames                          | 处理类名的工具                                                |
 | Typescript         | https://ts.nodejs.cn/                                             | 一种基于 JavaScript 构建的强类型编程语言                      |
@@ -26,7 +25,6 @@ src
 │  ├─ pt                                # 个人门户有关的请求
 │  └─ \*\*                              # 其他未分类的请求
 ├─ components                           # 项目中通用的组件，具体用法见注释和项目中已有的示例
-├─ models                               # 全局状态
 ├─ pages                                # 小程序主要页面，参考app.config.ts
 ├─ queryPage                            # 分包页面（工具箱里的页面），主要包括查询相关，参考app.config.ts
 ├─ settingsPage                         # 分包页面，包括小程序设置页面，参考app.config.ts

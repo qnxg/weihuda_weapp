@@ -4,18 +4,20 @@ import React, { useEffect, useMemo } from 'react'
 
 import CardLayout from '../utils/CardLayout'
 import styles from './index.module.scss'
-import { getCurrentSemesterInfoApi } from '@/apis/semester'
+import { useCurrentSemesterInfo } from '@/apis/semester'
 import icon from '@/static/index/icon/days-left.svg'
-import usePromise from '@/utils/hooks/usePromise'
 import type CardProps from '../../CardProps'
 import type { CurrentSemesterInfo } from '@/apis/semester'
 
 interface Props {
-  daysLeft: number
+  daysLeft: number | undefined
 }
 
 const CountdownCardDisplay: React.FC<Props> = ({ daysLeft }) => {
   const dataList = useMemo(() => {
+    if (daysLeft === undefined) {
+      return ['?', '?', '?']
+    }
     const temp = Math.abs(daysLeft || 0)
       .toString()
       .split('')
@@ -27,14 +29,17 @@ const CountdownCardDisplay: React.FC<Props> = ({ daysLeft }) => {
     )
     return result
   }, [daysLeft])
+
+  const isInSem = daysLeft !== undefined && daysLeft > 0
+
   return (
     <CardLayout
       icon={icon}
-      title={daysLeft > 0 ? '假期倒计时' : '开学倒计时'}
+      title={isInSem ? '假期倒计时' : '开学倒计时'}
       url='/queryPage/schoolCalendar/index'
     >
       <View className={styles.outer}>
-        <View>距离{daysLeft > 0 ? '本学期' : '假期'}结束还有</View>
+        <View>距离{isInSem ? '本学期' : '假期'}结束还有</View>
         <View className={styles.numArray}>
           {dataList.map((item, index) => {
             return (
@@ -51,8 +56,8 @@ const CountdownCardDisplay: React.FC<Props> = ({ daysLeft }) => {
 }
 
 function computeDaysLeft(semesterDate: CurrentSemesterInfo | undefined) {
-  if (!semesterDate) {
-    return 999
+  if (semesterDate === undefined) {
+    return undefined
   }
   const today = dayjs(dayjs().format('YYYY-MM-DD'))
   // 假期开始时间
@@ -72,15 +77,14 @@ const CountdownCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
-  const [semesterDate, isSemesterDateLoading] = usePromise(
-    getCurrentSemesterInfoApi,
-    undefined,
-    [getCurrentSemesterInfoApi, reloadController]
-  )
+  const [semesterInfo, loadingCache, loadingFetch] = useCurrentSemesterInfo([
+    reloadController,
+  ])
+  const combinedLoadingStatus = loadingCache || loadingFetch
   useEffect(() => {
-    onLoadingStatusChange(isSemesterDateLoading)
-  }, [isSemesterDateLoading, onLoadingStatusChange])
-  return <CountdownCardDisplay daysLeft={computeDaysLeft(semesterDate)} />
+    onLoadingStatusChange(combinedLoadingStatus)
+  }, [combinedLoadingStatus, onLoadingStatusChange])
+  return <CountdownCardDisplay daysLeft={computeDaysLeft(semesterInfo)} />
 }
 
 export default CountdownCard

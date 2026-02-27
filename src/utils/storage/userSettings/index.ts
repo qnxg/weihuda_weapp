@@ -1,47 +1,10 @@
-import Taro from '@tarojs/taro'
+import { getStorageAsyncNoExcept, setStorageAsync } from '../storage'
 import { DEFAULT_SETTINGS } from './defaults'
 import {
   getAllUserSettingsApi,
   setAllUserSettingsApi,
 } from '@/apis/userSettings'
 import type { UserSettings } from './defaults'
-
-/** 异步获取某个storage项目
- *
- * 遇到错误（例如找不到项目）时log错误并返回undefined。
- * 这个函数不会抛出错误。
- */
-export async function getStorageAsyncNoExcept(key: string): Promise<unknown> {
-  const logErr = (e: string) =>
-    console.log(
-      `Cannot find data of ${key} in storage: ${e}\n` + `Returning undefined.`
-    )
-  return new Promise((res, _rej) =>
-    Taro.getStorage({
-      key: key,
-      success: v => res(v.data),
-      fail: v => {
-        logErr(v.errMsg)
-        res(undefined)
-      },
-    }).catch(e => {
-      logErr(e)
-      res(undefined)
-    })
-  )
-}
-
-/** 异步设置一个storage项目 */
-export async function setStorageAsync(key: string, data: any) {
-  return new Promise((res, rej) =>
-    Taro.setStorage({
-      key: key,
-      data: data,
-      success: res,
-      fail: v => rej(v.errMsg),
-    })
-  )
-}
 
 const USER_SETTINGS_KEY = 'User-Settings'
 

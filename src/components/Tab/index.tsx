@@ -28,7 +28,7 @@ const Index: React.FC<Props> = props => {
   const isCurrentNull = current === null
 
   if (isCurrentNull && items.length != 0) {
-    throw 'Tab组件items非空，然而当前选项卡序号未设置'
+    throw new Error('Tab组件items非空，然而当前选项卡序号未设置')
   }
 
   // 一些滑动需要的 ref

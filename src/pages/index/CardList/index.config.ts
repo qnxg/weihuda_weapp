@@ -51,5 +51,5 @@ if (
   show.intersection(dontShow).size != 0 ||
   show.union(dontShow).symmetricDifference(customizableCardsMap).size != 0
 ) {
-  throw '首页卡片默认配置有误'
+  throw new Error('首页卡片默认配置有误')
 }

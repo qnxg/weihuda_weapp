@@ -18,13 +18,16 @@ export type SwitchChangeEvent = BaseEventOrig<SwitchProps.onChangeEventDetail>
 export interface AsyncSwitchProps {
   /**
    * 初始化状态或者初始化异步函数，应当注意在这个参数变化时一定会重新初始化。
-   * 你可能需要`useMemo`或者`useCallback`
+   * 你可能需要`useCallback`
    */
   init: SwitchState | (() => Promise<SwitchState>)
   /**
    * 切换事件
+   *
    * 若该函数返回了切换后的状态，则之后开关的状态由此决定。
    * 否则，开关的状态保持为切换后应有的状态。
+   *
+   * 若该函数抛出错误，则开关会停留在禁用状态
    */
   onChange: (e: SwitchChangeEvent) => Promise<SwitchState | undefined>
   /** 重新初始化的trigger，使其改变会重新调用初始化 */
@@ -58,6 +61,11 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
     [setState]
   )
 
+  // 被改造的init，用于判断是否需要重新初始化
+  const mappedInit =
+    typeof init === 'function'
+      ? init
+      : JSON.stringify([init.checked, init.disabled])
   // 初始化
   useEffect(() => {
     void (async () => {
@@ -69,7 +77,8 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
       }
       forcedSetState(initState)
     })()
-  }, [forcedSetState, init, props.reInitTrigger])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forcedSetState, mappedInit, props.reInitTrigger])
 
   const [changing, setChanging] = useState(false)
   const handleChange = useCallback(

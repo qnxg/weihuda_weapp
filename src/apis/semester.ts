@@ -1,5 +1,7 @@
 import request from './request'
-import { nowWeek } from '@/utils/day'
+import { rawWeekNum } from '@/utils/day'
+import { useCacheableGetJson } from '@/utils/storage/cache/requestCache'
+import type { DependencyList } from 'react'
 
 /**
  * 本学期信息
@@ -38,6 +40,10 @@ export const getCurrentSemesterInfoApi = async () => {
   return request.get<CurrentSemesterInfo>('/info/smester')
 }
 
+export function useCurrentSemesterInfo(deps: DependencyList) {
+  return useCacheableGetJson<CurrentSemesterInfo>('/info/smester', [], deps)
+}
+
 /**
  * 获取开课时间
  * @returns 开课时间
@@ -51,24 +57,28 @@ export const getClassStartDateApi = async (xn: string, xq: number) => {
   })
 }
 
+export function useClassStartDate(
+  xn: string | undefined,
+  xq: string | undefined,
+  deps: DependencyList
+) {
+  return useCacheableGetJson<string>(
+    '/hdjw/class-start-date',
+    xn !== undefined && xq !== undefined
+      ? [
+          ['xn', xn],
+          ['xq', xq],
+        ]
+      : undefined,
+    deps
+  )
+}
+
 // 下面拆分函数是有意的，当前后端的这两个接口过于混乱，因此将其抽象，方便以后大改这两个接口
 // 当前后端处理这种请求的性能足够，重复请求不是问题
 
 export const getCurrentWeekIndex = async (): Promise<number> =>
-  nowWeek(await getCurrentSemesterStartDate())
-
-export const getCurrentSemesterStartDate = async (): Promise<string> =>
-  (await getCurrentSemesterInfoApi()).startDate
-
-export const getNextSemesterStartDate = async (): Promise<string> =>
-  (await getCurrentSemesterInfoApi()).next
-
-/**
- * 如果当前处于寒暑假，则为当前假期开始时间，
- * 否则为下一个寒暑假开始时间。
- */
-export const getVacationStartDate = async (): Promise<string> =>
-  (await getCurrentSemesterInfoApi()).vacation
+  rawWeekNum((await getCurrentSemesterInfoApi()).startDate)
 
 /**
  * 获取当前学年学期

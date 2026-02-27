@@ -15,7 +15,7 @@ const Index: React.FC = () => {
     params: { xn: xn_str, xq: xq_str },
   } = useRouter()
   if (xn_str === undefined || xq_str === undefined) {
-    throw 'bad xn xq router param!!!'
+    throw new Error('bad xn xq router param!!!')
   }
   const xn = parseInt(xn_str, 10)
   const xq = parseInt(xq_str, 10)

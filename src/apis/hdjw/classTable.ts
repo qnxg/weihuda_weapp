@@ -1,4 +1,6 @@
 import request from '../request'
+import { useCacheableGetJson } from '@/utils/storage/cache/requestCache'
+import type { DependencyList } from 'react'
 
 /**
  * ClassTable
@@ -18,21 +20,36 @@ export interface CourseInfo {
   weeks: number[] // 在哪周上课
   type?: string // 课程类型
   customizeId: number // 自定义课程 id
-  bgColor?: string // 背景颜色（前端生成）
-  fontColor?: string // 字体颜色（前端生成）
 }
 
 /**
  * 获取课表
  * @returns 课表
  */
-export const getClassTable = async (xn: string, xq: number) => {
+export const getCourseApi = async (xn: string, xq: number) => {
   return request.get<CourseInfo[]>('/hdjw/class-table', {
     data: {
       xn,
       xq,
     },
   })
+}
+
+export function useCourse(
+  xn: string | undefined,
+  xq: string | undefined,
+  deps: DependencyList
+) {
+  return useCacheableGetJson<CourseInfo[]>(
+    '/hdjw/class-table',
+    xn !== undefined && xq !== undefined
+      ? [
+          ['xn', xn],
+          ['xq', xq],
+        ]
+      : undefined,
+    deps
+  )
 }
 
 /**

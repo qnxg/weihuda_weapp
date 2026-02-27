@@ -11,12 +11,18 @@ import type { CourseInfo } from '@/apis/hdjw/classTable'
  * @interface TableBody Component Props
  */
 interface Props {
-  formatTable: Array<Array<ClassTableItem>>
-  tableCurrentWeek: number
+  formattedTable: Array<Array<ClassTableItem>>
+  tableCurrentWeek: number | undefined
   setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>
   onRefresh: (close: () => any) => any
   setClassDetailsForFloatComponentToShow: React.Dispatch<
-    React.SetStateAction<CourseInfo[]>
+    React.SetStateAction<
+      {
+        courseItem: CourseInfo
+        bgColor: string
+        fgColor: string
+      }[]
+    >
   >
 }
 
@@ -38,6 +44,9 @@ const TableBody: React.FC<Props> = (props: Props) => {
    */
   const onTouchEnd = (e: any) => {
     const { tableCurrentWeek } = props
+    if (tableCurrentWeek === undefined) {
+      return
+    }
     if (e.changedTouches.length === 1) {
       const end = e.changedTouches[0].pageX
       const offset = end - startPos
@@ -52,7 +61,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
     }
   }
 
-  const { formatTable = [] } = props
+  const { formattedTable = [] } = props
 
   return (
     <View
@@ -76,7 +85,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
           )
         })}
       </View>
-      {formatTable.map((item, index) => {
+      {formattedTable.map((item, index) => {
         return (
           <View
             style='flex: 1;'

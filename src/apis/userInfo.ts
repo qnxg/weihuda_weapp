@@ -1,4 +1,6 @@
 import request from './request'
+import { useCacheableGetJson } from '@/utils/storage/cache/requestCache'
+import type { DependencyList } from 'react'
 
 /**
  * UserInfo，当前用户信息
@@ -44,4 +46,8 @@ export interface UserInfo {
  */
 export const getUserInfoApi = async () => {
   return request.get<UserInfo>('/info/user')
+}
+
+export function useUserInfo(deps: DependencyList) {
+  return useCacheableGetJson<UserInfo>('/info/user', [], deps)
 }

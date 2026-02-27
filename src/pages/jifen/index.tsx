@@ -6,13 +6,12 @@ import JifenRule from './components/JifenRule'
 import Qiandao from './components/Qiandao'
 import styles from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
-import { getUserInfoApi } from '@/apis/userInfo'
+import { useUserInfo } from '@/apis/userInfo'
 import Card from '@/components/Card'
 import { Tabs } from '@/components/Tabs'
-import usePromise from '@/utils/hooks/usePromise'
 
 const Index: React.FC = () => {
-  const [userInfo] = usePromise(getUserInfoApi, null, [getUserInfoApi])
+  const [userInfo] = useUserInfo([])
 
   const [total, setTotal] = React.useState(0)
   const jifenRecordRef = React.useRef<any>(null)

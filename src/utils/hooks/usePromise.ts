@@ -56,26 +56,18 @@ export default function usePromise<T>(
 
   useEffect(
     () => {
-      let isMounted = true
       void (async () => {
         try {
           setPromiseError(null)
           setIsPromisePending(true)
           const res = await fn()
-          if (!isMounted) return
           setPromiseResult(res)
         } catch (e) {
-          if (!isMounted) return
           setPromiseError({ thrown: e })
         } finally {
-          // eslint-disable-next-line no-unsafe-finally
-          if (!isMounted) return
           setIsPromisePending(false)
         }
       })()
-      return () => {
-        isMounted = false
-      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     deps

@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import storage from '@/utils/storage/cache'
+import storage from '@/utils/storage/token'
 import { urlUploadImg } from '@/utils/url'
 
 export const uploadImgApi = async (filePath: any) => {

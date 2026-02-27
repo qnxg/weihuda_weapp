@@ -27,6 +27,9 @@ const config = {
       enable: false,
     },
   },
+  defineConstants: {
+    'process.env.COMPILE_TIMESTAMP': `${+new Date()}`,
+  },
   mini: {
     miniCssExtractPluginOption: {
       ignoreOrder: true,

@@ -6,12 +6,9 @@ import { useCallback, useRef, useState } from 'react'
  * 详见字段上的注释。
  */
 export default interface CardProps {
-  /** 这个函数应该先被触发一次false，
-   * 然后后续每次开始请求时触发一次true，
-   * 请求结束触发一次false
+  /** 这个函数应该在每次开始请求时触发一次true，
+   * 每次请求结束触发一次false
    *
-   * 满足这个要求的最简单方式是使用`usePromise`管理你的请求。
-   * 
    * @example
    ```tsx
     const [messageData, isMessageDataLoading] = usePromise(
@@ -40,40 +37,59 @@ export default interface CardProps {
   reloadController: any
 }
 
+type LoadingCountKey = string | symbol | number | bigint
 /**
- * A custom hook that tracks whether the loading count is zero.
+ * Hook to manage and track multiple loading states with a counter.
  *
- * @param loadingCountInitial - The initial value of the loading count.
  * @returns A tuple containing:
- * - `isLoadingCountZero`: A boolean indicating whether the loading count is zero.
- * - `pendingStatusHandler`: A function to update the loading count based on the pending status.
- *   This function will not change so you can put it in dependency lists in such as `useEffect`.
+ *   - `loadingCount`: The current number of active loading operations
+ *   - `statusHandler`: A function that takes a loading key and returns a callback to update its pending status
  *
- * The `pendingStatusHandler` function accepts a boolean `isPending`:
- * - If `true`, it increments the loading count.
- * - If `false`, it decrements the loading count.
- * The hook updates the `isLoadingCountZero` state whenever the loading count changes.
+ * @example
+ * ```tsx
+ * const [loadingCount, statusHandler] = useLoadingCounter();
+ * const handleUserLoad = statusHandler('user');
+ *
+ * // Update loading status
+ * handleUserLoad(true);  // Increment loading count
+ * handleUserLoad(false); // Decrement loading count
+ * ```
+ *
+ * @remarks
+ * -  Uses `Map` to cache callbacks and track loading states for different keys
+ * -  Automatically calculates and updates the total loading count
+ * -  Callbacks are memoized per key to avoid unnecessary re-creation
+ *    so they are stable for putting in dep arrays.
  */
-export function useIsLoadingCountZero(
-  loadingCountInitial: number
-): [boolean, (isPending: boolean) => void] {
-  const loadingCount = useRef(loadingCountInitial)
-  const [isLoadingCountZero, setIsLoadingCountZero] = useState(
-    loadingCountInitial == 0
+export function useLoadingCounter(): [
+  number,
+  (key: LoadingCountKey) => (isPending: boolean) => void,
+] {
+  const loadingDict = useRef(new Map<LoadingCountKey, boolean>())
+  const callbackDict = useRef(
+    new Map<LoadingCountKey, (isPending: boolean) => void>()
   )
-  const pendingStatusHandler = useCallback((isPending: boolean) => {
-    if (isPending) {
-      loadingCount.current += 1
-    } else {
-      loadingCount.current -= 1
+  const [loadingCount, setLoadingCount] = useState(0)
+  const statusHandler = useCallback((key: LoadingCountKey) => {
+    // 使回调函数的引用稳定，防止放入依赖数组后出现问题
+    const cache = callbackDict.current.get(key)
+    if (cache !== undefined) {
+      return cache
     }
-    const cntLog = `loadingCount.current == ${loadingCount.current}`
-    if (loadingCount.current < 0) {
-      console.error(cntLog + ' 请检查对loading状态的处理')
-    } else {
-      console.log(cntLog)
+    const newCb = (isPending: boolean) => {
+      if (isPending) {
+        loadingDict.current.set(key, true)
+      } else {
+        loadingDict.current.set(key, false)
+      }
+      const currentLoadingCnt = loadingDict.current
+        .values()
+        .reduce((pv, cv) => (pv += cv ? 1 : 0), 0)
+      setLoadingCount(currentLoadingCnt)
+      console.log(`loadingCount.current == ${currentLoadingCnt}`)
     }
-    setIsLoadingCountZero(loadingCount.current == 0)
+    callbackDict.current.set(key, newCb)
+    return newCb
   }, [])
-  return [isLoadingCountZero, pendingStatusHandler]
+  return [loadingCount, statusHandler] as const
 }

@@ -17,6 +17,10 @@ const Index: React.FC = () => {
           title: <Text>大物实验平台绑定设置</Text>,
           onClick: nav('./labBindSettings/index'),
         },
+        {
+          title: <Text>课表页设置</Text>,
+          onClick: nav('./classtablePageSettings/index'),
+        },
       ]}
     />
   )

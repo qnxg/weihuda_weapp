@@ -4,17 +4,16 @@ import classNames from 'classnames'
 import { Fragment, useRef } from 'react'
 import styles from './index.module.scss'
 import { setLabPassword } from '@/apis/lab'
-import { getUserInfoApi } from '@/apis/userInfo'
+import { useUserInfo } from '@/apis/userInfo'
 import Card from '@/components/Card'
 import DisplayCard from '@/components/DisplayCard'
-import usePromise from '@/utils/hooks/usePromise'
 
 const Index: React.FC = () => {
   const router = useRouter()
   const params = router.params
   const showTips = params.tips === 'true'
 
-  const [userInfo] = usePromise(getUserInfoApi, null, [getUserInfoApi])
+  const [userInfo] = useUserInfo([])
 
   const labPwdRef = useRef('')
 
