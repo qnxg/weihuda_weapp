@@ -89,11 +89,6 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
         onClick: nav('/pages/jifen/index'),
       },
       {
-        title: <Text>留言板</Text>,
-        icon: <View className={styles.messageleft} />,
-        onClick: nav('/pages/messageleft/index'),
-      },
-      {
         title: <Text>更新日志</Text>,
         icon: <View className={styles.changelogImg} />,
         onClick: nav('/pages/changeLog/index'),
