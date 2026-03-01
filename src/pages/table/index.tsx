@@ -49,13 +49,11 @@ function* colorized(rawData: CourseInfo[]) {
     let colorIndex: number
     if (colorMap.has(courseItem.courseName)) {
       colorIndex = colorMap.get(courseItem.courseName)!
-    } else if (baseColorIndex > 9) {
-      colorIndex = Math.round(Math.random() * 9)
-      colorMap.set(courseItem.courseName, colorIndex)
     } else {
       colorIndex = baseColorIndex
       colorMap.set(courseItem.courseName, colorIndex)
       baseColorIndex++
+      baseColorIndex %= onColors.length
     }
     yield {
       item: courseItem,
