@@ -27,7 +27,7 @@ import { useUserInfo } from '@/apis/userInfo'
 import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import { offColor, offFontColor, onColors, onFontColors } from '@/utils/config'
-import { rawWeekNum, tempWeekNum } from '@/utils/day'
+import { rawWeekNum } from '@/utils/day'
 import usePromise from '@/utils/hooks/usePromise'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import useShowCount from '@/utils/hooks/useShowCount'
@@ -200,7 +200,7 @@ function computeInitialSemState(
     tableSemIdx: semesters.findIndex(
       item => item.xn == currentSemYear && item.xq == currentTerm
     ),
-    tableWeek: tempWeekNum(currentStart),
+    tableWeek: Math.min(18, rawWeekNum(currentStart) + 1), // 当位于假期，显示最后一周的课表
   }
   return res
 }

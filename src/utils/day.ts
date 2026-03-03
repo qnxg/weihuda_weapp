@@ -15,26 +15,16 @@ function calDiffDate(date: string): string {
 }
 
 /**
- * 返回当前周数
+ * 返回当前周数，从 0 开始，第一周返回 0。
+ * 当后端学期日期表配置正确的情况下，该函数不可能返回负数。
+ *
  * @param startDate 本学期的开始时间
- * @see tempWeekNum
  */
 export function rawWeekNum(
   startDate: string,
   today: string | number | Date | dayjs.Dayjs | null | undefined = undefined
 ): number {
-  return Math.floor(dayjs(today).diff(dayjs(startDate), 'day') / 7)
-}
-
-/**
- * 返回当前周数
- * @param startDate 本学期的开始时间
- * @see rawWeekNum
- */
-export function tempWeekNum(startDate: string): number {
-  const a = rawWeekNum(startDate)
-  // 计算周数分开学前后
-  return Math.min(18, dayjs().isBefore(startDate) ? a - 1 : a + 1)
+  return Math.floor(dayjs(today).diff(dayjs(startDate), 'week'))
 }
 
 /**

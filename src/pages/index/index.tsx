@@ -6,7 +6,7 @@ import DateBar from './DateBar'
 import styles from './index.module.scss'
 import { useCurrentSemesterInfo } from '@/apis/semester'
 import PullRefresh from '@/components/PullRefresh'
-import { tempWeekNum } from '@/utils/day'
+import { rawWeekNum } from '@/utils/day'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import type { RefProps } from '@/components/PullRefresh'
 
@@ -18,13 +18,12 @@ const Index: React.FC = () => {
   const [semInfo] = useCurrentSemesterInfo([fetchDataControl])
 
   useEffect(() => {
-    const currentWeek = semInfo ? tempWeekNum(semInfo.startDate) : undefined
-    if (currentWeek !== undefined && currentWeek !== null) {
+    const currentWeek = semInfo
+      ? Math.min(18, rawWeekNum(semInfo.startDate) + 1)
+      : undefined
+    if (currentWeek !== undefined) {
       void Taro.setNavigationBarTitle({
-        title:
-          currentWeek >= 0
-            ? `第${currentWeek}周`
-            : /* TODO: dead? */ `距开学${-currentWeek}周`,
+        title: `第${currentWeek}周`,
       })
     }
   }, [semInfo])

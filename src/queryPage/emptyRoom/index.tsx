@@ -5,12 +5,16 @@ import PickerArea from './components/PickerArea'
 import ResultArea from './components/ResultArea'
 import { radio } from './config'
 import { getEmptyRoom } from '@/apis/hdjw/emptyRoom'
-import { getCurrentWeekIndex } from '@/apis/semester'
+import { getCurrentSemesterInfoApi } from '@/apis/semester'
 import { buildingInfo } from '@/utils/config'
+import { rawWeekNum } from '@/utils/day'
 import usePromise from '@/utils/hooks/usePromise'
 import type { PickerStates } from './components/PickerArea'
 import type { EmptyRoom } from './interface'
 import type { EmptyRoomItem } from '@/apis/hdjw/emptyRoom'
+
+const getCurrentWeekIndex = async (): Promise<number> =>
+  rawWeekNum((await getCurrentSemesterInfoApi()).startDate)
 
 const Index: React.FC = () => {
   const [currentWeekIndex] = usePromise(getCurrentWeekIndex, null, [

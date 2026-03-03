@@ -10,7 +10,7 @@ export interface CourseInfo {
   courseId?: string // 课程代码
   courseName: string // 课程名称
   credit?: number // 学分
-  day: number // 周几上
+  day: number // 周几上，周一是 1，周日是 0
   extra?: string // 额外备注信息
   place?: string // 上课地点
   area?: string // 上课校区

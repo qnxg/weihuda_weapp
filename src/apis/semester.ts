@@ -1,5 +1,4 @@
 import request from './request'
-import { rawWeekNum } from '@/utils/day'
 import { useCacheableGetJson } from '@/utils/storage/cache/requestCache'
 import type { DependencyList } from 'react'
 
@@ -76,9 +75,6 @@ export function useClassStartDate(
 
 // 下面拆分函数是有意的，当前后端的这两个接口过于混乱，因此将其抽象，方便以后大改这两个接口
 // 当前后端处理这种请求的性能足够，重复请求不是问题
-
-export const getCurrentWeekIndex = async (): Promise<number> =>
-  rawWeekNum((await getCurrentSemesterInfoApi()).startDate)
 
 /**
  * 获取当前学年学期

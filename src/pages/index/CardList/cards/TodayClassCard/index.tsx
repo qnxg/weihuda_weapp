@@ -194,7 +194,7 @@ const TodayClassCard: React.FC<CardProps> = ({
   )
 
   // 计算当前周和星期几
-  const currentWeek = startDate ? rawWeekNum(startDate) : 0
+  const currentWeek = startDate ? rawWeekNum(startDate) + 1 : 0
   const dayOfWeek = new Date().getDay()
 
   const combinedLoadingStatus =

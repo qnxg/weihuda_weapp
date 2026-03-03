@@ -222,10 +222,12 @@ const RecentClassCardDisplay: React.FC<{
   const { currentSemStartDate, course } = props
 
   // 计算当前周和星期几
-  const todayWeek = currentSemStartDate ? rawWeekNum(currentSemStartDate) : 0
+  const todayWeek = currentSemStartDate
+    ? rawWeekNum(currentSemStartDate) + 1
+    : 0
   const todayOfWeek = new Date().getDay()
   const tomorrowWeek = currentSemStartDate
-    ? rawWeekNum(currentSemStartDate, dayjs().add(1, 'day'))
+    ? rawWeekNum(currentSemStartDate, dayjs().add(1, 'day')) + 1
     : 0
   const tomorrowOfWeek = (new Date().getDay() + 1) % 7
 
