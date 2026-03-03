@@ -1,4 +1,5 @@
-@import '~@/utils/scss/global.scss';
+@use 'sass:color';
+@use '~@/utils/scss/global' as *;
 
 .outer {
   @include flex(flex-start, center);
@@ -47,14 +48,18 @@
 @media (prefers-color-scheme: dark) {
   .outer {
     .subject {
-      color: darken($darkTextColor, 10%);
+      color: color.adjust($darkTextColor, $lightness: -10%, $space: hsl);
     }
 
     .banner {
-      background-color: darken(#eaeaea, 10%);
+      background-color: color.adjust(#eaeaea, $lightness: -10%, $space: hsl);
 
       .percent {
-        background-color: darken($primaryBlue, 10%);
+        background-color: color.adjust(
+          $primaryBlue,
+          $lightness: -10%,
+          $space: hsl
+        );
       }
     }
   }

@@ -16,4 +16,4 @@ jobs:
         uses: ./.gitea/workflows/setup-tools
 
       - name: Run PR Check
-        run: npx yarn pr-check
+        run: yarn pr-check

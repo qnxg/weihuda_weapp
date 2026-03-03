@@ -14,8 +14,5 @@ runs:
         node-version: lts/*
         cache: 'yarn'
 
-    - name: Use `npmmirror`
-      run: npx yarn config set registry https://registry.npmmirror.com
-
     - name: Yarn Install
-      run: npx yarn install --frozen-lockfile
+      run: yarn install --immutable

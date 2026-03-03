@@ -8,7 +8,7 @@
     "typescript": true,
     "css": "sass"
   },
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "yarn@4.12.0",
   "scripts": {
     "postinstall": "weapp-tw patch",
     "lint": "tsc --noEmit && eslint ./src --max-warnings 0",
@@ -56,6 +56,7 @@
     "autoprefixer": "^10.4.21",
     "babel-plugin-import": "^1.13.8",
     "babel-preset-taro": "^3.6.17",
+    "cross-env": "^7.0.3",
     "eslint": "^9.27.0",
     "eslint-import-resolver-typescript": "^4.4",
     "eslint-plugin-import": "^2.31",
@@ -68,7 +69,6 @@
     "typescript-eslint": "^8.32.1",
     "weapp-tailwindcss": "^4.1.1",
     "webpack": "^5.88.2",
-    "webpack-bundle-analyzer": "^4.9.1",
-    "cross-env": "^7.0.3"
+    "webpack-bundle-analyzer": "^4.9.1"
   }
 }

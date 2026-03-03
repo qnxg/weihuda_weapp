@@ -50,22 +50,26 @@ src
 
 ## 2. 快速开始
 
-本项目使用[yarn](https://github.com/yarnpkg/yarn/)管理依赖。请不要混用`npm`，否则可能会出现依赖相关的问题。提示：如果你在开发过程中发现项目下出现`package-lock.json`，则你很可能已经使用了`npm`。
+在开始前，请确认已经安装并配置好 Node.js。
 
-在开始前，请确认已经安装并配置好Node.js。
+本项目使用 [Yarn Modern](https://github.com/yarnpkg/berry) 管理依赖。请不要混用 `npm`，否则可能会出现依赖相关的问题。提示：如果你在开发过程中发现项目下出现 `package-lock.json`，则你很可能已经使用了 `npm`。
+
+如果你没有配置过 Yarn，请运行 `corepack enable` 命令启用 Corepack，随后即可执行有关 Yarn 的命令。要详细了解 Corepack，请参考 [nodejs/corepack](https://github.com/nodejs/corepack#readme) 或 [Yarn 帮助页面](https://yarnpkg.com/corepack)。
+
+如果你之前使用过 Yarn Classic (1.x)，在启用 Corepack 后你无需任何操作即可自动切换至 Yarn Modern，所以请确保使用 Corepack 管理你的包管理器。此外，建议阅读 [Yarn 迁移文档](https://yarnpkg.com/migration/guide)以了解 Yarn Modern 的破坏性变更。
 
 请首先将项目克隆到本地并创建自己的开发分支，然后
 
 1. 安装依赖
 
 ```shell
-npx yarn
+yarn
 ```
 
 2. 启动项目
 
 ```shell
-npx yarn dev
+yarn dev
 ```
 
 运行以上命令后当前工作目录中会出现`dist`文件夹，这是项目的打包结果，同时会监听文件变化，每次文件发生变化时都会重新打包。你需要：
@@ -128,7 +132,7 @@ ESLint是一个JavaScript和TypeScript的静态检查工具。它能够帮助开
 如果想要在命令行触发代码检查，本项目提供了`lint`命令：
 
 ```shell
-npx yarn lint
+yarn lint
 ```
 
 该命令在运行后会先进行Typescript检查，如果通过会继续进行ESlint检查。
@@ -148,7 +152,7 @@ Prettier是一个支持多语言的代码格式化工具，它使得在多人协
 
 请在编写代码完毕之后在命令行中执行：
 ```shell
-npx yarn fmt
+yarn fmt
 ```
 将使用Prettier对代码进行格式化。
 
@@ -163,7 +167,7 @@ npx yarn fmt
 在向主分支提起PR时会自动运行，若检查不通过会进行标识。目前的检查项目为prettier、typescript和eslint。如果想要在本地模拟PR检查，你可以运行：
 
 ```shell
-npx yarn pr-check
+yarn pr-check
 ```
 
 ## 7. 部署
@@ -176,7 +180,7 @@ npx yarn pr-check
 运行以下命令对项目打包：
 
 ```shell
-npx yarn build
+yarn build
 ```
 
 点击微信开发者工具右上角的 `上传` 按钮

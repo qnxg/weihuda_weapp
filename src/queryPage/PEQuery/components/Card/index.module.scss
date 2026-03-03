@@ -1,4 +1,5 @@
-@import '~@/utils/scss/global.scss';
+@use 'sass:color';
+@use '~@/utils/scss/global' as *;
 
 @keyframes slideUp {
   0% {
@@ -115,7 +116,7 @@
     }
 
     .score {
-      color: darken($darkTextColor, 10%);
+      color: color.adjust($darkTextColor, $lightness: -10%, $space: hsl);
     }
 
     .bnOuter {
@@ -123,11 +124,11 @@
         background-color: $darkBgColor;
 
         .title {
-          color: darken($darkTextColor, 10%);
+          color: color.adjust($darkTextColor, $lightness: -10%, $space: hsl);
         }
 
         .percent {
-          color: darken($darkTextColor, 15%);
+          color: color.adjust($darkTextColor, $lightness: -15%, $space: hsl);
         }
       }
     }

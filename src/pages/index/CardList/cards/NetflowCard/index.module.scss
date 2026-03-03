@@ -1,4 +1,4 @@
-@import '~@/utils/scss/global.scss';
+@use '~@/utils/scss/global' as *;
 
 .outer {
   @include flex(normal, center, column);

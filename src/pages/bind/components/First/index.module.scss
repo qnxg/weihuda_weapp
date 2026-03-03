@@ -1,4 +1,4 @@
-@import '~@/utils/scss/global.scss';
+@use '~@/utils/scss/global' as *;
 
 .footArea {
   margin: 48px auto 0 auto;

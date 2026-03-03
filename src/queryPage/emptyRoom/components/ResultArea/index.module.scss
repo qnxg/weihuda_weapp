@@ -1,4 +1,5 @@
-@import '~@/utils/scss/global.scss';
+@use 'sass:color';
+@use '~@/utils/scss/global' as *;
 
 .container {
   @include flex(normal, center, column);
@@ -100,7 +101,11 @@
 @media (prefers-color-scheme: dark) {
   .container {
     .search {
-      background-color: darken($primaryBlue, 8%);
+      background-color: color.adjust(
+        $primaryBlue,
+        $lightness: -8%,
+        $space: hsl
+      );
       box-shadow: 0 6px 20px 0 $darkBoxShadowColor;
       color: #fafafa;
     }

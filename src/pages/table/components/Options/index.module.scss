@@ -1,4 +1,5 @@
-@import '~@/utils/scss/global.scss';
+@use 'sass:color';
+@use '~@/utils/scss/global' as *;
 
 @keyframes slideDown {
   from {
@@ -61,13 +62,13 @@
 @media (prefers-color-scheme: dark) {
   .compMask {
     .headerMask {
-      background: lighten($darkBgColor, 10%);
-      color: darken($darkTextColor, 10%);
+      background: color.adjust($darkBgColor, $lightness: 10%, $space: hsl);
+      color: color.adjust($darkTextColor, $lightness: -10%, $space: hsl);
 
       .container {
         .switch-item {
           .switch {
-            color: darken($primaryBlue, 10%);
+            color: color.adjust($primaryBlue, $lightness: -10%, $space: hsl);
             filter: brightness(0.9);
           }
         }

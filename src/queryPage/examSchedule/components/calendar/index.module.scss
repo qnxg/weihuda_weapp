@@ -1,4 +1,5 @@
-@import '~@/utils/scss/global.scss';
+@use 'sass:color';
+@use '~@/utils/scss/global' as *;
 
 .calendar {
   @include shadow;
@@ -148,12 +149,16 @@
           }
 
           .blank {
-            color: darken($darkTextColor, 40%);
+            color: color.adjust($darkTextColor, $lightness: -40%, $space: hsl);
           }
 
           .highlight {
             color: $darkTextColor;
-            background-color: darken($primaryBlue, 15%);
+            background-color: color.adjust(
+              $primaryBlue,
+              $lightness: -15%,
+              $space: hsl
+            );
             box-shadow: 0 6px 12px 0 $darkBoxShadowColor;
           }
         }

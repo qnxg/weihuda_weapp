@@ -1,3 +1,3 @@
-@import './color.scss';
-@import './mixin.scss';
-@import './size.scss';
+@forward './color';
+@forward './mixin';
+@forward './size';
