@@ -18,8 +18,9 @@
 		"pr-check": "prettier --check . && yarn lint"
 	},
 	"browserslist": [
-		"defaults and fully supports es6-module",
-		"maintained node versions"
+		"defaults",
+		"Android >= 4.3",
+		"ios >= 8"
 	],
 	"author": "1000",
 	"license": "MIT",
