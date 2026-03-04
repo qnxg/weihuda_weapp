@@ -14,16 +14,19 @@ interface Props extends ButtonProps {
  * 按钮组件
  */
 const Button: React.FC<Props> = props => {
-  props.theme = props.theme || 'primary'
-  props.className = classNames(
+  const newProps = Object.assign({}, props)
+  newProps.theme = props.theme || 'primary'
+  newProps.className = classNames(
     props.className,
     styles.button,
-    styles[props.theme],
+    styles[newProps.theme],
     {
       [styles.disabled]: props.disabled,
     }
   )
-  return <TaroButton {...props} hoverClass={styles.buttonActive}></TaroButton>
+  return (
+    <TaroButton {...newProps} hoverClass={styles.buttonActive}></TaroButton>
+  )
 }
 
 export default Button

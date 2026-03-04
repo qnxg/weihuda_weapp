@@ -36,6 +36,7 @@ const JifenRecord: React.FC<IJifenRecordProps> = props => {
     void getData()
   }
   if (props.jifenRecordRef) {
+    // eslint-disable-next-line react-hooks/immutability
     props.jifenRecordRef.current = { updateJifenRecord }
   }
 

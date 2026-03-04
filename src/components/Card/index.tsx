@@ -20,7 +20,8 @@ interface Props extends ViewProps {
  */
 const Card: React.FC<Props> = props => {
   const needExtrapadding = props.needExtraPadding ?? true
-  props.className = classNames(props.className, styles.card, {
+  const newProps = Object.assign({}, props)
+  newProps.className = classNames(props.className, styles.card, {
     [styles.extraPadding]: needExtrapadding,
   })
   const wrapperClassName = classNames(
@@ -29,7 +30,7 @@ const Card: React.FC<Props> = props => {
   )
   return (
     <View className={wrapperClassName}>
-      <View {...props}></View>
+      <View {...newProps}></View>
     </View>
   )
 }

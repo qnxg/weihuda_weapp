@@ -4,6 +4,7 @@ import js from '@eslint/js'
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import reactHooks from 'eslint-plugin-react-hooks'
 
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -33,15 +34,14 @@ export default defineConfig([
     extends: fixupConfigRules(
       compat.extends(
         'plugin:react/recommended',
-        'plugin:react-hooks/recommended-legacy',
         'plugin:import/recommended',
-        'plugin:import/typescript',
-        'plugin:react-hooks/recommended'
+        'plugin:import/typescript'
       )
     ),
 
     plugins: {
       '@typescript-eslint': tsPlugin,
+      'react-hooks': reactHooks,
       local: eslintRules,
     },
 
@@ -65,6 +65,24 @@ export default defineConfig([
       'no-shadow': 'off',
       'no-shadow-restricted-names': ['error'],
       'no-unsafe-finally': ['warn'],
+
+      'react-hooks/exhaustive-deps': ['warn'],
+      'react-hooks/rules-of-hooks': ['warn'],
+      'react-hooks/component-hook-factories': ['warn'],
+      'react-hooks/config': ['warn'],
+      'react-hooks/error-boundaries': ['warn'],
+      'react-hooks/gating': ['warn'],
+      'react-hooks/globals': ['warn'],
+      'react-hooks/immutability': ['warn'],
+      'react-hooks/incompatible-library': ['warn'],
+      'react-hooks/preserve-manual-memoization': ['warn'],
+      'react-hooks/purity': ['warn'],
+      'react-hooks/refs': ['warn'],
+      'react-hooks/set-state-in-render': ['warn'],
+      'react-hooks/static-components': ['warn'],
+      'react-hooks/unsupported-syntax': ['warn'],
+      'react-hooks/use-memo': ['warn'],
+
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',

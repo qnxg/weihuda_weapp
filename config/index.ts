@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 import { UnifiedWebpackPluginV5 } from 'weapp-tailwindcss/webpack'
+import type { UserConfigExport } from '@tarojs/cli'
 
 const config = {
   projectName: 'hnu_query',
@@ -13,12 +14,12 @@ const config = {
   sourceRoot: 'src',
   outputRoot: 'dist',
   plugins: [],
-  defineConstants: {},
   alias: {
     '@': resolve(__dirname, '..', 'src'),
   },
   copy: {
     patterns: [{ from: 'src/static/tab/', to: 'dist/static/tab/' }],
+    options: {},
   },
   framework: 'react',
   compiler: {
@@ -52,7 +53,6 @@ const config = {
         config: {
           namingPattern: 'module', // 转换模式，取值为 global/module
           generateScopedName: '[folder]__[local]___[sha512:hash:base64:5]',
-          localIdentHashSalt: '1000@hnu',
         },
       },
     },
@@ -80,9 +80,9 @@ const config = {
   h5: {
     esnextModules: ['@taroify'],
   },
-}
+} satisfies UserConfigExport
 
-export default function (merge) {
+export default function (merge: any) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'))
   }

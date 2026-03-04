@@ -30,8 +30,7 @@ export interface IJifenRecordPageResponseData {
   rows: IJifenRecord[]
 }
 export interface IJifenRecordPageQueryData
-  extends IPageQueryData,
-    Partial<Pick<IJifenRecord, 'key' | 'param'>> {}
+  extends IPageQueryData, Partial<Pick<IJifenRecord, 'key' | 'param'>> {}
 /**
  * 获取积分记录
  */
@@ -89,8 +88,7 @@ export interface IJifenGoodsPageResponseData {
 }
 
 export interface IJifenGoodsPageQueryData
-  extends IPageQueryData,
-    Partial<Pick<IJifenGoods, 'name'>> {}
+  extends IPageQueryData, Partial<Pick<IJifenGoods, 'name'>> {}
 
 /**
  * 获取积分奖品列表分页
@@ -126,8 +124,7 @@ export interface IJifenRulePageResponseData {
 }
 
 export interface IJifenRulePageQueryData
-  extends IPageQueryData,
-    Partial<Pick<IJifenRule, 'key' | 'name'>> {}
+  extends IPageQueryData, Partial<Pick<IJifenRule, 'key' | 'name'>> {}
 
 /**
  * 获取积分规则列表分页

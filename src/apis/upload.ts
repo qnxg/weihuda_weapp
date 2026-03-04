@@ -3,10 +3,14 @@ import dayjs from 'dayjs'
 import storage from '@/utils/storage/token'
 import { urlUploadImg } from '@/utils/url'
 
-export const uploadImgApi = async (filePath: any) => {
+export const uploadImgApi = (filePath: any) => {
   return new Promise<string>((resolve, reject) =>
     Taro.uploadFile({
-      url: urlUploadImg,
+      url:
+        urlUploadImg ??
+        (() => {
+          throw new Error('图片上传URL未配置')
+        })(),
       filePath: filePath,
       name: 'img',
       header: {

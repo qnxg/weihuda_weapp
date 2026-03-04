@@ -53,34 +53,29 @@ const Index: React.FC = () => {
   }
 
   // 点击提交按钮
-  const handleSubmit = async () => {
+  const handleSubmit = async (feedback: AddFeedbackReq) => {
+    feedback = Object.assign({}, feedback)
     // 验证
-    if (
-      noAuth &&
-      (!feedbackState.stuId || feedbackState.stuId.trim().length === 0)
-    ) {
+    if (noAuth && (!feedback.stuId || feedback.stuId.trim().length === 0)) {
       await Taro.showToast({ title: '请填写学号', icon: 'none' })
       return
     }
-    if (
-      noAuth &&
-      (!feedbackState.contact || feedbackState.contact.trim().length === 0)
-    ) {
+    if (noAuth && (!feedback.contact || feedback.contact.trim().length === 0)) {
       await Taro.showToast({ title: '请填写联系方式', icon: 'none' })
       return
     }
-    if (feedbackState.desc === '') {
+    if (feedback.desc === '') {
       await Taro.showToast({ title: '请填写反馈内容', icon: 'none' })
       return
     }
 
     // 上传图片
-    if (feedbackState.imgUrl && feedbackState.imgUrl.trim().length > 0) {
+    if (feedback.imgUrl && feedback.imgUrl.trim().length > 0) {
       // 如果有图片那就先上传图片，拿到图片地址后再提交表单
       await Taro.showToast({ title: '正在上传图片', icon: 'loading' })
       try {
-        const uploadUrl = await uploadImgApi(feedbackState.imgUrl)
-        feedbackState.imgUrl = uploadUrl
+        const uploadUrl = await uploadImgApi(feedback.imgUrl)
+        feedback.imgUrl = uploadUrl
         await Taro.showToast({ title: '上传图片成功', icon: 'none' })
       } catch {
         await Taro.showToast({ title: '上传图片失败', icon: 'none' })
@@ -90,7 +85,7 @@ const Index: React.FC = () => {
 
     await Taro.showLoading({ title: '正在提交' })
     const reqData: AddFeedbackReq = {
-      ...feedbackState,
+      ...feedback,
     }
     if (reqData.stuId && reqData.stuId.trim().length === 0)
       reqData.stuId = undefined
@@ -189,7 +184,10 @@ const Index: React.FC = () => {
       </View>
 
       <View style={{ marginTop: '30px' }}>
-        <Button onClick={handleSubmit} className={styles.submitButton}>
+        <Button
+          onClick={() => handleSubmit(feedbackState)}
+          className={styles.submitButton}
+        >
           提交
         </Button>
       </View>

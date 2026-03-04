@@ -38,6 +38,7 @@ export async function saveCardSettings(
 }
 
 export function useFinalCardDisplay(deps: DependencyList) {
+  // eslint-disable-next-line react-hooks/use-memo
   const computeFinalCardDisplayMemo = useMemo(computeFinalCardDisplay, [
     ...deps,
   ])
