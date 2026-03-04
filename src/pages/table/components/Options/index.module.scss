@@ -42,14 +42,6 @@
       .container-item {
         margin-bottom: 34px;
       }
-
-      .switch-item {
-        @include flex(space-between, center);
-
-        .switch {
-          color: $primaryBlue;
-        }
-      }
     }
   }
 
@@ -64,15 +56,22 @@
     .headerMask {
       background: color.adjust($darkBgColor, $lightness: 10%, $space: hsl);
       color: color.adjust($darkTextColor, $lightness: -10%, $space: hsl);
-
-      .container {
-        .switch-item {
-          .switch {
-            color: color.adjust($primaryBlue, $lightness: -10%, $space: hsl);
-            filter: brightness(0.9);
-          }
-        }
-      }
     }
   }
+}
+
+.showNotCurrentWeekContainer {
+  display: flex;
+  align-items: center;
+}
+
+.showNotCurrentWeekText {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.goToClassTableSettingsButton {
+  margin: 1em auto;
+  padding: 0.2em auto;
 }

@@ -147,21 +147,21 @@ const Index: React.FC = () => {
           保存
         </Button>
         <Button
-          theme='default'
+          theme='secondary'
           className={style.actionButton}
           onClick={handleCheckAll}
         >
           全选
         </Button>
         <Button
-          theme='default'
+          theme='secondary'
           className={style.actionButton}
           onClick={handleUncheckAll}
         >
           全不选
         </Button>
         <Button
-          theme='default'
+          theme='secondary'
           className={style.actionButton}
           onClick={handleReset}
         >

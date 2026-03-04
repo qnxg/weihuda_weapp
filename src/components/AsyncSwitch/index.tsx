@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import style from './index.module.scss'
 import useStateCallback from '@/utils/hooks/useStateCallback'
 import type { BaseEventOrig, SwitchProps } from '@tarojs/components'
-import type { SetStateAction } from 'react'
+import type { DependencyList, SetStateAction } from 'react'
 
 export interface SwitchState {
   /** 是否处于开状态，如果为undefined则开关不会显示 */
@@ -31,7 +31,7 @@ export interface AsyncSwitchProps {
    */
   onChange: (e: SwitchChangeEvent) => Promise<SwitchState | undefined>
   /** 重新初始化的trigger，使其改变会重新调用初始化 */
-  reInitTrigger?: unknown
+  reInitDeps?: DependencyList
   /** CSS类名 */
   className?: string
 }
@@ -40,7 +40,7 @@ export interface AsyncSwitchProps {
  * 支持异步操作的开关。
  */
 const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
-  const { init, onChange } = props
+  const { init, onChange, reInitDeps = [] } = props
   const [state, setState] = useStateCallback<SwitchState>({
     checked: undefined,
     disabled: true,
@@ -78,7 +78,7 @@ const AsyncSwitch: React.FC<AsyncSwitchProps> = props => {
       forcedSetState(initState)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forcedSetState, mappedInit, props.reInitTrigger])
+  }, [forcedSetState, mappedInit, ...reInitDeps])
 
   const [changing, setChanging] = useState(false)
   const handleChange = useCallback(

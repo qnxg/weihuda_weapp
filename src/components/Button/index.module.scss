@@ -21,7 +21,7 @@
     background: var(--brand-color);
   }
 
-  &.default {
+  &.secondary {
     color: var(--text-color-primary);
     background: var(--bg-color-component);
   }
@@ -39,7 +39,7 @@
     background: var(--brand-color-active);
   }
 
-  &.default {
+  &.secondary {
     background: var(--bg-color-component-hover);
   }
 

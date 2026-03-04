@@ -1,8 +1,15 @@
 import { Picker, Text, View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import React, { useMemo } from 'react'
 import styles from './index.module.scss'
+import AsyncSwitch from '@/components/AsyncSwitch'
+import Button from '@/components/Button'
 import { semesterWeekNum } from '@/utils/config'
+import usePromise from '@/utils/hooks/usePromise'
+import useShowCount from '@/utils/hooks/useShowCount'
+import { fetchUserSettings } from '@/utils/storage/userSettings'
+import { setNeedDisplayNotCurrentWeekClasses } from '@/utils/storage/userSettings/customAccessors/classtablePageSettings'
 import type { Semester } from '../..'
 import type { BaseEventOrig, PickerSelectorProps } from '@tarojs/components'
 
@@ -14,6 +21,41 @@ export interface OptionProps {
   tableCurrentSemIdx: number | undefined
   setTableCurrentSem: (newSem: number) => void
   semesters: Semester[] | undefined
+  refreshTableSettingsTrigger: () => void
+}
+
+const DisplayNotCurrentWeekSwitch: React.FC<{
+  className: string
+  refreshTableSettingsTrigger: () => void
+}> = props => {
+  const showCnt = useShowCount()
+  const [userSettings] = usePromise(fetchUserSettings, undefined, [
+    fetchUserSettings,
+    showCnt,
+  ])
+  return (
+    <AsyncSwitch
+      className={props.className}
+      init={{
+        disabled: false,
+        checked:
+          userSettings?.classtablePageSettings.needDisplayNotCurrentWeekClasses,
+      }}
+      onChange={async e => {
+        await setNeedDisplayNotCurrentWeekClasses(e.detail.value)
+        props.refreshTableSettingsTrigger()
+        const settingsUpdated = await fetchUserSettings()
+
+        return {
+          disabled: false,
+          checked:
+            settingsUpdated.classtablePageSettings
+              .needDisplayNotCurrentWeekClasses,
+        }
+      }}
+      reInitDeps={[showCnt]}
+    />
+  )
 }
 
 const Options: React.FC<OptionProps> = props => {
@@ -112,6 +154,26 @@ const Options: React.FC<OptionProps> = props => {
               )}
             </Picker>
           )}
+          <View className={styles.showNotCurrentWeekContainer}>
+            <DisplayNotCurrentWeekSwitch
+              className={styles.showNotCurrentWeekSwitch}
+              refreshTableSettingsTrigger={props.refreshTableSettingsTrigger}
+            />
+            <Text className={styles.showNotCurrentWeekText}>
+              显示非本周课程
+            </Text>
+          </View>
+          <Button
+            onClick={() =>
+              void Taro.navigateTo({
+                url: '/settingsPage/classtablePageSettings/index',
+              })
+            }
+            theme='secondary'
+            className={styles.goToClassTableSettingsButton}
+          >
+            所有课表设置…
+          </Button>
         </View>
       </View>
     </View>

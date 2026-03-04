@@ -5,7 +5,7 @@ export interface IBtnConfigItem {
   /** 文本 */
   text: string
   /** 样式 */
-  theme?: 'primary' | 'default' | 'plain'
+  theme?: 'primary' | 'secondary' | 'plain'
   /** 功能 */
   type?: 'button' | 'link'
   /** 值 */

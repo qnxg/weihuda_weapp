@@ -88,7 +88,7 @@ const Index: React.FC = () => {
           </Button>
           <Button
             className={classNames(styles.btn, styles.btn2)}
-            theme='default'
+            theme='secondary'
             onClick={onCancel}
           >
             取消
@@ -100,7 +100,7 @@ const Index: React.FC = () => {
           <Text>二维码已失效</Text>
           <Button
             className={classNames(styles.btn, styles.btn2)}
-            theme='default'
+            theme='secondary'
           >
             返回到首页
           </Button>

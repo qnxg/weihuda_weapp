@@ -65,7 +65,7 @@ const SignButton: React.FC<{
   return (
     <Button
       className={props.className}
-      theme={status !== 'unsigned' ? 'default' : 'primary'}
+      theme={status !== 'unsigned' ? 'secondary' : 'primary'}
       onClick={handleClick}
       disabled={status !== 'unsigned'}
       loading={status == 'loading'}

@@ -5,8 +5,7 @@ import styles from './index.module.scss'
 import type { ButtonProps } from '@tarojs/components'
 
 interface Props extends ButtonProps {
-  theme?: 'primary' | 'default' | 'plain'
-  // | 'danger' | 'success' | 'warning' | 'success'
+  theme?: 'primary' | 'secondary' | 'plain'
   disabled?: boolean
 }
 

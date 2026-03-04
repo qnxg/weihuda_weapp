@@ -106,7 +106,7 @@ const Goods: React.FC<IGoodsProps> = props => {
               disabled={item.count <= 0 || item.price > total}
               className={styles.goodsBtn}
               theme={
-                item.count <= 0 || item.price > total ? 'default' : 'primary'
+                item.count <= 0 || item.price > total ? 'secondary' : 'primary'
               }
               onClick={() => exchangeGoods(item.id)}
             >

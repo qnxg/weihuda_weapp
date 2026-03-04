@@ -472,6 +472,7 @@ const Index: React.FC = () => {
         tableCurrentSemIdx={tableSemIdx}
         setTableCurrentSem={setTableSemIdx}
         semesters={tableSemesters}
+        refreshTableSettingsTrigger={refreshTrigger}
       />
       <ClassDetailFloat
         classDetailsToShow={classDetailsForFloatComponentToShow}
