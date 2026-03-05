@@ -7,19 +7,19 @@ import {
   setShowCustomExamArrange,
   setShowExamArrange,
   setShowExperimentArrange,
-} from '@/utils/storage/userSettings/customAccessors/TaskCardSettings'
+} from '@/utils/storage/userSettings/customAccessors/LabAndExamCardSettings'
 import type { SwitchChangeEvent } from '@/components/AsyncSwitch'
 
-const getTaskCardSettings = async () =>
-  (await fetchUserSettings()).indexTaskCardSettings
+const getLabAndExamCardSettings = async () =>
+  (await fetchUserSettings()).indexLabAndExamCardSettings
 
 const SwitchList: React.FC<{
   setShouldRelaunchIndex: (s: boolean) => unknown
 }> = ({ setShouldRelaunchIndex }) => {
-  const [taskCardSettings, loadingTaskCardSettings] = usePromise(
-    getTaskCardSettings,
+  const [labAndExamCardSettings, loadingLabAndExamCardSettings] = usePromise(
+    getLabAndExamCardSettings,
     undefined,
-    [getTaskCardSettings]
+    [getLabAndExamCardSettings]
   )
 
   const onShowExperimentArrangeChange = useCallback(
@@ -27,7 +27,7 @@ const SwitchList: React.FC<{
       setShouldRelaunchIndex(true)
       await setShowExperimentArrange(e.detail.value)
       return {
-        checked: (await getTaskCardSettings()).showExperimentArrange,
+        checked: (await getLabAndExamCardSettings()).showExperimentArrange,
         disabled: false,
       }
     },
@@ -39,7 +39,7 @@ const SwitchList: React.FC<{
       setShouldRelaunchIndex(true)
       await setShowExamArrange(e.detail.value)
       return {
-        checked: (await getTaskCardSettings()).showExamArrange,
+        checked: (await getLabAndExamCardSettings()).showExamArrange,
         disabled: false,
       }
     },
@@ -51,7 +51,7 @@ const SwitchList: React.FC<{
       setShouldRelaunchIndex(true)
       await setShowCustomExamArrange(e.detail.value)
       return {
-        checked: (await getTaskCardSettings()).showCustomExamArrange,
+        checked: (await getLabAndExamCardSettings()).showCustomExamArrange,
         disabled: false,
       }
     },
@@ -64,24 +64,24 @@ const SwitchList: React.FC<{
         {
           title: '显示实验安排',
           init: {
-            checked: taskCardSettings?.showExperimentArrange,
-            disabled: loadingTaskCardSettings,
+            checked: labAndExamCardSettings?.showExperimentArrange,
+            disabled: loadingLabAndExamCardSettings,
           },
           onChange: onShowExperimentArrangeChange,
         },
         {
           title: '显示考试安排',
           init: {
-            checked: taskCardSettings?.showExamArrange,
-            disabled: loadingTaskCardSettings,
+            checked: labAndExamCardSettings?.showExamArrange,
+            disabled: loadingLabAndExamCardSettings,
           },
           onChange: onShowExamArrangeChange,
         },
         {
           title: '显示自定义考试安排',
           init: {
-            checked: taskCardSettings?.showCustomExamArrange,
-            disabled: loadingTaskCardSettings,
+            checked: labAndExamCardSettings?.showCustomExamArrange,
+            disabled: loadingLabAndExamCardSettings,
           },
           onChange: onShowCustomExamArrange,
         },
@@ -90,7 +90,7 @@ const SwitchList: React.FC<{
   )
 }
 
-/** 待办卡片设置页面 */
+/** 实验与考试卡片设置页面 */
 const Index: React.FC = () => {
   const [setShouldRelaunchIndex] = useShouldRelaunchIndex(false)
   return <SwitchList setShouldRelaunchIndex={setShouldRelaunchIndex} />

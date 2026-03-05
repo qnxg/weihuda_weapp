@@ -15,7 +15,9 @@ import { fetchUserSettings } from '@/utils/storage/userSettings'
 import type { FormatData, TaskItem as TaskItemType } from './types'
 import type CardProps from '../../CardProps'
 
-const TaskCardDisplay: React.FC<{ tasks: TaskItemType[] }> = ({ tasks }) => {
+const LabAndExamCardDisplay: React.FC<{ tasks: TaskItemType[] }> = ({
+  tasks,
+}) => {
   const formattedData = useMemo<Array<FormatData>>(() => {
     const now = dayjs()
 
@@ -53,7 +55,7 @@ const TaskCardDisplay: React.FC<{ tasks: TaskItemType[] }> = ({ tasks }) => {
 
   return (
     <Card>
-      <CardHeader title='近期待办' icon={cardIcon} />
+      <CardHeader title='实验与考试' icon={cardIcon} />
       {formattedData && formattedData.length > 0 ? (
         <View style={{ marginTop: 8 }}>
           {formattedData.map((item, index) => {
@@ -104,18 +106,20 @@ const TaskCardDisplay: React.FC<{ tasks: TaskItemType[] }> = ({ tasks }) => {
 }
 
 // 获取任务卡片设置
-const getTaskCardSettings = async () =>
-  (await fetchUserSettings()).indexTaskCardSettings
+const getLabAndExamCardSettings = async () =>
+  (await fetchUserSettings()).indexLabAndExamCardSettings
 
-/** 近期待办卡片 - 显示7天内的考试和实验 */
-const TaskCard: React.FC<CardProps> = ({
+/** 实验与考试卡片 - 显示7天内的考试和实验 */
+const LabAndExamCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
   // 获取用户设置
-  const [taskCardSettings] = usePromise(getTaskCardSettings, undefined, [
-    getTaskCardSettings,
-  ])
+  const [labAndExamCardSettings] = usePromise(
+    getLabAndExamCardSettings,
+    undefined,
+    [getLabAndExamCardSettings]
+  )
 
   // 获取考试安排
   const [examData, isExamLoading] = usePromise(
@@ -145,7 +149,7 @@ const TaskCard: React.FC<CardProps> = ({
 
     // 处理考试数据 - 根据设置决定是否显示
     if (
-      taskCardSettings?.showExamArrange &&
+      labAndExamCardSettings?.showExamArrange &&
       examData &&
       Array.isArray(examData)
     ) {
@@ -180,7 +184,7 @@ const TaskCard: React.FC<CardProps> = ({
 
     // 处理实验数据 - 根据设置决定是否显示
     if (
-      taskCardSettings?.showExperimentArrange &&
+      labAndExamCardSettings?.showExperimentArrange &&
       labData &&
       Array.isArray(labData)
     ) {
@@ -213,7 +217,7 @@ const TaskCard: React.FC<CardProps> = ({
 
     // 处理准考证预存数据 - 根据设置决定是否显示
     if (
-      taskCardSettings?.showCustomExamArrange &&
+      labAndExamCardSettings?.showCustomExamArrange &&
       examIdData &&
       Array.isArray(examIdData)
     ) {
@@ -252,7 +256,7 @@ const TaskCard: React.FC<CardProps> = ({
     })
 
     return taskList
-  }, [examData, labData, examIdData, taskCardSettings])
+  }, [examData, labData, examIdData, labAndExamCardSettings])
 
   // 更新加载状态
   const loadingStatus = isExamLoading || isLabLoading || isExamIdLoading
@@ -260,7 +264,7 @@ const TaskCard: React.FC<CardProps> = ({
     onLoadingStatusChange(loadingStatus)
   }, [loadingStatus, onLoadingStatusChange])
 
-  return <TaskCardDisplay tasks={tasks} />
+  return <LabAndExamCardDisplay tasks={tasks} />
 }
 
-export default TaskCard
+export default LabAndExamCard

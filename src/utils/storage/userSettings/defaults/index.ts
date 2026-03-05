@@ -1,7 +1,7 @@
 import { DEFAULT_CLASSTABLE_PAGE_SETTINGS } from './classtablePageSettings'
+import { DEFAULT_INDEX_LAB_AND_EXAM_CARD_SETTINGS } from './indexLabAndExamCardSettings'
 import { DEFAULT_INDEX_NORMAL_CARD_SETTINGS } from './indexNormalCardSettings'
 import { DEFAULT_INDEX_SIGNIN_CARD_SETTINGS } from './indexSignInCardSettings'
-import { DEFAULT_INDEX_TASK_CARD_SETTINGS } from './indexTaskCardSettings'
 
 /** 当前小程序的所有用户配置项目列于此处
  *
@@ -29,6 +29,6 @@ export const DEFAULT_SETTINGS = {
   indexSignInCardSettings: DEFAULT_INDEX_SIGNIN_CARD_SETTINGS,
   /** 课表页设置 */
   classtablePageSettings: DEFAULT_CLASSTABLE_PAGE_SETTINGS,
-  /** 首页待办卡片设置 */
-  indexTaskCardSettings: DEFAULT_INDEX_TASK_CARD_SETTINGS,
+  /** 首页实验与考试卡片设置 */
+  indexLabAndExamCardSettings: DEFAULT_INDEX_LAB_AND_EXAM_CARD_SETTINGS,
 } as const /* 禁止修改，因为获取设置的函数返回的对象可能来自默认设置对象的一部分 */ satisfies Settings

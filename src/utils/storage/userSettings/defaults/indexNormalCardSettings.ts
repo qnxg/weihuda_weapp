@@ -13,7 +13,7 @@ export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
   show: [
     '今日知湖',
     '近期课程',
-    '近期待办',
+    '实验与考试',
     '本月流量',
     '宿舍电量',
     '假期倒计时',
