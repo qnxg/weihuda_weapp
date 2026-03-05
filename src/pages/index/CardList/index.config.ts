@@ -1,12 +1,12 @@
 import CampusCard from './cards/CampusCard'
 import CountdownCard from './cards/CountdownCard'
+import CourseCard from './cards/CourseCard'
 import ElectricityCard from './cards/ElectricityCard'
 import EmailCard from './cards/EmailCard'
 import GradeCard from './cards/GradeCard'
 import LabAndExamCard from './cards/LabAndExamCard'
 import MessageCard from './cards/MessageCard'
 import NetflowCard from './cards/NetflowCard'
-import RecentClassCard from './cards/RecentClassCard'
 import SignInCard from './cards/SignInCard'
 import HomeSwiperCard from './cards/SwiperCard'
 import TodayClassCard from './cards/TodayClassCard'
@@ -30,7 +30,8 @@ const customizableCards = {
   今日知湖: HomeSwiperCard,
   今日课程: TodayClassCard,
   实验与考试: LabAndExamCard,
-  近期课程: RecentClassCard,
+  /** TODO: 将该键重命名为我的课程 */
+  近期课程: CourseCard,
   本月流量: NetflowCard,
   宿舍电量: ElectricityCard,
   假期倒计时: CountdownCard,

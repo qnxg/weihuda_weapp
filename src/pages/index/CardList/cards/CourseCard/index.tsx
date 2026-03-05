@@ -186,7 +186,7 @@ const ClassList: React.FC<ClassDisplayProps> = props => {
   )
 }
 
-const RecentClassCard: React.FC<CardProps> = ({
+const CourseCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
@@ -209,13 +209,11 @@ const RecentClassCard: React.FC<CardProps> = ({
     onLoadingStatusChange(combinedLoadingStatus)
   }, [combinedLoadingStatus, onLoadingStatusChange])
 
-  return (
-    <RecentClassCardDisplay currentSemStartDate={startDate} course={course} />
-  )
+  return <CourseCardDisplay currentSemStartDate={startDate} course={course} />
 }
 
-/** 近期课程卡片 - 显示今日和明日课程 */
-const RecentClassCardDisplay: React.FC<{
+/** 我的课程卡片 - 显示今日和明日课程 */
+const CourseCardDisplay: React.FC<{
   currentSemStartDate: string | undefined
   course: CourseInfo[] | undefined
 }> = props => {
@@ -235,7 +233,7 @@ const RecentClassCardDisplay: React.FC<{
 
   return (
     <Card>
-      <CardHeader title='近期课程' icon={cardIcon} />
+      <CardHeader title='我的课程' icon={cardIcon} />
 
       {/* Tab 标签 */}
       <View className={styles.tabLabels}>
@@ -280,4 +278,4 @@ const RecentClassCardDisplay: React.FC<{
   )
 }
 
-export default RecentClassCard
+export default CourseCard
