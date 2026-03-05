@@ -11,7 +11,6 @@ import CardHeader from '@/components/Card/CardHeader'
 import empty from '@/static/empty/no-exam.svg'
 import cardIcon from '@/static/index/icon/exam-schedule.svg'
 import usePromise from '@/utils/hooks/usePromise'
-import { fetchUserSettings } from '@/utils/storage/userSettings'
 import type { FormatData, TaskItem as TaskItemType } from './types'
 import type CardProps from '../../CardProps'
 
@@ -105,22 +104,11 @@ const LabAndExamCardDisplay: React.FC<{ tasks: TaskItemType[] }> = ({
   )
 }
 
-// 获取任务卡片设置
-const getLabAndExamCardSettings = async () =>
-  (await fetchUserSettings()).indexLabAndExamCardSettings
-
 /** 实验与考试卡片 - 显示7天内的考试和实验 */
 const LabAndExamCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
-  // 获取用户设置
-  const [labAndExamCardSettings] = usePromise(
-    getLabAndExamCardSettings,
-    undefined,
-    [getLabAndExamCardSettings]
-  )
-
   // 获取考试安排
   const [examData, isExamLoading] = usePromise(
     getExamArrange,
@@ -148,11 +136,7 @@ const LabAndExamCard: React.FC<CardProps> = ({
     const taskList: TaskItemType[] = []
 
     // 处理考试数据 - 根据设置决定是否显示
-    if (
-      labAndExamCardSettings?.showExamArrange &&
-      examData &&
-      Array.isArray(examData)
-    ) {
+    if (examData && Array.isArray(examData)) {
       examData.forEach(exam => {
         try {
           // 解析日期时间
@@ -183,11 +167,7 @@ const LabAndExamCard: React.FC<CardProps> = ({
     }
 
     // 处理实验数据 - 根据设置决定是否显示
-    if (
-      labAndExamCardSettings?.showExperimentArrange &&
-      labData &&
-      Array.isArray(labData)
-    ) {
+    if (labData && Array.isArray(labData)) {
       labData.forEach(lab => {
         try {
           const dateTimeStr = `${lab.date} ${lab.time.split('-')[0] || lab.time}`
@@ -216,11 +196,7 @@ const LabAndExamCard: React.FC<CardProps> = ({
     }
 
     // 处理准考证预存数据 - 根据设置决定是否显示
-    if (
-      labAndExamCardSettings?.showCustomExamArrange &&
-      examIdData &&
-      Array.isArray(examIdData)
-    ) {
+    if (examIdData && Array.isArray(examIdData)) {
       examIdData.forEach(examIdItem => {
         try {
           // examIdItem 的 date 格式为 YYYY-MM-DD
@@ -256,7 +232,7 @@ const LabAndExamCard: React.FC<CardProps> = ({
     })
 
     return taskList
-  }, [examData, labData, examIdData, labAndExamCardSettings])
+  }, [examData, labData, examIdData])
 
   // 更新加载状态
   const loadingStatus = isExamLoading || isLabLoading || isExamIdLoading
