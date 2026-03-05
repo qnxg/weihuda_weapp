@@ -1,5 +1,9 @@
 @use '~@/utils/scss/global' as *;
 
+.tabBar {
+  z-index: 100;
+}
+
 .add {
   position: relative;
   margin: 20px auto 0 auto;

@@ -149,6 +149,7 @@ const Index: React.FC = () => {
       ) : (
         <Block>
           <TabBar
+            className={styles.tabBar}
             items={['未过期', '已过期']}
             num={0}
             current={tabIndex}
