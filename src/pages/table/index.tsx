@@ -42,7 +42,7 @@ export interface Semester {
 }
 
 /** 课表染色 */
-function* colorized(rawData: CourseInfo[]) {
+function* genColors(rawData: readonly CourseInfo[]) {
   let baseColorIndex = 0
   const colorMap: Map<string, number> = new Map()
   for (const courseItem of rawData) {
@@ -56,7 +56,6 @@ function* colorized(rawData: CourseInfo[]) {
       baseColorIndex %= onColors.length
     }
     yield {
-      item: courseItem,
       bgColor: onColors[colorIndex] ?? onColors[0]!,
       fgColor: onFontColors[colorIndex] ?? onFontColors[0]!,
     }
@@ -77,7 +76,10 @@ function formatTable(
     return []
   }
 
-  const coloredClassTable = colorized(classTable).toArray()
+  /**
+   * 需要和课表数组一一对应
+   */
+  const colors = genColors(classTable).toArray()
 
   const schedule: Array<Array<ClassTableItem>> = []
   // 初始化数组
@@ -99,8 +101,8 @@ function formatTable(
       // 是本周的课则放在前面，否则放在后面。这样可以保证本周课程在前面显示
       schedule[course.day]![time]!.courses.unshift({
         courseItem: course,
-        bgColor: coloredClassTable[i]!.bgColor,
-        fgColor: coloredClassTable[i]!.fgColor,
+        bgColor: colors[i]!.bgColor,
+        fgColor: colors[i]!.fgColor,
       })
     } else if (needNotCurrentWeekClasses) {
       // 没有开启仅显示本周课程
