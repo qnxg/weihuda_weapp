@@ -5,7 +5,7 @@
   padding: 20px;
   padding-top: 26px;
   font-size: $fontNormal;
-  color: #3e3e3e;
+  color: $primaryTextColor;
 
   .picker {
     background: #fff;
@@ -27,7 +27,7 @@
       font-weight: normal;
       font-stretch: normal;
       letter-spacing: 0.6px;
-      color: #3e3e3e;
+      color: $primaryTextColor;
       margin-top: 22px;
       margin-left: 72px;
     }
@@ -37,7 +37,7 @@
       font-weight: normal;
       font-stretch: normal;
       letter-spacing: 0;
-      color: #328ccb;
+      color: $primaryBlue;
       margin-left: 68px;
       margin-top: 84px;
     }
@@ -64,7 +64,7 @@
       font-weight: normal;
       font-stretch: normal;
       letter-spacing: 0.6px;
-      color: #3e3e3e;
+      color: $primaryTextColor;
       margin-top: 22px;
       margin-left: 72px;
     }
@@ -78,7 +78,7 @@
       font-weight: normal;
       font-stretch: normal;
       letter-spacing: 0;
-      color: #328ccb;
+      color: $primaryBlue;
       width: 550px;
       margin-left: 68px;
       margin-top: 84px;

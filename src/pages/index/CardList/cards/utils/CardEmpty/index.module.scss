@@ -12,12 +12,9 @@
 
   .text {
     font-size: $fontMedium;
-    font-weight: normal;
-    font-stretch: normal;
     line-height: 40px;
     margin-top: 12px;
-    letter-spacing: 0;
-    color: #808080;
+    color: $thirdTextColor;
   }
 }
 

@@ -48,7 +48,7 @@
       .titles {
         font-size: $fontNormal;
         letter-spacing: 0.6px;
-        color: #3e3e3e;
+        color: $primaryTextColor;
         margin-left: 16px;
       }
     }
@@ -64,7 +64,7 @@
       text-align: center;
       font-size: $fontMedium;
       letter-spacing: 0;
-      color: #808080;
+      color: $thirdTextColor;
     }
 
     .Box {

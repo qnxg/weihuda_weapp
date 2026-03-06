@@ -130,7 +130,7 @@ const useSharedResult = createGlobalDict<string | undefined, Slot>(() => ({
  * ```
  *
  * @example
- * ```typescript
+ * ```tsx
  * // 这个示例中的组件并不需要这个接口的数据，
  * // 而是想要刷新用该Hook请求了对应接口的组件中的数据
  * const [refreshKey, refreshTrigger] = useRefreshKey()

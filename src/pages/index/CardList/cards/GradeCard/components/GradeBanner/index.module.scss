@@ -20,7 +20,7 @@
     white-space: nowrap;
     letter-spacing: 0.4px;
     text-overflow: ellipsis;
-    color: #3e3e3e;
+    color: $primaryTextColor;
   }
 
   .banner {
@@ -44,7 +44,7 @@
     height: fit-content;
     margin-right: 12px;
     letter-spacing: 0.2px;
-    color: #808080;
+    color: $thirdTextColor;
   }
 }
 

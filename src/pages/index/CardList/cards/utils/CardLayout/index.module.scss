@@ -37,7 +37,7 @@
       .title {
         @include flex(center, center);
         letter-spacing: 0.2px;
-        color: #3e3e3e;
+        color: $primaryTextColor;
       }
     }
 
@@ -45,7 +45,7 @@
       @include flex(center, center);
       min-width: 98px;
       letter-spacing: 0.2px;
-      color: #3e3e3e;
+      color: $primaryTextColor;
     }
   }
 }

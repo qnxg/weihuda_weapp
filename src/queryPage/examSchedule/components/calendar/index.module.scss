@@ -41,7 +41,7 @@
       font-size: $fontNormal;
       line-height: 40px;
       letter-spacing: 0.6px;
-      color: #3e3e3e;
+      color: $primaryTextColor;
     }
   }
 
@@ -80,7 +80,7 @@
       .cell {
         .valid {
           width: 60px;
-          color: #3e3e3e;
+          color: $primaryTextColor;
         }
 
         .blank {
@@ -89,7 +89,7 @@
         }
 
         .highlight {
-          @include shadow(#328ccb, rgba(209, 205, 205, 0.16));
+          @include shadow($primaryBlue, rgba(209, 205, 205, 0.16));
           width: 60px;
           height: 60px;
           color: #ffffff;

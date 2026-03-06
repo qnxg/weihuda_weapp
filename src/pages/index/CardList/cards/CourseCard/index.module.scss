@@ -35,16 +35,30 @@
     opacity: 0.6;
   }
 
+  &.normal-tomorrow {
+    background-color: var(--brand-color-1);
+    border-color: var(--brand-color-4);
+  }
+
   &:last-child {
     margin-bottom: 8px;
   }
 
   .leftPart {
     margin-right: 20px;
+    flex-shrink: 0;
   }
 
   .mainPart {
-    flex: 1;
+    flex: 1 1 0%;
+    overflow: hidden;
+  }
+
+  .mainPart * {
+    white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .startTime,
@@ -54,11 +68,8 @@
     color: var(--text-color-primary);
   }
 
-  .courseInfo {
-    display: flex;
-  }
-
   .infoItem {
+    display: inline;
     padding: 0 12px;
     border-right: 3px solid var(--text-color-secondary);
 
@@ -85,24 +96,18 @@
   text-align: center;
   padding: 12px 0;
   font-size: 28px;
-  color: #3e3e3e;
+  color: $primaryTextColor;
   background-color: transparent;
   border-radius: 12px;
   transition: all 0.3s ease;
   cursor: pointer;
 
   &.activeTab {
-    background-color: #328ccb;
+    background-color: $primaryBlue;
     box-shadow: 0 0 8px 0 rgba(151, 204, 251, 0.43);
     color: #ffffff;
     font-weight: 500;
   }
-}
-
-// 内容容器样式
-.contentContainer {
-  width: 100%;
-  // 不设置固定高度，自适应内容
 }
 
 @media (prefers-color-scheme: dark) {
