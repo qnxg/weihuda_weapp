@@ -16,6 +16,8 @@ interface NetFlowCardProps {
 }
 
 const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
+  const basePackageUsedPer = netFlow?.thisMonth?.basePackageUsedPer
+
   return (
     <CardLayout
       icon={icon}
@@ -53,7 +55,7 @@ const NetflowCardDisplay: React.FC<NetFlowCardProps> = ({ netFlow }) => {
           <GradeBanner
             grade={{
               name: '免费流量：',
-              score: 100 - (netFlow?.thisMonth?.basePackageUsedPer ?? 0) * 100,
+              score: basePackageUsedPer ? 100 - basePackageUsedPer * 100 : 0,
               content: `${netFlow?.thisMonth === undefined ? '--' : (netFlow.thisMonth.allBasePackageAmount - netFlow.thisMonth.basePackageUsed).toFixed(2)}G`,
             }}
           />
