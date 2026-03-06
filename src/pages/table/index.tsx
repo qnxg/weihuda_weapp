@@ -41,25 +41,58 @@ export interface Semester {
   xq: number
 }
 
-/** 课表染色 */
-function* genColors(rawData: readonly CourseInfo[]) {
-  let baseColorIndex = 0
-  const colorMap: Map<string, number> = new Map()
-  for (const courseItem of rawData) {
-    let colorIndex: number
-    if (colorMap.has(courseItem.courseName)) {
-      colorIndex = colorMap.get(courseItem.courseName)!
-    } else {
-      colorIndex = baseColorIndex
-      colorMap.set(courseItem.courseName, colorIndex)
-      baseColorIndex++
-      baseColorIndex %= onColors.length
-    }
-    yield {
-      bgColor: onColors[colorIndex] ?? onColors[0]!,
-      fgColor: onFontColors[colorIndex] ?? onFontColors[0]!,
+/** @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Remainder */
+function modPositive(n: number, d: number) {
+  d = Math.abs(d)
+  return ((n % d) + d) % d
+}
+
+type ColorPair = { readonly bgColor: string; readonly fgColor: string }
+/**
+ * @returns 每个课程项目对应的颜色。需要和传入数组一一对应
+ */
+function tableColors(rawData: readonly CourseInfo[]): readonly ColorPair[] {
+  /**
+   * 唯一标识一个课程的键
+   *
+   * 定义课程的同一性
+   */
+  const courseKey = (course: CourseInfo): string =>
+    [course.courseName, course.courseId, course.customizeId]
+      .map(v => (v === undefined ? '' : JSON.stringify(v)))
+      .join()
+
+  const isCustomCourse = (course: CourseInfo): boolean =>
+    course.customizeId !== -1
+
+  const maxColorNum = Math.min(onColors.length, onFontColors.length)
+  const modularColor = (int: number): ColorPair => ({
+    fgColor: onFontColors[modPositive(int, maxColorNum)]!,
+    bgColor: onColors[modPositive(int, maxColorNum)]!,
+  })
+
+  const keys = rawData.map(courseKey)
+  const customCourseKeys = new Set(
+    rawData.filter(isCustomCourse).map(courseKey)
+  )
+  const sortedKeys = keys.toSorted()
+
+  const keyToColorMap = new Map<string, ColorPair>()
+  let counter = 0
+  const useExistingOrDyeAndRotate = (key: string) => {
+    if (!keyToColorMap.has(key)) {
+      keyToColorMap.set(key, modularColor(counter))
+      counter += 1
     }
   }
+  sortedKeys
+    .filter(k => !customCourseKeys.has(k))
+    .forEach(useExistingOrDyeAndRotate)
+  sortedKeys
+    .filter(k => customCourseKeys.has(k))
+    .forEach(useExistingOrDyeAndRotate)
+
+  return rawData.map(c => keyToColorMap.get(courseKey(c))!)
 }
 
 /**
@@ -77,9 +110,9 @@ function formatTable(
   }
 
   /**
-   * 需要和课表数组一一对应
+   * 和课表数组一一对应
    */
-  const colors = genColors(classTable).toArray()
+  const colors = tableColors(classTable)
 
   const schedule: Array<Array<ClassTableItem>> = []
   // 初始化数组

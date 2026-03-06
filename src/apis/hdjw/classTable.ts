@@ -6,20 +6,38 @@ import type { DependencyList } from 'react'
  * ClassTable
  */
 export interface CourseInfo {
-  className: string // 上课班级
-  courseId?: string // 课程代码
-  courseName: string // 课程名称
-  credit?: number // 学分
-  day: number // 周几上，周一是 1，周日是 0
-  extra?: string // 额外备注信息
-  place?: string // 上课地点
-  area?: string // 上课校区
-  people: number // 上课人数
-  time: number // 上课节次。注意，ClassTableItem 里的 time 都是 -1
-  teacher?: string // 教师
-  weeks: number[] // 在哪周上课
-  type?: string // 课程类型
-  customizeId: number // 自定义课程 id
+  /** 上课班级 */
+  className: string
+  /** 课程代码 */
+  courseId?: string
+  /** 课程名称 */
+  courseName: string
+  /** 学分 */
+  credit?: number
+  /** 周几上，周一是 1，周日是 0 */
+  day: number
+  /** 额外备注信息 */
+  extra?: string
+  /** 上课地点 */
+  place?: string
+  /** 上课校区 */
+  area?: string
+  /** 上课人数 */
+  people: number
+  /**
+   * 上课节次。
+   *
+   * 注意，ClassTableItem 里的 time 都是 -1
+   */
+  time: number
+  /** 教师 */
+  teacher?: string
+  /** 在哪些周上课 */
+  weeks: number[]
+  /** 课程类型 */
+  type?: string
+  /** 自定义课程 id */
+  customizeId: number
 }
 
 /**
