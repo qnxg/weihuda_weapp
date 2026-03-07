@@ -1,11 +1,42 @@
 import { useCallback, useSyncExternalStore } from 'react'
 
+export type GlobalDict<K, V> = {
+  /**
+   * 一个用于订阅某个键对应的值的React Hook
+   *
+   * @returns 一个状态，跟踪所给键对应的值。当值变化时组件更新会被触发。
+   */
+  readonly use: (k: K) => V
+  /**
+   * 获取当前某个键对应的值
+   */
+  readonly get: (k: K) => V
+  /**
+   * 设置某个键对应的值
+   *
+   * 该函数会触发所给键的订阅者
+   */
+  readonly set: (k: K, v: V) => void
+  /**
+   * 清除某个键及其对应值的存储，随后的获取将返回默认值
+   *
+   * 该函数会触发所给键的订阅者
+   */
+  readonly del: (k: K) => void
+  /**
+   * @deprecated Don't use it unless you know what you are doing.
+   */
+  readonly internalPayloadMap: Map<K, V>
+  /**
+   * @deprecated Don't use it unless you know what you are doing.
+   */
+  readonly internalSubscribersMap: Map<K, Set<() => void>>
+}
+
 /**
- * 新建非持久化的全局字典，返回用于操作字典中状态的Hook
+ * 创建非持久化的全局字典
  */
-function createGlobalDict<K, V>(
-  defaultVal: (k: K) => V
-): (k: K) => [V, () => V, (v: V) => void, () => void] {
+function createGlobalDict<K, V>(defaultVal: (k: K) => V): GlobalDict<K, V> {
   const globalDict = new Map<K, V>()
   const subscribeDict = new Map<K, Set<() => void>>()
 
@@ -25,20 +56,28 @@ function createGlobalDict<K, V>(
     }
   }
 
-  const setDict = (k: K, v: V) => {
+  const get = (k: K): V => {
+    if (globalDict.has(k)) {
+      return globalDict.get(k) as V
+    } else {
+      const v = defaultVal(k)
+      globalDict.set(k, v)
+      return v
+    }
+  }
+
+  const set = (k: K, v: V) => {
     if (Object.is(globalDict.get(k), v)) return
     globalDict.set(k, v)
     notice(k)
   }
 
-  const delDict = (k: K) => {
+  const del = (k: K) => {
     globalDict.delete(k)
     notice(k)
   }
 
-  function useGlobalDictValueFor(
-    k: K
-  ): [V, () => V, (v: V) => void, () => void] {
+  const use = (k: K): V => {
     const subscribe = useCallback(
       (cb: () => void) => {
         getSubscribes(k).add(cb)
@@ -52,27 +91,20 @@ function createGlobalDict<K, V>(
       },
       [k]
     )
-    const getState = useCallback(() => {
-      if (globalDict.has(k)) {
-        return globalDict.get(k) as V
-      } else {
-        const v = defaultVal(k)
-        globalDict.set(k, v)
-        return v
-      }
-    }, [k])
+
+    const getState = useCallback(() => get(k), [k])
     const state = useSyncExternalStore(subscribe, getState)
-    const setState = useCallback(
-      (v: V) => {
-        setDict(k, v)
-      },
-      [k]
-    )
-    const removeState = useCallback(() => delDict(k), [k])
-    return [state, getState, setState, removeState]
+    return state
   }
 
-  return useGlobalDictValueFor
+  return {
+    use,
+    get,
+    set,
+    del,
+    internalPayloadMap: globalDict,
+    internalSubscribersMap: subscribeDict,
+  }
 }
 
 export default createGlobalDict

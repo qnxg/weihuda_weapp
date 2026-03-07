@@ -4,6 +4,8 @@ import Taro from '@tarojs/taro'
 // eslint-disable-next-line import/no-cycle
 import { postUnbind } from './bind'
 import getLoginCode from '@/utils/getLoginCode'
+// eslint-disable-next-line import/no-cycle
+import { clearReqCacheInMemoryAndRelaunch } from '@/utils/storage/requestCache'
 import storage from '@/utils/storage/token'
 import { BASE_URL } from '@/utils/url'
 
@@ -133,7 +135,7 @@ async function request<T extends Data>(
       } catch {}
       Taro.clearStorageSync()
       Taro.hideLoading()
-      await Taro.reLaunch({
+      await clearReqCacheInMemoryAndRelaunch({
         url: '/pages/bind/index',
       })
     } catch (err) {

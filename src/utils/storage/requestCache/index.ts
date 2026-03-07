@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { getStorageAsyncNoExcept, setStorageAsync } from '../storage'
+// eslint-disable-next-line import/no-cycle
 import request from '@/apis/request'
 import createGlobalDict from '@/utils/hooks/globalDict'
 import type { DependencyList } from 'react'
@@ -85,12 +86,13 @@ type Slot = {
   fetching: boolean
   gettingCache: boolean
 }
-const useSharedResult = createGlobalDict<string | undefined, Slot>(() => ({
+const resultDict = createGlobalDict<string | undefined, Slot>(() => ({
   res: undefined,
   error: null,
   fetching: false,
   gettingCache: false,
 }))
+
 /**
  * 这是一个从后端GET接口请求JSON数据，并且自动进行缓存和消除并发重复请求的Hook。
  *
@@ -118,6 +120,10 @@ const useSharedResult = createGlobalDict<string | undefined, Slot>(() => ({
  *    大量调用该Hook可能会造成用户可见的UI阻塞时间。
  *    然后，该Hook目前将当前应用实例中所有请求过的结果在内存中都留存了一份，且暂无自动清理措施，
  *    内存泄漏量取决于使用了该Hook的(接口,参数)的pair的多少和每个pair对应的响应的大小。
+ * -  由于该缓存系统将要使用的缓存存放在内存中，删除storage可能不足以清除缓存。
+ *    应该提醒用户重启小程序，或者调用`clearReqCacheInMemoryAndRelaunch`
+ *
+ * @see clearReqCacheInMemoryAndRelaunch
  *
  * @example
  * ```typescript
@@ -164,7 +170,15 @@ export function useCacheableGetJson<T>(
           .join('&')
       : undefined
 
-  const [slotState, getSlot, setSlot] = useSharedResult(normalizedURL)
+  const slotState = resultDict.use(normalizedURL)
+  const getSlot = useCallback(
+    () => resultDict.get(normalizedURL),
+    [normalizedURL]
+  )
+  const setSlot = useCallback(
+    (k: Slot) => resultDict.set(normalizedURL, k),
+    [normalizedURL]
+  )
 
   // 从本地存储初始化
   useEffect(() => {
@@ -245,8 +259,13 @@ export function useCacheableGetJson<T>(
         fetching: false,
       })
     })()
+  }, [
+    getSlot,
+    normalizedURL,
+    setSlot,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getSlot, normalizedURL, setSlot, ...deps])
+    ...deps,
+  ])
 
   return [
     slotState.res as T | undefined,
@@ -254,4 +273,18 @@ export function useCacheableGetJson<T>(
     slotState.fetching,
     slotState.error,
   ]
+}
+
+/**
+ * 清除在内存中的缓存，然后reLaunch到首页
+ */
+export function clearReqCacheInMemoryAndRelaunch(
+  reLaunchOption: Taro.reLaunch.Option
+): Promise<TaroGeneral.CallbackResult> {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- 之后的reLaunch销毁了所有页面实例，最终不会造成状态错误的组件
+  resultDict.internalPayloadMap.clear()
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- 同上，所有订阅函数不可能再被调用
+  resultDict.internalSubscribersMap.clear()
+  recentlyUsedCacheKeys.clear()
+  return Taro.reLaunch(reLaunchOption)
 }

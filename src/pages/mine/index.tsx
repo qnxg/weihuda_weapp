@@ -9,6 +9,7 @@ import Copyright from '@/components/Copyright'
 import { LineDividedButtonList } from '@/components/LineDividedButtonList'
 import usePromise from '@/utils/hooks/usePromise'
 import useShowCount from '@/utils/hooks/useShowCount'
+import { clearReqCacheInMemoryAndRelaunch } from '@/utils/storage/requestCache'
 import { cleanNotImportantStorage } from '@/utils/storage/storage'
 
 /**
@@ -33,7 +34,7 @@ const unBind = async (): Promise<void> => {
       console.log(err)
     }
     Taro.hideLoading()
-    await Taro.reLaunch({
+    await clearReqCacheInMemoryAndRelaunch({
       url: '/pages/bind/index',
     })
   }
@@ -42,7 +43,7 @@ const unBind = async (): Promise<void> => {
 /**
  * 清除缓存操作
  *
- * 实际上是清除了所有storage，所以本地保存的小程序设置也会被清空。
+ * @see cleanNotImportantStorage
  */
 const clean = async () => {
   const res = await Taro.showModal({
@@ -56,7 +57,7 @@ const clean = async () => {
     await Taro.showToast({
       title: '清除成功',
     })
-    await Taro.reLaunch({
+    await clearReqCacheInMemoryAndRelaunch({
       url: '/pages/index/index',
     })
   }

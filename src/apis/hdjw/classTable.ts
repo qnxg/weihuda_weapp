@@ -1,5 +1,5 @@
 import request from '../request'
-import { useCacheableGetJson } from '@/utils/storage/cache/requestCache'
+import { useCacheableGetJson } from '@/utils/storage/requestCache'
 import type { DependencyList } from 'react'
 
 /**
