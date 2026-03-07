@@ -9,7 +9,6 @@ import MessageCard from './cards/MessageCard'
 import NetflowCard from './cards/NetflowCard'
 import SignInCard from './cards/SignInCard'
 import HomeSwiperCard from './cards/SwiperCard'
-import TodayClassCard from './cards/TodayClassCard'
 import { DEFAULT_INDEX_NORMAL_CARD_SETTINGS } from '@/utils/storage/userSettings/defaults/indexNormalCardSettings'
 import type CardProps from './CardProps'
 import type React from 'react'
@@ -28,10 +27,8 @@ export const topCards: [string, React.FC<CardProps>][] = [
  */
 const customizableCards = {
   今日知湖: HomeSwiperCard,
-  今日课程: TodayClassCard,
   实验与考试: LabAndExamCard,
-  /** TODO: 将该键重命名为我的课程 */
-  近期课程: CourseCard,
+  我的课程: CourseCard,
   本月流量: NetflowCard,
   宿舍电量: ElectricityCard,
   假期倒计时: CountdownCard,

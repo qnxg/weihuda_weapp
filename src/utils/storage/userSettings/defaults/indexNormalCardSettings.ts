@@ -12,7 +12,7 @@ export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
   settingsMajorVersion: '1',
   show: [
     '今日知湖',
-    '近期课程',
+    '我的课程',
     '实验与考试',
     '本月流量',
     '宿舍电量',
@@ -21,5 +21,5 @@ export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
     '校园邮箱',
     '成绩查询',
   ],
-  dontShow: ['今日课程'],
+  dontShow: [],
 }
