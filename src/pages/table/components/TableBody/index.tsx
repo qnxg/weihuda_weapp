@@ -12,8 +12,8 @@ import type { CourseInfo } from '@/apis/hdjw/classTable'
  */
 interface Props {
   formattedTable: Array<Array<ClassTableItem>>
-  tableCurrentWeek: number | undefined
-  setTableCurrentWeek: React.Dispatch<React.SetStateAction<number>>
+  tableWeekNotRaw: number | undefined
+  setTableWeekNotRaw: React.Dispatch<React.SetStateAction<number>>
   onRefresh: (close: () => any) => any
   setClassDetailsForFloatComponentToShow: React.Dispatch<
     React.SetStateAction<
@@ -43,7 +43,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
    * @param e 事件对象
    */
   const onTouchEnd = (e: any) => {
-    const { tableCurrentWeek } = props
+    const { tableWeekNotRaw: tableCurrentWeek } = props
     if (tableCurrentWeek === undefined) {
       return
     }
@@ -56,7 +56,7 @@ const TableBody: React.FC<Props> = (props: Props) => {
         if (finalWeek < 1) finalWeek = 18
         else if (finalWeek > 18) finalWeek = 1
         // dispatch(saveClassTable({ currentWeeks: finalWeek }))
-        props.setTableCurrentWeek(finalWeek)
+        props.setTableWeekNotRaw(finalWeek)
       }
     }
   }

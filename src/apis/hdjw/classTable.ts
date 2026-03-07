@@ -147,7 +147,7 @@ export interface ExtraCourseInfo {
  * @param xq 学期
  * @returns 无课表课程
  */
-export const getExtraCourseApi = async (xn: number, xq: number) => {
+export const getExtraCourseApi = async (xn: string, xq: string) => {
   return request.get<ExtraCourseInfo[]>('/hdjw/class-table-extra', {
     data: {
       xn,

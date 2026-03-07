@@ -1,14 +1,7 @@
 import { View, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import dayjs from 'dayjs'
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import AddCourseButton from './components/AddCourseButton'
 import ClassDetailFloat from './components/ClassDetailFloat'
 import ExtraCourse from './components/ExtraCourse'
@@ -23,23 +16,15 @@ import {
   type ExtraCourseInfo,
 } from '@/apis/hdjw/classTable'
 import { useClassStartDate, useCurrentSemesterInfo } from '@/apis/semester'
-import { useUserInfo } from '@/apis/userInfo'
 import Card from '@/components/Card'
 import PullRefresh from '@/components/PullRefresh'
 import { offColor, offFontColor, onColors, onFontColors } from '@/utils/config'
-import { rawWeekNum } from '@/utils/day'
+import { getXnXqShowName, rawWeekNum } from '@/utils/day'
 import usePromise from '@/utils/hooks/usePromise'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import useShowCount from '@/utils/hooks/useShowCount'
 import { fetchUserSettings } from '@/utils/storage/userSettings'
 import type { CurDatesOfWeek, ClassTableItem } from './interface'
-import type { SetStateAction } from 'react'
-
-export interface Semester {
-  show: string
-  xn: number
-  xq: number
-}
 
 /** @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Remainder */
 function modPositive(n: number, d: number) {
@@ -187,59 +172,6 @@ function formatTable(
 const fetchSettings = async () =>
   (await fetchUserSettings()).classtablePageSettings
 
-type SemInfo = {
-  tableSemesters: Semester[]
-  tableSemIdx: number
-  tableWeek: number
-}
-/**
- * 课表初始化信息
- */
-function computeInitialSemState(
-  currentTerm: number,
-  currentSemYear: number,
-  currentStart: string,
-  userEnterYear: number
-): SemInfo {
-  const termText: Array<string> = ['秋', '春', '夏']
-
-  // 计算学期
-  const semesters: Array<Semester> = []
-  // TODO 这里先进行特判，到了第三学期就先人为添加一个新学期，
-  // 确保能够查看新课表。后续打算大力修改前端
-  if (currentTerm === 3) {
-    semesters.unshift({
-      show: `${currentSemYear + 1}-${currentSemYear + 2}秋`,
-      xn: currentSemYear + 1,
-      xq: 1,
-    })
-  }
-  // 从当前学年开始倒序枚举到入学年份。有可能入学年份大于当前学年（新生），
-  // 此时下界取 min，确保当前学年被加入
-  for (
-    let i = currentSemYear;
-    i >= Math.min(userEnterYear, currentSemYear);
-    --i
-  ) {
-    for (let j = 3; j >= 1; --j) {
-      semesters.push({
-        show: `${i}-${i + 1}${termText[j - 1]}`,
-        xn: i,
-        xq: j,
-      })
-    }
-  }
-  // 生成基础信息
-  const res = {
-    tableSemesters: semesters,
-    tableSemIdx: semesters.findIndex(
-      item => item.xn == currentSemYear && item.xq == currentTerm
-    ),
-    tableWeek: Math.min(18, rawWeekNum(currentStart) + 1), // 当位于假期，显示最后一周的课表
-  }
-  return res
-}
-
 const Index: React.FC = () => {
   const [refreshKey, refreshTrigger] = useRefreshKey()
 
@@ -247,58 +179,34 @@ const Index: React.FC = () => {
   // 因此在本页面show的时候触发某些数据的刷新
   const pageShowTimes = useShowCount()
 
-  const [userInfo, , , userInfoErr] = useUserInfo([])
-  const [currentSemInfo, , , currentSemInfoErr] = useCurrentSemesterInfo([])
-  const semStateInit = useMemo(() => {
-    if (userInfo === undefined || currentSemInfo === undefined) {
-      return undefined
-    }
+  const [currentSemInfo, , , currentSemInfoErr] = useCurrentSemesterInfo([
+    refreshKey,
+  ])
 
-    return computeInitialSemState(
-      currentSemInfo.term,
-      currentSemInfo.year,
-      currentSemInfo.startDate,
-      userInfo.enter
-    )
-  }, [currentSemInfo, userInfo])
+  const [tableXn, setTableXn] = useState<string>()
+  const [tableXq, setTableXq] = useState<string>()
+  const [tableWeekNotRaw, setTableWeekNotRawInternal] = useState<number>(0)
+  const isTableWeekSetByUser = useRef(false)
+  const setTableWeekNotRawWrapped = (w: number) => {
+    isTableWeekSetByUser.current = true
+    setTableWeekNotRawInternal(w)
+  }
 
-  const semStateSetByUser = useRef(false)
-  const [{ tableSemIdx, tableSemesters, tableWeek }, internalSetSemState] =
-    useState<Partial<SemInfo>>({})
-  const wrappedSetSemState = useCallback(
-    (f: SetStateAction<Partial<SemInfo>>) => {
-      internalSetSemState(f)
-      semStateSetByUser.current = true
-    },
-    []
-  )
   useEffect(() => {
-    if (semStateSetByUser.current || semStateInit === undefined) {
-      return
+    if (
+      currentSemInfo !== undefined &&
+      (tableXn === undefined || tableXq === undefined)
+    ) {
+      setTableXn(currentSemInfo.year.toString())
+      setTableXq(currentSemInfo.term.toString())
+      if (isTableWeekSetByUser.current) {
+        return
+      }
+      setTableWeekNotRawInternal(
+        Math.min(18, rawWeekNum(currentSemInfo.startDate) + 1)
+      )
     }
-    internalSetSemState(semStateInit)
-  }, [semStateInit])
-  type S = React.Dispatch<React.SetStateAction<number | undefined>>
-  const setTableSemIdx: S = n =>
-    wrappedSetSemState(old => ({
-      ...old,
-      tableSemIdx: typeof n === 'function' ? n(old.tableSemIdx) : n,
-    }))
-  const setTableWeek: S = n =>
-    wrappedSetSemState(old => ({
-      ...old,
-      tableWeek: typeof n === 'function' ? n(old.tableWeek) : n,
-    }))
-
-  const [tableXn, tableXq] = useMemo(() => {
-    if (tableSemesters === undefined || tableSemIdx === undefined) {
-      return [undefined, undefined]
-    }
-    return [
-      String(tableSemesters[tableSemIdx]!.xn),
-      String(tableSemesters[tableSemIdx]!.xq),
-    ] as const
-  }, [tableSemIdx, tableSemesters])
+  }, [currentSemInfo, tableXn, tableXq])
 
   const [
     classTable,
@@ -316,12 +224,13 @@ const Index: React.FC = () => {
 
   // 计算当前选定周的日期
   const curDatesOfWeek = useMemo<Array<CurDatesOfWeek> | undefined>(() => {
-    if (tableStart === undefined || tableWeek == undefined) {
+    if (tableStart === undefined || tableWeekNotRaw == undefined) {
       return undefined
     }
-    if (tableWeek !== 0 /* TODO: why? */) {
+    if (tableWeekNotRaw !== 0 /* TODO: why? */) {
       const daysArrayTemp: Array<CurDatesOfWeek> = []
-      const curWeek = tableWeek < 0 ? tableWeek + 1 : tableWeek - 1
+      const curWeek =
+        tableWeekNotRaw < 0 ? tableWeekNotRaw + 1 : tableWeekNotRaw - 1
       const startDate = dayjs(tableStart).add(curWeek, 'week')
       for (let i = 0; i < 7; ++i) {
         const temp = startDate.add(i, 'day')
@@ -334,7 +243,7 @@ const Index: React.FC = () => {
     } else {
       return undefined
     }
-  }, [tableWeek, tableStart])
+  }, [tableWeekNotRaw, tableStart])
 
   const [
     classDetailsForFloatComponentToShow,
@@ -361,12 +270,7 @@ const Index: React.FC = () => {
   const [showExtraCoursePopup, setShowExtraCoursePopup] = useState(false)
   const [extraCourseData, setExtraCourseData] = useState<ExtraCourseInfo[]>([])
   const handleShowExtraCourse = async () => {
-    if (
-      !tableSemesters ||
-      tableSemesters.length === 0 ||
-      !tableSemIdx ||
-      !tableSemesters[tableSemIdx]
-    ) {
+    if (tableXn === undefined || tableXq === undefined) {
       return
     }
     await Taro.showLoading({
@@ -374,10 +278,7 @@ const Index: React.FC = () => {
       title: '加载中...',
     })
     try {
-      const res = await getExtraCourseApi(
-        tableSemesters[tableSemIdx].xn,
-        tableSemesters[tableSemIdx].xq
-      )
+      const res = await getExtraCourseApi(tableXn, tableXq)
       setExtraCourseData(res)
       setShowExtraCoursePopup(true)
     } catch (err) {
@@ -390,6 +291,9 @@ const Index: React.FC = () => {
     }
   }
 
+  const currentXn = currentSemInfo ? currentSemInfo.year.toString() : undefined
+  const currentXq = currentSemInfo ? currentSemInfo.term.toString() : undefined
+
   const onRefresh = async (close: () => void) => {
     refreshTrigger()
     close()
@@ -398,38 +302,31 @@ const Index: React.FC = () => {
   const formattedTable = useMemo(
     () =>
       (classTable &&
-        tableWeek !== undefined &&
+        tableWeekNotRaw !== undefined &&
         formatTable(
           settings?.needDisplayNotCurrentWeekClasses === true,
           classTable,
-          tableWeek
+          tableWeekNotRaw
         )) ||
       [],
-    [classTable, settings?.needDisplayNotCurrentWeekClasses, tableWeek]
+    [classTable, settings?.needDisplayNotCurrentWeekClasses, tableWeekNotRaw]
   )
 
   const title1 = () => {
     if (
-      tableSemesters === undefined ||
-      tableSemIdx == undefined ||
-      tableWeek == undefined
+      tableXn === undefined ||
+      tableXq === undefined ||
+      tableWeekNotRaw == undefined
     ) {
-      return userInfoErr !== null || currentSemInfoErr !== null ? (
+      return currentSemInfoErr !== null ? (
         <Text>课表学期信息初始化失败</Text>
       ) : (
         <Text>正在获取学期信息…</Text> // 若学期信息已被请求过，直接显示
       )
     }
 
-    const semShow = tableSemesters[tableSemIdx]?.show
-    if (semShow === undefined) {
-      throw new Error('semesters下标越界，这是一个bug')
-    }
-
-    const semWeekShow =
-      tableWeek >= 0
-        ? `${semShow}    第${tableWeek}周`
-        : `${semShow}    距离开学还有${-tableWeek}周` // TODO: dead?
+    const semShow = getXnXqShowName(+tableXn, +tableXq)
+    const semWeekShow = `${semShow} 第${tableWeekNotRaw}周`
 
     const dataStatus = () => {
       if (
@@ -465,16 +362,16 @@ const Index: React.FC = () => {
     <Fragment>
       <Header
         title1={title1()}
-        semesters={tableSemesters}
-        tableCurrentDatesOfWeek={curDatesOfWeek}
-        tableCurrentWeek={tableWeek}
-        tableCurrentSemIdx={tableSemIdx}
+        tableDatesOfWeek={curDatesOfWeek}
+        tableWeek={tableWeekNotRaw}
         setShouldShowOptions={setShouldShowOptions}
-        xn={currentSemInfo?.year}
-        xq={currentSemInfo?.term}
-        rawWeekNum={
+        currentXn={currentXn}
+        currentXq={currentXq}
+        currentRawWeekNum={
           currentSemInfo ? rawWeekNum(currentSemInfo?.startDate) : undefined
         }
+        tableXn={tableXn ? +tableXn : undefined}
+        tableXq={tableXq ? +tableXq : undefined}
       />
       <ExtraCourse
         open={showExtraCoursePopup}
@@ -484,8 +381,8 @@ const Index: React.FC = () => {
       <PullRefresh runFunc={onRefresh} topGap={124}>
         <TableBody
           formattedTable={formattedTable}
-          tableCurrentWeek={tableWeek}
-          setTableCurrentWeek={setTableWeek}
+          tableWeekNotRaw={tableWeekNotRaw}
+          setTableWeekNotRaw={setTableWeekNotRawWrapped}
           onRefresh={onRefresh}
           setClassDetailsForFloatComponentToShow={
             setClassDetailsForFloatComponentToShow
@@ -502,26 +399,24 @@ const Index: React.FC = () => {
       <Options
         show={shouldShowOptions}
         setShow={setShouldShowOptions}
-        tableCurrentWeek={tableWeek}
-        setTableCurrentWeek={setTableWeek}
-        tableCurrentSemIdx={tableSemIdx}
-        setTableCurrentSem={setTableSemIdx}
-        semesters={tableSemesters}
+        tableWeek={tableWeekNotRaw}
+        setTableWeek={setTableWeekNotRawWrapped}
+        setTableXn={setTableXn}
+        setTableXq={setTableXq}
+        tableXn={tableXn}
+        tableXq={tableXq}
+        currentXn={currentXn}
+        currentXq={currentXq}
+        currentSemStartDate={currentSemInfo?.startDate}
         refreshTableSettingsTrigger={refreshTrigger}
+        refreshKey={refreshKey}
       />
       <ClassDetailFloat
         classDetailsToShow={classDetailsForFloatComponentToShow}
         clearClassDetailsToShow={clearClassDetailsForFloatComponentToShow}
         refreshTable={refreshTrigger}
       />
-      {tableSemesters &&
-        tableSemIdx !== undefined &&
-        tableSemesters[tableSemIdx] && (
-          <AddCourseButton
-            xn={tableSemesters[tableSemIdx].xn}
-            xq={tableSemesters[tableSemIdx].xq}
-          />
-        )}
+      {tableXn && tableXq && <AddCourseButton xn={+tableXn} xq={+tableXq} />}
     </Fragment>
   )
 }

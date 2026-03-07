@@ -51,3 +51,6 @@ export function markBook(borrow: Array<any>): Array<any> {
     }
   })
 }
+
+export const getXnXqShowName = (xn: number, xq: number) =>
+  `${xn}-${xn + 1}${['秋', '春', '夏'][xq - 1]}`

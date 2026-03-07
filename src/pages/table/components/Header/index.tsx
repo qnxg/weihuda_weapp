@@ -2,7 +2,6 @@ import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
 import styles from './index.module.scss'
-import type { Semester } from '../..'
 import type { CurDatesOfWeek } from '../../interface'
 import type { ReactNode } from 'react'
 
@@ -11,20 +10,20 @@ import type { ReactNode } from 'react'
  */
 interface Props {
   title1: ReactNode
-  /** 学期信息表 */
-  semesters: Semester[] | undefined
   /** 选定周的日期 */
-  tableCurrentDatesOfWeek: Array<CurDatesOfWeek> | undefined
+  tableDatesOfWeek: Array<CurDatesOfWeek> | undefined
   /** 选定周数 */
-  tableCurrentWeek: number | undefined
-  /** 选定学期 */
-  tableCurrentSemIdx: number | undefined
+  tableWeek: number | undefined
+  /** 课表选定学年 */
+  tableXn: number | undefined
+  /** 课表选定学期 */
+  tableXq: number | undefined
   /** 当前学年 */
-  xn: number | undefined
+  currentXn: string | undefined
   /** 当前学期 */
-  xq: number | undefined
+  currentXq: string | undefined
   /** 当前周数 */
-  rawWeekNum: number | undefined
+  currentRawWeekNum: number | undefined
   setShouldShowOptions: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -32,7 +31,7 @@ const text = ['周日', '周一', '周二', '周三', '周四', '周五', '周�
 
 const Header: React.FC<Props> = props => {
   const dayOfWeek = new Date().getDay()
-  const { tableCurrentDatesOfWeek, tableCurrentSemIdx, semesters } = props
+  const { tableDatesOfWeek, tableXn, tableXq, currentXn, currentXq } = props
 
   /** 显示课表选项 */
   const onShowOptions = () => {
@@ -51,16 +50,15 @@ const Header: React.FC<Props> = props => {
             [styles['title-item']]: true,
             [styles.selected]:
               index === dayOfWeek &&
-              props.tableCurrentWeek !== undefined &&
-              (props.tableCurrentWeek < 0
-                ? props.tableCurrentWeek + 1
-                : props.tableCurrentWeek - 1) === props.rawWeekNum &&
-              semesters !== undefined &&
-              tableCurrentSemIdx !== undefined &&
-              semesters[tableCurrentSemIdx]?.xn === props.xn &&
-              semesters[tableCurrentSemIdx]?.xq === props.xq,
+              props.tableWeek !== undefined &&
+              props.currentRawWeekNum !== undefined &&
+              props.tableWeek === props.currentRawWeekNum + 1 &&
+              tableXn !== undefined &&
+              tableXq !== undefined &&
+              tableXn.toString() === currentXn &&
+              tableXq.toString() === currentXq,
           })
-          const x = tableCurrentDatesOfWeek && tableCurrentDatesOfWeek[index]
+          const x = tableDatesOfWeek && tableDatesOfWeek[index]
           return (
             <View className={cx} key={String(index)}>
               <View>{d}</View>
