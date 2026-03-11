@@ -14,7 +14,6 @@ export default {
     // 'pages/lostFoundDetail/index', // 失物招领帖详情
     'pages/addCourse/index', // 在课表里添加课程
     'pages/bind/index', // 绑定信息页面
-    'pages/changeLog/index', // 我的-更新日志页面
     'pages/faq/index', // 近期热门问题
     'pages/messageBox/index', // 消息盒子
     'pages/feedback/index', // 反馈建议

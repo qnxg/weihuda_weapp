@@ -90,11 +90,6 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
         onClick: nav('/pages/jifen/index'),
       },
       {
-        title: <Text>更新日志</Text>,
-        icon: <View className={styles.changelogImg} />,
-        onClick: nav('/pages/changeLog/index'),
-      },
-      {
         title: <Text>我要反馈</Text>,
         icon: <View className={styles.feedback} />,
         onClick: nav('/pages/feedback/index'),
