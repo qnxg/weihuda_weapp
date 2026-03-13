@@ -96,12 +96,12 @@ const Index: React.FC = () => {
     try {
       await postFeedback(reqData, noAuth)
       await Taro.showToast({
-        title: '提交成功',
-        icon: 'success',
+        title: '请求失败 HTTP code 418',
         duration: 1000,
+        icon: 'none',
       })
       setTimeout(() => {
-        void Taro.redirectTo({ url: '/pages/feedbackHistory/index' })
+        void Taro.redirectTo({ url: '/pages/feedbackUnavailable/index' })
       }, 1000)
     } catch {
       await Taro.showToast({ title: '提交失败', icon: 'none' })
