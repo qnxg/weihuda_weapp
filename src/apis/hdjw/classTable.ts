@@ -1,6 +1,6 @@
+import { useCallback, type DependencyList } from 'react'
 import request from '../request'
-import { useCacheableGetJson } from '@/utils/storage/requestCache'
-import type { DependencyList } from 'react'
+import usePromise from '@/utils/hooks/usePromise'
 
 /**
  * ClassTable
@@ -58,16 +58,16 @@ export function useCourse(
   xq: string | undefined,
   deps: DependencyList
 ) {
-  return useCacheableGetJson<CourseInfo[]>(
-    '/hdjw/class-table',
-    xn !== undefined && xq !== undefined
-      ? [
-          ['xn', xn],
-          ['xq', xq],
-        ]
-      : undefined,
-    deps
-  )
+  const fetchData = useCallback(async () => {
+    if (xn === undefined || xq === undefined) {
+      console.log(`已忽略 xn (${xn}) 或 xq (${xq}) 为空的课表请求`)
+      return undefined
+    }
+
+    return await getCourseApi(xn, Number(xq))
+  }, [xn, xq])
+
+  return usePromise(fetchData, undefined, [fetchData, ...deps])
 }
 
 /**

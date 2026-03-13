@@ -77,10 +77,10 @@ const CountdownCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
-  const [semesterInfo, loadingCache, loadingFetch] = useCurrentSemesterInfo([
+  const [semesterInfo, loadingFetch] = useCurrentSemesterInfo([
     reloadController,
   ])
-  const combinedLoadingStatus = loadingCache || loadingFetch
+  const combinedLoadingStatus = loadingFetch
   useEffect(() => {
     onLoadingStatusChange(combinedLoadingStatus)
   }, [combinedLoadingStatus, onLoadingStatusChange])

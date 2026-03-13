@@ -115,7 +115,7 @@ const Options: React.FC<OptionProps> = props => {
     currentSemStartDate,
     refreshKey,
   } = props
-  const [userInfo, , , userInfoErr] = useUserInfo([refreshKey])
+  const [userInfo, , userInfoErr] = useUserInfo([refreshKey])
 
   const selectableSemList = useMemo(
     () =>
