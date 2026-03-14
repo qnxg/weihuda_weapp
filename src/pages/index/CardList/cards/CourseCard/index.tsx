@@ -200,15 +200,20 @@ const CourseCard: React.FC<CardProps> = ({
   onLoadingStatusChange,
   reloadController,
 }) => {
-  const [semInfo, fetchingSemInfo] = useCurrentSemesterInfo([reloadController])
+  const [semInfo, loadingSemInfoCache, fetchingSemInfo] =
+    useCurrentSemesterInfo([reloadController])
   const { term, year, startDate } = semInfo || {}
-  const [course, fetchingCourse, courseErr] = useCourse(
+  const [course, loadingCourseCache, fetchingCourse, courseErr] = useCourse(
     year === undefined ? undefined : String(year),
     term === undefined ? undefined : String(term),
     [reloadController]
   )
 
-  const combinedLoadingStatus = fetchingSemInfo || fetchingCourse
+  const combinedLoadingStatus =
+    loadingSemInfoCache ||
+    fetchingSemInfo ||
+    loadingCourseCache ||
+    fetchingCourse
 
   useEffect(() => {
     onLoadingStatusChange(combinedLoadingStatus)

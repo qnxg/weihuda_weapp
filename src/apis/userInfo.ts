@@ -1,6 +1,6 @@
-import { useCallback, type DependencyList } from 'react'
 import request from './request'
-import usePromise from '@/utils/hooks/usePromise'
+import { useCacheableGetJson } from '@/utils/storage/requestCache'
+import type { DependencyList } from 'react'
 
 /**
  * UserInfo，当前用户信息
@@ -49,9 +49,5 @@ export const getUserInfoApi = async () => {
 }
 
 export function useUserInfo(deps: DependencyList) {
-  const fetchData = useCallback(async () => {
-    return await getUserInfoApi()
-  }, [])
-
-  return usePromise(fetchData, undefined, [fetchData, ...deps])
+  return useCacheableGetJson<UserInfo>('/info/user', [], deps)
 }

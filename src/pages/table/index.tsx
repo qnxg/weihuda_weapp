@@ -179,7 +179,7 @@ const Index: React.FC = () => {
   // 因此在本页面show的时候触发某些数据的刷新
   const pageShowTimes = useShowCount()
 
-  const [currentSemInfo, , currentSemInfoErr] = useCurrentSemesterInfo([
+  const [currentSemInfo, , , currentSemInfoErr] = useCurrentSemesterInfo([
     refreshKey,
   ])
 
@@ -208,17 +208,19 @@ const Index: React.FC = () => {
     }
   }, [currentSemInfo, tableXn, tableXq])
 
-  const [classTable, loadingClassTableFetch, classTableErr] = useCourse(
-    tableXn,
-    tableXq,
-    [refreshKey, pageShowTimes]
-  )
+  const [
+    classTable,
+    loadingClassTableCache,
+    loadingClassTableFetch,
+    classTableErr,
+  ] = useCourse(tableXn, tableXq, [refreshKey, pageShowTimes])
 
-  const [tableStart, loadingTableStartFetch, tableStartErr] = useClassStartDate(
-    tableXn,
-    tableXq,
-    [refreshKey, pageShowTimes]
-  )
+  const [
+    tableStart,
+    loadingTableStartCache,
+    loadingTableStartFetch,
+    tableStartErr,
+  ] = useClassStartDate(tableXn, tableXq, [refreshKey, pageShowTimes])
 
   // 计算当前选定周的日期
   const curDatesOfWeek = useMemo<Array<CurDatesOfWeek> | undefined>(() => {
@@ -327,7 +329,13 @@ const Index: React.FC = () => {
     const semWeekShow = `${semShow} 第${tableWeekNotRaw}周`
 
     const dataStatus = () => {
-      if (loadingClassTableFetch || loadingSettings || loadingTableStartFetch) {
+      if (
+        loadingClassTableCache ||
+        loadingClassTableFetch ||
+        loadingSettings ||
+        loadingTableStartCache ||
+        loadingTableStartFetch
+      ) {
         return '（同步中）'
       }
       if (classTableErr) {
