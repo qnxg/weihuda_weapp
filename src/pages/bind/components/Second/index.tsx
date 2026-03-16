@@ -1,6 +1,5 @@
 import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import classNames from 'classnames'
 import React, { useRef } from 'react'
 import styles from './index.module.scss'
 import { postBind } from '@/apis/bind'
@@ -31,6 +30,20 @@ const Second: React.FC = () => {
         url: '/pages/index/index',
       })
     } catch (err) {
+      if (err.message.includes('请前往个人门户修改密码后重试')) {
+        await Taro.showModal({
+          title: '请修改密码',
+          content:
+            '您的账号密码正确，但需要重新设置密码。请使用账号密码登录个人门户（不要使用微信扫码登录），并在专门的密码修改提示界面按要求重新修改密码。请严格按照该流程修改密码，在其他地方修改的密码无效。\n密码修改要求是强制的。如有疑问请联系学校信息化办。',
+        })
+      }
+      if (err.message.includes('账号被锁定')) {
+        await Taro.showModal({
+          title: '账号被锁定',
+          content:
+            '由于您的账号密码输入错误次数过多，账号已被锁定。请10分钟之后再试。',
+        })
+      }
       console.log(err)
     }
   }
@@ -96,11 +109,7 @@ const Second: React.FC = () => {
         </View>
       </View>
       <View className={styles.tips}>
-        如忘记密码，请前往 https://pt.hnu.edu.cn 进行密码重置。
-      </View>
-      <View className={classNames(styles.tips, 'my-2')}>
-        如密码输入正确但仍提示密码错误，说明先前账号密码输入错误次数过多，被锁定，请
-        10 分钟之后再试。
+        如忘记密码，请前往个人门户：https://pt.hnu.edu.cn 进行密码重置。
       </View>
       <Button className={styles.confirmBtn} onClick={submit}>
         进行验证
