@@ -101,7 +101,11 @@ const Index: React.FC = () => {
         duration: 1000,
       })
       setTimeout(() => {
-        void Taro.redirectTo({ url: '/pages/feedbackHistory/index' })
+        if (noAuth) {
+          void Taro.navigateBack()
+        } else {
+          void Taro.redirectTo({ url: '/pages/feedbackHistory/index' })
+        }
       }, 1000)
     } catch {
       await Taro.showToast({ title: '提交失败', icon: 'none' })
