@@ -1,82 +1,14 @@
 import { View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import classNames from 'classnames'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import style from './index.module.scss'
 import { getJifenTotalApi } from '@/apis/jifen'
-import { getZhihuItemLink, getZhihuPageApi } from '@/apis/zhihu'
-import Button from '@/components/Button'
 import Card from '@/components/Card'
 import SignButton from '@/pages/jifen/components/Qiandao/SignButton'
 import usePromise from '@/utils/hooks/usePromise'
 import useRefreshKey from '@/utils/hooks/useRefreshKey'
 import useShowCount from '@/utils/hooks/useShowCount'
 import { fetchUserSettings } from '@/utils/storage/userSettings'
-import { setNeedShowHintAfterSignIn } from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
 import type CardProps from '../../CardProps'
-import type { IZhihu } from '@/apis/zhihu'
-
-const getRecentZhihu = async () =>
-  (await getZhihuPageApi({ offset: 0, req_count: 3, tags: '' })).rows
-
-const ZhihuItem: React.FC<{ izhihu: IZhihu }> = props => {
-  const { izhihu } = props
-  const [clicked, setClicked] = useState(false)
-  return (
-    <View
-      className={classNames(style.zhihuItem, { [style.clicked]: clicked })}
-      onClick={() => {
-        void Taro.navigateTo({ url: getZhihuItemLink(izhihu) })
-        setClicked(true)
-      }}
-    >
-      {izhihu.title}
-    </View>
-  )
-}
-
-const SignInCardMorePart: React.FC<{
-  onCollapseButtonClick: () => unknown
-  onNeverShowAgainButtonClick: () => unknown
-}> = props => {
-  const [moreThings, loadingMoreThings, error] = usePromise(
-    getRecentZhihu,
-    [],
-    [getRecentZhihu]
-  )
-
-  return loadingMoreThings || error || moreThings.length == 0 ? (
-    <></>
-  ) : (
-    <View className={style.more}>
-      <View>
-        查看最新推文，获取更多积分吧：
-        {moreThings.map(v => (
-          <ZhihuItem izhihu={v} key={v.id} />
-        ))}
-      </View>
-      <View className={style.otherHints}>
-        问题反馈/知湖投稿也有机会获得积分哟~
-      </View>
-      <View className={style.actionButtonLine}>
-        <Button
-          theme='plain'
-          className={style.actionButton}
-          onClick={props.onCollapseButtonClick}
-        >
-          折叠
-        </Button>
-        <Button
-          theme='plain'
-          className={style.actionButton}
-          onClick={props.onNeverShowAgainButtonClick}
-        >
-          不再显示
-        </Button>
-      </View>
-    </View>
-  )
-}
 
 /** 签到卡片 */
 const SignInCard: React.FC<CardProps> = props => {
@@ -108,8 +40,6 @@ const SignInCard: React.FC<CardProps> = props => {
     onLoadingStatusChange(loadingJifen)
   }, [onLoadingStatusChange, loadingJifen])
 
-  const [showMore, setShowMore] = useState(false)
-
   if (settings == undefined || !settings.show) {
     return <></>
   }
@@ -125,26 +55,8 @@ const SignInCard: React.FC<CardProps> = props => {
         <SignButton
           className={style.signInButton}
           key={props.reloadController}
-          signActionCallback={() => {
-            reloadJifenTrigger()
-            if (settings.showHintAfterSignIn) {
-              setShowMore(true)
-            }
-          }}
+          signActionCallback={() => reloadJifenTrigger()}
         />
-      </View>
-      <View>
-        {showMore ? (
-          <SignInCardMorePart
-            onCollapseButtonClick={() => setShowMore(false)}
-            onNeverShowAgainButtonClick={() => {
-              setShowMore(false)
-              void setNeedShowHintAfterSignIn(false)
-            }}
-          />
-        ) : (
-          <></>
-        )}
       </View>
     </Card>
   )

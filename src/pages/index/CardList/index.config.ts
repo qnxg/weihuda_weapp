@@ -2,13 +2,11 @@ import CampusCard from './cards/CampusCard'
 import CountdownCard from './cards/CountdownCard'
 import CourseCard from './cards/CourseCard'
 import ElectricityCard from './cards/ElectricityCard'
-import EmailCard from './cards/EmailCard'
 import GradeCard from './cards/GradeCard'
 import LabAndExamCard from './cards/LabAndExamCard'
 import MessageCard from './cards/MessageCard'
 import NetflowCard from './cards/NetflowCard'
 import SignInCard from './cards/SignInCard'
-import HomeSwiperCard from './cards/SwiperCard'
 import { DEFAULT_INDEX_NORMAL_CARD_SETTINGS } from '@/utils/storage/userSettings/defaults/indexNormalCardSettings'
 import type CardProps from './CardProps'
 import type React from 'react'
@@ -26,14 +24,12 @@ export const topCards: [string, React.FC<CardProps>][] = [
  * 如果在此处添加/删除/修改了字段，一定要一同修改卡片默认设置
  */
 const customizableCards = {
-  今日知湖: HomeSwiperCard,
   实验与考试: LabAndExamCard,
   我的课程: CourseCard,
   本月流量: NetflowCard,
   宿舍电量: ElectricityCard,
   假期倒计时: CountdownCard,
   校园卡余额: CampusCard,
-  校园邮箱: EmailCard,
   成绩查询: GradeCard,
 } as const satisfies Record<string, React.FC<CardProps>>
 

@@ -1,7 +1,7 @@
 export default {
   pages: [
     'pages/index/index', // 首页
-    'pages/zhihu/index', // 知湖
+    // 'pages/zhihu/index', // 知湖
     // 'pages/informationAdd/index', // 发布知湖
     'pages/jifen/index', // 积分中心
     'pages/webview/index', // webview
@@ -9,7 +9,7 @@ export default {
     'pages/mine/index', // 我的
     'pages/authConfirm/index', // 授权确认
     'pages/toolBox/index', // 工具箱
-    'pages/detail/index', // 知湖文章详情
+    // 'pages/detail/index', // 知湖文章详情
     // 'pages/lostFoundAdd/index', // 发布失物招领帖
     // 'pages/lostFoundDetail/index', // 失物招领帖详情
     'pages/addCourse/index', // 在课表里添加课程
@@ -91,12 +91,12 @@ export default {
         iconPath: '@iconHomePath',
         selectedIconPath: '@selectedIconHomePath',
       },
-      {
-        pagePath: 'pages/zhihu/index',
-        text: '知湖',
-        iconPath: '@iconInfoPath',
-        selectedIconPath: '@selectedIconInfoPath',
-      },
+      // {
+      //   pagePath: 'pages/zhihu/index',
+      //   text: '知湖',
+      //   iconPath: '@iconInfoPath',
+      //   selectedIconPath: '@selectedIconInfoPath',
+      // },
       {
         pagePath: 'pages/toolBox/index',
         text: '工具箱',

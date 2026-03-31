@@ -3,10 +3,7 @@ import LineDividedSwitchList from '@/components/LineDividedSwitchList'
 import usePromise from '@/utils/hooks/usePromise'
 import useShouldRelaunchIndex from '@/utils/hooks/useShouldRelaunchIndex'
 import { fetchUserSettings } from '@/utils/storage/userSettings'
-import {
-  setNeedShowHintAfterSignIn,
-  setNeedShowSignInCard,
-} from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
+import { setNeedShowSignInCard } from '@/utils/storage/userSettings/customAccessors/SignInCardSettings'
 import type { SwitchChangeEvent } from '@/components/AsyncSwitch'
 
 const getSignInCardSettings = async () =>
@@ -33,18 +30,6 @@ const SwitchList: React.FC<{
     [setShouldRelaunchIndex]
   )
 
-  const onNeedShowHintAfterSignInChange = useCallback(
-    async (e: SwitchChangeEvent) => {
-      setShouldRelaunchIndex(true)
-      await setNeedShowHintAfterSignIn(e.detail.value)
-      return {
-        checked: (await getSignInCardSettings()).showHintAfterSignIn,
-        disabled: false,
-      }
-    },
-    [setShouldRelaunchIndex]
-  )
-
   return (
     <LineDividedSwitchList
       items={[
@@ -55,14 +40,6 @@ const SwitchList: React.FC<{
             disabled: loadingSignInCardSettings,
           },
           onChange: onNeedShowSignInCardChange,
-        },
-        {
-          title: '签到后显示推荐',
-          init: {
-            checked: signInCardSettings?.showHintAfterSignIn,
-            disabled: loadingSignInCardSettings,
-          },
-          onChange: onNeedShowHintAfterSignInChange,
         },
       ]}
     />

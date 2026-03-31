@@ -1,4 +1,4 @@
-import { Block, Button, Text, View } from '@tarojs/components'
+import { Block, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React from 'react'
 import styles from './index.module.scss'
@@ -98,14 +98,6 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
         title: <Text>常见问题</Text>,
         icon: <View className={styles.faImg} />,
         onClick: nav('/pages/faq/index'),
-      },
-      {
-        title: (
-          <Button openType='contact' className={styles.cusBut}>
-            人工客服
-          </Button>
-        ),
-        icon: <View className={styles.cusServiceImg} />,
       },
       {
         title: <Text>免责声明</Text>,

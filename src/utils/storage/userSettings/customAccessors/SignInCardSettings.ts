@@ -6,10 +6,3 @@ export async function setNeedShowSignInCard(needShow: boolean) {
     show: needShow,
   }))
 }
-
-export async function setNeedShowHintAfterSignIn(needShow: boolean) {
-  await modifyUserSettingsPart('indexSignInCardSettings', async old => ({
-    ...old,
-    showHintAfterSignIn: needShow,
-  }))
-}

@@ -11,13 +11,11 @@ export interface IndexNormalCardSettings extends SettingsItem {
 export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
   settingsMajorVersion: '1',
   show: [
-    '今日知湖',
     '我的课程',
     '假期倒计时',
     '本月流量',
     '宿舍电量',
     '校园卡余额',
-    '校园邮箱',
     '实验与考试',
     '成绩查询',
   ],

@@ -7,7 +7,7 @@ import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg'
 import experiment from '@/static/toolBox/icon-experiment.svg'
 // import experimentGrade from '@/static/toolBox/icon-experiment-grade.svg'
 import grade from '@/static/toolBox/icon-grade.svg'
-import mxsc from '@/static/toolBox/icon-mxsc.svg'
+// import mxsc from '@/static/toolBox/icon-mxsc.svg'
 import netflowBill from '@/static/toolBox/icon-network-bill.svg'
 import netflowDetail from '@/static/toolBox/icon-network-detail.svg'
 import PEAppoint from '@/static/toolBox/icon-pe-appointment.svg'
@@ -148,11 +148,11 @@ export const data: Category[] = [
         imgUrl: electricity,
         navigator: '/queryPage/electricity/index',
       },
-      {
-        title: '萌新手册',
-        imgUrl: mxsc,
-        navigator: '/pages/webview/index?url=https://qnxg.cn/mxsc/book/',
-      },
+      // {
+      //   title: '萌新手册',
+      //   imgUrl: mxsc,
+      //   navigator: '/pages/webview/index?url=https://qnxg.cn/mxsc/book/',
+      // },
       // {
       //   title: '电费历史',
       //   imgUrl: electricityHistory,
