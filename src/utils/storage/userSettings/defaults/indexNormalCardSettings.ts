@@ -16,6 +16,7 @@ export const DEFAULT_INDEX_NORMAL_CARD_SETTINGS: IndexNormalCardSettings = {
     '本月流量',
     '宿舍电量',
     '校园卡余额',
+    '校园邮箱',
     '实验与考试',
     '成绩查询',
   ],

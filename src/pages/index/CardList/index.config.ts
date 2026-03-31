@@ -2,6 +2,7 @@ import CampusCard from './cards/CampusCard'
 import CountdownCard from './cards/CountdownCard'
 import CourseCard from './cards/CourseCard'
 import ElectricityCard from './cards/ElectricityCard'
+import EmailCard from './cards/EmailCard'
 import GradeCard from './cards/GradeCard'
 import LabAndExamCard from './cards/LabAndExamCard'
 import MessageCard from './cards/MessageCard'
@@ -30,6 +31,7 @@ const customizableCards = {
   宿舍电量: ElectricityCard,
   假期倒计时: CountdownCard,
   校园卡余额: CampusCard,
+  校园邮箱: EmailCard,
   成绩查询: GradeCard,
 } as const satisfies Record<string, React.FC<CardProps>>
 
