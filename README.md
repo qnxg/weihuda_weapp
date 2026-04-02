@@ -9,7 +9,7 @@
 | 微信小程序开发文档 | https://developers.weixin.qq.com/miniprogram/dev/framework/       | 微信小程序官方文档                                            |
 | Taro               | https://taro-docs.jd.com/docs/                                    | 移动端解决方案                                                |
 | React              | https://zh-hans.react.dev/reference/react                         | JS界面构建库                                                  |
-| Dayjs              | https://www.npmjs.com/package/dayjs https://dayjs.gitee.io/zh-CN/ | 轻量的处理时间和日期的 JavaScript 库（正在考虑删掉这个依赖）  |
+| Dayjs              | https://www.npmjs.com/package/dayjs https://dayjs.gitee.io/zh-CN/ | 轻量的处理时间和日期的 JavaScript 库  |
 | classnames         | https://www.npmjs.com/package/classnames                          | 处理类名的工具                                                |
 | Typescript         | https://ts.nodejs.cn/                                             | 一种基于 JavaScript 构建的强类型编程语言                      |
 | Eslint             | https://eslint.org/docs/latest/                                   | 增强对 Javascript 的语法检查                                  |
