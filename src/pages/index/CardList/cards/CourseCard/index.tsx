@@ -121,8 +121,6 @@ function formatCourse(
         // 可以合并
         item.time = preItem.time
         preItem._show = false
-      } else {
-        break
       }
     }
   }
