@@ -67,8 +67,8 @@ function formatCourse(
     return undefined
   }
 
-  // 是否已经出现了一次特殊类型，防止同时出现正在进行和即将开始
-  let hasSpecial = false
+  // 是否已有正在进行的课程，防止同时出现正在进行和即将开始
+  let hasDoing = false
   // 获取课程显示类型（仅对今日有效）
   const getType = (startTime: string, endTime: string) => {
     if (!isToday) {
@@ -81,19 +81,15 @@ function formatCourse(
     if (current.isAfter(end)) {
       return 'end'
     }
-    if (hasSpecial) {
-      return 'normal-today'
-    }
     // 如果介于开始时间和结束时间之间，即正在进行
     if (current.isBefore(end) && current.isAfter(start)) {
-      hasSpecial = true
+      hasDoing = true
       return 'doing'
     }
-    // 如果当前时间小于开始时间30分钟之内，即将开始
+    // 如果当前时间小于开始时间30分钟之内，且无正在进行，显示即将开始
     const diffOfStart = start.diff(current, 'minute')
     if (diffOfStart <= 30 && diffOfStart >= 0) {
-      hasSpecial = true
-      return 'will'
+      return hasDoing ? 'normal-today' : 'will'
     }
     return 'normal-today'
   }
