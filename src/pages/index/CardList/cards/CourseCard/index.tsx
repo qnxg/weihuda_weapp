@@ -116,6 +116,8 @@ function formatCourse(
       if (
         item.courseName === preItem.courseName &&
         item.place === preItem.place &&
+        item.courseId == preItem.courseId &&
+        item.customizeId == preItem.customizeId &&
         item.time === preItem.time + 1
       ) {
         // 可以合并
