@@ -14,7 +14,7 @@
 | Typescript         | https://ts.nodejs.cn/                                             | 一种基于 JavaScript 构建的强类型编程语言                      |
 | Eslint             | https://eslint.org/docs/latest/                                   | 增强对 Javascript 的语法检查                                  |
 | Prettier           | https://prettier.io/docs/                                         | 代码格式化工具                                                |
-| TailwindCSS        | https://v3.tailwindcss.com/docs                                   | 提供很多原子的工具类来写样式（我们暂时只用 v3 版本，不用 v4） |
+| TailwindCSS        | https://v3.tailwindcss.com/docs                                   | 提供很多原子的工具类来写样式（**[已弃用，即将移除该依赖](https://code.qnxg.cn/qnxg/front/issues/139)**） |
 
 ### 项目结构
 
