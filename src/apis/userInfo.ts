@@ -37,7 +37,7 @@ export interface UserInfo {
   /**
    * 学制
    */
-  xz: number
+  xz?: number
 }
 
 /**
