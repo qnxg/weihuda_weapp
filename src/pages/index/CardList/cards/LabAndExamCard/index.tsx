@@ -135,12 +135,13 @@ const LabAndExamCard: React.FC<CardProps> = ({
     const sevenDaysLater = now.add(7, 'day')
     const taskList: TaskItemType[] = []
 
-    // 处理考试数据 - 根据设置决定是否显示
+    // region 处理考试数据
     if (examData && Array.isArray(examData)) {
       examData.forEach(exam => {
         try {
           // 解析日期时间
-          const dateTimeStr = `${exam.date} ${exam.time.split('-')[0] || exam.time}`
+          // 教务系统可能用~分割时间，也可能用-分割时间，保险起见都试试
+          const dateTimeStr = `${exam.date} ${exam.time.split('~')[0] || exam.time.split('-')[0] || exam.time}`
           const examDateTime = dayjs(dateTimeStr)
 
           // 只保留7天内且未过期的
@@ -165,8 +166,9 @@ const LabAndExamCard: React.FC<CardProps> = ({
         }
       })
     }
+    // endregion
 
-    // 处理实验数据 - 根据设置决定是否显示
+    // region 处理实验数据
     if (labData && Array.isArray(labData)) {
       labData.forEach(lab => {
         try {
@@ -194,8 +196,9 @@ const LabAndExamCard: React.FC<CardProps> = ({
         }
       })
     }
+    // endregion
 
-    // 处理准考证预存数据 - 根据设置决定是否显示
+    // region 处理准考证预存数据
     if (examIdData && Array.isArray(examIdData)) {
       examIdData.forEach(examIdItem => {
         try {
@@ -223,6 +226,7 @@ const LabAndExamCard: React.FC<CardProps> = ({
         }
       })
     }
+    // endregion
 
     // 按时间排序，由近到远
     taskList.sort((a, b) => {
