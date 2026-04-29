@@ -48,14 +48,16 @@ const Index: React.FC = () => {
     preparePrerequisites,
   ])
 
+  /** 初始值设为 -1，以防 {@link getData} 意外请求数据 */
   const [
     { selectedXnIndex: selectedXnIdx, selectedXq: selectedXqIdx },
     setSelectedTabStates,
   ] = useState<GradeState>({
-    selectedXnIndex: 0,
-    selectedXq: 1,
+    selectedXnIndex: -1,
+    selectedXq: -1,
   })
-  // 设置默认选项卡
+
+  // 数据可用后再设置默认选项卡
   useEffect(() => {
     if (prerequisites !== null) {
       setSelectedTabStates({
@@ -65,16 +67,14 @@ const Index: React.FC = () => {
     }
   }, [prerequisites])
 
-  const [data, setData] = useState<GradeItem[]>([])
-
-  const [show, setShow] = useState(false)
+  const [data, setData] = useState<GradeItem[] | null>(null)
 
   const [showGradeDetail, setShowGradeDetail] = useState<GradeDetail | null>(
     null
   )
 
   const getData = useCallback(async () => {
-    if (prerequisites === null) {
+    if (prerequisites === null || selectedXnIdx < 0 || selectedXqIdx < 0) {
       return
     }
     await Taro.showLoading({
@@ -87,14 +87,13 @@ const Index: React.FC = () => {
         selectedXqIdx
       )
       if (!res || res.length === 0) {
-        setShow(false)
+        setData(null)
       } else {
         console.log(res)
         setData(res)
-        setShow(true)
       }
     } catch (err) {
-      setShow(false)
+      setData(null)
       await Taro.showToast({
         icon: 'none',
         title: err.toString(),
@@ -198,7 +197,7 @@ const Index: React.FC = () => {
         current={selectedXqIdx - 1}
       />
       <PullRefresh topGap={136} runFunc={onRefresh}>
-        {data && show && data.length > 0 ? (
+        {data && data.length > 0 ? (
           <Fragment>
             <View className='pt-1'>
               <Text className={styles.tips}>点击可查看课程具体分数组成。</Text>
