@@ -1,0 +1,11 @@
+{
+  "output": "json",
+  "only": "prod",
+  "fields": [
+    "name",
+    "licenseType",
+    "link",
+    "installedVersion",
+    "author"
+  ]
+}

@@ -20,6 +20,7 @@ export default {
     'pages/feedbackHistory/index', // 历史反馈查询
     'pages/noDuty/index', // 免责声明
     'pages/404/index', // 404页
+    'pages/about/index', // 关于
   ],
   subPackages: [
     {

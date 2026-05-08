@@ -15,7 +15,8 @@
 		"fmt": "prettier --write . --log-level warn",
 		"dev": "taro build --type weapp --watch",
 		"build": "yarn lint && taro build --type weapp",
-		"pr-check": "prettier --check . && yarn lint"
+		"pr-check": "prettier --check . && yarn lint",
+    "license": "license-report --config=.license-report-rc.json > ./src/static/licenses/report.json"
 	},
 	"browserslist": [
 		"defaults",
@@ -64,6 +65,7 @@
 		"eslint-plugin-import": "^2.31",
 		"eslint-plugin-react": "^7.37",
 		"eslint-plugin-react-hooks": "^7.0.1",
+		"license-report": "^6.8.2",
 		"postcss": "^8.5.6",
 		"prettier": "^3.5.3",
 		"react-refresh": "^0.14.0",

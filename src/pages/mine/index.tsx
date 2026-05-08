@@ -105,6 +105,11 @@ const OptionsList: React.FC<{ messageUnread: number }> = props => (
         onClick: nav('/pages/noDuty/index'),
       },
       {
+        title: <Text>关于</Text>,
+        icon: <View className={styles.aboutMiniProgramImg} />,
+        onClick: nav('/pages/about/index'),
+      },
+      {
         title: <Text>清除缓存</Text>,
         icon: <View className={styles.cleanImg} />,
         onClick: clean,

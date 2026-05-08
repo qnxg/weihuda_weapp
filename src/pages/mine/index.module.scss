@@ -74,6 +74,10 @@
   @include imageCommon('~@/static/mine/icon-paper.svg');
 }
 
+.aboutMiniProgramImg {
+  @include imageCommon('~@/static/mine/about-mini-program.svg');
+}
+
 .faImg {
   @include imageCommon('~@/static/mine/fa.svg');
 }

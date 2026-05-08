@@ -1,0 +1,24 @@
+@use '~@/utils/scss/global' as *;
+
+.libraryItem {
+  padding: 0.5em 0;
+}
+
+.detailsLabel {
+  color: $secondTextColor;
+  font-size: 0.85em;
+}
+
+.divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  .detailsLabel {
+    color: $darkTextColor;
+  }
+
+  .divider {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
