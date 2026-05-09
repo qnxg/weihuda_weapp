@@ -29,12 +29,17 @@
   }
 
   &.soon {
-    background-color: var(--danger-color-1);
-    border-color: var(--danger-color-4);
+    background-color: var(--success-color-1);
+    border-color: var(--success-color-4);
 
     .rightPart {
-      color: var(--danger-color-4);
+      color: var(--success-color-4);
     }
+  }
+
+  &.normal {
+    background-color: var(--brand-color-1);
+    border-color: var(--brand-color-4);
   }
 
   &:last-child {
