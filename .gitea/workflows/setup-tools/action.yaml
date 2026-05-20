@@ -4,6 +4,10 @@ runs:
   using: 'composite'
   steps:
     - name: Install Package Manager
+      shell: bash
+      env:
+        NPM_CONFIG_REGISTRY: https://registry.npmmirror.com
+        NODEJS_ORG_MIRROR: https://npmmirror.com/mirrors/node
       run: |
         corepack enable
         corepack install
@@ -11,8 +15,12 @@ runs:
     - name: Setup Node
       uses: https://gitee.com/skr2005/setup-node@641a5f27d9d3241b501f5ae40ac61aa9d04c04ca
       with:
-        node-version: lts/*
+        node-version: '22'
         cache: 'yarn'
+      env:
+        NODEJS_ORG_MIRROR: https://npmmirror.com/mirrors/node
+        NPM_CONFIG_REGISTRY: https://registry.npmmirror.com
 
     - name: Yarn Install
+      shell: bash
       run: yarn install --immutable

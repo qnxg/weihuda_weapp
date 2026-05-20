@@ -8,10 +8,12 @@ import {
 } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
+import Faq from './components/Faq'
 import styles from './index.module.scss'
 import { postFeedback } from '@/apis/feedback'
 import { uploadImgApi } from '@/apis/upload'
 import Button from '@/components/Button'
+import iconFaq from '@/static/mine/fa.svg'
 import type { AddFeedbackReq } from '@/apis/feedback'
 
 const Index: React.FC = () => {
@@ -114,15 +116,6 @@ const Index: React.FC = () => {
 
   return (
     <View className={styles.container}>
-      <View className={styles.tips}>
-        反馈问题前请先查看
-        <View className={styles.feedbackLink}>
-          <Navigator url={`/pages/faq/index`} className={'inline'}>
-            <Text>常见问题</Text>
-          </Navigator>
-        </View>
-        ，避免重复反馈哦～
-      </View>
       {noAuth && (
         <>
           <View className={styles.title} style={{ marginTop: '30px;' }}>
@@ -202,6 +195,14 @@ const Index: React.FC = () => {
           </Navigator>
         </View>
       )}
+
+      <View className={styles.faqTip}>
+        <Image src={iconFaq} className={styles.faqIcon} />
+        <Text>提交反馈前，不妨先看看常见问题：</Text>
+      </View>
+      <View className={styles.faq}>
+        <Faq />
+      </View>
     </View>
   )
 }

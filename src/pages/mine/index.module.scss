@@ -78,10 +78,6 @@
   @include imageCommon('~@/static/mine/about-mini-program.svg');
 }
 
-.faImg {
-  @include imageCommon('~@/static/mine/fa.svg');
-}
-
 .changelogImg {
   @include imageCommon('~@/static/mine/icon-changelog.svg');
 }

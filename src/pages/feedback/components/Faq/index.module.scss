@@ -1,0 +1,22 @@
+@use '~@/utils/scss/global' as *;
+
+.faqListText {
+  font-size: $fontNormal;
+}
+
+.faqPopup {
+  padding: 36px;
+  padding-bottom: 48px; // 底部多 padding 一点，视觉上可能更好些
+}
+
+.faqPopupTitle {
+  padding: 0.2em 0;
+  margin-bottom: 0.5em;
+  font-size: $fontLarge;
+  font-weight: bold;
+}
+
+.faqPopupContent {
+  padding: 0 0.5em; // 左右给一点间距，也是视觉上的考虑
+  white-space: pre-wrap;
+}

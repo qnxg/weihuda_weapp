@@ -79,7 +79,7 @@
   }
 
   .feedbackLink {
-    margin-top: 72px;
+    margin-top: 36px;
     text-decoration: underline;
     color: $primaryBlue;
     font-size: $fontNormal;
@@ -88,15 +88,22 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .tips {
-    font-size: $fontNormal;
-    margin-bottom: -45px;
-    .feedbackLink {
-      display: inline;
-      margin-top: 0px;
-      margin-left: 2px;
-      margin-right: 2px;
+  .faqTip {
+    margin-top: 36px;
+    margin-bottom: 16px;
+
+    display: flex;
+    align-items: center;
+
+    & > .faqIcon {
+      width: 1.5em;
+      height: 1.5em;
+      margin-inline-end: 0.3em;
     }
+  }
+
+  .faq {
+    padding-bottom: 48px; // 底部空出一些位置，问题较多时便于用户判断是否已到底
   }
 }
 
@@ -105,6 +112,12 @@
     .input,
     .upload {
       background: #333333;
+    }
+  }
+
+  .faqTip {
+    & > .faqIcon {
+      filter: invert(1) hue-rotate(180deg);
     }
   }
 }

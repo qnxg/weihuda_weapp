@@ -15,7 +15,6 @@ export default {
     'pages/addCourse/index', // 在课表里添加课程
     'pages/bind/index', // 绑定信息页面
     'pages/tfa/index', // 双因子认证
-    'pages/faq/index', // 近期热门问题
     'pages/messageBox/index', // 消息盒子
     'pages/feedback/index', // 反馈建议
     'pages/feedbackHistory/index', // 历史反馈查询
