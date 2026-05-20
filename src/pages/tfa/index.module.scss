@@ -1,0 +1,148 @@
+@use '~@/utils/scss/global' as *;
+
+.page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 48px 32px 64px;
+  background-color: var(--bg-color-page);
+}
+
+.panel {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 28px 28px;
+  box-sizing: border-box;
+  border-radius: var(--radius-large, 16px);
+  background-color: var(--bg-color-container);
+}
+
+.title {
+  display: block;
+  text-align: center;
+  font-size: $fontLarge;
+  font-weight: 600;
+  color: var(--text-color-primary);
+  margin-bottom: 28px;
+}
+
+.fieldBlock {
+  margin-bottom: 24px;
+}
+
+$fieldRowHeight: 72px;
+
+.codeField {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.codeLabelWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $fieldRowHeight;
+  margin-right: 12px;
+}
+
+.codeLabel {
+  color: var(--text-color-primary);
+  line-height: 1.2;
+}
+
+.codeInputRow {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  min-width: 0;
+  height: $fieldRowHeight;
+}
+
+.codeInputItem {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.codeInputBox {
+  width: 100%;
+  height: 100%;
+  min-height: $fieldRowHeight;
+  padding: 0 16px;
+  line-height: $fieldRowHeight;
+  box-sizing: border-box;
+}
+
+.sendBtnWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.sendBtn {
+  padding: 0 8px;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  line-height: 1.2;
+  font-size: 26px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hint {
+  display: block;
+  margin-top: -8px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  line-height: 1.5;
+  color: var(--text-color-secondary);
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  margin-top: 0;
+}
+
+.actionBtn {
+  flex: 1;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: auto;
+  min-height: 0;
+  line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    background-color: $darkBgColor;
+  }
+
+  .panel {
+    background-color: $darkBgColor;
+  }
+
+  .title {
+    color: $darkTextColor;
+  }
+
+  .codeLabel {
+    color: $darkTextColor;
+  }
+
+  .hint {
+    color: var(--text-color-placeholder);
+  }
+}

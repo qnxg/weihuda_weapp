@@ -3,6 +3,7 @@
 import Taro from '@tarojs/taro'
 // eslint-disable-next-line import/no-cycle
 import { postUnbind } from './bind'
+import { showTFADialog } from '@/components/TFADialog'
 import getLoginCode from '@/utils/getLoginCode'
 // eslint-disable-next-line import/no-cycle
 import { clearReqCacheInMemoryAndRelaunch } from '@/utils/storage/requestCache'
@@ -64,6 +65,20 @@ export type Datum =
   | { [key: string]: any }
   | null
   | string
+
+/**
+ * 从 request 抛出的异常中取出后端 msg（`throw new Error(response.data.msg)`）。
+ */
+export function getRequestErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message
+  }
+  if (typeof error === 'string') {
+    return error
+  }
+  return '请求失败'
+}
+
 // 跳转到bind界面
 const toBind = () => {
   const duration = 700
@@ -153,6 +168,9 @@ async function request<T extends Data>(
         icon: 'none',
         duration: 2000,
       })
+    }
+    if (response.data.msg.includes('需要双因子认证')) {
+      showTFADialog()
     }
     throw new Error(response.data.msg)
   }

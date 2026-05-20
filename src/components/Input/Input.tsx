@@ -7,6 +7,10 @@ import type { InputProps } from '@tarojs/components'
 
 interface Props extends InputProps {
   /**
+   * 外层容器 className（作用于 inputItem）
+   */
+  itemClassName?: string
+  /**
    * 标签
    */
   label?: string
@@ -24,9 +28,13 @@ interface Props extends InputProps {
  * 输入框组件
  */
 const Input: React.FC<Props> = props => {
-  const { labelPosition = 'left', label, required } = props
+  const { labelPosition = 'left', label, required, itemClassName } = props
   // 输入框项类名
-  const inputItemClassName = classNames(styles.inputItem, styles[labelPosition])
+  const inputItemClassName = classNames(
+    styles.inputItem,
+    styles[labelPosition],
+    itemClassName
+  )
   // 输入框是否聚焦
   const [isFocus, setIsFocus] = useState(false)
   // 输入框类名

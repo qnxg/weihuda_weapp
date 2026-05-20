@@ -22,3 +22,23 @@ export const postBind = async (data: Bind) => {
 export const postUnbind = async () => {
   return request.post<string>('/unbind')
 }
+
+export interface TFAInfo {
+  phone: string
+}
+
+export const getTFA = async (): Promise<TFAInfo | null> => {
+  return request.get<TFAInfo | null>('/tfa')
+}
+
+export const sendTFASms = async (): Promise<string> => {
+  return request.get<string>('/tfa/send_sms')
+}
+
+export const verifyTFA = async (code: string): Promise<string> => {
+  return request.post<string>('/tfa/verify', {
+    data: {
+      code,
+    },
+  })
+}
