@@ -3803,6 +3803,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/crypto-js@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "@types/crypto-js@npm:4.2.2"
+  checksum: 10c0/760a2078f36f2a3a1089ef367b0d13229876adcf4bcd6e8824d00d9e9bfad8118dc7e6a3cc66322b083535e12be3a29044ccdc9603bfb12519ff61551a3322c6
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.1.5":
   version: 4.1.12
   resolution: "@types/debug@npm:4.1.12"
@@ -4020,7 +4027,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-forge@npm:^1.3.0":
+"@types/node-forge@npm:^1, @types/node-forge@npm:^1.3.0":
   version: 1.3.14
   resolution: "@types/node-forge@npm:1.3.14"
   dependencies:
@@ -6287,6 +6294,13 @@ __metadata:
   version: 0.0.2
   resolution: "crypt@npm:0.0.2"
   checksum: 10c0/adbf263441dd801665d5425f044647533f39f4612544071b1471962209d235042fb703c27eea2795c7c53e1dfc242405173003f83cf4f4761a633d11f9653f18
+  languageName: node
+  linkType: hard
+
+"crypto-js@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "crypto-js@npm:4.2.0"
+  checksum: 10c0/8fbdf9d56f47aea0794ab87b0eb9833baf80b01a7c5c1b0edc7faf25f662fb69ab18dc2199e2afcac54670ff0cd9607a9045a3f7a80336cccd18d77a55b9fdf0
   languageName: node
   linkType: hard
 
@@ -9041,8 +9055,10 @@ __metadata:
     "@tarojs/taro": "npm:4.1.1"
     "@tarojs/taro-loader": "npm:4.1.1"
     "@tarojs/webpack5-runner": "npm:4.1.1"
+    "@types/crypto-js": "npm:^4.2.2"
     "@types/minimatch": "npm:^5"
     "@types/node": "npm:^18"
+    "@types/node-forge": "npm:^1"
     "@types/react": "npm:^18.0.0"
     "@types/react-dom": "npm:^18"
     "@types/sass": "npm:=1.43.1"
@@ -9051,13 +9067,16 @@ __metadata:
     babel-plugin-import: "npm:^1.13.8"
     babel-preset-taro: "npm:4.1.1"
     classnames: "npm:^2.3.2"
+    crypto-js: "npm:^4.2.0"
     dayjs: "npm:^1.11.10"
     eslint: "npm:^9"
     eslint-import-resolver-typescript: "npm:^4.4"
     eslint-plugin-import: "npm:^2.31"
     eslint-plugin-react: "npm:^7.37"
     eslint-plugin-react-hooks: "npm:^7.0.1"
+    js-sha256: "npm:^0.11.1"
     license-report: "npm:^6.8.2"
+    node-forge: "npm:^1.4.0"
     postcss: "npm:^8.5.6"
     prettier: "npm:^3.5.3"
     react: "npm:^18.0.0"
@@ -10060,6 +10079,13 @@ __metadata:
     "@sideway/formula": "npm:^3.0.1"
     "@sideway/pinpoint": "npm:^2.0.0"
   checksum: 10c0/9262aef1da3f1bec5b03caf50c46368899fe03b8ff26cbe3d53af4584dd1049079fc97230bbf1500b6149db7cc765b9ee45f0deb24bb6fc3fa06229d7148c17f
+  languageName: node
+  linkType: hard
+
+"js-sha256@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "js-sha256@npm:0.11.1"
+  checksum: 10c0/ef8e294b6f38f218e4834cb653471dd1a76808cea93dc66eaffcb04124116bc36d6cebc4e8866753e184ab4e57892b6ef21918e8ab0450179a7e093ea962d974
   languageName: node
   linkType: hard
 
@@ -11292,6 +11318,13 @@ __metadata:
   version: 1.3.3
   resolution: "node-forge@npm:1.3.3"
   checksum: 10c0/9c6f53b0ebb34865872cf62a35b0aef8fb337e2efc766626c2e3a0040f4c02933bf29a62ba999eb44a2aca73bd512c4eda22705a47b94654b9fb8ed53db9a1db
+  languageName: node
+  linkType: hard
+
+"node-forge@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "node-forge@npm:1.4.0"
+  checksum: 10c0/67330a5f1f95257a4c8a93b7d555abe87b5f15e350123aa396c97a21a8ca94f9c6549008eb2c73668a91e0d7e3a905785acbd8f8bd0751c29401292011f8f8e1
   languageName: node
   linkType: hard
 

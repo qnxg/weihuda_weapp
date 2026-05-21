@@ -16,7 +16,7 @@
 		"dev": "taro build --type weapp --watch",
 		"build": "yarn lint && taro build --type weapp",
 		"pr-check": "prettier --check . && yarn lint",
-    "license": "license-report --config=.license-report-rc.json > ./src/static/licenses/report.json"
+		"license": "license-report --config=.license-report-rc.json > ./src/static/licenses/report.json"
 	},
 	"browserslist": [
 		"defaults",
@@ -37,7 +37,10 @@
 		"@tarojs/shared": "4.1.1",
 		"@tarojs/taro": "4.1.1",
 		"classnames": "^2.3.2",
+		"crypto-js": "^4.2.0",
 		"dayjs": "^1.11.10",
+		"js-sha256": "^0.11.1",
+		"node-forge": "^1.4.0",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0"
 	},
@@ -51,8 +54,10 @@
 		"@tarojs/cli": "4.1.1",
 		"@tarojs/taro-loader": "4.1.1",
 		"@tarojs/webpack5-runner": "4.1.1",
+		"@types/crypto-js": "^4.2.2",
 		"@types/minimatch": "^5",
 		"@types/node": "^18",
+		"@types/node-forge": "^1",
 		"@types/react": "^18.0.0",
 		"@types/react-dom": "^18",
 		"@types/sass": "=1.43.1",

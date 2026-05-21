@@ -213,5 +213,5 @@ export default defineConfig([
     },
     files: ['**/*.ts', '**/*.tsx', '**/*.jsx', '**/*.js'],
   },
-  globalIgnores(['**/*.min.js', '**/.*.js']),
+  globalIgnores(['**/*.min.js', '**/.*.js', 'src/workers/**']),
 ])

@@ -1,31 +1,34 @@
 import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './index.module.scss'
-import { postBind } from '@/apis/bind'
+import { getPow, postBind } from '@/apis/bind'
 import { getTokenApi } from '@/apis/request'
+import { encryptBindPassword } from '@/utils/encrypt'
 import getLoginCode from '@/utils/getLoginCode'
+import { solvePowInWorker } from '@/utils/pow'
 
 const Second: React.FC = () => {
   const stuIdRef = useRef('')
   const stuPassRef = useRef('')
+  const [loadingText, setLoadingText] = useState<string | null>(null)
 
   const postData = async () => {
-    await Taro.showLoading({
-      mask: true,
-      title: '加载中...',
-    })
     try {
+      setLoadingText('正在进行安全验证，可能需要一些时间...')
+      const { ticket, difficulty } = await getPow(stuIdRef.current)
+      const nonce = await solvePowInWorker(ticket, difficulty)
+      setLoadingText('正在加载...')
+      const encryptedPassword = encryptBindPassword(stuPassRef.current)
       const code = await getLoginCode()
-      const res = await postBind({
+      await postBind({
         code: code,
         stuId: stuIdRef.current,
-        password: stuPassRef.current,
+        password: encryptedPassword,
+        powTicket: ticket,
+        powAnswer: nonce,
       })
-
-      console.log('res', res)
       await getTokenApi()
-      Taro.hideLoading()
       await Taro.reLaunch({
         url: '/pages/index/index',
       })
@@ -45,6 +48,8 @@ const Second: React.FC = () => {
         })
       }
       console.log(err)
+    } finally {
+      setLoadingText(null)
     }
   }
 
@@ -61,25 +66,19 @@ const Second: React.FC = () => {
       })
       return
     }
-    if (stuPassRef.current.length < 7) {
-      const result = await Taro.showModal({
-        title: '密码提示',
-        content:
-          '检测到你的个人门户密码是初始密码或密码强度较弱，建议修改后再绑定，是否继续绑定？',
-        confirmText: '继续绑定',
-        confirmColor: '#ff0000',
-        cancelText: '之后绑定',
-        cancelColor: '#19aa19',
-      })
-      if (!result.confirm) {
-        return
-      }
-    }
     await postData()
   }
 
   return (
     <View className={styles.footArea}>
+      {loadingText && (
+        <View className={styles.loadingMask} catchMove>
+          <View className={styles.loadingPanel}>
+            <View className={styles.loadingSpinner} />
+            <Text className={styles.loadingText}>{loadingText}</Text>
+          </View>
+        </View>
+      )}
       <View className={styles.hintText}>请输入学号密码</View>
       <View className={styles.formCard}>
         <View className={styles.dataItem}>

@@ -5,6 +5,21 @@ export interface Bind {
   code: string
   stuId: string
   password: string
+  powTicket: string
+  powAnswer: number
+}
+
+export interface BindPow {
+  ticket: string
+  difficulty: number
+}
+
+export const getPow = async (stuId: string): Promise<BindPow> => {
+  return request.get<BindPow>('/bind/pow', {
+    data: {
+      stuId,
+    },
+  })
 }
 
 /**
