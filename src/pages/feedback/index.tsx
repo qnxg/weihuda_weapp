@@ -1,3 +1,4 @@
+import { NoticeBar } from '@taroify/core'
 import {
   Image,
   Input,
@@ -13,17 +14,14 @@ import styles from './index.module.scss'
 import { postFeedback } from '@/apis/feedback'
 import { uploadImgApi } from '@/apis/upload'
 import Button from '@/components/Button'
-import iconFaq from '@/static/mine/fa.svg'
+import groupQrcode from '@/static/feedback/group-qrcode.png'
 import type { AddFeedbackReq } from '@/apis/feedback'
 
 const Index: React.FC = () => {
+  // 是否已经提交表单，提交表单后会显示已经提交页面
+  const [submitted, setSubmitted] = useState(false)
   const { params } = useRouter()
   const noAuth = !!(params.noAuth && params.noAuth == '1')
-
-  // const type_list = [
-  //   { label: '产品建议', value: 'suggestion', checked: true },
-  //   { label: '功能故障或其他问题', value: 'bug', checked: false }
-  // ]
 
   const [feedbackState, setFeedbackState] = useState<AddFeedbackReq>({
     stuId: '',
@@ -97,112 +95,152 @@ const Index: React.FC = () => {
       reqData.imgUrl = undefined
     try {
       await postFeedback(reqData, noAuth)
-      await Taro.showToast({
-        title: '提交成功',
-        icon: 'success',
-        duration: 1000,
-      })
-      setTimeout(() => {
-        if (noAuth) {
-          void Taro.navigateBack()
-        } else {
-          void Taro.redirectTo({ url: '/pages/feedbackHistory/index' })
-        }
-      }, 1000)
+      setSubmitted(true)
     } catch {
       await Taro.showToast({ title: '提交失败', icon: 'none' })
+    } finally {
+      Taro.hideLoading()
     }
   }
 
   return (
-    <View className={styles.container}>
-      {noAuth && (
-        <>
-          <View className={styles.title} style={{ marginTop: '30px;' }}>
-            学号：
+    <View>
+      {submitted ? (
+        <View className={styles.successPage}>
+          <View className={styles.successHero}>
+            <View className={styles.successIcon}>
+              <View className={styles.successIconCheck} />
+            </View>
+            <Text className={styles.successTitle}>反馈提交成功</Text>
+            <Text className={styles.successDesc}>
+              感谢你的反馈，我们会尽快查看并处理
+            </Text>
+          </View>
+
+          <View className={styles.qrCard}>
+            <Text className={styles.qrCardTitle}>加入交流群</Text>
+            <Text className={styles.qrCardDesc}>
+              欢迎加群交流，让问题反馈更快解决
+            </Text>
+            <View className={styles.qrImageWrap}>
+              <Image
+                className={styles.qrImage}
+                src={groupQrcode}
+                mode='widthFix'
+              />
+            </View>
+          </View>
+
+          <View className={styles.successActions}>
+            <Button
+              className={styles.successActionBtn}
+              onClick={() => Taro.navigateBack()}
+            >
+              完成
+            </Button>
+          </View>
+        </View>
+      ) : (
+        <View className={styles.container}>
+          {!noAuth && (
+            <NoticeBar style={{ color: '#1989fa', background: '#ecf9ff' }}>
+              优质反馈或建议被采纳后，可获得一定的积分奖励。
+            </NoticeBar>
+          )}
+
+          {noAuth && (
+            <>
+              <View className={styles.title} style={{ marginTop: '15px;' }}>
+                学号：
+              </View>
+              <Input
+                value={feedbackState.stuId}
+                onInput={e => {
+                  change('stuId', (e.target as any).value)
+                }}
+                className={styles.input}
+                type='text'
+                placeholder='请输入学号，必填'
+              />
+            </>
+          )}
+
+          <View className={styles.title} style={{ marginTop: '15px;' }}>
+            联系方式：
           </View>
           <Input
-            value={feedbackState.stuId}
+            value={feedbackState.contact}
             onInput={e => {
-              change('stuId', (e.target as any).value)
+              change('contact', (e.target as any).value)
             }}
             className={styles.input}
             type='text'
-            placeholder='请输入学号，必填'
+            placeholder={`电子邮箱地址，方便接收反馈回复${noAuth ? '，必填' : '，选填'}`}
           />
-        </>
-      )}
 
-      <View className={styles.title} style={{ marginTop: '30px;' }}>
-        联系方式：
-      </View>
-      <Input
-        value={feedbackState.contact}
-        onInput={e => {
-          change('contact', (e.target as any).value)
-        }}
-        className={styles.input}
-        type='text'
-        placeholder={`电子邮箱地址，方便接收反馈回复${noAuth ? '，必填' : '，选填'}`}
-      />
-
-      <View className={styles.title} style={{ marginTop: '30px;' }}>
-        详细描述：
-      </View>
-      <View className={styles.input}>
-        <Textarea
-          value={feedbackState.desc}
-          onInput={e => {
-            change('desc', (e.target as any).value)
-          }}
-          placeholder='请填写描述信息，必填。'
-        />
-        <View className={styles.upload}>
-          <View className={styles.content}>
-            {feedbackState.imgUrl && feedbackState.imgUrl.trim().length > 0 && (
-              <View className={styles.image}>
-                <Image src={feedbackState.imgUrl}></Image>
+          <View className={styles.title} style={{ marginTop: '15px;' }}>
+            详细描述：
+          </View>
+          <View className={styles.input}>
+            <Textarea
+              value={feedbackState.desc}
+              onInput={e => {
+                change('desc', (e.target as any).value)
+              }}
+              placeholder='请填写描述信息，必填。'
+            />
+            <View className={styles.upload}>
+              <View className={styles.content}>
+                {feedbackState.imgUrl &&
+                  feedbackState.imgUrl.trim().length > 0 && (
+                    <View className={styles.image}>
+                      <Image src={feedbackState.imgUrl}></Image>
+                    </View>
+                  )}
+                {/* 如果是非登录的用户，不让上传图片 */}
+                {!noAuth &&
+                  !(
+                    feedbackState.imgUrl &&
+                    feedbackState.imgUrl.trim().length > 0
+                  ) && (
+                    <View
+                      className={styles.uploadButton}
+                      onClick={handleChoose}
+                    >
+                      <View className={styles.uploadIcon}></View>
+                      <View className={styles.placeholder}>
+                        上传图片能帮助程序猿更好地解决问题
+                      </View>
+                    </View>
+                  )}
               </View>
-            )}
-            {/* 如果是非登录的用户，不让上传图片 */}
-            {!noAuth &&
-              !(
-                feedbackState.imgUrl && feedbackState.imgUrl.trim().length > 0
-              ) && (
-                <View className={styles.uploadButton} onClick={handleChoose}>
-                  <View className={styles.uploadIcon}></View>
-                  <View className={styles.placeholder}>
-                    上传图片能帮助程序猿更好地解决问题
-                  </View>
-                </View>
-              )}
+            </View>
+          </View>
+
+          <View style={{ marginTop: '30px' }}>
+            <Button
+              onClick={() => handleSubmit(feedbackState)}
+              className={styles.submitButton}
+            >
+              提交
+            </Button>
+          </View>
+          {!noAuth && (
+            <View className={styles.feedbackLink}>
+              <Navigator url={`/pages/feedbackHistory/index`}>
+                <Text>反馈历史</Text>
+              </Navigator>
+            </View>
+          )}
+
+          <View className={styles.faqTip}>
+            <Text>常见问题</Text>
+          </View>
+          <View className={styles.faq}>
+            <Faq />
           </View>
         </View>
-      </View>
-
-      <View style={{ marginTop: '30px' }}>
-        <Button
-          onClick={() => handleSubmit(feedbackState)}
-          className={styles.submitButton}
-        >
-          提交
-        </Button>
-      </View>
-      {!noAuth && (
-        <View className={styles.feedbackLink}>
-          <Navigator url={`/pages/feedbackHistory/index`}>
-            <Text>反馈历史</Text>
-          </Navigator>
-        </View>
       )}
-
-      <View className={styles.faqTip}>
-        <Image src={iconFaq} className={styles.faqIcon} />
-        <Text>提交反馈前，不妨先看看常见问题：</Text>
-      </View>
-      <View className={styles.faq}>
-        <Faq />
-      </View>
     </View>
   )
 }
