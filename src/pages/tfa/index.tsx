@@ -151,9 +151,18 @@ const Index: React.FC = () => {
             </View>
           </View>
         </View>
-        <Text className={styles.hint}>
-          验证通过后再次刷新界面即可继续正常使用
-        </Text>
+        <View className={styles.hint}>
+          <View>1. 验证通过后再次刷新界面即可继续正常使用。</View>
+          <View>
+            2.
+            如果未绑定手机号，或之前绑定的手机号已经弃用，请联系学校信息化办进行重新绑定。
+          </View>
+          <View>
+            {
+              '3. 如有其他问题，请点击“我的”->“我要反馈”，向我们进行问题反馈，我们会尽快处理。'
+            }
+          </View>
+        </View>
         <View className={styles.actions}>
           <Button
             className={styles.actionBtn}
