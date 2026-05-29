@@ -2,15 +2,74 @@ import request from '../request'
 
 // 请求 hdjw 的 grade-rank 接口时的 query 参数
 export interface HdjwGradeRankForm {
-  year?: number // 学年，如果没有则为全部学年
-  term?: number // 学期，如果没有则为全部学期
-  course: number // 课程类型，1为全部课程，2为必修，3为核心
-  rank: number // 排名类型，1为算数平均分，2为加权平均分，3为绩点
+  /**
+   * 数据来源，1 为成绩主库，2 为执行方案
+   */
+  data_source: number
+  /**
+   * 显示方式，1 为取最大成绩，2 为取初修成绩
+   */
+  display: number
+  /**
+   * 课程范围，1 为主修，2 为辅修
+   */
+  range: number
+  /**
+   * 学年。为空则取全部学年学期，此时 xq 字段会被忽略
+   */
+  xn?: number
+  /**
+   * 学期，1为秋季学期，2为春季学期，3为夏季学期。为空则取当前学年下的全部学期
+   */
+  xq?: number
 }
 
-export interface HdjwGradeRank {
-  score: string // 分数
-  rank: string // 排名
+/**
+ * Rank
+ */
+export interface HdjwRank {
+  /**
+   * 全部课程，为 null 说明暂无数据
+   */
+  all: null | HdjwRankDetail
+  /**
+   * 核心课程，为 null 说明暂无数据
+   */
+  core: null | HdjwRankDetail
+  /**
+   * 必修课程，为 null 说明暂无数据
+   */
+  must: null | HdjwRankDetail
+}
+
+/**
+ * RankDetail
+ */
+export interface HdjwRankDetail {
+  /**
+   * 算数平均成绩
+   */
+  arithmetic: string
+  /**
+   * 算数平均成绩排名，格式为 排名/总人数，例如 1/100
+   */
+  arithmetic_rank: string
+  /**
+   * 绩点
+   */
+  gpa: string
+  /**
+   * 绩点排名，格式为 排名/总人数，例如 1/100
+   */
+  gpa_rank: string
+  /**
+   * 加权平均成绩
+   */
+  weighted: string
+  /**
+   * 加权平均成绩排名，格式为 排名/总人数，例如 1/100
+   */
+  weighted_rank: string
 }
 
 export interface CaGradeRankDetail {
@@ -37,7 +96,7 @@ export interface CaGradeRank {
  * 从教务系统获取成绩排名
  */
 export const getGradeRankFromHdjw = async (data: HdjwGradeRankForm) => {
-  return request.get<HdjwGradeRank>('/hdjw/grade-rank', { data })
+  return request.get<HdjwRank>('/hdjw/grade-rank', { data })
 }
 
 /**
