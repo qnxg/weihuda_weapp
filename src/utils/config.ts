@@ -28,6 +28,7 @@ export const buildingInfo = [
   { building: '二教楼(北校区)', id: '202' },
   { building: '电子楼(北校区)', id: '203' },
   { building: '水上教学楼(北校区)', id: '204' },
+  { building: '科创港教学楼', id: 'C201CF80E84B4C73ABE19BE367E4062F' },
   { building: '综合楼机房', id: 'W134b2a60000WH' },
   { building: '南楼', id: '117' },
   { building: '北楼', id: '121' },
