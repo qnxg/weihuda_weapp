@@ -1,9 +1,6 @@
 import { resolve } from 'path'
 import { UnifiedWebpackPluginV5 } from 'weapp-tailwindcss/webpack'
 import type { UserConfigExport } from '@tarojs/cli'
-import CopyWebpackPlugin = require('copy-webpack-plugin')
-
-const workersDir = resolve(__dirname, '..', 'src/workers')
 
 const config = {
   projectName: 'hnu_query',
@@ -21,10 +18,7 @@ const config = {
     '@': resolve(__dirname, '..', 'src'),
   },
   copy: {
-    patterns: [
-      { from: 'src/static/tab/', to: 'dist/static/tab/' },
-      { from: 'src/workers/', to: 'dist/workers/', ignore: ['**/.DS_Store'] },
-    ],
+    patterns: [{ from: 'src/static/tab/', to: 'dist/static/tab/' }],
     options: {},
   },
   framework: 'react',
@@ -76,19 +70,6 @@ const config = {
             args: [
               {
                 appType: 'taro',
-              },
-            ],
-          },
-          copyWorkers: {
-            plugin: CopyWebpackPlugin,
-            args: [
-              {
-                patterns: [
-                  {
-                    from: workersDir,
-                    to: 'workers',
-                  },
-                ],
               },
             ],
           },

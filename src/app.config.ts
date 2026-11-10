@@ -1,5 +1,4 @@
 export default {
-  workers: 'workers',
   pages: [
     'pages/index/index', // 首页
     // 'pages/zhihu/index', // 知湖

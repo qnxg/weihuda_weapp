@@ -2,11 +2,10 @@ import { Button, Input, View, Navigator, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { useRef, useState } from 'react'
 import styles from './index.module.scss'
-import { getPow, postBind } from '@/apis/bind'
+import { postBind } from '@/apis/bind'
 import { getTokenApi } from '@/apis/request'
 import { encryptBindPassword } from '@/utils/encrypt'
 import getLoginCode from '@/utils/getLoginCode'
-import { solvePowInWorker } from '@/utils/pow'
 
 const Second: React.FC = () => {
   const stuIdRef = useRef('')
@@ -15,9 +14,6 @@ const Second: React.FC = () => {
 
   const postData = async () => {
     try {
-      setLoadingText('正在进行安全验证，可能需要一些时间...')
-      const { ticket, difficulty } = await getPow(stuIdRef.current)
-      const nonce = await solvePowInWorker(ticket, difficulty)
       setLoadingText('正在加载...')
       const encryptedPassword = encryptBindPassword(stuPassRef.current)
       const code = await getLoginCode()
@@ -25,8 +21,6 @@ const Second: React.FC = () => {
         code: code,
         stuId: stuIdRef.current,
         password: encryptedPassword,
-        powTicket: ticket,
-        powAnswer: nonce,
       })
       await getTokenApi()
       await Taro.reLaunch({
