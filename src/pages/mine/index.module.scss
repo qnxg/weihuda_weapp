@@ -102,8 +102,15 @@
 }
 
 .outer {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   min-height: 100vh;
+  padding: 20px;
+}
+
+.footer {
+  margin-top: auto;
 }
 
 .version {
