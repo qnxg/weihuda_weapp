@@ -1,4 +1,3 @@
-import { NoticeBar } from '@taroify/core'
 import {
   Image,
   Input,
@@ -120,7 +119,9 @@ const Index: React.FC = () => {
           <View className={styles.qrCard}>
             <Text className={styles.qrCardTitle}>加入交流群</Text>
             <Text className={styles.qrCardDesc}>
-              欢迎加群交流，让问题反馈更快解决
+              {noAuth
+                ? '若未登录，推荐加入交流群以方便与开发者取得联系'
+                : '欢迎加群交流，让问题反馈更快解决'}
             </Text>
             <View className={styles.qrImageWrap}>
               <Image
@@ -142,12 +143,6 @@ const Index: React.FC = () => {
         </View>
       ) : (
         <View className={styles.container}>
-          {!noAuth && (
-            <NoticeBar style={{ color: '#1989fa', background: '#ecf9ff' }}>
-              优质反馈或建议被采纳后，可获得一定的积分奖励。
-            </NoticeBar>
-          )}
-
           {noAuth && (
             <>
               <View className={styles.title} style={{ marginTop: '15px;' }}>
@@ -175,7 +170,7 @@ const Index: React.FC = () => {
             }}
             className={styles.input}
             type='text'
-            placeholder={`电子邮箱地址，方便接收反馈回复${noAuth ? '，必填' : '，选填'}`}
+            placeholder={`请填写QQ号，方便接收反馈回复${noAuth ? '，必填' : '，选填'}`}
           />
 
           <View className={styles.title} style={{ marginTop: '15px;' }}>
