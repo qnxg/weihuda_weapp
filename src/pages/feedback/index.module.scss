@@ -154,57 +154,6 @@
   padding: 0 24px;
 }
 
-.qrCard {
-  background: #fff;
-  border-radius: $borderRadius;
-  padding: 36px 32px 32px;
-  box-sizing: border-box;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-}
-
-.qrCardTitle {
-  display: block;
-  font-size: $fontBig;
-  font-weight: 600;
-  color: $primaryTextColor;
-  margin-bottom: 12px;
-}
-
-.qrCardDesc {
-  display: block;
-  font-size: $fontMedium;
-  color: $thirdTextColor;
-  line-height: 1.5;
-  margin-bottom: 28px;
-}
-
-// 群二维码原图比例 530 : 634，展示宽度 440px 时高度约 526px
-$qrImageWidth: 440px;
-
-.qrImageWrap {
-  width: $qrImageWidth;
-  max-width: 100%;
-  margin: 0 auto 20px;
-  box-sizing: border-box;
-  border-radius: $borderRadius;
-  background: #fafafa;
-  border: 1px solid #f0f0f0;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.qrImage {
-  width: 100%;
-  display: block;
-}
-
-.qrTip {
-  display: block;
-  font-size: $fontMedium;
-  color: $secondTextColor;
-}
-
 .successActions {
   display: flex;
   flex-direction: column;
@@ -237,24 +186,8 @@ $qrImageWidth: 440px;
       color: $darkTextColor;
     }
 
-    .successDesc,
-    .qrCardDesc,
-    .qrTip {
+    .successDesc {
       color: var(--text-color-placeholder, #888);
-    }
-
-    .qrCard {
-      background: #333333;
-      box-shadow: none;
-    }
-
-    .qrCardTitle {
-      color: $darkTextColor;
-    }
-
-    .qrImageWrap {
-      background: #2a2a2a;
-      border-color: #444;
     }
   }
 }

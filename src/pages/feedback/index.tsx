@@ -13,7 +13,6 @@ import styles from './index.module.scss'
 import { postFeedback } from '@/apis/feedback'
 import { uploadImgApi } from '@/apis/upload'
 import Button from '@/components/Button'
-import groupQrcode from '@/static/feedback/group-qrcode.png'
 import type { AddFeedbackReq } from '@/apis/feedback'
 
 const Index: React.FC = () => {
@@ -114,22 +113,6 @@ const Index: React.FC = () => {
             <Text className={styles.successDesc}>
               感谢你的反馈，我们会尽快查看并处理
             </Text>
-          </View>
-
-          <View className={styles.qrCard}>
-            <Text className={styles.qrCardTitle}>加入交流群</Text>
-            <Text className={styles.qrCardDesc}>
-              {noAuth
-                ? '若未登录，推荐加入交流群以方便与开发者取得联系'
-                : '欢迎加群交流，让问题反馈更快解决'}
-            </Text>
-            <View className={styles.qrImageWrap}>
-              <Image
-                className={styles.qrImage}
-                src={groupQrcode}
-                mode='widthFix'
-              />
-            </View>
           </View>
 
           <View className={styles.successActions}>
