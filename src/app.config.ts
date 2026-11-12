@@ -1,4 +1,5 @@
 export default {
+  lazyCodeLoading: 'requiredComponents',
   pages: [
     'pages/index/index', // 首页
     // 'pages/zhihu/index', // 知湖
