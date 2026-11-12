@@ -1,6 +1,6 @@
 {
 	"name": "hnu_query",
-	"version": "5.7.0",
+	"version": "5.7.1",
 	"private": true,
 	"description": "湖南大学微生活小程序",
 	"type": "module",
