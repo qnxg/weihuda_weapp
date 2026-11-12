@@ -148,7 +148,7 @@ const Index: React.FC = () => {
         <OptionsList messageUnread={unread} />
         <View className={styles.footer}>
           <View className={styles.version}>
-            <View>Version 5.7.1</View>
+            <View>Version 5.8.0</View>
           </View>
           <Copyright />
         </View>
