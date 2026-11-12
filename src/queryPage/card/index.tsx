@@ -104,8 +104,9 @@ const Index: React.FC = () => {
                         key={Math.random()}
                       >
                         <View>
-                          消费地点：
-                          {item.tranLocation}
+                          {item.tranname === '领取补助'
+                            ? '领取补助（余额同步）'
+                            : `消费地点：${item.tranLocation}`}
                         </View>
                         <View>消费后余额：{item.nowAmt}</View>
                       </DisplayCard>
@@ -119,8 +120,12 @@ const Index: React.FC = () => {
                         subTitle={String(item.tranAmt)}
                         key={Math.random()}
                       >
-                        <View>充值方式：{item.tranname}</View>
-                        <View>充值前余额：{item.nowAmt}</View>
+                        <View>
+                          {item.tranname === '领取补助'
+                            ? '领取补助（余额同步）'
+                            : `充值方式：${item.tranname}`}
+                        </View>
+                        <View>充值后余额：{item.nowAmt}</View>
                       </DisplayCard>
                     </Navigator>
                   )}
